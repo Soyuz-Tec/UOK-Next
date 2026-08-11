@@ -41,8 +41,8 @@
     "sobelow": "~> 0.15.0"
   },
   "infrastructure": {
-    "postgres": "18.4",
-    "postgres_image": "docker.io/library/postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15"
+    "postgres": "19beta2",
+    "postgres_image": "docker.io/library/postgres@sha256:d37ce87b33b80bd76fb8d9bc9ff6ad2caaf6c4a50caf9ae25e393f247fc01d6e"
   },
   "deferred_pins": [
     "oban",

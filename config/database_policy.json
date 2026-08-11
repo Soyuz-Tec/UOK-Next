@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "postgresql": {
+    "target_major": 19,
+    "compatibility_release": "19beta2",
+    "production_prerelease_allowed": false,
+    "compatibility_image": "docker.io/library/postgres@sha256:d37ce87b33b80bd76fb8d9bc9ff6ad2caaf6c4a50caf9ae25e393f247fc01d6e",
+    "cluster": {
+      "encoding": "UTF8",
+      "locale_provider": "builtin",
+      "builtin_locale": "PG_UNICODE_FAST",
+      "timezone": "UTC",
+      "data_checksums": true,
+      "password_encryption": "scram-sha-256"
+    },
+    "extensions": {
+      "required": [
+        "pg_stat_statements"
+      ],
+      "allowed": [
+        "pg_stat_statements",
+        "plpgsql"
+      ]
+    }
+  },
+  "connection_budget": {
+    "local_max_connections": 50,
+    "local_reserved_connections": 5,
+    "local_superuser_reserved_connections": 3,
+    "application_replicas": 2,
+    "application_pool_per_replica": 5,
+    "application_role_limit": 20
+  },
+  "service_objectives": {
+    "monthly_availability_percent": 99.9,
+    "recovery_point_minutes": 15,
+    "recovery_time_minutes": 60
+  },
+  "roles": [
+    {
+      "id": "uok_owner",
+      "login": false,
+      "purpose": "Own application schemas and objects; never used by a process"
+    },
+    {
+      "id": "uok_migrator",
+      "login": true,
+      "purpose": "Run one reviewed migration job through the owner role"
+    },
+    {
+      "id": "uok_app",
+      "login": true,
+      "purpose": "Serve tenant-scoped application transactions with exact grants"
+    },
+    {
+      "id": "uok_outbox",
+      "login": true,
+      "purpose": "Publish claimed outbox records through a separately bounded worker"
+    },
+    {
+      "id": "uok_monitor",
+      "login": true,
+      "purpose": "Read approved operational statistics without business-table access"
+    },
+    {
+      "id": "uok_backup",
+      "login": true,
+      "purpose": "Perform provider-approved physical backup and WAL archival operations"
+    },
+    {
+      "id": "uok_replication",
+      "login": true,
+      "purpose": "Stream WAL only to approved replicas"
+    },
+    {
+      "id": "uok_break_glass",
+      "login": true,
+      "purpose": "Time-limited audited emergency administration"
+    }
+  ]
+}
