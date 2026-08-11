@@ -94,6 +94,6 @@ The command generates ephemeral secrets, reconciles a least-privileged runtime
 database role, migrates through the owner role, compiles the exact Git revision
 into an immutable release, starts two forced-recreated replicas behind HAProxy,
 verifies each replica's image and release identity plus authenticated metrics,
-deliberately poisons and repairs persistent role state before startup, and
-proves single-replica failover. It binds only to loopback and is not a
-production deployment.
+deliberately poisons and repairs persistent role state, terminates a live stale
+authorized database session before startup, and proves single-replica failover.
+It binds only to loopback and is not a production deployment.

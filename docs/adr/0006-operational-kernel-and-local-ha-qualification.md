@@ -33,7 +33,10 @@ also does not yet define a trusted production ingress or backup target.
   with one migration job and PostgreSQL. It is a development qualification
   target, not a production topology or a substitute for regional resilience.
   Before either replica starts, it seeds and then proves reconciliation of
-  unsafe persistent role attributes, settings, grants, and memberships.
+  unsafe persistent role attributes, settings, grants, and memberships. It
+  also establishes a live session under the stale authorization, blocks new
+  non-superuser connections, terminates existing client sessions, and proves
+  that the stale session cannot survive reconciliation.
 - Until a production ingress ADR proves TLS termination, header sanitization,
   network isolation, and source identity, the default production endpoint
   remains loopback-only and PostgreSQL TLS remains mandatory.

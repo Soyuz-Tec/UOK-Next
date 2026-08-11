@@ -159,6 +159,36 @@ try {
         throw "The unsafe persistent-role fixture could not be installed"
     }
 
+    & podman exec -d uok-next-postgres-1 psql `
+        -v ON_ERROR_STOP=1 `
+        -U uok_qualification_poison `
+        -d "${env:UOK_DB_NAME}" `
+        -c "SET ROLE uok_app; SELECT pg_sleep(300)"
+    if ($LASTEXITCODE -ne 0) {
+        throw "The stale authorized-session fixture could not be started"
+    }
+
+    $staleSessionEstablished = $false
+    foreach ($attempt in 1..10) {
+        $staleSessionCount = (& podman compose -f $composePath exec -T postgres psql `
+                -v ON_ERROR_STOP=1 `
+                -U "${env:UOK_DB_USER}" `
+                -d "${env:UOK_DB_NAME}" `
+                -Atc "SELECT count(*) FROM pg_stat_activity WHERE datname = current_database() AND usename = 'uok_qualification_poison'" |
+                Out-String).Trim()
+        if ($LASTEXITCODE -ne 0) {
+            throw "The stale authorized-session fixture could not be inspected"
+        }
+        if ($staleSessionCount -eq "1") {
+            $staleSessionEstablished = $true
+            break
+        }
+        Start-Sleep -Milliseconds 250
+    }
+    if (-not $staleSessionEstablished) {
+        throw "The stale authorized-session fixture did not become active"
+    }
+
     & podman compose -f $composePath exec -T postgres psql `
         -v ON_ERROR_STOP=1 `
         -v "app_password=$($env:UOK_APP_DB_PASSWORD)" `
@@ -167,6 +197,16 @@ try {
         -f /qualification/prepare_app_role.sql
     if ($LASTEXITCODE -ne 0) {
         throw "The runtime role did not reconcile deliberately unsafe persistent state"
+    }
+
+    $survivingStaleSessions = (& podman compose -f $composePath exec -T postgres psql `
+            -v ON_ERROR_STOP=1 `
+            -U "${env:UOK_DB_USER}" `
+            -d "${env:UOK_DB_NAME}" `
+            -Atc "SELECT count(*) FROM pg_stat_activity WHERE datname = current_database() AND usename = 'uok_qualification_poison'" |
+            Out-String).Trim()
+    if ($LASTEXITCODE -ne 0 -or $survivingStaleSessions -ne "0") {
+        throw "A stale runtime-authorized database session survived reconciliation"
     }
 
     & podman compose -f $composePath up -d migrate

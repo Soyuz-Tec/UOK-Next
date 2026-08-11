@@ -5,6 +5,11 @@ $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 . (Join-Path $repoRoot "scripts\support\write_local_credential.ps1")
 
+$developmentConfig = Get-Content -LiteralPath (Join-Path $repoRoot "config\dev.exs") -Raw
+if ($developmentConfig -match 'show_sensitive_data_on_connection_error\s*:\s*true') {
+    throw "Development database errors must not disclose connection credentials"
+}
+
 $tempRoot = [IO.Path]::GetTempPath()
 $testRoot = Join-Path $tempRoot ("uok-next-credential-test-" + [guid]::NewGuid().ToString("N"))
 $credentialPath = Join-Path $testRoot "uok-db-password"

@@ -1,5 +1,17 @@
 \set ON_ERROR_STOP on
 
+-- Prevent a previously authorized client from surviving credential and role
+-- reconciliation. The local qualification owner is a superuser, so it can
+-- recover a fail-closed connection limit on the next run if this script stops.
+SELECT format('ALTER DATABASE %I CONNECTION LIMIT 0', current_database())
+\gexec
+
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname = current_database()
+  AND backend_type = 'client backend'
+  AND pid <> pg_backend_pid();
+
 SELECT format(
   'CREATE ROLE uok_app LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT NOBYPASSRLS NOREPLICATION PASSWORD %L',
   :'app_password'
@@ -32,3 +44,6 @@ WHERE granted_role.rolname = 'uok_app'
 SELECT format('GRANT CONNECT ON DATABASE %I TO uok_app', current_database())
 \gexec
 GRANT USAGE ON SCHEMA public TO uok_app;
+
+SELECT format('ALTER DATABASE %I CONNECTION LIMIT -1', current_database())
+\gexec
