@@ -65,3 +65,20 @@ A change is not complete until, as applicable:
 
 Never claim a declared or scaffolded capability is implemented or
 production-ready without executable and runtime evidence.
+
+## Security is part of every change
+
+- Map attacker-controlled input, protected assets, trust boundaries, sensitive
+  operations, and fail-closed behavior before adding a reachable surface.
+- Review the changed source-to-sink paths for authorization bypass, tenant
+  escape, injection, unsafe parsing, SSRF, file/process access, secret leakage,
+  resource exhaustion, and supply-chain changes.
+- Consequential commands require success and negative tests for permission,
+  tenant mismatch, stale state, idempotency, audit, and failure behavior.
+- Executable downloads, CI actions, container images, and direct dependencies
+  require immutable identity or cryptographic verification and an update path.
+- Run applicable formatter, compiler, tests, Sobelow, advisory, artifact,
+  production-configuration, and secret checks before completion.
+- Fix validated security defects in the same bounded increment when safe. If a
+  fix depends on an unresolved product or deployment decision, keep the gate
+  blocked and record the residual risk; never describe software as invulnerable.

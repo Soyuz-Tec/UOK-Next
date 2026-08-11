@@ -124,7 +124,38 @@ state-machine, reconciliation, and policy invariants.
 - New languages, databases, queues, workflow products, or deployment platforms
   require an ADR and measured need.
 
-## 8. Review and commit discipline
+## 8. Security-by-construction discipline
+
+- Treat every external value, header, identifier, file, event, model output,
+  and integration response as attacker-controlled until its boundary proves
+  otherwise.
+- Authenticate before resolving tenant-owned records, authorize the named
+  command server-side, bind tenant scope in queries and constraints, and return
+  uniform not-found/denied errors where disclosure matters.
+- Prefer allowlists, structured parsers, parameterized queries, bounded reads,
+  explicit timeouts, backpressure, and fail-closed configuration. Never build
+  shell commands, SQL, paths, templates, URLs, or code from unchecked input.
+- Require authenticated TLS for production HTTP, database, object-storage, and
+  integration traffic. Forwarding headers are trusted only from an explicitly
+  validated proxy peer; Host is never proof of local origin.
+- Keep secrets out of source, logs, events, URLs, browser state, and error
+  payloads. Reference managed secrets and test missing, empty, malformed, and
+  rotated values.
+- Verify every executable-producing artifact before use, including transitive
+  bootstrap payloads. Bound network response bytes before digest verification.
+  Extract archives member by member into new staging directories with path
+  containment, duplicate-target, entry-type, count, and expanded-size
+  enforcement. Revalidate persistent executable caches, including receipt,
+  path type, owner, and write ACL, before use. Pin CI actions and container
+  images, commit dependency locks, run advisory and secret checks, and review
+  every dependency update for runtime authority and exit cost.
+- Add a regression test for every validated vulnerability and demonstrate that
+  the original malicious condition fails while legitimate behavior remains.
+- A security review reports attacker, entry point, broken control, sensitive
+  operation, prerequisites, impact, counterevidence, and remaining uncertainty.
+  "Hacker-proof" is treated as a defense-in-depth goal, never a guarantee.
+
+## 9. Review and commit discipline
 
 - One change solves one reviewable problem and advances the active gate.
 - Avoid unrelated formatting, renaming, abstraction, or dependency churn.
@@ -132,4 +163,3 @@ state-machine, reconciliation, and policy invariants.
 - Pull requests report architecture impact, exact verification, operational
   risk, migration, rollout, and rollback.
 - A temporary exception must not become an undocumented permanent architecture.
-

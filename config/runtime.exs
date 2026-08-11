@@ -16,7 +16,7 @@ import Config
 #
 # Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
 # script that automatically sets the env var above.
-if System.get_env("PHX_SERVER") do
+if System.get_env("PHX_SERVER") in ~w(true 1) do
   config :uok_next, UokNextWeb.Endpoint, server: true
 end
 
@@ -25,17 +25,28 @@ config :uok_next, UokNextWeb.Endpoint,
 
 if config_env() == :prod do
   database_url =
-    System.get_env("DATABASE_URL") ||
-      raise """
-      environment variable DATABASE_URL is missing.
-      For example: ecto://USER:PASS@HOST/DATABASE
-      """
+    case System.get_env("DATABASE_URL") do
+      value when is_binary(value) and value != "" -> value
+      _ -> raise "environment variable DATABASE_URL is missing or empty"
+    end
+
+  database_uri = URI.parse(database_url)
+
+  ssl_override? =
+    case database_uri.query do
+      nil -> false
+      query -> Enum.any?(URI.query_decoder(query), fn {key, _value} -> key == "ssl" end)
+    end
+
+  if ssl_override? do
+    raise "DATABASE_URL must not override the repository-owned SSL policy"
+  end
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   config :uok_next, UokNext.Repo,
-    # ssl: true,
     url: database_url,
+    ssl: true,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     # For machines with several cores, consider starting multiple pools of `pool_size`
     # pool_count: 4,
@@ -47,24 +58,25 @@ if config_env() == :prod do
   # to check this value into version control, so we use an environment
   # variable instead.
   secret_key_base =
-    System.get_env("SECRET_KEY_BASE") ||
-      raise """
-      environment variable SECRET_KEY_BASE is missing.
-      You can generate one by calling: mix phx.gen.secret
-      """
+    case System.get_env("SECRET_KEY_BASE") do
+      value when is_binary(value) and byte_size(value) >= 64 -> value
+      _ -> raise "environment variable SECRET_KEY_BASE must contain at least 64 bytes"
+    end
 
-  host = System.get_env("PHX_HOST") || "example.com"
+  host =
+    case System.get_env("PHX_HOST") do
+      value when is_binary(value) and value != "" -> value
+      _ -> raise "environment variable PHX_HOST is missing or empty"
+    end
 
   config :uok_next, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :uok_next, UokNextWeb.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
     http: [
-      # Enable IPv6 and bind on all interfaces.
-      # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
-      # See the documentation on https://bandit.hexdocs.pm/Bandit.html#t:options/0
-      # for details about using IPv6 vs IPv4 and loopback vs public addresses.
-      ip: {0, 0, 0, 0, 0, 0, 0, 0}
+      # Fail closed until a deployment ADR proves a private, header-sanitizing
+      # proxy boundary or configures application-level TLS.
+      ip: {0, 0, 0, 0, 0, 0, 0, 1}
     ],
     secret_key_base: secret_key_base
 

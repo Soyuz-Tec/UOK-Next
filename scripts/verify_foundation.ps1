@@ -7,6 +7,7 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $requiredFiles = @(
     "AGENTS.md",
     "README.md",
+    ".github/dependabot.yml",
     "docs/PRODUCT_CHARTER.md",
     "docs/ARCHITECTURE.md",
     "docs/MODULAR_MONOLITH_CONTRACT.md",
@@ -28,7 +29,10 @@ $requiredFiles = @(
     "config/code_size_exceptions.json",
     "scripts/setup_elixir_toolchain.ps1",
     "scripts/setup_framework_tools.ps1",
-    "scripts/verify_code_discipline.ps1"
+    "scripts/verify_code_discipline.ps1",
+    "scripts/security/ArtifactIntegrity.psm1",
+    "scripts/verify_production_security.exs",
+    "test/security/artifact_integrity_test.ps1"
 )
 
 $missing = @(
@@ -54,10 +58,68 @@ if ($toolchain.schema_version -ne 1) {
     throw "Unsupported toolchain schema version: $($toolchain.schema_version)"
 }
 
-foreach ($requiredVersion in @("elixir", "erlang_otp", "phoenix_new")) {
+foreach ($requiredVersion in @("elixir", "erlang_otp", "phoenix_new", "hex", "rebar3")) {
     if ([string]::IsNullOrWhiteSpace($toolchain.primary.$requiredVersion)) {
         throw "Primary toolchain version '$requiredVersion' must be pinned"
     }
+}
+
+foreach ($artifactName in @("otp_archive", "elixir_archive")) {
+    $artifactUrl = $toolchain.bootstrap."${artifactName}_url"
+    $artifactSha256 = $toolchain.bootstrap."${artifactName}_sha256"
+    if ($artifactUrl -notmatch '^https://') {
+        throw "$artifactName URL must use HTTPS"
+    }
+    if ($artifactSha256 -cnotmatch '^[0-9A-F]{64}$') {
+        throw "$artifactName SHA-256 must contain 64 uppercase hexadecimal characters"
+    }
+    if ([long]$toolchain.bootstrap."${artifactName}_size_bytes" -le 0) {
+        throw "$artifactName size pin must be positive"
+    }
+}
+
+$toolchainSetupText = Get-Content -LiteralPath (Join-Path $repoRoot "scripts/setup_elixir_toolchain.ps1") -Raw
+if ($toolchainSetupText -notmatch 'Assert-FileSha256' -or
+    $toolchainSetupText -notmatch 'Expand-SafeZipArchive' -or
+    $toolchainSetupText -notmatch 'Assert-VerifiedInstallDirectory' -or
+    $toolchainSetupText -notmatch 'New-VerifiedInstallReceipt' -or
+    $toolchainSetupText -notmatch '--max-filesize' -or
+    $toolchainSetupText -notmatch '--remove-on-error' -or
+    $toolchainSetupText -match '\.Substring\(' -or
+    $toolchainSetupText -match 'install\.bat') {
+    throw "Language setup must bound, verify, safely install, and revalidate exact OTP and Elixir archives"
+}
+
+foreach ($artifactName in @("hex_archive", "rebar3", "phx_new_package")) {
+    $artifactUrl = $toolchain.bootstrap."${artifactName}_url"
+    $artifactSha512 = $toolchain.bootstrap."${artifactName}_sha512"
+    if ($artifactUrl -notmatch '^https://') {
+        throw "$artifactName URL must use HTTPS"
+    }
+    if ($artifactSha512 -notmatch '^[0-9A-Fa-f]{128}$') {
+        throw "$artifactName SHA-512 must contain 128 hexadecimal characters"
+    }
+    if ([long]$toolchain.bootstrap."${artifactName}_size_bytes" -le 0) {
+        throw "$artifactName size pin must be positive"
+    }
+}
+
+if ($toolchain.bootstrap.phx_new_contents_sha512 -cnotmatch '^[0-9A-F]{128}$') {
+    throw "Phoenix inner contents SHA-512 must contain 128 uppercase hexadecimal characters"
+}
+
+$frameworkSetupText = Get-Content -LiteralPath (Join-Path $repoRoot "scripts/setup_framework_tools.ps1") -Raw
+if ($frameworkSetupText -notmatch 'Assert-FileSha512' -or
+    $frameworkSetupText -notmatch 'Expand-SafeTarArchive' -or
+    $frameworkSetupText -notmatch 'Assert-VerifiedInstallDirectory' -or
+    $frameworkSetupText -notmatch '--max-filesize' -or
+    $frameworkSetupText -notmatch '--remove-on-error' -or
+    $frameworkSetupText -match '\.Substring\(' -or
+    $frameworkSetupText -match 'tar\.exe' -or
+    $frameworkSetupText -match 'local\.rebar\s+--if-missing' -or
+    $frameworkSetupText -match 'archive\.install\s+hex\s+phx_new' -or
+    $frameworkSetupText -notmatch 'archive\.build') {
+    throw "Framework setup must verify pinned Hex, Rebar3, and Phoenix artifacts before installation"
 }
 
 $allowedStatuses = @("planned", "existing", "optional", "deferred")

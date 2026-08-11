@@ -21,6 +21,9 @@ jobs:
       - name: Verify code discipline
         shell: pwsh
         run: .\scripts\verify_code_discipline.ps1
+      - name: Verify artifact-integrity control
+        shell: pwsh
+        run: .\test\security\artifact_integrity_test.ps1
 
   verify-application:
     runs-on: ubuntu-latest
@@ -59,3 +62,21 @@ jobs:
         run: mix quality
       - name: Audit Hex advisories
         run: mix hex.audit
+      - name: Verify fail-closed production security configuration
+        env:
+          MIX_ENV: prod
+          DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
+          SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+          PHX_HOST: uok-next.example.invalid
+        run: mix run --no-start scripts/verify_production_security.exs
+      - name: Reject database URL TLS-policy overrides
+        env:
+          MIX_ENV: prod
+          DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next?ssl=false
+          SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+          PHX_HOST: uok-next.example.invalid
+        run: |
+          if mix run --no-start -e 'System.halt(0)'; then
+            echo "DATABASE_URL unexpectedly overrode the repository-owned SSL policy"
+            exit 1
+          fi
