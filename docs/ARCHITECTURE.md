@@ -36,6 +36,13 @@ Owns HTTP APIs, authenticated sessions, policy enforcement, transactional
 commands, module composition, read models, human tasks, evidence metadata,
 outbox publication, and the initial operational UI delivery boundary.
 
+The React/TypeScript workspace compiles content-hashed assets into this same
+release. `web/src/shell` is presentation-only and module-neutral; future module
+UI belongs under `web/src/modules/<module-id>`. Browser code may request
+server-owned commands and queries but never becomes authoritative for tenant,
+authorization, approval, audit, evidence, or business transitions. The delivery
+toolchain and deferrals are governed by ADR-0008.
+
 ### PostgreSQL
 
 The transactional system of record for kernel and in-process business modules.

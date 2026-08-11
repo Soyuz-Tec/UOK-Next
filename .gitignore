@@ -11,6 +11,7 @@ cover/
 node_modules/
 dist/
 coverage/
+/priv/static/uok-ui/
 
 target/
 

@@ -1,0 +1,640 @@
+:root {
+  color: #1d2b25;
+  background: #f2f2eb;
+  font-family: Inter, Aptos, "Segoe UI", system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --ink: #172d24;
+  --muted: #68766f;
+  --paper: #faf9f2;
+  --line: #d9ddd2;
+  --moss: #557360;
+  --mint: #d8eadc;
+  --amber: #d8a84e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: white;
+  background: var(--ink);
+  border-radius: 0.4rem;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.app-frame {
+  display: grid;
+  grid-template-areas:
+    "topbar topbar"
+    "sidebar main";
+  grid-template-columns: 16rem minmax(0, 1fr);
+  grid-template-rows: 5rem 1fr;
+  min-height: 100vh;
+}
+
+.topbar {
+  grid-area: topbar;
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  color: white;
+  background: var(--ink);
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+}
+
+.brand {
+  display: inline-flex;
+  gap: 0.85rem;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  width: 2.45rem;
+  height: 2.45rem;
+  place-items: center;
+  color: var(--ink);
+  background: #d9eadc;
+  border-radius: 50% 50% 45% 55%;
+  font:
+    700 1.05rem Inter,
+    Aptos,
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+}
+
+.brand strong,
+.brand small {
+  display: block;
+}
+
+.brand strong {
+  font:
+    700 0.98rem Inter,
+    Aptos,
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.brand small {
+  margin-top: 0.12rem;
+  color: #aabbb1;
+  font-size: 0.69rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.health-pill {
+  display: inline-flex;
+  gap: 0.55rem;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 0.9rem;
+  color: #dfe9e2;
+  background: rgb(255 255 255 / 7%);
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.health-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #aeb8b2;
+  border-radius: 50%;
+}
+
+.health-pill--ready .health-dot {
+  background: #79c78e;
+  box-shadow: 0 0 0 0.2rem rgb(121 199 142 / 15%);
+}
+
+.health-pill--unavailable .health-dot {
+  background: #e29972;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  position: sticky;
+  top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100vh - 5rem);
+  padding: 2rem 1.2rem 1.4rem;
+  color: #dfe7e2;
+  background: #1e372d;
+}
+
+.sidebar nav {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.nav-link {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  min-height: 2.9rem;
+  padding: 0 0.85rem;
+  color: #adbbb3;
+  border-radius: 0.55rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible,
+.nav-link--active {
+  color: white;
+  background: rgb(255 255 255 / 8%);
+  outline: none;
+}
+
+.nav-icon {
+  color: #7f9b8a;
+  font:
+    600 0.68rem Inter,
+    Aptos,
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.gate-card {
+  padding: 1.1rem;
+  background: rgb(255 255 255 / 6%);
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 0.75rem;
+}
+
+.gate-card strong {
+  display: block;
+  margin-top: 0.55rem;
+  color: white;
+  font:
+    700 1.15rem Inter,
+    Aptos,
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+}
+
+.gate-card p {
+  margin: 0.3rem 0 0.9rem;
+  color: #a9b8af;
+  font-size: 0.77rem;
+}
+
+.progress-track {
+  height: 0.25rem;
+  overflow: hidden;
+  background: rgb(255 255 255 / 10%);
+  border-radius: 999px;
+}
+
+.progress-track span {
+  display: block;
+  width: 67%;
+  height: 100%;
+  background: #95b9a2;
+}
+
+main {
+  grid-area: main;
+  min-width: 0;
+  padding: clamp(2rem, 4vw, 4.6rem);
+  overflow: hidden;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(17rem, 0.75fr);
+  gap: clamp(2rem, 5vw, 5.5rem);
+  align-items: center;
+  max-width: 76rem;
+  margin: 0 auto 4.5rem;
+  padding-top: 1.4rem;
+}
+
+.eyebrow {
+  color: #6a7b70;
+  font:
+    700 0.67rem Inter,
+    Aptos,
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow--light {
+  color: #9db0a5;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--ink);
+  font-family: Inter, Aptos, "Segoe UI", system-ui, sans-serif;
+}
+
+h1 {
+  max-width: 12ch;
+  margin: 1rem 0 1.3rem;
+  font-size: clamp(2.65rem, 5.2vw, 5.45rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+h2 {
+  margin: 0.65rem 0 0;
+  font-size: clamp(1.6rem, 2.4vw, 2.35rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.hero-copy {
+  max-width: 41rem;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.5vw, 1.17rem);
+  line-height: 1.75;
+}
+
+.readiness-card {
+  padding: 1.55rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  box-shadow: 0 1.5rem 4rem rgb(36 55 46 / 8%);
+}
+
+.readiness-head {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.readiness-head small,
+.readiness-head strong {
+  display: block;
+}
+
+.readiness-head small {
+  margin-bottom: 0.2rem;
+  color: #75837b;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.readiness-head strong {
+  color: var(--ink);
+  font:
+    700 1rem Inter,
+    Aptos,
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+}
+
+.readiness-symbol {
+  width: 2.55rem;
+  height: 2.55rem;
+  background: #e2e5df;
+  border: 0.7rem solid #f0f1ec;
+  border-radius: 50%;
+}
+
+.readiness-symbol--ready {
+  background: #5d9b6d;
+  border-color: #dcebdd;
+}
+
+.readiness-symbol--unavailable {
+  background: #c37552;
+  border-color: #f1ddd2;
+}
+
+.readiness-card > p {
+  margin: 1.25rem 0;
+  color: var(--muted);
+  font-size: 0.87rem;
+  line-height: 1.6;
+}
+
+.readiness-card dl {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.readiness-card dl div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.76rem;
+}
+
+.readiness-card dt {
+  color: #7a867f;
+}
+
+.readiness-card dd {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.section-block {
+  max-width: 76rem;
+  margin: 0 auto 4rem;
+}
+
+.section-heading {
+  display: flex;
+  gap: 2rem;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 1.45rem;
+}
+
+.section-heading > p {
+  max-width: 19rem;
+  margin-bottom: 0.2rem;
+  color: var(--muted);
+  font-size: 0.84rem;
+  text-align: right;
+}
+
+.truth-label,
+.card-state {
+  color: #596c60;
+  background: #e6e8df;
+  border-radius: 999px;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.truth-label {
+  padding: 0.55rem 0.8rem;
+}
+
+.foundation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.foundation-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 17rem;
+  padding: 1.7rem 1.6rem;
+  border-right: 1px solid var(--line);
+}
+
+.foundation-card:last-child {
+  border-right: 0;
+}
+
+.foundation-card h3 {
+  margin: 1.2rem 0 0.8rem;
+  font-size: 1.18rem;
+  letter-spacing: -0.02em;
+}
+
+.foundation-card p {
+  flex: 1;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.card-state {
+  align-self: flex-start;
+  padding: 0.45rem 0.65rem;
+}
+
+.module-section {
+  padding-top: 0.5rem;
+}
+
+.module-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.module-row {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  min-height: 4.2rem;
+  padding: 0 1.1rem;
+  background: rgb(250 249 242 / 75%);
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+}
+
+.module-number,
+.module-row > span:last-child {
+  color: #849088;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.module-row strong {
+  color: #33443b;
+  font:
+    600 0.85rem Inter,
+    Aptos,
+    "Segoe UI",
+    system-ui,
+    sans-serif;
+}
+
+.boundary-banner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 4vw, 3.2rem);
+  color: white;
+  background: var(--ink);
+  border-radius: 0.9rem;
+}
+
+.boundary-banner h2 {
+  color: white;
+}
+
+.boundary-banner p {
+  align-self: end;
+  margin-bottom: 0.1rem;
+  color: #b6c3bb;
+  line-height: 1.75;
+}
+
+@media (max-width: 900px) {
+  .app-frame {
+    grid-template-areas:
+      "topbar"
+      "sidebar"
+      "main";
+    grid-template-columns: 1fr;
+    grid-template-rows: 4.5rem auto 1fr;
+  }
+
+  .topbar {
+    height: 4.5rem;
+    padding: 0 1.2rem;
+  }
+
+  .sidebar {
+    top: 4.5rem;
+    z-index: 15;
+    display: block;
+    height: auto;
+    padding: 0.65rem 1.2rem;
+    overflow-x: auto;
+  }
+
+  .sidebar nav {
+    display: flex;
+    min-width: max-content;
+  }
+
+  .nav-link {
+    min-height: 2.6rem;
+  }
+
+  .gate-card {
+    display: none;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .foundation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .foundation-card {
+    min-height: 13rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .foundation-card:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .brand small,
+  .health-pill {
+    display: none;
+  }
+
+  main {
+    padding: 2.2rem 1.15rem 3rem;
+  }
+
+  .hero {
+    gap: 2rem;
+    margin-bottom: 3.4rem;
+    padding-top: 0.5rem;
+  }
+
+  h1 {
+    font-size: clamp(2.55rem, 13vw, 3.5rem);
+  }
+
+  .section-heading,
+  .boundary-banner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .section-heading > p {
+    text-align: left;
+  }
+
+  .truth-label {
+    justify-self: start;
+  }
+
+  .module-list {
+    grid-template-columns: 1fr;
+  }
+
+  .boundary-banner {
+    padding: 1.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

@@ -63,6 +63,19 @@ $httpBoundary = @(Get-SourceText -Paths @(
     "spikes/uok_next_web"
 ))
 $nonInfrastructureModules = @($domainAndPolicies + $application)
+$webShellRoot = Join-Path $repoRoot "web/src/shell"
+$webShell = @(
+    if (Test-Path -LiteralPath $webShellRoot -PathType Container) {
+        Get-ChildItem -LiteralPath $webShellRoot -File -Recurse |
+            Where-Object { $_.Extension -in @(".ts", ".tsx") } |
+            ForEach-Object {
+                [pscustomobject]@{
+                    Path = $_.FullName.Substring($repoRoot.Length + 1).Replace('\', '/')
+                    Text = Get-Content -LiteralPath $_.FullName -Raw
+                }
+            }
+    }
+)
 
 Assert-NoDependency -Sources $kernel `
     -Pattern 'UokNext\.(Modules|Web)\.' `
@@ -84,4 +97,8 @@ Assert-NoDependency -Sources $nonInfrastructureModules `
     -Pattern 'alias\s+UokNext\.Repo' `
     -Rule "Only infrastructure and kernel transaction code may access the repository."
 
-Write-Output "Architecture-boundary verification passed for $($kernel.Count + $domainAndPolicies.Count + $application.Count + $httpBoundary.Count) source files."
+Assert-NoDependency -Sources $webShell `
+    -Pattern '(src/modules/|@modules/|\.\./modules/)' `
+    -Rule "The module-neutral web shell must not import business-module UI code."
+
+Write-Output "Architecture-boundary verification passed for $($kernel.Count + $domainAndPolicies.Count + $application.Count + $httpBoundary.Count + $webShell.Count) source files."

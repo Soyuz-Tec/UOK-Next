@@ -19,6 +19,22 @@ defmodule UokNextWeb.Endpoint do
       longpoll: [connect_info: [session: @session_options]]
   end
 
+  plug UokNextWeb.ShellSecurityHeaders
+
+  plug Plug.Static,
+    at: "/uok-ui",
+    from: {:uok_next, "priv/static/uok-ui"},
+    gzip: not code_reloading?,
+    only: ~w(index.html),
+    cache_control_for_etags: "no-store"
+
+  plug Plug.Static,
+    at: "/uok-ui",
+    from: {:uok_next, "priv/static/uok-ui"},
+    gzip: not code_reloading?,
+    only: ~w(assets),
+    cache_control_for_etags: "public, max-age=31536000, immutable"
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # When code reloading is disabled (e.g., in production),

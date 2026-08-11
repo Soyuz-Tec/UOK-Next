@@ -11,10 +11,10 @@ evidence, policy, audit lineage, and recoverability.
 
 ## Current state
 
-**Gate 1 is in progress.** The durable command kernel and first governed party
-onboarding slice are implemented and locally qualified. The React shell and
-object-storage dependency remain before Gate 1 can close. No production
-business capability is claimed.
+**Gate 1 is in progress.** The durable command kernel, first governed party
+onboarding slice, and module-neutral React shell are implemented. The
+object-storage dependency and merged-revision qualification remain before Gate
+1 can close. No production business capability is claimed.
 
 The target stack is:
 
@@ -56,6 +56,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_foundation.
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_code_discipline.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_architecture_boundaries.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_database_policy.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_web_foundation.ps1
 ```
 
 This verifies that required authority documents exist, module and external
@@ -73,9 +74,21 @@ Start the pinned local PostgreSQL dependency and run the application checks:
 
 ```powershell
 .\scripts\start_local_postgres.ps1
+npm ci --prefix web --ignore-scripts --no-audit --no-fund
+npm run quality --prefix web
 mix setup
 mix quality
 ```
+
+The web build writes ignored, content-hashed assets to
+`priv/static/uok-ui`. Phoenix serves the shell and same-origin API from one
+release; browser code is presentation-only and does not own authorization,
+tenant, approval, audit, or business-transition policy.
+
+For an alternate loopback Phoenix development port, set `UOK_API_ORIGIN` for
+the Vite process to an `http://127.0.0.1:<port>` or
+`http://localhost:<port>` origin. Non-loopback and non-HTTP proxy targets fail
+closed.
 
 The local dependency binds the digest-pinned PostgreSQL 19 compatibility build
 to `127.0.0.1:15432`. Its startup script

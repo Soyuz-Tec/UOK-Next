@@ -1,6 +1,17 @@
 ARG UOK_REVISION
+ARG NODE_IMAGE=docker.io/library/node@sha256:244cc2b53f46f9e876304391d17682b0ddae9ac33491f4857e25e35a36ba7995
 ARG ERLANG_IMAGE=docker.io/library/erlang@sha256:ba97a44914a22f12d00a4ce6cf1dcae71f11bd57ab2dedebdbf34f1047cd2a54
 ARG RUNTIME_IMAGE=docker.io/library/alpine@sha256:fd791d74b68913cbb027c6546007b3f0d3bc45125f797758156952bc2d6daf40
+
+FROM ${NODE_IMAGE} AS web_build
+
+WORKDIR /build/web
+
+COPY web/package.json web/package-lock.json ./
+RUN npm ci --ignore-scripts --no-audit --no-fund
+
+COPY web ./
+RUN npm run build -- --outDir /build/uok-ui
 
 FROM ${ERLANG_IMAGE} AS build
 
@@ -41,6 +52,7 @@ ENV UOK_BUILD_REVISION=${UOK_REVISION}
 COPY config config
 COPY lib lib
 COPY priv priv
+COPY --from=web_build /build/uok-ui priv/static/uok-ui
 
 RUN mix compile --warnings-as-errors && mix release
 
