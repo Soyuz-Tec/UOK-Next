@@ -17,21 +17,27 @@ focus, and verification durable before application scaffolding.**
 - The workspace is an empty Git repository suitable for a greenfield start.
 - Node.js, npm, Rust, Cargo, Python, and Podman are available on the Windows
   development host.
-- Elixir and Mix are not currently installed or discoverable on `PATH`.
+- The pinned Erlang/OTP 28.4 and Elixir/Mix 1.20.2 toolchain is installed in
+  the current user's versioned `.elixir-install` directory and added to the
+  user `PATH`.
 - Initial product, architecture, ownership, roadmap, continuity, and decision
   documents have been created.
 - A machine-readable module catalog and PowerShell verification command have
   been added.
+- Elixir 1.20.2, Erlang/OTP 28.4, and the Phoenix 1.8.9 generator are pinned in
+  `config/toolchain.json`; the checked-in setup script uses the official Elixir
+  Windows installer.
+- Hex 2.5.1, Rebar3, and the pinned Phoenix 1.8.9 generator are installed and
+  verified through the checked-in framework-tool setup script.
 
 ## Foundation Gate 0 remaining work
 
 1. Run and fix the foundation verifier.
 2. Decide and configure the canonical GitHub repository and protected default
    branch.
-3. Pin and install supported Erlang/OTP, Elixir, Phoenix, and related toolchain
-   versions.
+3. Scaffold the bounded framework spike and pin only its directly selected
+   dependencies.
 4. Record the framework-spike ADR outcome after executable comparison.
-5. Create the first verified commit only after local checks pass.
 
 ## Explicitly not yet implemented
 
@@ -41,7 +47,5 @@ focus, and verification durable before application scaffolding.**
 
 ## Next action
 
-Run the foundation verifier, correct any catalog/document drift, then establish
-the reproducible Elixir/Erlang toolchain and scaffold the bounded framework
-spike without beginning business feature breadth.
-
+Scaffold the bounded framework spike without beginning business feature
+breadth.

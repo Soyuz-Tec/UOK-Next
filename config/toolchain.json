@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "primary": {
+    "elixir": "1.20.2",
+    "erlang_otp": "28.4",
+    "phoenix_new": "1.8.9"
+  },
+  "development_host_snapshot": {
+    "node": "24.16.0",
+    "npm": "11.13.0",
+    "rust": "1.97.1",
+    "python": "3.14.6",
+    "podman": "5.8.3"
+  },
+  "deferred_pins": [
+    "ash",
+    "ash_postgres",
+    "oban",
+    "postgres_container",
+    "object_storage_container"
+  ]
+}
+

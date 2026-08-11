@@ -19,6 +19,6 @@ __pycache__/
 
 *.log
 *.tmp
+erl_crash.dump
 .DS_Store
 Thumbs.db
-

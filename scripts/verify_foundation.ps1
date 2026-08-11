@@ -18,7 +18,10 @@ $requiredFiles = @(
     "docs/adr/0002-selective-ash-adoption-spike.md",
     "docs/adr/0003-specialist-runtime-authority.md",
     "docs/adr/0004-blockchain-is-an-optional-evidence-anchor.md",
-    "config/module_catalog.json"
+    "config/module_catalog.json",
+    "config/toolchain.json",
+    "scripts/setup_elixir_toolchain.ps1",
+    "scripts/setup_framework_tools.ps1"
 )
 
 $missing = @(
@@ -33,9 +36,21 @@ if ($missing.Count -gt 0) {
 
 $catalogPath = Join-Path $repoRoot "config/module_catalog.json"
 $catalog = Get-Content -LiteralPath $catalogPath -Raw | ConvertFrom-Json
+$toolchainPath = Join-Path $repoRoot "config/toolchain.json"
+$toolchain = Get-Content -LiteralPath $toolchainPath -Raw | ConvertFrom-Json
 
 if ($catalog.schema_version -ne 1) {
     throw "Unsupported module catalog schema version: $($catalog.schema_version)"
+}
+
+if ($toolchain.schema_version -ne 1) {
+    throw "Unsupported toolchain schema version: $($toolchain.schema_version)"
+}
+
+foreach ($requiredVersion in @("elixir", "erlang_otp", "phoenix_new")) {
+    if ([string]::IsNullOrWhiteSpace($toolchain.primary.$requiredVersion)) {
+        throw "Primary toolchain version '$requiredVersion' must be pinned"
+    }
 }
 
 $allowedStatuses = @("planned", "existing", "optional", "deferred")
@@ -86,4 +101,4 @@ if ($architectureText -notmatch "modular monolith") {
 
 Write-Output "Foundation verification passed."
 Write-Output "Validated $($catalog.modules.Count) modules, $($catalog.external_systems.Count) external systems, and $($recordOwners.Count) uniquely owned record types."
-
+Write-Output "Pinned Elixir $($toolchain.primary.elixir), Erlang/OTP $($toolchain.primary.erlang_otp), and Phoenix generator $($toolchain.primary.phoenix_new)."

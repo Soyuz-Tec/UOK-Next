@@ -53,3 +53,9 @@ This verifies that required authority documents exist, module and external
 system identifiers are unique, and no record type has more than one declared
 system of record.
 
+Install or activate the pinned Windows Elixir/Erlang toolchain with:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup_elixir_toolchain.ps1 -PersistUserPath
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup_framework_tools.ps1
+```
