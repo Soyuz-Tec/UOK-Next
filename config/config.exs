@@ -17,6 +17,18 @@ config :uok_next,
 
 config :uok_next, UokNext.Repo, migration_lock: :table_lock
 
+config :ex_aws,
+  http_client: UokNext.Modules.Platform.Evidence.Infrastructure.BoundedReqHttpClient,
+  json_codec: Jason
+
+config :ex_aws, :req_opts,
+  connect_options: [timeout: 2_000],
+  receive_timeout: 5_000,
+  retry: false,
+  raw: true
+
+config :ex_aws_s3, :content_hash_algorithm, :sha256
+
 # Configure the endpoint
 config :uok_next, UokNextWeb.Endpoint,
   url: [host: "localhost"],

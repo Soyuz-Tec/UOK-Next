@@ -1,6 +1,7 @@
 repo_config = Application.fetch_env!(:uok_next, UokNext.Repo)
 endpoint_config = Application.fetch_env!(:uok_next, UokNextWeb.Endpoint)
 build_revision = Application.fetch_env!(:uok_next, :build_revision)
+object_store = Application.fetch_env!(:uok_next, :object_store)
 force_ssl = Keyword.fetch!(endpoint_config, :force_ssl)
 http = Keyword.fetch!(endpoint_config, :http)
 
@@ -25,6 +26,16 @@ end
 unless Application.fetch_env!(:uok_next, :database_target_major) == 19 and
          Application.fetch_env!(:uok_next, :database_prerelease_allowed) == false do
   raise "production must require PostgreSQL 19 GA"
+end
+
+unless object_store[:adapter] ==
+         UokNext.Modules.Platform.Evidence.Infrastructure.S3ObjectStore and
+         Application.fetch_env!(:ex_aws, :http_client) ==
+           UokNext.Modules.Platform.Evidence.Infrastructure.BoundedReqHttpClient and
+         object_store[:scheme] == "https://" and object_store[:port] in 1..65_535 and
+         object_store[:bucket] == "uok-evidence" and
+         object_store[:max_object_bytes] == 8_388_608 do
+  raise "production object storage must use the bounded provider-neutral S3 contract over HTTPS"
 end
 
 database_uri = repo_config |> Keyword.fetch!(:url) |> URI.parse()

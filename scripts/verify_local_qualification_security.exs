@@ -1,6 +1,7 @@
 repo_config = Application.fetch_env!(:uok_next, UokNext.Repo)
 endpoint_config = Application.fetch_env!(:uok_next, UokNextWeb.Endpoint)
 build_revision = Application.fetch_env!(:uok_next, :build_revision)
+object_store = Application.fetch_env!(:uok_next, :object_store)
 
 unless is_binary(build_revision) and Regex.match?(~r/\A[0-9a-f]{40}\z/, build_revision) do
   raise "local qualification release identity must be compiled from a full Git revision"
@@ -29,6 +30,16 @@ end
 
 unless is_binary(Application.fetch_env!(:uok_next, :metrics_access_token)) do
   raise "local qualification must protect metrics with a bearer token"
+end
+
+unless object_store[:adapter] ==
+         UokNext.Modules.Platform.Evidence.Infrastructure.S3ObjectStore and
+         Application.fetch_env!(:ex_aws, :http_client) ==
+           UokNext.Modules.Platform.Evidence.Infrastructure.BoundedReqHttpClient and
+         object_store[:scheme] == "http://" and object_store[:host] == "object-store" and
+         object_store[:port] == 8_333 and object_store[:bucket] == "uok-evidence" and
+         object_store[:max_object_bytes] == 8_388_608 do
+  raise "local qualification must use the isolated bounded S3 dependency"
 end
 
 IO.puts("Local qualification security configuration verification passed.")

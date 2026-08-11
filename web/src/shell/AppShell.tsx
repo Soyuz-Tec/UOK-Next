@@ -16,11 +16,11 @@ const foundationAreas = [
     state: "Qualification",
   },
   {
-    eyebrow: "Next dependency",
+    eyebrow: "Evidence boundary",
     title: "Evidence object storage",
     detail:
-      "The next Gate 1 increment will add content-addressed evidence objects behind a typed contract.",
-    state: "Planned",
+      "A local S3-compatible qualifier now proves bounded, content-addressed, quarantined object bytes.",
+    state: "Qualification",
   },
 ] as const;
 
@@ -82,8 +82,8 @@ export function AppShell() {
         <div className="gate-card">
           <span className="eyebrow eyebrow--light">Active focus</span>
           <strong>Gate 1</strong>
-          <p>Framework and kernel skeleton</p>
-          <div className="progress-track" aria-label="Gate 1 foundation progress">
+          <p>Final qualification</p>
+          <div className="progress-track" aria-label="Gate 1 qualification progress">
             <span />
           </div>
         </div>

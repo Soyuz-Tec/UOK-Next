@@ -9,6 +9,35 @@ parse_bounded_integer = fn name, default, minimum, maximum ->
   end
 end
 
+required_bounded_token = fn name, minimum, maximum ->
+  value = System.get_env(name)
+
+  if is_binary(value) and byte_size(value) in minimum..maximum and
+       Regex.match?(~r/\A[A-Za-z0-9][A-Za-z0-9._~-]*\z/, value) do
+    value
+  else
+    raise "#{name} must contain #{minimum} to #{maximum} URL-safe characters"
+  end
+end
+
+required_object_store_url = fn local_qualification? ->
+  value = System.get_env("OBJECT_STORE_URL")
+  uri = if is_binary(value), do: URI.parse(value), else: %URI{}
+  expected_scheme = if local_qualification?, do: "http", else: "https"
+
+  valid_path? = uri.path in [nil, "", "/"]
+  valid_port? = is_nil(uri.port) or uri.port in 1..65_535
+  valid_local_host? = not local_qualification? or uri.host == "object-store"
+
+  unless uri.scheme == expected_scheme and is_binary(uri.host) and uri.host != "" and
+           valid_path? and valid_port? and valid_local_host? and is_nil(uri.userinfo) and
+           is_nil(uri.query) and is_nil(uri.fragment) do
+    raise "OBJECT_STORE_URL must identify the approved S3 endpoint and transport"
+  end
+
+  uri
+end
+
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
 # system starts, so it is typically used to load production configuration
@@ -109,6 +138,33 @@ if config_env() == :prod do
       timezone: "UTC"
     ],
     socket_options: maybe_ipv6
+
+  object_store_uri = required_object_store_url.(local_qualification?)
+  object_store_access_key = required_bounded_token.("OBJECT_STORE_ACCESS_KEY", 16, 64)
+  object_store_secret_key = required_bounded_token.("OBJECT_STORE_SECRET_KEY", 32, 128)
+  object_store_bucket = System.get_env("OBJECT_STORE_BUCKET", "uok-evidence")
+  object_store_region = System.get_env("OBJECT_STORE_REGION", "us-east-1")
+
+  unless Regex.match?(~r/\A[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]\z/, object_store_bucket) and
+           not String.contains?(object_store_bucket, "..") do
+    raise "OBJECT_STORE_BUCKET must be a DNS-compatible S3 bucket name"
+  end
+
+  unless Regex.match?(~r/\A[a-z0-9][a-z0-9-]{1,30}[a-z0-9]\z/, object_store_region) do
+    raise "OBJECT_STORE_REGION must be a bounded lowercase region identifier"
+  end
+
+  config :uok_next, :object_store,
+    adapter: UokNext.Modules.Platform.Evidence.Infrastructure.S3ObjectStore,
+    scheme: object_store_uri.scheme <> "://",
+    host: object_store_uri.host,
+    port: object_store_uri.port || if(local_qualification?, do: 8_333, else: 443),
+    access_key_id: object_store_access_key,
+    secret_access_key: object_store_secret_key,
+    bucket: object_store_bucket,
+    region: object_store_region,
+    max_object_bytes:
+      parse_bounded_integer.("OBJECT_STORE_MAX_OBJECT_BYTES", "8388608", 1, 8_388_608)
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you

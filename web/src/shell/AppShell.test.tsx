@@ -17,6 +17,9 @@ test("renders a truthful module-neutral foundation shell", async () => {
     screen.getByRole("heading", { name: "One trusted path from decision to evidence." }),
   ).toBeVisible();
   expect(screen.getByText("No production claim")).toBeVisible();
+  expect(screen.getByText("Gate 1")).toBeVisible();
+  expect(screen.getByText("Final qualification")).toBeVisible();
+  expect(screen.getAllByText("Qualification")).toHaveLength(2);
   expect(screen.getAllByText("Presentation only")).toHaveLength(1);
   expect(await screen.findAllByText("Kernel ready")).toHaveLength(2);
   expect(screen.queryByRole("button")).not.toBeInTheDocument();

@@ -11,10 +11,11 @@ evidence, policy, audit lineage, and recoverability.
 
 ## Current state
 
-**Gate 1 is in progress.** The durable command kernel, first governed party
-onboarding slice, and module-neutral React shell are implemented. The
-object-storage dependency and merged-revision qualification remain before Gate
-1 can close. No production business capability is claimed.
+**Gate 1 is in final qualification.** The durable command kernel, first
+governed party-onboarding slice, module-neutral React shell, PostgreSQL 19
+platform, and provider-neutral S3 evidence-byte boundary are implemented. The
+candidate must still pass protected merge and exact-revision qualification
+before Gate 2 becomes active. No production business capability is claimed.
 
 The target stack is:
 
@@ -56,6 +57,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_foundation.
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_code_discipline.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_architecture_boundaries.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_database_policy.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_object_storage_policy.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_web_foundation.ps1
 ```
 
@@ -90,8 +92,9 @@ the Vite process to an `http://127.0.0.1:<port>` or
 `http://localhost:<port>` origin. Non-loopback and non-HTTP proxy targets fail
 closed.
 
-The local dependency binds the digest-pinned PostgreSQL 19 compatibility build
-to `127.0.0.1:15432`. Its startup script
+The local dependencies bind the digest-pinned PostgreSQL 19 compatibility
+build to `127.0.0.1:15432` and the digest-pinned S3-compatible qualifier to
+`127.0.0.1:18333`. The PostgreSQL startup script
 generates and rotates a clone-local owner credential under
 `%LOCALAPPDATA%\UOK-Next\credentials\<clone-hash>` outside the repository and
 OneDrive. It replaces inherited filesystem permissions with a fail-closed ACL
@@ -107,10 +110,12 @@ local qualification topology with:
 .\scripts\deploy_local_qualification.ps1
 ```
 
-The command generates ephemeral secrets, reconciles a least-privileged runtime
+The command generates ephemeral database, metrics, application, and object-
+store secrets, reconciles a least-privileged runtime
 database role, migrates through the owner role, compiles the exact Git revision
 into an immutable release, starts two forced-recreated replicas behind HAProxy,
-verifies each replica's image and release identity plus authenticated metrics,
+verifies a bounded content-addressed object put/collision-rejection/read/delete plus each replica's
+image and release identity and authenticated metrics,
 deliberately poisons and repairs persistent role state, terminates a live stale
 authorized database session before startup, and proves single-replica failover.
 It binds only to loopback and is not a production deployment.
