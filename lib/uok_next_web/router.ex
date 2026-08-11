@@ -9,6 +9,22 @@ defmodule UokNextWeb.Router do
     pipe_through :api
 
     get "/health", HealthController, :show
+    get "/health/live", HealthController, :live
+    get "/health/ready", HealthController, :ready
+    get "/health/startup", HealthController, :startup
+    get "/release", HealthController, :release
+    get "/metrics", MetricsController, :show
+  end
+
+  if Application.compile_env(:uok_next, :framework_spike_routes, false) do
+    scope "/api/v1/spikes", UokNextWeb.Spikes do
+      pipe_through :api
+
+      post "/:implementation/parties", PartyController, :create
+      get "/:implementation/parties/:id", PartyController, :show
+      post "/:implementation/parties/:id/evidence", PartyController, :submit_evidence
+      post "/:implementation/parties/:id/decision", PartyController, :decide
+    end
   end
 
   # Enable LiveDashboard in development

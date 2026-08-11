@@ -1,7 +1,12 @@
 repo_config = Application.fetch_env!(:uok_next, UokNext.Repo)
 endpoint_config = Application.fetch_env!(:uok_next, UokNextWeb.Endpoint)
+build_revision = Application.fetch_env!(:uok_next, :build_revision)
 force_ssl = Keyword.fetch!(endpoint_config, :force_ssl)
 http = Keyword.fetch!(endpoint_config, :http)
+
+unless is_binary(build_revision) and Regex.match?(~r/\A[0-9a-f]{40}\z/, build_revision) do
+  raise "production release identity must be compiled from a full Git revision"
+end
 
 {:ok, effective_repo_config} =
   Ecto.Repo.Supervisor.init_config(:supervisor, UokNext.Repo, :uok_next, [])
@@ -12,13 +17,21 @@ end
 
 database_uri = repo_config |> Keyword.fetch!(:url) |> URI.parse()
 
-if database_uri.query &&
-     Enum.any?(URI.query_decoder(database_uri.query), fn {key, _value} -> key == "ssl" end) do
-  raise "production DATABASE_URL must not control the repository-owned SSL policy"
+if database_uri.query not in [nil, ""] do
+  raise "production DATABASE_URL must not contain query-owned connection settings"
 end
 
-unless force_ssl == [exclude: []] do
-  raise "production force_ssl must not trust client forwarding or Host metadata"
+health_paths = [
+  "/api/v1/health",
+  "/api/v1/health/live",
+  "/api/v1/health/ready",
+  "/api/v1/health/startup",
+  "/api/v1/release",
+  "/api/v1/metrics"
+]
+
+unless force_ssl == [exclude: [paths: health_paths]] do
+  raise "production force_ssl may exclude only the declared orchestrator health paths"
 end
 
 unless http[:ip] == {0, 0, 0, 0, 0, 0, 0, 1} do
@@ -35,6 +48,15 @@ spoofed_proxy_conn =
 
 unless spoofed_proxy_conn.halted and spoofed_proxy_conn.status == 301 do
   raise "spoofed X-Forwarded-Proto must not bypass the HTTPS redirect"
+end
+
+health_conn =
+  :get
+  |> Plug.Test.conn("/api/v1/health/ready")
+  |> Plug.SSL.call(plug_ssl_options)
+
+if health_conn.halted do
+  raise "the readiness probe must remain reachable inside the private origin boundary"
 end
 
 spoofed_host_conn =

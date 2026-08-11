@@ -1,15 +1,47 @@
 import Config
 
+repository_root =
+  __DIR__
+  |> Path.join("..")
+  |> Path.expand()
+  |> String.replace("\\", "/")
+  |> String.trim_trailing("/")
+  |> String.downcase()
+
+clone_hash = :crypto.hash(:sha256, repository_root) |> Base.encode16(case: :lower)
+local_application_data = System.get_env("LOCALAPPDATA")
+
+local_password_path =
+  if is_binary(local_application_data) and local_application_data != "" do
+    Path.join([local_application_data, "UOK-Next", "credentials", clone_hash, "uok-db-password"])
+  end
+
+database_password =
+  System.get_env("UOK_DB_PASSWORD") ||
+    if local_password_path do
+      case File.read(local_password_path) do
+        {:ok, value} -> String.trim(value)
+        _ -> nil
+      end
+    end
+
+unless is_binary(database_password) and
+         Regex.match?(~r/\A[A-Za-z0-9._~-]{32,128}\z/, database_password) do
+  raise "run scripts/start_local_postgres.ps1 to create the clone-local database credential"
+end
+
 # Configure your database
 config :uok_next, UokNext.Repo,
   username: System.get_env("UOK_DB_USER", "uok_next"),
-  password: System.get_env("UOK_DB_PASSWORD", "uok_next_local_only"),
+  password: database_password,
   hostname: System.get_env("UOK_DB_HOST", "127.0.0.1"),
   port: String.to_integer(System.get_env("UOK_DB_PORT", "15432")),
   database: System.get_env("UOK_DB_NAME", "uok_next_dev"),
   stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  queue_target: 50,
+  queue_interval: 1_000,
+  timeout: 5_000
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -52,6 +84,7 @@ config :uok_next, UokNextWeb.Endpoint,
 
 # Enable dev routes for dashboard and mailbox
 config :uok_next, dev_routes: true
+config :uok_next, framework_spike_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :default_formatter, format: "[$level] $message\n"

@@ -11,9 +11,9 @@ defmodule UokNextWeb.Telemetry do
     children = [
       # Telemetry poller will execute the given period measurements
       # every 10_000ms. Learn more here: https://telemetry-metrics.hexdocs.pm
-      {:telemetry_poller, measurements: periodic_measurements(), period: 10_000}
-      # Add reporters as children of your supervision tree.
-      # {Telemetry.Metrics.ConsoleReporter, metrics: metrics()}
+      {:telemetry_poller, measurements: periodic_measurements(), period: 10_000},
+      {TelemetryMetricsPrometheus.Core,
+       name: :uok_next_metrics, metrics: metrics(), start_async: false}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
@@ -22,72 +22,53 @@ defmodule UokNextWeb.Telemetry do
   def metrics do
     [
       # Phoenix Metrics
-      summary("phoenix.endpoint.start.system_time",
+      distribution("phoenix.endpoint.stop.duration",
+        reporter_options: [buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1_000]],
         unit: {:native, :millisecond}
       ),
-      summary("phoenix.endpoint.stop.duration",
-        unit: {:native, :millisecond}
-      ),
-      summary("phoenix.router_dispatch.start.system_time",
+      distribution("phoenix.router_dispatch.exception.duration",
         tags: [:route],
+        reporter_options: [buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1_000]],
         unit: {:native, :millisecond}
       ),
-      summary("phoenix.router_dispatch.exception.duration",
+      distribution("phoenix.router_dispatch.stop.duration",
         tags: [:route],
-        unit: {:native, :millisecond}
-      ),
-      summary("phoenix.router_dispatch.stop.duration",
-        tags: [:route],
-        unit: {:native, :millisecond}
-      ),
-      summary("phoenix.socket_connected.duration",
+        reporter_options: [buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1_000]],
         unit: {:native, :millisecond}
       ),
       sum("phoenix.socket_drain.count"),
-      summary("phoenix.channel_joined.duration",
-        unit: {:native, :millisecond}
-      ),
-      summary("phoenix.channel_handled_in.duration",
-        tags: [:event],
-        unit: {:native, :millisecond}
-      ),
 
       # Database Metrics
-      summary("uok_next.repo.query.total_time",
+      distribution("uok_next.repo.query.total_time",
+        reporter_options: [buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1_000]],
         unit: {:native, :millisecond},
         description: "The sum of the other measurements"
       ),
-      summary("uok_next.repo.query.decode_time",
-        unit: {:native, :millisecond},
-        description: "The time spent decoding the data received from the database"
-      ),
-      summary("uok_next.repo.query.query_time",
+      distribution("uok_next.repo.query.query_time",
+        reporter_options: [buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1_000]],
         unit: {:native, :millisecond},
         description: "The time spent executing the query"
       ),
-      summary("uok_next.repo.query.queue_time",
+      distribution("uok_next.repo.query.queue_time",
+        reporter_options: [buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1_000]],
         unit: {:native, :millisecond},
         description: "The time spent waiting for a database connection"
       ),
-      summary("uok_next.repo.query.idle_time",
-        unit: {:native, :millisecond},
-        description:
-          "The time the connection spent waiting before being checked out for the query"
+
+      # Kernel command metrics
+      counter("uok_next.command.stop.count", tags: [:command, :outcome]),
+      distribution("uok_next.command.stop.duration",
+        tags: [:command, :outcome],
+        reporter_options: [buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1_000]],
+        unit: {:native, :millisecond}
       ),
-
       # VM Metrics
-      summary("vm.memory.total", unit: {:byte, :kilobyte}),
-      summary("vm.total_run_queue_lengths.total"),
-      summary("vm.total_run_queue_lengths.cpu"),
-      summary("vm.total_run_queue_lengths.io")
+      last_value("vm.memory.total", unit: {:byte, :kilobyte}),
+      last_value("vm.total_run_queue_lengths.total"),
+      last_value("vm.total_run_queue_lengths.cpu"),
+      last_value("vm.total_run_queue_lengths.io")
     ]
   end
 
-  defp periodic_measurements do
-    [
-      # A module, function and arguments to be invoked periodically.
-      # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {UokNextWeb, :count_users, []}
-    ]
-  end
+  defp periodic_measurements, do: []
 end

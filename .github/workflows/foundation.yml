@@ -9,9 +9,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: uok-next-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify-foundation:
     runs-on: windows-latest
+    timeout-minutes: 10
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -21,18 +26,25 @@ jobs:
       - name: Verify code discipline
         shell: pwsh
         run: .\scripts\verify_code_discipline.ps1
+      - name: Verify module boundaries
+        shell: pwsh
+        run: .\scripts\verify_architecture_boundaries.ps1
       - name: Verify artifact-integrity control
         shell: pwsh
         run: .\test\security\artifact_integrity_test.ps1
+      - name: Verify clone-local credential ACL
+        shell: pwsh
+        run: .\test\security\local_credential_acl_test.ps1
 
   verify-application:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     services:
       postgres:
         image: postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
         env:
           POSTGRES_USER: uok_next
-          POSTGRES_PASSWORD: uok_next_ci_only
+          POSTGRES_PASSWORD: uok_next_ci_only_0123456789abcdef
           POSTGRES_DB: uok_next_test
         ports:
           - 5432:5432
@@ -46,8 +58,9 @@ jobs:
       UOK_DB_HOST: 127.0.0.1
       UOK_DB_PORT: 5432
       UOK_DB_USER: uok_next
-      UOK_DB_PASSWORD: uok_next_ci_only
+      UOK_DB_PASSWORD: uok_next_ci_only_0123456789abcdef
       UOK_TEST_DB_NAME: uok_next_test
+      UOK_BUILD_REVISION: ${{ github.sha }}
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -80,3 +93,53 @@ jobs:
             echo "DATABASE_URL unexpectedly overrode the repository-owned SSL policy"
             exit 1
           fi
+      - name: Reject database URL resource-policy overrides
+        env:
+          MIX_ENV: prod
+          UOK_BUILD_REVISION: ${{ github.sha }}
+          DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next?pool_size=1000000
+          SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+          PHX_HOST: uok-next.example.invalid
+        run: |
+          if mix run --no-start -e 'System.halt(0)'; then
+            echo "DATABASE_URL unexpectedly overrode repository-owned resource bounds"
+            exit 1
+          fi
+      - name: Verify isolated local qualification profile
+        env:
+          MIX_ENV: prod
+          DATABASE_URL: ecto://uok_next:ci_only@postgres/uok_next
+          SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+          PHX_HOST: localhost
+          UOK_DEPLOYMENT_PROFILE: local_qualification
+          METRICS_ACCESS_TOKEN: local-qualification-ci-metrics-token
+        run: mix run --no-start scripts/verify_local_qualification_security.exs
+      - name: Reject invalid bounded runtime settings
+        env:
+          MIX_ENV: prod
+          DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
+          SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+          PHX_HOST: uok-next.example.invalid
+          PORT: 0
+        run: |
+          if mix run --no-start -e 'System.halt(0)'; then
+            echo "An invalid production port unexpectedly passed runtime validation"
+            exit 1
+          fi
+
+  verify-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build immutable release image
+        run: >-
+          docker build
+          --file Containerfile
+          --build-arg UOK_REVISION=${{ github.sha }}
+          --tag uok-next:${{ github.sha }}
+          .
+      - name: Verify non-root runtime identity
+        run: |
+          test "$(docker image inspect uok-next:${{ github.sha }} --format '{{.Config.User}}')" = "10001:10001"

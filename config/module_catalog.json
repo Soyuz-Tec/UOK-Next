@@ -16,7 +16,7 @@
     {"id": "platform.evidence", "status": "planned", "record_types": ["evidence_object", "evidence_review", "audit_event", "integrity_manifest"]},
     {"id": "platform.integrations", "status": "planned", "record_types": ["connector_definition", "external_reference", "integration_receipt"]},
     {"id": "platform.agents", "status": "planned", "record_types": ["agent_runbook", "agent_run", "agent_plan", "agent_approval", "agent_tool_receipt"]},
-    {"id": "master.parties", "status": "planned", "record_types": ["party", "party_alias", "party_role", "party_relationship", "operating_site", "onboarding_profile"]},
+    {"id": "master.parties", "status": "in_progress", "record_types": ["party", "party_alias", "party_role", "party_relationship", "operating_site", "onboarding_profile"]},
     {"id": "master.products", "status": "planned", "record_types": ["product", "product_classification", "unit_definition", "quality_template"]},
     {"id": "master.locations", "status": "planned", "record_types": ["country_reference", "location", "corridor", "route_reference"]},
     {"id": "operations.work", "status": "planned", "record_types": ["project", "work_item", "work_dependency", "work_calendar", "work_comment"]},
@@ -38,4 +38,3 @@
     {"id": "blockchain_anchor", "status": "deferred", "record_types": ["evidence_anchor_receipt"]}
   ]
 }
-

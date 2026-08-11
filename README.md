@@ -11,15 +11,17 @@ evidence, policy, audit lineage, and recoverability.
 
 ## Current state
 
-**Gate 1 is in progress.** The durable foundation is established and the
-Phoenix runtime/framework spike is being built. No production business
-capability is claimed.
+**Gate 1 is in progress.** The durable command kernel and first governed party
+onboarding slice are implemented and locally qualified. The React shell and
+object-storage dependency remain before Gate 1 can close. No production
+business capability is claimed.
 
 The target stack is:
 
 - Elixir, Phoenix, Erlang/OTP, and PostgreSQL for the product-neutral kernel
   and business modular monolith;
-- selective Ash Framework adoption after a bounded vertical-slice spike;
+- explicit Elixir/Ecto application services; the completed bounded spike did
+  not justify adopting Ash in the production dependency graph;
 - React and TypeScript for internal, partner, public, and field/PWA surfaces;
 - Rust for collaboration and analytical engines;
 - Python for OCR, document intelligence, and AI workers;
@@ -51,6 +53,7 @@ From PowerShell:
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_foundation.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_code_discipline.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_architecture_boundaries.ps1
 ```
 
 This verifies that required authority documents exist, module and external
@@ -67,11 +70,30 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup_framework_to
 Start the pinned local PostgreSQL dependency and run the application checks:
 
 ```powershell
-podman compose up -d postgres
+.\scripts\start_local_postgres.ps1
 mix setup
 mix quality
 ```
 
-The committed defaults bind PostgreSQL to `127.0.0.1:15432` and are strictly
-for local development. Copy `.env.example` to `.env` only when local overrides
-are required; production credentials must come from a deployment secret store.
+The local dependency binds PostgreSQL to `127.0.0.1:15432`. Its startup script
+generates and rotates a clone-local owner credential under
+`%LOCALAPPDATA%\UOK-Next\credentials\<clone-hash>` outside the repository and
+OneDrive. It replaces inherited filesystem permissions with a fail-closed ACL
+for the current Windows user, SYSTEM, and Administrators; there is no committed
+password. Copy `.env.example` to `.env` only when local overrides are required.
+Production credentials must come from a deployment secret store.
+
+From a clean committed revision, build and deploy the complete two-replica
+local qualification topology with:
+
+```powershell
+.\scripts\deploy_local_qualification.ps1
+```
+
+The command generates ephemeral secrets, reconciles a least-privileged runtime
+database role, migrates through the owner role, compiles the exact Git revision
+into an immutable release, starts two forced-recreated replicas behind HAProxy,
+verifies each replica's image and release identity plus authenticated metrics,
+deliberately poisons and repairs persistent role state, terminates a live stale
+authorized database session before startup, and proves single-replica failover.
+It binds only to loopback and is not a production deployment.

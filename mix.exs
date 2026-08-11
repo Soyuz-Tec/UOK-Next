@@ -47,13 +47,11 @@ defmodule UokNext.MixProject do
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
+      {:telemetry_metrics_prometheus_core, "~> 1.2"},
       {:gettext, "~> 1.0"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
-      {:ash, "~> 3.31", only: [:dev, :test]},
-      {:ash_postgres, "~> 2.11", only: [:dev, :test]},
-      {:ash_phoenix, "~> 2.3", only: [:dev, :test]},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:sobelow, "~> 0.15.0", only: [:dev, :test], runtime: false}
     ]

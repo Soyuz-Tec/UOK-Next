@@ -1,0 +1,16 @@
+.git
+.github
+.codex
+_build
+deps
+cover
+coverage
+node_modules
+test
+scripts
+spikes
+*.log
+*.tmp
+.env
+.env.*
+.local
