@@ -14,6 +14,7 @@ $requiredFiles = @(
     "docs/MODULE_OWNERSHIP.md",
     "docs/ROADMAP.md",
     "docs/DEVELOPMENT_CONTINUITY.md",
+    "docs/GATE_1_FRAMEWORK_SPIKE.md",
     "docs/STATUS.md",
     "docs/DECISION_LOG.md",
     "docs/adr/0001-elixir-phoenix-modular-monolith.md",

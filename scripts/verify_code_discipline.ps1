@@ -33,6 +33,18 @@ foreach ($exception in @($exceptionCatalog.exceptions)) {
 $reviewFindings = @()
 $maximumFindings = @()
 $checkedFiles = 0
+$repoRootWithSeparator = $repoRoot.TrimEnd('\', '/') + [System.IO.Path]::DirectorySeparatorChar
+
+function Get-RepositoryRelativePath {
+    param([Parameter(Mandatory = $true)][string]$FullName)
+
+    $canonicalPath = [System.IO.Path]::GetFullPath($FullName)
+    if (-not $canonicalPath.StartsWith($repoRootWithSeparator, [System.StringComparison]::OrdinalIgnoreCase)) {
+        throw "Source path is outside the repository: '$canonicalPath'"
+    }
+
+    return $canonicalPath.Substring($repoRootWithSeparator.Length).Replace('\', '/')
+}
 
 foreach ($filePolicy in @($policy.file_policies)) {
     foreach ($relativeRoot in @($filePolicy.roots)) {
@@ -45,7 +57,7 @@ foreach ($filePolicy in @($policy.file_policies)) {
             if (@($filePolicy.extensions) -notcontains $file.Extension) {
                 continue
             }
-            $relativePath = [System.IO.Path]::GetRelativePath($repoRoot, $file.FullName).Replace('\', '/')
+            $relativePath = Get-RepositoryRelativePath -FullName $file.FullName
             $pathForMatch = "/$relativePath"
             $excluded = @($filePolicy.excluded_path_fragments | Where-Object { $pathForMatch.Contains($_) }).Count -gt 0
             if ($excluded) {
@@ -72,4 +84,3 @@ if ($maximumFindings.Count -gt 0) {
 }
 
 Write-Output "Code-discipline verification passed for $checkedFiles production source files with $($exceptions.Count) active exceptions."
-
