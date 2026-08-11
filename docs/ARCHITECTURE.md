@@ -40,7 +40,11 @@ outbox publication, and the initial operational UI delivery boundary.
 
 The transactional system of record for kernel and in-process business modules.
 Every table is owned by one module. Cross-module reads use public query
-contracts or projections; cross-module writes use commands.
+contracts or projections; cross-module writes use commands. PostgreSQL 19 is
+the governed target. Cluster identity, roles, connections, migrations, tenant
+integrity, HA/fencing, WAL/PITR, observability, maintenance, capacity, upgrade,
+and retirement requirements are defined in
+[`DATABASE_ARCHITECTURE.md`](DATABASE_ARCHITECTURE.md) and ADR-0007.
 
 ### Object storage
 

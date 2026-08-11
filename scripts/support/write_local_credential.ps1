@@ -2,7 +2,7 @@ function Get-UokCloneLocalCredentialPath {
     [CmdletBinding()]
     param([Parameter(Mandatory = $true)][string]$RepositoryRoot)
 
-    if (-not $IsWindows) {
+    if ($env:OS -ne "Windows_NT") {
         throw "Clone-local credential storage currently requires Windows"
     }
 
@@ -15,11 +15,14 @@ function Get-UokCloneLocalCredentialPath {
 
     $normalizedRepository = [IO.Path]::GetFullPath($RepositoryRoot).Replace("\", "/")
     $normalizedRepository = $normalizedRepository.TrimEnd('/').ToLowerInvariant()
-    $cloneHash = [Convert]::ToHexString(
-        [Security.Cryptography.SHA256]::HashData(
-            [Text.Encoding]::UTF8.GetBytes($normalizedRepository)
-        )
-    ).ToLowerInvariant()
+    $sha256 = [Security.Cryptography.SHA256]::Create()
+    try {
+        $hashBytes = $sha256.ComputeHash([Text.Encoding]::UTF8.GetBytes($normalizedRepository))
+    }
+    finally {
+        $sha256.Dispose()
+    }
+    $cloneHash = ([BitConverter]::ToString($hashBytes)).Replace("-", "").ToLowerInvariant()
 
     $credentialRoot = Join-Path $localApplicationData "UOK-Next\credentials"
     $credentialPath = Join-Path $credentialRoot "$cloneHash\uok-db-password"
@@ -43,7 +46,7 @@ function Write-UokCloneLocalCredential {
         [Parameter(Mandatory = $true)][string]$Value
     )
 
-    if (-not $IsWindows) {
+    if ($env:OS -ne "Windows_NT") {
         throw "Clone-local credential ACL enforcement currently requires Windows"
     }
 

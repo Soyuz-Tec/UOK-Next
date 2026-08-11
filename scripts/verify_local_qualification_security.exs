@@ -17,6 +17,12 @@ unless effective_repo_config[:ssl] == false do
   raise "local qualification is the only profile allowed to use its isolated plaintext database"
 end
 
+unless effective_repo_config[:target_server_type] == :primary and
+         Application.fetch_env!(:uok_next, :database_target_major) == 19 and
+         Application.fetch_env!(:uok_next, :database_prerelease_allowed) == true do
+  raise "local qualification must exercise a PostgreSQL 19 primary and may allow the pinned beta"
+end
+
 unless endpoint_config[:http][:ip] == {0, 0, 0, 0} do
   raise "local qualification container must bind its private container interface"
 end

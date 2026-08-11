@@ -13,7 +13,8 @@
 ## Verified foundation
 
 - The accepted foundation is an Elixir 1.20.2, Erlang/OTP 28.4, Phoenix 1.8
-  modular monolith backed by PostgreSQL 18.4.
+  modular monolith targeting PostgreSQL 19. PG19 Beta 2 is digest-pinned for
+  local/CI compatibility; production remains gated on PG19 GA/current minor.
 - Toolchain archives, framework bootstrap artifacts, GitHub Actions, base
   images, PostgreSQL, and HAProxy are pinned to repository-owned hashes or
   immutable digests and fail closed on identity mismatch.
@@ -46,7 +47,14 @@
   identity, and single-replica failover have been exercised on Podman.
 - Application tests include authorization, input, tenant mismatch, database
   row-level isolation, atomic audit/outbox/receipt creation, replay conflict,
-  stale state, unavailable dependencies, and schema-readiness failure paths.
+  stale state, unavailable dependencies, schema-readiness failure paths, and a
+  pre-migration PG19 major/prerelease compatibility gate.
+- ADR-0007 now governs PostgreSQL as a complete data platform: deterministic
+  UTF-8 cluster identity, checksums, SCRAM, explicit roles/default privileges,
+  connection budgets, CA-authenticated TLS, tenant-aware foreign keys,
+  migration safety, HA/fencing, WAL/PITR, restore drills, observability,
+  vacuum/freeze, capacity, retention, and upgrades. Machine checks exercise
+  the initial PG19 cluster and policy invariants.
 
 ## Gate 1 remaining work
 
@@ -62,14 +70,14 @@
 - Production identity/OIDC, session management, user-facing business APIs, the
   operational React UI, durable outbox delivery, jobs/workflows, object storage,
   external integrations, BI projections, or blockchain anchoring.
-- The local two-replica qualifier is not a production topology. PostgreSQL is
-  still a single local dependency and no backup/restore receipt exists.
+- The local two-replica qualifier is not a production topology. PostgreSQL 19
+  is still a single local dependency and no backup/restore receipt exists.
 - Production deployment is blocked on a selected platform, managed secrets,
   trusted TLS ingress, monitoring/alerting destinations, backup/restore,
   rollback, capacity, penetration, and disaster-recovery qualification.
 
 ## Next action
 
-Complete the Gate 1 React/TypeScript shell and object-storage development
-dependency while preserving the selected Ecto implementation and kernel
-boundaries.
+Finish PG19 compatibility and local qualification, then complete the Gate 1
+React/TypeScript shell and object-storage development dependency while
+preserving the selected Ecto implementation and kernel boundaries.

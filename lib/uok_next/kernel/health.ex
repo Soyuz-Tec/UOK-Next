@@ -3,6 +3,7 @@ defmodule UokNext.Kernel.Health do
   Bounded liveness, startup, and readiness checks for orchestrators.
   """
 
+  alias UokNext.Kernel.DatabaseCompatibility
   alias UokNext.Kernel.ReleaseIdentity
   alias UokNext.Repo
 
@@ -16,6 +17,7 @@ defmodule UokNext.Kernel.Health do
   @spec readiness(module()) :: {:ok, map()} | {:error, map()}
   def readiness(repo \\ Repo) do
     with :ok <- database_available(repo),
+         :ok <- DatabaseCompatibility.verify(repo),
          :ok <- schema_current(repo) do
       {:ok, ReleaseIdentity.current() |> Map.put(:status, "ready")}
     else

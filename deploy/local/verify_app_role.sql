@@ -8,7 +8,7 @@ BEGIN
 
   IF runtime_role.rolsuper OR runtime_role.rolbypassrls OR runtime_role.rolreplication OR
      runtime_role.rolcreatedb OR runtime_role.rolcreaterole OR runtime_role.rolinherit OR
-     runtime_role.rolconfig IS NOT NULL THEN
+     runtime_role.rolconfig IS NOT NULL OR runtime_role.rolconnlimit <> 20 THEN
     RAISE EXCEPTION 'uok_app retains an unsafe role attribute or setting';
   END IF;
 

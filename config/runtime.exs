@@ -54,18 +54,46 @@ if config_env() == :prod do
     raise "DATABASE_URL query parameters are not allowed to override repository-owned settings"
   end
 
+  database_credentials = String.split(database_uri.userinfo || "", ":", parts: 2)
+
+  unless database_uri.scheme in ["ecto", "postgres", "postgresql"] and
+           is_binary(database_uri.host) and database_uri.host != "" and
+           length(database_credentials) == 2 and
+           Enum.all?(database_credentials, &(&1 != "")) and
+           is_binary(database_uri.path) and Regex.match?(~r|\A/[^/]+\z|, database_uri.path) and
+           database_uri.fragment in [nil, ""] and
+           (is_nil(database_uri.port) or database_uri.port in 1..65_535) do
+    raise "DATABASE_URL must contain a supported scheme, credentials, host, and one database name"
+  end
+
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   if local_qualification? and database_uri.host not in ["postgres", "host.containers.internal"] do
     raise "local qualification DATABASE_URL must target the isolated local dependency"
   end
 
-  database_ssl? = not local_qualification?
+  database_ssl =
+    if local_qualification? do
+      false
+    else
+      database_ca_cert_file = System.get_env("DATABASE_CA_CERT_FILE")
+
+      unless is_binary(database_ca_cert_file) and Path.type(database_ca_cert_file) == :absolute and
+               File.regular?(database_ca_cert_file) do
+        raise "DATABASE_CA_CERT_FILE must name a readable absolute CA trust file"
+      end
+
+      [cacertfile: database_ca_cert_file]
+    end
+
+  config :uok_next, :database_prerelease_allowed, local_qualification?
 
   config :uok_next, UokNext.Repo,
     url: database_url,
-    ssl: database_ssl?,
-    pool_size: parse_bounded_integer.("POOL_SIZE", "10", 1, 100),
+    ssl: database_ssl,
+    target_server_type: :primary,
+    disconnect_on_error_codes: [:read_only_sql_transaction],
+    pool_size: parse_bounded_integer.("POOL_SIZE", "10", 1, 20),
     queue_target: parse_bounded_integer.("DB_QUEUE_TARGET_MS", "50", 1, 60_000),
     queue_interval: parse_bounded_integer.("DB_QUEUE_INTERVAL_MS", "1000", 1, 60_000),
     timeout: parse_bounded_integer.("DB_CHECKOUT_TIMEOUT_MS", "5000", 100, 120_000),
@@ -76,7 +104,9 @@ if config_env() == :prod do
         parse_bounded_integer.("DB_LOCK_TIMEOUT_MS", "2000", 100, 120_000) |> to_string(),
       idle_in_transaction_session_timeout:
         parse_bounded_integer.("DB_IDLE_TRANSACTION_TIMEOUT_MS", "10000", 100, 300_000)
-        |> to_string()
+        |> to_string(),
+      application_name: "uok-next",
+      timezone: "UTC"
     ],
     socket_options: maybe_ipv6
 

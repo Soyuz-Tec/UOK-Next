@@ -11,8 +11,20 @@ end
 {:ok, effective_repo_config} =
   Ecto.Repo.Supervisor.init_config(:supervisor, UokNext.Repo, :uok_next, [])
 
-unless effective_repo_config[:ssl] == true do
-  raise "production PostgreSQL must require authenticated TLS"
+database_ca_cert_file = System.fetch_env!("DATABASE_CA_CERT_FILE")
+
+unless effective_repo_config[:ssl] == [cacertfile: database_ca_cert_file] do
+  raise "production PostgreSQL must verify peer identity against the declared CA trust file"
+end
+
+unless effective_repo_config[:target_server_type] == :primary and
+         effective_repo_config[:disconnect_on_error_codes] == [:read_only_sql_transaction] do
+  raise "production writes must target a primary and disconnect after read-only failover errors"
+end
+
+unless Application.fetch_env!(:uok_next, :database_target_major) == 19 and
+         Application.fetch_env!(:uok_next, :database_prerelease_allowed) == false do
+  raise "production must require PostgreSQL 19 GA"
 end
 
 database_uri = repo_config |> Keyword.fetch!(:url) |> URI.parse()

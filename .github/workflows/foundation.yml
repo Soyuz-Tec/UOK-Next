@@ -29,6 +29,9 @@ jobs:
       - name: Verify module boundaries
         shell: pwsh
         run: .\scripts\verify_architecture_boundaries.ps1
+      - name: Verify PostgreSQL architecture policy
+        shell: pwsh
+        run: .\scripts\verify_database_policy.ps1
       - name: Verify artifact-integrity control
         shell: pwsh
         run: .\test\security\artifact_integrity_test.ps1
@@ -41,11 +44,13 @@ jobs:
     timeout-minutes: 20
     services:
       postgres:
-        image: postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
+        image: docker.io/library/postgres@sha256:d37ce87b33b80bd76fb8d9bc9ff6ad2caaf6c4a50caf9ae25e393f247fc01d6e
         env:
           POSTGRES_USER: uok_next
           POSTGRES_PASSWORD: uok_next_ci_only_0123456789abcdef
           POSTGRES_DB: uok_next_test
+          POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale-provider=builtin --builtin-locale=PG_UNICODE_FAST --data-checksums --auth-host=scram-sha-256
+          TZ: UTC
         ports:
           - 5432:5432
         options: >-
@@ -71,6 +76,16 @@ jobs:
           elixir-version: "1.20.2"
       - name: Fetch dependencies
         run: mix deps.get
+      - name: Verify PostgreSQL 19 cluster baseline
+        env:
+          PGPASSWORD: uok_next_ci_only_0123456789abcdef
+        run: >-
+          psql
+          --host 127.0.0.1
+          --username uok_next
+          --dbname uok_next_test
+          --set ON_ERROR_STOP=1
+          --file deploy/postgres/verify_core_baseline.sql
       - name: Verify application
         run: mix quality
       - name: Audit Hex advisories
@@ -81,6 +96,7 @@ jobs:
           DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
+          DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
         run: mix run --no-start scripts/verify_production_security.exs
       - name: Reject database URL TLS-policy overrides
         env:
@@ -88,9 +104,22 @@ jobs:
           DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next?ssl=false
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
+          DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
         run: |
           if mix run --no-start -e 'System.halt(0)'; then
             echo "DATABASE_URL unexpectedly overrode the repository-owned SSL policy"
+            exit 1
+          fi
+      - name: Reject missing database CA trust
+        env:
+          MIX_ENV: prod
+          UOK_BUILD_REVISION: ${{ github.sha }}
+          DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
+          SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+          PHX_HOST: uok-next.example.invalid
+        run: |
+          if mix run --no-start -e 'System.halt(0)'; then
+            echo "Production unexpectedly accepted a missing database CA trust file"
             exit 1
           fi
       - name: Reject database URL resource-policy overrides
@@ -100,6 +129,7 @@ jobs:
           DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next?pool_size=1000000
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
+          DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
         run: |
           if mix run --no-start -e 'System.halt(0)'; then
             echo "DATABASE_URL unexpectedly overrode repository-owned resource bounds"
@@ -120,6 +150,7 @@ jobs:
           DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
+          DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
           PORT: 0
         run: |
           if mix run --no-start -e 'System.halt(0)'; then

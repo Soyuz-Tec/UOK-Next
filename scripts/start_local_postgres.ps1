@@ -5,22 +5,28 @@ $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 . (Join-Path $PSScriptRoot "support\write_local_credential.ps1")
 
-$env:UOK_LOCAL_SECRET_KEY_BASE = [Convert]::ToBase64String(
-    [Security.Cryptography.RandomNumberGenerator]::GetBytes(64)
-)
-$env:UOK_LOCAL_METRICS_TOKEN = [Convert]::ToBase64String(
-    [Security.Cryptography.RandomNumberGenerator]::GetBytes(48)
-)
-$env:UOK_APP_DB_PASSWORD = [Convert]::ToHexString(
-    [Security.Cryptography.RandomNumberGenerator]::GetBytes(32)
-).ToLowerInvariant()
+function New-RandomBytes {
+    param([ValidateRange(16, 128)][int]$Count)
+
+    [byte[]]$bytes = New-Object byte[] $Count
+    $generator = [Security.Cryptography.RandomNumberGenerator]::Create()
+    try {
+        $generator.GetBytes($bytes)
+    }
+    finally {
+        $generator.Dispose()
+    }
+    return $bytes
+}
+
+$env:UOK_LOCAL_SECRET_KEY_BASE = [Convert]::ToBase64String((New-RandomBytes -Count 64))
+$env:UOK_LOCAL_METRICS_TOKEN = [Convert]::ToBase64String((New-RandomBytes -Count 48))
+$env:UOK_APP_DB_PASSWORD = ([BitConverter]::ToString((New-RandomBytes -Count 32))).Replace("-", "").ToLowerInvariant()
 if ([string]::IsNullOrWhiteSpace($env:UOK_DB_USER)) {
     $env:UOK_DB_USER = "uok_next"
 }
 if ([string]::IsNullOrWhiteSpace($env:UOK_DB_PASSWORD)) {
-    $env:UOK_DB_PASSWORD = [Convert]::ToHexString(
-        [Security.Cryptography.RandomNumberGenerator]::GetBytes(32)
-    ).ToLowerInvariant()
+    $env:UOK_DB_PASSWORD = ([BitConverter]::ToString((New-RandomBytes -Count 32))).Replace("-", "").ToLowerInvariant()
 }
 if ($env:UOK_DB_PASSWORD -notmatch '^[A-Za-z0-9._~-]{32,128}$') {
     throw "UOK_DB_PASSWORD must contain 32 to 128 URL-safe characters"
@@ -69,7 +75,16 @@ try {
         throw "The local PostgreSQL development credential could not be synchronized"
     }
 
-    Write-Output "Local PostgreSQL is ready; the ACL-isolated clone credential is at $credentialPath"
+    & podman compose -f (Join-Path $repoRoot "compose.yaml") exec -T postgres psql `
+        -v ON_ERROR_STOP=1 `
+        -U "${env:UOK_DB_USER}" `
+        -d "${env:UOK_DB_NAME}" `
+        -f /database-baseline/verify_local_platform.sql
+    if ($LASTEXITCODE -ne 0) {
+        throw "The local PostgreSQL 19 platform baseline failed verification"
+    }
+
+    Write-Output "Local PostgreSQL 19 is ready; the ACL-isolated clone credential is at $credentialPath"
 }
 finally {
     Pop-Location

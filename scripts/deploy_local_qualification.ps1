@@ -15,13 +15,27 @@ if (-not (Test-Path -LiteralPath $composePath -PathType Leaf)) {
 function New-RandomToken {
     param([ValidateRange(32, 128)][int]$Bytes)
 
-    [Convert]::ToBase64String([Security.Cryptography.RandomNumberGenerator]::GetBytes($Bytes))
+    [Convert]::ToBase64String((New-RandomBytes -Count $Bytes))
 }
 
 function New-RandomHex {
     param([ValidateRange(16, 64)][int]$Bytes)
 
-    [Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes($Bytes)).ToLowerInvariant()
+    ([BitConverter]::ToString((New-RandomBytes -Count $Bytes))).Replace("-", "").ToLowerInvariant()
+}
+
+function New-RandomBytes {
+    param([ValidateRange(16, 128)][int]$Count)
+
+    [byte[]]$bytes = New-Object byte[] $Count
+    $generator = [Security.Cryptography.RandomNumberGenerator]::Create()
+    try {
+        $generator.GetBytes($bytes)
+    }
+    finally {
+        $generator.Dispose()
+    }
+    return $bytes
 }
 
 function Normalize-ImageId {
@@ -135,6 +149,15 @@ try {
         -f /qualification/rotate_admin_password.sql
     if ($LASTEXITCODE -ne 0) {
         throw "The local database owner credential could not be rotated"
+    }
+
+    & podman compose -f $composePath exec -T postgres psql `
+        -v ON_ERROR_STOP=1 `
+        -U "${env:UOK_DB_USER}" `
+        -d "${env:UOK_DB_NAME}" `
+        -f /database-baseline/verify_local_platform.sql
+    if ($LASTEXITCODE -ne 0) {
+        throw "The PostgreSQL 19 local platform baseline failed verification"
     }
 
     & podman compose -f $composePath exec -T postgres psql `
