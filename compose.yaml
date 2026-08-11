@@ -1,13 +1,23 @@
 name: uok-next
 
+x-runtime-environment: &runtime_environment
+  SECRET_KEY_BASE: ${UOK_LOCAL_SECRET_KEY_BASE:?set UOK_LOCAL_SECRET_KEY_BASE}
+  PHX_HOST: localhost
+  PORT: 4000
+  PHX_SERVER: "true"
+  UOK_DEPLOYMENT_PROFILE: local_qualification
+  METRICS_ACCESS_TOKEN: ${UOK_LOCAL_METRICS_TOKEN:?set UOK_LOCAL_METRICS_TOKEN}
+  POOL_SIZE: 5
+
 services:
   postgres:
     image: docker.io/library/postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${UOK_DB_USER:-uok_next}
-      POSTGRES_PASSWORD: ${UOK_DB_PASSWORD:-uok_next_local_only}
+      POSTGRES_PASSWORD: ${UOK_DB_PASSWORD:?set UOK_DB_PASSWORD}
       POSTGRES_DB: ${UOK_DB_NAME:-uok_next_dev}
+      UOK_APP_DB_PASSWORD: ${UOK_APP_DB_PASSWORD:?set UOK_APP_DB_PASSWORD}
     ports:
       - "127.0.0.1:${UOK_DB_PORT:-15432}:5432"
     healthcheck:
@@ -18,6 +28,88 @@ services:
       start_period: 5s
     volumes:
       - uok_next_postgres_data:/var/lib/postgresql
+      - ./deploy/local:/qualification:ro
+
+  migrate:
+    image: localhost/uok-next:${UOK_IMAGE_TAG:-local}
+    build:
+      context: .
+      dockerfile: Containerfile
+      args:
+        UOK_REVISION: ${UOK_REVISION:?set UOK_REVISION}
+    command: ["eval", "UokNext.Release.migrate()"]
+    restart: "no"
+    environment:
+      <<: *runtime_environment
+      DATABASE_URL: ecto://${UOK_DB_USER:-uok_next}:${UOK_DB_PASSWORD:?set UOK_DB_PASSWORD}@postgres:5432/${UOK_DB_NAME:-uok_next_dev}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+  app-a: &app_service
+    image: localhost/uok-next:${UOK_IMAGE_TAG:-local}
+    restart: unless-stopped
+    environment:
+      <<: *runtime_environment
+      DATABASE_URL: ecto://uok_app:${UOK_APP_DB_PASSWORD:?set UOK_APP_DB_PASSWORD}@postgres:5432/${UOK_DB_NAME:-uok_next_dev}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+    mem_limit: 512m
+    cpus: 1.0
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:4000/api/v1/health/ready"]
+      interval: 3s
+      timeout: 2s
+      retries: 15
+      start_period: 10s
+
+  app-b:
+    <<: *app_service
+
+  proxy:
+    image: docker.io/library/haproxy@sha256:79799e8b2977e60802774fa53d29e6b54e045402cdd8a8b9fe43923e7095a047
+    restart: unless-stopped
+    depends_on:
+      app-a:
+        condition: service_healthy
+      app-b:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${UOK_HTTP_PORT:-18089}:8080"
+    volumes:
+      - ./deploy/local/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 128
+    mem_limit: 128m
+    cpus: 0.5
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/api/v1/health/ready"]
+      interval: 3s
+      timeout: 2s
+      retries: 10
+      start_period: 5s
 
 volumes:
   uok_next_postgres_data:

@@ -8,8 +8,9 @@ defmodule UokNext.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      UokNextWeb.Telemetry,
       UokNext.Repo,
+      UokNext.Kernel.HealthProbe,
+      UokNextWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:uok_next, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: UokNext.PubSub},
       # Start a worker by calling: UokNext.Worker.start_link(arg)

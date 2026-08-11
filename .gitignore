@@ -1,6 +1,7 @@
 .env
 .env.*
 !.env.example
+.local/
 
 _build/
 deps/

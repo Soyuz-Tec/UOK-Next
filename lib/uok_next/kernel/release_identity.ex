@@ -2,9 +2,9 @@ defmodule UokNext.Kernel.ReleaseIdentity do
   @moduledoc """
   Reports immutable application identity without exposing host secrets.
 
-  Deployments provide `UOK_REVISION` from the exact source revision used to
-  build the release. Local development deliberately reports `uncommitted` when
-  no revision is supplied.
+  The container build compiles `UOK_BUILD_REVISION` into the release. Runtime
+  environment changes therefore cannot make a different image claim the
+  expected source revision. Local development reports `uncommitted`.
   """
 
   @spec current() :: %{service: String.t(), version: String.t(), revision: String.t()}
@@ -12,7 +12,7 @@ defmodule UokNext.Kernel.ReleaseIdentity do
     %{
       service: "uok-next",
       version: application_version(),
-      revision: System.get_env("UOK_REVISION", "uncommitted")
+      revision: Application.fetch_env!(:uok_next, :build_revision)
     }
   end
 

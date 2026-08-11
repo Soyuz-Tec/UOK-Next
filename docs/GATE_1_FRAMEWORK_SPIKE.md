@@ -1,6 +1,6 @@
 # Gate 1 Framework Spike
 
-**Status:** In progress
+**Status:** Complete; explicit Elixir/Ecto selected
 
 ## Question
 
@@ -58,3 +58,9 @@ Update ADR-0002 with measured results, select one implementation model, remove
 the losing production candidate, and make the selected path pass the full Gate
 1 quality suite.
 
+## Result
+
+ADR-0002 records the executable comparison and selects explicit Elixir/Ecto.
+The shared command, tenant, policy, audit, outbox, concurrency, error, and HTTP
+contracts remain as regression tests. The losing Ash implementation and its
+runtime dependencies have been removed.

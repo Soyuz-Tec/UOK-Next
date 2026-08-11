@@ -1,5 +1,35 @@
 import Config
 
+repository_root =
+  __DIR__
+  |> Path.join("..")
+  |> Path.expand()
+  |> String.replace("\\", "/")
+  |> String.trim_trailing("/")
+  |> String.downcase()
+
+clone_hash = :crypto.hash(:sha256, repository_root) |> Base.encode16(case: :lower)
+local_application_data = System.get_env("LOCALAPPDATA")
+
+local_password_path =
+  if is_binary(local_application_data) and local_application_data != "" do
+    Path.join([local_application_data, "UOK-Next", "credentials", clone_hash, "uok-db-password"])
+  end
+
+database_password =
+  System.get_env("UOK_DB_PASSWORD") ||
+    if local_password_path do
+      case File.read(local_password_path) do
+        {:ok, value} -> String.trim(value)
+        _ -> nil
+      end
+    end
+
+unless is_binary(database_password) and
+         Regex.match?(~r/\A[A-Za-z0-9._~-]{32,128}\z/, database_password) do
+  raise "run scripts/start_local_postgres.ps1 to create the clone-local database credential"
+end
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
@@ -7,7 +37,7 @@ import Config
 # Run `mix help test` for more information.
 config :uok_next, UokNext.Repo,
   username: System.get_env("UOK_DB_USER", "uok_next"),
-  password: System.get_env("UOK_DB_PASSWORD", "uok_next_local_only"),
+  password: database_password,
   hostname: System.get_env("UOK_DB_HOST", "127.0.0.1"),
   port: String.to_integer(System.get_env("UOK_DB_PORT", "15432")),
   database:
@@ -24,6 +54,9 @@ config :uok_next, UokNextWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warning
+
+config :uok_next, framework_spike_routes: true
+config :uok_next, metrics_access_token: "uok-next-test-metrics-token-only"
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime

@@ -6,7 +6,10 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 
 $requiredFiles = @(
     "AGENTS.md",
+    "SECURITY.md",
     "README.md",
+    "Containerfile",
+    "compose.yaml",
     ".github/dependabot.yml",
     "docs/PRODUCT_CHARTER.md",
     "docs/ARCHITECTURE.md",
@@ -23,16 +26,22 @@ $requiredFiles = @(
     "docs/adr/0003-specialist-runtime-authority.md",
     "docs/adr/0004-blockchain-is-an-optional-evidence-anchor.md",
     "docs/adr/0005-modular-monolith-and-code-discipline.md",
+    "docs/adr/0006-operational-kernel-and-local-ha-qualification.md",
     "config/module_catalog.json",
     "config/toolchain.json",
     "config/code_policy.json",
     "config/code_size_exceptions.json",
     "scripts/setup_elixir_toolchain.ps1",
     "scripts/setup_framework_tools.ps1",
+    "scripts/start_local_postgres.ps1",
+    "scripts/deploy_local_qualification.ps1",
+    "scripts/support/write_local_credential.ps1",
     "scripts/verify_code_discipline.ps1",
+    "scripts/verify_architecture_boundaries.ps1",
     "scripts/security/ArtifactIntegrity.psm1",
     "scripts/verify_production_security.exs",
-    "test/security/artifact_integrity_test.ps1"
+    "test/security/artifact_integrity_test.ps1",
+    "test/security/local_credential_acl_test.ps1"
 )
 
 $missing = @(
@@ -122,7 +131,7 @@ if ($frameworkSetupText -notmatch 'Assert-FileSha512' -or
     throw "Framework setup must verify pinned Hex, Rebar3, and Phoenix artifacts before installation"
 }
 
-$allowedStatuses = @("planned", "existing", "optional", "deferred")
+$allowedStatuses = @("planned", "in_progress", "existing", "optional", "deferred")
 $allOwners = @($catalog.modules) + @($catalog.external_systems)
 $ownerIds = @($allOwners | ForEach-Object { $_.id })
 $duplicateOwners = @(

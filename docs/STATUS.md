@@ -2,93 +2,74 @@
 
 **Snapshot date:** 2026-08-11
 
-**Repository:** `C:\Users\vasan\OneDrive\Documents\uok 2`
-
 **Canonical repository:** `https://github.com/Soyuz-Tec/UOK-Next`
 
 **Visibility/default branch:** public, protected `main`
 
 ## One active focus
 
-**Gate 1: prove the Phoenix runtime skeleton and compare selective Ash against
-explicit Elixir/Ecto for one tenant-scoped party-onboarding slice.**
+**Gate 1: complete the reproducible framework and kernel skeleton.**
 
-## Verified in this increment
+## Verified foundation
 
-- The workspace is an empty Git repository suitable for a greenfield start.
-- Node.js, npm, Rust, Cargo, Python, and Podman are available on the Windows
-  development host.
-- The pinned Erlang/OTP 28.4 and Elixir/Mix 1.20.2 toolchain is installed in
-  the current user's versioned `.elixir-install` directory and added to the
-  user `PATH`.
-- Initial product, architecture, ownership, roadmap, continuity, and decision
-  documents have been created.
-- A machine-readable module catalog and PowerShell verification command have
-  been added.
-- The modular-monolith source layout, dependency direction, transaction rules,
-  tenancy baseline, module split/extraction tests, and code-size discipline are
-  accepted and machine-checked.
-- Elixir 1.20.2, Erlang/OTP 28.4, and the Phoenix 1.8.9 generator are pinned in
-  `config/toolchain.json`; the checked-in setup downloads the exact OTP and
-  Elixir ZIP assets, verifies repository-owned SHA-256 identities, safely
-  extracts them, and installs them into content-addressed directories.
-- Hex 2.5.1, Rebar3 3.25.1, and the pinned Phoenix 1.8.9 generator are installed
-  and verified through the checked-in framework-tool setup script.
-- The public GitHub repository exists, `main` is protected, foundation CI is
-  required, administrators are included, direct force-push/deletion is denied,
-  conversations must resolve, and squash/linear history is enforced.
-- The API-only Phoenix 1.8.9 skeleton and versioned `/api/v1/health` endpoint
-  are scaffolded on `codex/gate-1-framework-spike` for verification.
-- PostgreSQL 18.4 is pinned by multi-platform image digest, runs locally on
-  loopback port 15432, and passed the Ecto setup/test path.
-- Phoenix, Ash candidate, PostgreSQL adapter, Credo, and Sobelow dependencies
-  are locked; `mix quality`, `mix hex.audit`, foundation verification, and code
-  discipline verification pass locally.
-- A live Bandit smoke test returned the expected release identity from
-  `GET /api/v1/health` on `127.0.0.1`.
-- The first complete repository security scan recorded three low-severity
-  foundation findings: mutable installer execution, untrusted proxy/Host
-  transport metadata, and plaintext-default production PostgreSQL transport.
-- The bounded security-hardening increment pins and verifies the installer,
-  fails closed on production origin/database transport, removes unused
-  production parser/session/socket surface, and adds regression/CI controls.
-- Diff-scoped adversarial review reproduced an Ecto URL-precedence bypass of
-  the first database TLS control. The corrected baseline rejects URL-owned SSL
-  options and verifies Ecto's effective normalized configuration.
-- A second diff audit found one low-severity bootstrap trust gap: Hex metadata
-  and its artifact shared a publication channel. Hex and Rebar3 now use exact
-  repository-owned URLs and SHA-512 pins, and every downloaded byte is checked
-  before installation; existing local Rebar3 files are no longer trusted.
-- The completed remediation scan closed all 12 review rows with no reportable
-  findings. Hex's signed package checksums already protected the Phoenix
-  generator, and the baseline now adds a repository-owned Phoenix package
-  SHA-512 before extraction and local archive build as an independent control.
-- A subsequent publication-gate scan closed all 12 review rows and found one
-  low-severity transitive bootstrap gap: the authenticated installer still
-  fetched unchecked OTP and Elixir ZIPs. The installer path has been removed;
-  both archives are now independently pinned and safely extracted, while ZIP
-  and TAR traversal, link-like entries, entry counts, and expanded sizes fail
-  closed before executable use.
-- The final candidate scan closed all 12 review rows and all four candidate
-  ledgers with no reportable finding. Defense-in-depth follow-through adds
-  exact response-size pins, curl streaming ceilings and partial-file cleanup,
-  full-digest install paths, protected-parent staging, install receipts,
-  reparse/owner/write-ACL checks, normalized duplicate-target rejection, and
-  an explicit digest for Phoenix's inner source archive.
+- The accepted foundation is an Elixir 1.20.2, Erlang/OTP 28.4, Phoenix 1.8
+  modular monolith backed by PostgreSQL 18.4.
+- Toolchain archives, framework bootstrap artifacts, GitHub Actions, base
+  images, PostgreSQL, and HAProxy are pinned to repository-owned hashes or
+  immutable digests and fail closed on identity mismatch.
+- Architecture, module ownership, code discipline, production transport
+  controls, and release decisions are repository-owned and machine-checked.
+- `main` is protected; Foundation CI, review resolution, linear history, and
+  administrative enforcement remain delivery gates.
+
+## Implemented in the current Gate 1 increment
+
+- Equivalent explicit Ecto and Ash party-onboarding candidates were built
+  against one contract and measured. ADR-0002 selects explicit Elixir/Ecto;
+  the Ash candidate and all Ash dependencies were removed.
+- `master.parties` now has a narrow governed onboarding slice: draft creation,
+  evidence submission, approval/hold decisions, tenant-safe reads, named
+  permissions, mandatory reasons, optimistic concurrency, and stable identity.
+- Mutations atomically persist business state, an idempotent command receipt,
+  append-only audit evidence, and versioned outbox events.
+- PostgreSQL forces row-level tenant isolation. Runtime replicas use a dedicated
+  non-superuser, non-`BYPASSRLS` role and activate a validated tenant only for
+  the current database transaction; migrations use a separate owner role.
+- Liveness, admission-limited cached readiness/startup, immutable release
+  identity, bounded database timeouts, authenticated Prometheus metrics, and
+  command telemetry are implemented.
+- The release builds in a non-root, read-only container with dropped
+  capabilities and bounded CPU, memory, process, and temporary-file resources.
+- The supported local qualifier runs one migration job and two identical app
+  replicas behind HAProxy. Readiness, release identity, metrics authorization,
+  reconciled least-privileged database access, DNS refresh, per-replica image
+  identity, and single-replica failover have been exercised on Podman.
+- Application tests include authorization, input, tenant mismatch, database
+  row-level isolation, atomic audit/outbox/receipt creation, replay conflict,
+  stale state, unavailable dependencies, and schema-readiness failure paths.
 
 ## Gate 1 remaining work
 
-1. Implement equivalent explicit Elixir/Ecto and Ash party-onboarding paths.
-2. Run the evaluation matrix and record ADR-0002's final decision.
-3. Retain the selected implementation and remove the losing candidate.
+1. Add the minimal React/TypeScript shell and its formatter, lint, type, test,
+   and reproducible production build.
+2. Add a pinned local S3-compatible object-storage dependency and prove a
+   bounded evidence-object contract without moving policy into the store.
+3. Require the expanded CI and security gates on the protected branch, then
+   close Gate 1 only after a clean candidate is rebuilt from the merged SHA.
 
 ## Explicitly not yet implemented
 
-- Party onboarding, Ash selection, React, persistent business modules, object
-  storage, durable jobs, integrations, or blockchain anchoring.
-- No production-readiness claim exists.
+- Production identity/OIDC, session management, user-facing business APIs, the
+  operational React UI, durable outbox delivery, jobs/workflows, object storage,
+  external integrations, BI projections, or blockchain anchoring.
+- The local two-replica qualifier is not a production topology. PostgreSQL is
+  still a single local dependency and no backup/restore receipt exists.
+- Production deployment is blocked on a selected platform, managed secrets,
+  trusted TLS ingress, monitoring/alerting destinations, backup/restore,
+  rollback, capacity, penetration, and disaster-recovery qualification.
 
 ## Next action
 
-Implement the explicit Elixir/Ecto party-onboarding path and its shared
-contract tests before implementing the equivalent Ash candidate.
+Complete the Gate 1 React/TypeScript shell and object-storage development
+dependency while preserving the selected Ecto implementation and kernel
+boundaries.

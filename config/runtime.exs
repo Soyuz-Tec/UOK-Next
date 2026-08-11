@@ -1,5 +1,14 @@
 import Config
 
+parse_bounded_integer = fn name, default, minimum, maximum ->
+  value = System.get_env(name, default)
+
+  case Integer.parse(value) do
+    {parsed, ""} when parsed >= minimum and parsed <= maximum -> parsed
+    _ -> raise "#{name} must be an integer between #{minimum} and #{maximum}"
+  end
+end
+
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
 # system starts, so it is typically used to load production configuration
@@ -21,9 +30,18 @@ if System.get_env("PHX_SERVER") in ~w(true 1) do
 end
 
 config :uok_next, UokNextWeb.Endpoint,
-  http: [port: String.to_integer(System.get_env("PORT", "4000"))]
+  http: [port: parse_bounded_integer.("PORT", "4000", 1, 65_535)]
 
 if config_env() == :prod do
+  build_revision = Application.fetch_env!(:uok_next, :build_revision)
+
+  unless is_binary(build_revision) and Regex.match?(~r/\A[0-9a-f]{40}\z/, build_revision) do
+    raise "the compiled UOK_BUILD_REVISION must be a full lowercase Git revision"
+  end
+
+  deployment_profile = System.get_env("UOK_DEPLOYMENT_PROFILE", "production")
+  local_qualification? = deployment_profile == "local_qualification"
+
   database_url =
     case System.get_env("DATABASE_URL") do
       value when is_binary(value) and value != "" -> value
@@ -32,24 +50,34 @@ if config_env() == :prod do
 
   database_uri = URI.parse(database_url)
 
-  ssl_override? =
-    case database_uri.query do
-      nil -> false
-      query -> Enum.any?(URI.query_decoder(query), fn {key, _value} -> key == "ssl" end)
-    end
-
-  if ssl_override? do
-    raise "DATABASE_URL must not override the repository-owned SSL policy"
+  if database_uri.query not in [nil, ""] do
+    raise "DATABASE_URL query parameters are not allowed to override repository-owned settings"
   end
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
+  if local_qualification? and database_uri.host not in ["postgres", "host.containers.internal"] do
+    raise "local qualification DATABASE_URL must target the isolated local dependency"
+  end
+
+  database_ssl? = not local_qualification?
+
   config :uok_next, UokNext.Repo,
     url: database_url,
-    ssl: true,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    # For machines with several cores, consider starting multiple pools of `pool_size`
-    # pool_count: 4,
+    ssl: database_ssl?,
+    pool_size: parse_bounded_integer.("POOL_SIZE", "10", 1, 100),
+    queue_target: parse_bounded_integer.("DB_QUEUE_TARGET_MS", "50", 1, 60_000),
+    queue_interval: parse_bounded_integer.("DB_QUEUE_INTERVAL_MS", "1000", 1, 60_000),
+    timeout: parse_bounded_integer.("DB_CHECKOUT_TIMEOUT_MS", "5000", 100, 120_000),
+    parameters: [
+      statement_timeout:
+        parse_bounded_integer.("DB_STATEMENT_TIMEOUT_MS", "5000", 100, 300_000) |> to_string(),
+      lock_timeout:
+        parse_bounded_integer.("DB_LOCK_TIMEOUT_MS", "2000", 100, 120_000) |> to_string(),
+      idle_in_transaction_session_timeout:
+        parse_bounded_integer.("DB_IDLE_TRANSACTION_TIMEOUT_MS", "10000", 100, 300_000)
+        |> to_string()
+    ],
     socket_options: maybe_ipv6
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
@@ -69,6 +97,21 @@ if config_env() == :prod do
       _ -> raise "environment variable PHX_HOST is missing or empty"
     end
 
+  if local_qualification? and host != "localhost" do
+    raise "local qualification PHX_HOST must be localhost"
+  end
+
+  metrics_access_token =
+    case System.get_env("METRICS_ACCESS_TOKEN") do
+      nil -> nil
+      value when byte_size(value) in 32..256 -> value
+      _ -> raise "METRICS_ACCESS_TOKEN must contain 32 to 256 bytes when configured"
+    end
+
+  if metrics_access_token do
+    config :uok_next, :metrics_access_token, metrics_access_token
+  end
+
   config :uok_next, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :uok_next, UokNextWeb.Endpoint,
@@ -76,7 +119,8 @@ if config_env() == :prod do
     http: [
       # Fail closed until a deployment ADR proves a private, header-sanitizing
       # proxy boundary or configures application-level TLS.
-      ip: {0, 0, 0, 0, 0, 0, 0, 1}
+      ip: if(local_qualification?, do: {0, 0, 0, 0}, else: {0, 0, 0, 0, 0, 0, 0, 1}),
+      port: parse_bounded_integer.("PORT", "4000", 1, 65_535)
     ],
     secret_key_base: secret_key_base
 

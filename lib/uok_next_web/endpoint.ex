@@ -2,6 +2,7 @@ defmodule UokNextWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :uok_next
 
   @dev_routes Application.compile_env(:uok_next, :dev_routes, false)
+  @framework_spike_routes Application.compile_env(:uok_next, :framework_spike_routes, false)
 
   if @dev_routes do
     @session_options [
@@ -47,6 +48,16 @@ defmodule UokNextWeb.Endpoint do
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
   plug Plug.Head
+
+  if @framework_spike_routes do
+    plug Plug.Parsers,
+      parsers: [:json],
+      pass: ["application/json"],
+      json_decoder: Phoenix.json_library(),
+      length: 64_000,
+      read_length: 64_000,
+      read_timeout: 2_000
+  end
 
   if @dev_routes do
     plug Plug.Session, @session_options
