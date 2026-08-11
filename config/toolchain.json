@@ -7,6 +7,16 @@
     "hex": "2.5.1",
     "rebar3": "3.25.1"
   },
+  "frontend": {
+    "node": "24.19.0",
+    "npm": "11.17.0",
+    "react": "19.2.8",
+    "react_dom": "19.2.8",
+    "vite": "8.2.1",
+    "typescript_native": "7.0.2",
+    "typescript_compatibility_api": "6.0.2",
+    "node_image": "docker.io/library/node@sha256:244cc2b53f46f9e876304391d17682b0ddae9ac33491f4857e25e35a36ba7995"
+  },
   "bootstrap": {
     "otp_archive_url": "https://github.com/erlang/otp/releases/download/OTP-28.4/otp_win64_28.4.zip",
     "otp_archive_sha256": "53E48EBA1A3F410B22CC89F6409A1D789EABFF7E689EDC3678ECC04A15245F12",

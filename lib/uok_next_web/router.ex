@@ -1,8 +1,30 @@
 defmodule UokNextWeb.Router do
   use UokNextWeb, :router
 
+  @browser_security_headers %{
+    "content-security-policy" =>
+      "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; " <>
+        "img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'none'; " <>
+        "frame-ancestors 'none'; form-action 'self'",
+    "permissions-policy" => "camera=(), geolocation=(), microphone=(), payment=()",
+    "referrer-policy" => "no-referrer",
+    "x-frame-options" => "DENY"
+  }
+
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :browser do
+    plug :accepts, ["html"]
+
+    plug :put_secure_browser_headers, @browser_security_headers
+  end
+
+  scope "/", UokNextWeb do
+    pipe_through :browser
+
+    get "/", ShellController, :index
   end
 
   scope "/api/v1", UokNextWeb do

@@ -55,20 +55,32 @@
   migration safety, HA/fencing, WAL/PITR, restore drills, observability,
   vacuum/freeze, capacity, retention, and upgrades. Machine checks exercise
   the initial PG19 cluster and policy invariants.
+- ADR-0008 now governs the UI delivery boundary. A responsive, accessible,
+  module-neutral React 19.2 shell is implemented with one read-only readiness
+  contract and no browser-owned business policy.
+- Node 24 LTS, npm 11, Vite 8, native TypeScript 7, and the bounded TypeScript 6
+  tooling API are exactly pinned. Format, lint, dual type checks, unit tests,
+  advisory audit, architecture policy, and production build now run in CI.
+- Content-hashed UI assets are built in a digest-pinned Node stage and copied
+  into the same non-root Phoenix release. Phoenix applies a restrictive CSP,
+  framing denial, no-store, referrer, MIME-sniffing, and browser-capability
+  headers to the shell response.
+- Local rendered proof covers 1440-by-1000 desktop and 390-by-844 phone
+  viewports through the Phoenix delivery path: readiness reached `Kernel ready`,
+  no horizontal overflow or console errors remained, and no business mutation
+  control was exposed. Merged-SHA release qualification remains a Gate 1 gate.
 
 ## Gate 1 remaining work
 
-1. Add the minimal React/TypeScript shell and its formatter, lint, type, test,
-   and reproducible production build.
-2. Add a pinned local S3-compatible object-storage dependency and prove a
+1. Add a pinned local S3-compatible object-storage dependency and prove a
    bounded evidence-object contract without moving policy into the store.
-3. Require the expanded CI and security gates on the protected branch, then
+2. Require the expanded CI and security gates on the protected branch, then
    close Gate 1 only after a clean candidate is rebuilt from the merged SHA.
 
 ## Explicitly not yet implemented
 
-- Production identity/OIDC, session management, user-facing business APIs, the
-  operational React UI, durable outbox delivery, jobs/workflows, object storage,
+- Production identity/OIDC, session management, user-facing business APIs,
+  business-module React UI, durable outbox delivery, jobs/workflows, object storage,
   external integrations, BI projections, or blockchain anchoring.
 - The local two-replica qualifier is not a production topology. PostgreSQL 19
   is still a single local dependency and no backup/restore receipt exists.
@@ -78,6 +90,6 @@
 
 ## Next action
 
-Finish PG19 compatibility and local qualification, then complete the Gate 1
-React/TypeScript shell and object-storage development dependency while
-preserving the selected Ecto implementation and kernel boundaries.
+Add the Gate 1 object-storage development dependency and bounded evidence-object
+contract while preserving PostgreSQL metadata authority, the selected Ecto
+implementation, and the kernel boundaries.

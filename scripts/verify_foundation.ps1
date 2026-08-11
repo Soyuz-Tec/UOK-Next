@@ -29,6 +29,7 @@ $requiredFiles = @(
     "docs/adr/0005-modular-monolith-and-code-discipline.md",
     "docs/adr/0006-operational-kernel-and-local-ha-qualification.md",
     "docs/adr/0007-postgresql-19-data-platform-foundation.md",
+    "docs/adr/0008-react-typescript-delivery-foundation.md",
     "config/module_catalog.json",
     "config/database_policy.json",
     "config/toolchain.json",
@@ -42,13 +43,20 @@ $requiredFiles = @(
     "scripts/verify_code_discipline.ps1",
     "scripts/verify_architecture_boundaries.ps1",
     "scripts/verify_database_policy.ps1",
+    "scripts/verify_web_foundation.ps1",
     "scripts/security/ArtifactIntegrity.psm1",
     "scripts/verify_production_security.exs",
     "deploy/postgres/bootstrap.sql",
     "deploy/postgres/verify_core_baseline.sql",
     "deploy/postgres/verify_local_platform.sql",
     "test/security/artifact_integrity_test.ps1",
-    "test/security/local_credential_acl_test.ps1"
+    "test/security/local_credential_acl_test.ps1",
+    "web/package.json",
+    "web/package-lock.json",
+    "web/tsconfig.json",
+    "web/vite.config.ts",
+    "web/src/main.tsx",
+    "web/src/shell/AppShell.tsx"
 )
 
 $missing = @(
@@ -78,6 +86,16 @@ foreach ($requiredVersion in @("elixir", "erlang_otp", "phoenix_new", "hex", "re
     if ([string]::IsNullOrWhiteSpace($toolchain.primary.$requiredVersion)) {
         throw "Primary toolchain version '$requiredVersion' must be pinned"
     }
+}
+
+foreach ($requiredVersion in @("node", "npm", "react", "react_dom", "vite", "typescript_native", "typescript_compatibility_api")) {
+    if ([string]::IsNullOrWhiteSpace($toolchain.frontend.$requiredVersion)) {
+        throw "Frontend toolchain version '$requiredVersion' must be pinned"
+    }
+}
+
+if ($toolchain.frontend.node_image -notmatch '^docker\.io/library/node@sha256:[0-9a-f]{64}$') {
+    throw "Frontend build image must be pinned to an immutable Docker Hub digest"
 }
 
 foreach ($artifactName in @("otp_archive", "elixir_archive")) {
@@ -186,4 +204,4 @@ if ($architectureText -notmatch "modular monolith") {
 
 Write-Output "Foundation verification passed."
 Write-Output "Validated $($catalog.modules.Count) modules, $($catalog.external_systems.Count) external systems, and $($recordOwners.Count) uniquely owned record types."
-Write-Output "Pinned Elixir $($toolchain.primary.elixir), Erlang/OTP $($toolchain.primary.erlang_otp), and Phoenix generator $($toolchain.primary.phoenix_new)."
+Write-Output "Pinned Elixir $($toolchain.primary.elixir), Erlang/OTP $($toolchain.primary.erlang_otp), Phoenix generator $($toolchain.primary.phoenix_new), Node $($toolchain.frontend.node), and React $($toolchain.frontend.react)."
