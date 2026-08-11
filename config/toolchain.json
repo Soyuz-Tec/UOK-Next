@@ -3,7 +3,27 @@
   "primary": {
     "elixir": "1.20.2",
     "erlang_otp": "28.4",
-    "phoenix_new": "1.8.9"
+    "phoenix_new": "1.8.9",
+    "hex": "2.5.1",
+    "rebar3": "3.25.1"
+  },
+  "bootstrap": {
+    "otp_archive_url": "https://github.com/erlang/otp/releases/download/OTP-28.4/otp_win64_28.4.zip",
+    "otp_archive_sha256": "53E48EBA1A3F410B22CC89F6409A1D789EABFF7E689EDC3678ECC04A15245F12",
+    "otp_archive_size_bytes": 178502270,
+    "elixir_archive_url": "https://github.com/elixir-lang/elixir/releases/download/v1.20.2/elixir-otp-28.zip",
+    "elixir_archive_sha256": "5559E5C496AD959BDE0BAB4DD2B7E92757A0BD45FBA6FC58D35584A8337D0AD1",
+    "elixir_archive_size_bytes": 8615814,
+    "hex_archive_url": "https://builds.hex.pm/installs/1.20.0/hex-2.5.1-otp-28.ez",
+    "hex_archive_sha512": "690F12F6933088BB32F1D7125485FB13426318C03CFEABCBD3CCE55824CDDF2A701104B09B7F4CD7092FE7F76D5B669E391A072428EC4526879B36F62820AE5D",
+    "hex_archive_size_bytes": 1133980,
+    "rebar3_url": "https://builds.hex.pm/installs/1.18.4/rebar3-3.25.1-otp-28",
+    "rebar3_sha512": "992FD755B7926FAE455E5E07D9D195F4D3E7F181609EED1B9CABFE548624DF10D148CD4B59BDA40BEBB185D3D68F9A9FD68A70B294101C8AD9CF0FADCC683D24",
+    "rebar3_size_bytes": 845498,
+    "phx_new_package_url": "https://repo.hex.pm/tarballs/phx_new-1.8.9.tar",
+    "phx_new_package_sha512": "AF4C478C94A2B1E0B423CDE53924D355895C02F97BE484BDEE527BC1E4BB1DE2C1617967E194A4BA7B6455A6A54D5BB43A98C47A57FF8DF31B26DF6BE3E5DA82",
+    "phx_new_package_size_bytes": 2755072,
+    "phx_new_contents_sha512": "DD114E60776442A40A6FDCF2B5842645F86B24C8D40E4EAAFBA947635AD1BA9F096CDF21BC9185AB3EABA654B34564BE52DA5B4202185A5273B1E49FD5A4D2EF"
   },
   "development_host_snapshot": {
     "node": "24.16.0",
