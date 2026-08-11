@@ -68,14 +68,18 @@
 - Local rendered proof covers 1440-by-1000 desktop and 390-by-844 phone
   viewports through the Phoenix delivery path: readiness reached `Kernel ready`,
   no horizontal overflow or console errors remained, and no business mutation
-  control was exposed. Merged-SHA release qualification remains a Gate 1 gate.
+  control was exposed.
+- The UI increment passed all protected foundation, application, and release
+  checks in PR #7 and was squash-merged. The exact merged revision was rebuilt
+  into both local application replicas; readiness/release identity and
+  single-replica failover passed without bypassing a delivery gate.
 
 ## Gate 1 remaining work
 
 1. Add a pinned local S3-compatible object-storage dependency and prove a
    bounded evidence-object contract without moving policy into the store.
-2. Require the expanded CI and security gates on the protected branch, then
-   close Gate 1 only after a clean candidate is rebuilt from the merged SHA.
+2. Close Gate 1 only after that final candidate passes the same protected CI,
+   security, merged-revision rebuild, identity, and failover qualification.
 
 ## Explicitly not yet implemented
 
