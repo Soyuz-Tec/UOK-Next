@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "product": "UOK Next",
+  "kernel": {
+    "language": "Elixir",
+    "framework": "Phoenix",
+    "runtime": "Erlang/OTP",
+    "database": "PostgreSQL",
+    "architecture": "modular_monolith"
+  },
+  "modules": [
+    {"id": "platform.identity", "status": "planned", "record_types": ["tenant", "organization", "actor", "session", "service_identity"]},
+    {"id": "platform.modules", "status": "planned", "record_types": ["module_definition", "module_installation"]},
+    {"id": "platform.policy", "status": "planned", "record_types": ["permission", "role_grant", "policy_decision"]},
+    {"id": "platform.workflow", "status": "planned", "record_types": ["workflow_definition", "workflow_instance", "human_task", "approval_request", "escalation"]},
+    {"id": "platform.evidence", "status": "planned", "record_types": ["evidence_object", "evidence_review", "audit_event", "integrity_manifest"]},
+    {"id": "platform.integrations", "status": "planned", "record_types": ["connector_definition", "external_reference", "integration_receipt"]},
+    {"id": "platform.agents", "status": "planned", "record_types": ["agent_runbook", "agent_run", "agent_plan", "agent_approval", "agent_tool_receipt"]},
+    {"id": "master.parties", "status": "planned", "record_types": ["party", "party_alias", "party_role", "party_relationship", "operating_site", "onboarding_profile"]},
+    {"id": "master.products", "status": "planned", "record_types": ["product", "product_classification", "unit_definition", "quality_template"]},
+    {"id": "master.locations", "status": "planned", "record_types": ["country_reference", "location", "corridor", "route_reference"]},
+    {"id": "operations.work", "status": "planned", "record_types": ["project", "work_item", "work_dependency", "work_calendar", "work_comment"]},
+    {"id": "trade.sourcing", "status": "planned", "record_types": ["sourcing_lane", "purchase_requisition", "rfq", "supplier_quote", "quote_comparison"]},
+    {"id": "trade.contracts", "status": "planned", "record_types": ["purchase_contract", "sales_contract", "contract_amendment", "commercial_commitment"]},
+    {"id": "trade.shipments", "status": "planned", "record_types": ["shipment_plan", "container", "shipment_milestone", "logistics_exception"]},
+    {"id": "trade.quality", "status": "planned", "record_types": ["quality_lot", "sample", "quality_measurement", "inspection", "quality_claim"]},
+    {"id": "trade.compliance", "status": "planned", "record_types": ["standard", "compliance_requirement", "clearance_case", "compliance_decision"]},
+    {"id": "trade.finance", "status": "planned", "record_types": ["trade_economics", "landed_cost", "funding_plan", "fx_exposure", "risk_control"]},
+    {"id": "intelligence.bi", "status": "planned", "record_types": ["metric_definition", "semantic_model", "report_definition", "governed_export"]},
+    {"id": "public.publishing", "status": "planned", "record_types": ["publication_snapshot", "public_release"]}
+  ],
+  "external_systems": [
+    {"id": "k_comms", "status": "existing", "record_types": ["conversation", "communication_membership", "message", "communication_attachment", "call_session", "presence_state"]},
+    {"id": "k_board", "status": "existing", "record_types": ["canvas_document", "canvas_operation", "canvas_snapshot"]},
+    {"id": "python_workers", "status": "planned", "record_types": ["document_extraction_result", "model_inference_result"]},
+    {"id": "rust_analytics", "status": "planned", "record_types": ["analytical_execution_receipt"]},
+    {"id": "odoo", "status": "optional", "record_types": ["general_ledger_entry", "tax_record", "payroll_record"]},
+    {"id": "blockchain_anchor", "status": "deferred", "record_types": ["evidence_anchor_receipt"]}
+  ]
+}
+

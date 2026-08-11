@@ -1,0 +1,89 @@
+[CmdletBinding()]
+param()
+
+$ErrorActionPreference = "Stop"
+$repoRoot = Split-Path -Parent $PSScriptRoot
+
+$requiredFiles = @(
+    "AGENTS.md",
+    "README.md",
+    "docs/PRODUCT_CHARTER.md",
+    "docs/ARCHITECTURE.md",
+    "docs/MODULE_OWNERSHIP.md",
+    "docs/ROADMAP.md",
+    "docs/DEVELOPMENT_CONTINUITY.md",
+    "docs/STATUS.md",
+    "docs/DECISION_LOG.md",
+    "docs/adr/0001-elixir-phoenix-modular-monolith.md",
+    "docs/adr/0002-selective-ash-adoption-spike.md",
+    "docs/adr/0003-specialist-runtime-authority.md",
+    "docs/adr/0004-blockchain-is-an-optional-evidence-anchor.md",
+    "config/module_catalog.json"
+)
+
+$missing = @(
+    $requiredFiles | Where-Object {
+        -not (Test-Path -LiteralPath (Join-Path $repoRoot $_) -PathType Leaf)
+    }
+)
+
+if ($missing.Count -gt 0) {
+    throw "Missing required foundation files: $($missing -join ', ')"
+}
+
+$catalogPath = Join-Path $repoRoot "config/module_catalog.json"
+$catalog = Get-Content -LiteralPath $catalogPath -Raw | ConvertFrom-Json
+
+if ($catalog.schema_version -ne 1) {
+    throw "Unsupported module catalog schema version: $($catalog.schema_version)"
+}
+
+$allowedStatuses = @("planned", "existing", "optional", "deferred")
+$allOwners = @($catalog.modules) + @($catalog.external_systems)
+$ownerIds = @($allOwners | ForEach-Object { $_.id })
+$duplicateOwners = @(
+    $ownerIds |
+        Group-Object |
+        Where-Object Count -gt 1 |
+        ForEach-Object Name
+)
+
+if ($duplicateOwners.Count -gt 0) {
+    throw "Duplicate module or external-system identifiers: $($duplicateOwners -join ', ')"
+}
+
+$recordOwners = @{}
+foreach ($owner in $allOwners) {
+    if ([string]::IsNullOrWhiteSpace($owner.id)) {
+        throw "Every module and external system requires a non-empty id"
+    }
+    if ($allowedStatuses -notcontains $owner.status) {
+        throw "Owner '$($owner.id)' has unsupported status '$($owner.status)'"
+    }
+    if (@($owner.record_types).Count -eq 0) {
+        throw "Owner '$($owner.id)' must declare at least one record type"
+    }
+    foreach ($recordType in @($owner.record_types)) {
+        if ([string]::IsNullOrWhiteSpace($recordType)) {
+            throw "Owner '$($owner.id)' declares an empty record type"
+        }
+        if ($recordOwners.ContainsKey($recordType)) {
+            throw "Record type '$recordType' has multiple owners: '$($recordOwners[$recordType])' and '$($owner.id)'"
+        }
+        $recordOwners[$recordType] = $owner.id
+    }
+}
+
+$statusText = Get-Content -LiteralPath (Join-Path $repoRoot "docs/STATUS.md") -Raw
+if ($statusText -notmatch "## One active focus") {
+    throw "docs/STATUS.md must contain the single-focus heading"
+}
+
+$architectureText = Get-Content -LiteralPath (Join-Path $repoRoot "docs/ARCHITECTURE.md") -Raw
+if ($architectureText -notmatch "modular monolith") {
+    throw "docs/ARCHITECTURE.md must declare the modular-monolith foundation"
+}
+
+Write-Output "Foundation verification passed."
+Write-Output "Validated $($catalog.modules.Count) modules, $($catalog.external_systems.Count) external systems, and $($recordOwners.Count) uniquely owned record types."
+

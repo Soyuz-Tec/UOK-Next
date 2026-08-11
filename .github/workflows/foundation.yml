@@ -1,0 +1,21 @@
+name: Foundation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  verify-foundation:
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Verify architecture foundation
+        shell: pwsh
+        run: .\scripts\verify_foundation.ps1
+

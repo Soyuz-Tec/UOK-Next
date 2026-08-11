@@ -1,0 +1,55 @@
+# UOK Next
+
+UOK Next is a greenfield, evidence-first operating platform for multi-entity
+commodity trade, supply-chain execution, CRM, ERP coordination, business
+intelligence, collaboration, and governed AI-assisted operations.
+
+The product is not a generic CRUD suite and it is not a blockchain application.
+Its defining capability is to coordinate real business operations across
+organizations while preserving explicit ownership, human decision authority,
+evidence, policy, audit lineage, and recoverability.
+
+## Current state
+
+**Foundation Gate 0 is in progress.** The repository currently contains the
+durable product and architecture controls required before application
+scaffolding begins. No production capability is claimed.
+
+The target stack is:
+
+- Elixir, Phoenix, Erlang/OTP, and PostgreSQL for the product-neutral kernel
+  and business modular monolith;
+- selective Ash Framework adoption after a bounded vertical-slice spike;
+- React and TypeScript for internal, partner, public, and field/PWA surfaces;
+- Rust for collaboration and analytical engines;
+- Python for OCR, document intelligence, and AI workers;
+- K-Comms, K-Board, Odoo, and optional blockchain anchoring behind explicit
+  authority-preserving integration contracts.
+
+## Start here
+
+Read these files in order before making a material change:
+
+1. [Product charter](docs/PRODUCT_CHARTER.md)
+2. [Architecture](docs/ARCHITECTURE.md)
+3. [Module ownership](docs/MODULE_OWNERSHIP.md)
+4. [Current status](docs/STATUS.md)
+5. [Roadmap](docs/ROADMAP.md)
+6. [Development continuity](docs/DEVELOPMENT_CONTINUITY.md)
+7. [Decision log](docs/DECISION_LOG.md)
+
+Machine-readable architecture authority is in
+[`config/module_catalog.json`](config/module_catalog.json).
+
+## Verify the foundation
+
+From PowerShell:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_foundation.ps1
+```
+
+This verifies that required authority documents exist, module and external
+system identifiers are unique, and no record type has more than one declared
+system of record.
+
