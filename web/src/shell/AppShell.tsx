@@ -13,14 +13,14 @@ const foundationAreas = [
     title: "PostgreSQL 19",
     detail:
       "Row-level tenant isolation and bounded runtime roles are active in the local qualifier.",
-    state: "Qualification",
+    state: "Qualified",
   },
   {
     eyebrow: "Evidence boundary",
     title: "Evidence object storage",
     detail:
       "A local S3-compatible qualifier now proves bounded, content-addressed, quarantined object bytes.",
-    state: "Qualification",
+    state: "Qualified",
   },
 ] as const;
 
@@ -81,9 +81,9 @@ export function AppShell() {
         </nav>
         <div className="gate-card">
           <span className="eyebrow eyebrow--light">Active focus</span>
-          <strong>Gate 1</strong>
-          <p>Final qualification</p>
-          <div className="progress-track" aria-label="Gate 1 qualification progress">
+          <strong>Gate 2</strong>
+          <p>Kernel v0</p>
+          <div className="progress-track" aria-label="Gate 2 kernel progress">
             <span />
           </div>
         </div>
