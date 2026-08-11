@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "file_policies": [
+    {
+      "name": "elixir_production",
+      "roots": ["lib"],
+      "extensions": [".ex"],
+      "review_lines": 500,
+      "maximum_lines": 700,
+      "excluded_path_fragments": ["/generated/", "/fixtures/"]
+    },
+    {
+      "name": "typescript_production",
+      "roots": ["web/src"],
+      "extensions": [".ts", ".tsx"],
+      "review_lines": 350,
+      "maximum_lines": 550,
+      "excluded_path_fragments": ["/generated/", "/fixtures/", "/__snapshots__/"]
+    }
+  ],
+  "function_guidance": {
+    "elixir": {"target_logical_lines": 25, "review_logical_lines": 40, "exception_logical_lines": 80},
+    "typescript": {"target_logical_lines": 30, "review_logical_lines": 50, "exception_logical_lines": 100}
+  },
+  "maximum_preferred_nesting": 3,
+  "maximum_preferred_positional_parameters": 4
+}
+

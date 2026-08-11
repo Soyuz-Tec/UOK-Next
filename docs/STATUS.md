@@ -24,6 +24,9 @@ focus, and verification durable before application scaffolding.**
   documents have been created.
 - A machine-readable module catalog and PowerShell verification command have
   been added.
+- The modular-monolith source layout, dependency direction, transaction rules,
+  tenancy baseline, module split/extraction tests, and code-size discipline are
+  accepted and machine-checked.
 - Elixir 1.20.2, Erlang/OTP 28.4, and the Phoenix 1.8.9 generator are pinned in
   `config/toolchain.json`; the checked-in setup script uses the official Elixir
   Windows installer.
@@ -32,9 +35,8 @@ focus, and verification durable before application scaffolding.**
 
 ## Foundation Gate 0 remaining work
 
-1. Run and fix the foundation verifier.
-2. Decide and configure the canonical GitHub repository and protected default
-   branch.
+1. Create and configure the authorized public `Soyuz-Tec/UOK-Next` repository.
+2. Configure the protected default branch when initial GitHub checks exist.
 3. Scaffold the bounded framework spike and pin only its directly selected
    dependencies.
 4. Record the framework-spike ADR outcome after executable comparison.

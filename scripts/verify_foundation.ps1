@@ -9,6 +9,8 @@ $requiredFiles = @(
     "README.md",
     "docs/PRODUCT_CHARTER.md",
     "docs/ARCHITECTURE.md",
+    "docs/MODULAR_MONOLITH_CONTRACT.md",
+    "docs/ENGINEERING_STANDARDS.md",
     "docs/MODULE_OWNERSHIP.md",
     "docs/ROADMAP.md",
     "docs/DEVELOPMENT_CONTINUITY.md",
@@ -18,10 +20,14 @@ $requiredFiles = @(
     "docs/adr/0002-selective-ash-adoption-spike.md",
     "docs/adr/0003-specialist-runtime-authority.md",
     "docs/adr/0004-blockchain-is-an-optional-evidence-anchor.md",
+    "docs/adr/0005-modular-monolith-and-code-discipline.md",
     "config/module_catalog.json",
     "config/toolchain.json",
+    "config/code_policy.json",
+    "config/code_size_exceptions.json",
     "scripts/setup_elixir_toolchain.ps1",
-    "scripts/setup_framework_tools.ps1"
+    "scripts/setup_framework_tools.ps1",
+    "scripts/verify_code_discipline.ps1"
 )
 
 $missing = @(

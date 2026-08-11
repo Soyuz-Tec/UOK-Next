@@ -8,10 +8,12 @@ Before changing code or architecture, read:
 
 1. `docs/PRODUCT_CHARTER.md`
 2. `docs/ARCHITECTURE.md`
-3. `docs/MODULE_OWNERSHIP.md`
-4. `docs/STATUS.md`
-5. `docs/ROADMAP.md`
-6. Relevant ADRs under `docs/adr/`
+3. `docs/MODULAR_MONOLITH_CONTRACT.md`
+4. `docs/ENGINEERING_STANDARDS.md`
+5. `docs/MODULE_OWNERSHIP.md`
+6. `docs/STATUS.md`
+7. `docs/ROADMAP.md`
+8. Relevant ADRs under `docs/adr/`
 
 Treat repository files, tests, Git/GitHub state, and runtime evidence as more
 authoritative than conversation history or model memory.
@@ -36,6 +38,8 @@ authoritative than conversation history or model memory.
   `config/module_catalog.json`.
 - Modules communicate through public commands, queries, events, and typed
   integration contracts. They do not write another module's tables.
+- Kernel dependencies point inward and never import business modules. Module
+  dependencies are declared, public-only, and acyclic.
 - K-Comms owns communication content and delivery state.
 - K-Board owns collaborative canvas operations and convergence state.
 - Odoo may own explicitly selected back-office records; it never shares the
@@ -51,6 +55,8 @@ A change is not complete until, as applicable:
 
 - architecture checks, formatters, linters, type checks, unit tests,
   integration tests, and end-to-end tests pass;
+- code-size, cohesion, complexity, dependency, and boundary checks pass or have
+  an explicit unexpired exception;
 - authorization and tenant-isolation negative tests exist;
 - idempotency, concurrency, audit, and failure behavior are tested;
 - runtime health and user-visible behavior are smoke-tested;
@@ -59,4 +65,3 @@ A change is not complete until, as applicable:
 
 Never claim a declared or scaffolded capability is implemented or
 production-ready without executable and runtime evidence.
-

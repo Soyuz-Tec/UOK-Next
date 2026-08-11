@@ -9,8 +9,10 @@ Exit when:
 
 - product charter, architecture, ownership, roadmap, continuity, and initial
   ADRs are accepted;
+- modular-monolith and engineering standards are explicit and machine-checked;
 - the machine-readable module catalog has unique module and record ownership;
 - architecture verification runs locally and in CI;
+- code-discipline verification runs locally and in CI;
 - the target repository, branch, remote, and versioning convention are fixed;
 - required toolchains are pinned and reproducibly installable.
 
@@ -68,4 +70,3 @@ security, immutable release promotion, staged deployment, and rollback.
 Only after the off-chain evidence system is production-proven, implement a
 chain-neutral anchor adapter and verify privacy, key management, reorganization
 handling, cost, receipt reconciliation, legal purpose, and non-blocking failure.
-

@@ -32,11 +32,13 @@ Read these files in order before making a material change:
 
 1. [Product charter](docs/PRODUCT_CHARTER.md)
 2. [Architecture](docs/ARCHITECTURE.md)
-3. [Module ownership](docs/MODULE_OWNERSHIP.md)
-4. [Current status](docs/STATUS.md)
-5. [Roadmap](docs/ROADMAP.md)
-6. [Development continuity](docs/DEVELOPMENT_CONTINUITY.md)
-7. [Decision log](docs/DECISION_LOG.md)
+3. [Modular monolith contract](docs/MODULAR_MONOLITH_CONTRACT.md)
+4. [Engineering standards](docs/ENGINEERING_STANDARDS.md)
+5. [Module ownership](docs/MODULE_OWNERSHIP.md)
+6. [Current status](docs/STATUS.md)
+7. [Roadmap](docs/ROADMAP.md)
+8. [Development continuity](docs/DEVELOPMENT_CONTINUITY.md)
+9. [Decision log](docs/DECISION_LOG.md)
 
 Machine-readable architecture authority is in
 [`config/module_catalog.json`](config/module_catalog.json).
@@ -47,6 +49,7 @@ From PowerShell:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_foundation.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_code_discipline.ps1
 ```
 
 This verifies that required authority documents exist, module and external

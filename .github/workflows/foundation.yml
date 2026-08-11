@@ -18,4 +18,6 @@ jobs:
       - name: Verify architecture foundation
         shell: pwsh
         run: .\scripts\verify_foundation.ps1
-
+      - name: Verify code discipline
+        shell: pwsh
+        run: .\scripts\verify_code_discipline.ps1

@@ -8,4 +8,4 @@ Material decisions live in ADRs. This file is a short index and review queue.
 | [0002](adr/0002-selective-ash-adoption-spike.md) | Ash adoption is selective and conditional on a bounded executable spike | Proposed | Gate 1 spike evidence |
 | [0003](adr/0003-specialist-runtime-authority.md) | K-Comms, K-Board, Python, Rust, and Odoo retain bounded authority | Accepted | A proposed ownership or runtime-boundary change |
 | [0004](adr/0004-blockchain-is-an-optional-evidence-anchor.md) | Blockchain is optional anchoring infrastructure, not the kernel | Accepted | Approved legal/business case beyond evidence anchoring |
-
+| [0005](adr/0005-modular-monolith-and-code-discipline.md) | One Phoenix/Mix modular monolith with explicit boundaries and review-based source-size discipline | Accepted | Proven boundary failure or extraction requirement |
