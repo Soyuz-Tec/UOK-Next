@@ -8,6 +8,12 @@ x-runtime-environment: &runtime_environment
   UOK_DEPLOYMENT_PROFILE: local_qualification
   METRICS_ACCESS_TOKEN: ${UOK_LOCAL_METRICS_TOKEN:?set UOK_LOCAL_METRICS_TOKEN}
   POOL_SIZE: 5
+  OBJECT_STORE_URL: http://object-store:8333
+  OBJECT_STORE_ACCESS_KEY: ${UOK_OBJECT_STORE_ACCESS_KEY:?set UOK_OBJECT_STORE_ACCESS_KEY}
+  OBJECT_STORE_SECRET_KEY: ${UOK_OBJECT_STORE_SECRET_KEY:?set UOK_OBJECT_STORE_SECRET_KEY}
+  OBJECT_STORE_BUCKET: ${UOK_OBJECT_STORE_BUCKET:-uok-evidence}
+  OBJECT_STORE_REGION: us-east-1
+  OBJECT_STORE_MAX_OBJECT_BYTES: 8388608
 
 services:
   postgres:
@@ -63,6 +69,81 @@ services:
       - ./deploy/postgres/bootstrap.sql:/docker-entrypoint-initdb.d/20-uok-platform.sql:ro
       - ./deploy/postgres:/database-baseline:ro
 
+  object-store-init:
+    image: docker.io/library/alpine@sha256:fd791d74b68913cbb027c6546007b3f0d3bc45125f797758156952bc2d6daf40
+    command:
+      - sh
+      - -ec
+      - >-
+        if [ "$(stat -c %u /data)" != 10001 ] || [ "$(stat -c %g /data)" != 10001 ]; then
+          chown 10001:10001 /data && chmod 0700 /data;
+        fi;
+        find /data -mindepth 1 \( ! -user 10001 -o ! -group 10001 \)
+        -exec chown 10001:10001 {} +
+    restart: "no"
+    volumes:
+      - uok_next_object_store_data:/data
+    read_only: true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+    security_opt:
+      - no-new-privileges:true
+
+  object-store:
+    image: docker.io/chrislusf/seaweedfs@sha256:f898c91e42d7da5f4bb13f1efd424ff03ba85b420312eb929708a384e8a8b03d
+    command:
+      - mini
+      - -dir=/data
+      - -admin.dataDir=/data/admin
+      - -admin.ui=false
+      - -webdav=false
+      - -s3.iam=false
+      - -s3.allowDeleteBucketNotEmpty=false
+      - -s3.allowedOrigins=http://localhost.invalid
+      - -filer.disableDirListing=true
+      - -filer.exposeDirectoryData=false
+      - -filer.ui.deleteDir=false
+      - -master.telemetry=false
+      - -volume.allowUntrustedRemoteEndpoints=false
+      - -volume.fileSizeLimitMB=16
+      - -volume.concurrentUploadLimitMB=16
+      - -volume.concurrentDownloadLimitMB=16
+      - -filer.concurrentUploadLimitMB=16
+      - -s3.concurrentUploadLimitMB=16
+    restart: unless-stopped
+    user: "10001:10001"
+    environment:
+      AWS_ACCESS_KEY_ID: ${UOK_OBJECT_STORE_ACCESS_KEY:?set UOK_OBJECT_STORE_ACCESS_KEY}
+      AWS_SECRET_ACCESS_KEY: ${UOK_OBJECT_STORE_SECRET_KEY:?set UOK_OBJECT_STORE_SECRET_KEY}
+      S3_BUCKET: ${UOK_OBJECT_STORE_BUCKET:-uok-evidence}
+    depends_on:
+      object-store-init:
+        condition: service_completed_successfully
+    ports:
+      - "127.0.0.1:${UOK_OBJECT_STORE_PORT:-18333}:8333"
+    volumes:
+      - uok_next_object_store_data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+    mem_limit: 512m
+    cpus: 1.0
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9333/cluster/status"]
+      interval: 3s
+      timeout: 2s
+      retries: 20
+      start_period: 10s
+
   migrate:
     image: localhost/uok-next:${UOK_IMAGE_TAG:-local}
     build:
@@ -77,6 +158,8 @@ services:
       DATABASE_URL: ecto://${UOK_DB_USER:-uok_next}:${UOK_DB_PASSWORD:?set UOK_DB_PASSWORD}@postgres:5432/${UOK_DB_NAME:-uok_next_dev}
     depends_on:
       postgres:
+        condition: service_healthy
+      object-store:
         condition: service_healthy
     read_only: true
     tmpfs:
@@ -95,6 +178,8 @@ services:
     depends_on:
       migrate:
         condition: service_completed_successfully
+      object-store:
+        condition: service_healthy
     read_only: true
     tmpfs:
       - /tmp:size=32m,mode=1777
@@ -146,3 +231,4 @@ services:
 
 volumes:
   uok_next_postgres19_data:
+  uok_next_object_store_data:

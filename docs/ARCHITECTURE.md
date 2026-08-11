@@ -58,7 +58,12 @@ and retirement requirements are defined in
 Stores business documents and evidence objects. PostgreSQL stores metadata,
 hashes, policy, retention, review state, and object references. Upload,
 download, promotion, redaction, quarantine, and deletion are explicit audited
-commands.
+commands. The Gate 1 byte-storage boundary is a provider-neutral S3 port;
+SeaweedFS is only the local/CI qualifier and does not become a production
+selection or policy authority. ADR-0009 governs this boundary.
+Candidate bytes are capped at 8 MiB, S3 control responses at 64 KiB, writes use
+create-only semantics, and read-back verifies exact length plus SHA-256 before
+any future command may promote an object.
 
 ### Durable work layer
 

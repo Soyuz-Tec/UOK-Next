@@ -81,6 +81,10 @@ try {
     $env:UOK_LOCAL_SECRET_KEY_BASE = New-RandomToken -Bytes 64
     $env:UOK_LOCAL_METRICS_TOKEN = New-RandomToken -Bytes 48
     $env:UOK_APP_DB_PASSWORD = New-RandomHex -Bytes 32
+    $env:UOK_OBJECT_STORE_ACCESS_KEY = New-RandomHex -Bytes 24
+    $env:UOK_OBJECT_STORE_SECRET_KEY = New-RandomHex -Bytes 48
+    $env:UOK_OBJECT_STORE_BUCKET = "uok-evidence"
+    $env:UOK_OBJECT_STORE_PORT = "18333"
     if ([string]::IsNullOrWhiteSpace($env:UOK_DB_USER)) {
         $env:UOK_DB_USER = "uok_next"
     }
@@ -106,6 +110,9 @@ try {
     }
 
     $imageReference = "localhost/uok-next:$($env:UOK_IMAGE_TAG)"
+    $objectStorePolicy = Get-Content -LiteralPath (Join-Path $repoRoot "config/object_store_policy.json") -Raw |
+        ConvertFrom-Json
+    $objectStoreImageReference = [string]$objectStorePolicy.local_qualifier.image
     $imageMetadata = (& podman image inspect $imageReference | Out-String | ConvertFrom-Json)
     if ($LASTEXITCODE -ne 0 -or $imageMetadata.Count -ne 1) {
         throw "Unable to resolve the qualified image identity"
@@ -117,7 +124,7 @@ try {
         throw "The image identity label does not match the source revision"
     }
 
-    & podman compose -f $composePath stop proxy app-a app-b
+    & podman compose -f $composePath stop proxy app-a app-b object-store
     if ($LASTEXITCODE -ne 0) {
         throw "Existing local application containers could not be quiesced before role verification"
     }
@@ -139,6 +146,40 @@ try {
     }
     if (-not $databaseReady) {
         throw "The local qualification database did not become ready"
+    }
+
+    & podman compose -f $composePath up -d --force-recreate object-store-init object-store
+    if ($LASTEXITCODE -ne 0) {
+        throw "The local qualification object store failed to start"
+    }
+
+    $objectStoreReady = $false
+    foreach ($attempt in 1..20) {
+        & podman exec uok-next-object-store-1 curl -fsS `
+            http://127.0.0.1:9333/cluster/status 2>$null | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            $objectStoreReady = $true
+            break
+        }
+        Start-Sleep -Seconds 2
+    }
+    if (-not $objectStoreReady) {
+        throw "The local qualification object store did not become ready"
+    }
+
+    $objectStoreImageMetadata = (& podman image inspect $objectStoreImageReference |
+            Out-String | ConvertFrom-Json)
+    if ($LASTEXITCODE -ne 0 -or $objectStoreImageMetadata.Count -ne 1) {
+        throw "Unable to resolve the approved object-store image identity"
+    }
+    $objectStoreImageId = Normalize-ImageId -Value $objectStoreImageMetadata[0].Id
+    $runningObjectStoreImageId = Get-ContainerImageId -Container "uok-next-object-store-1"
+    $objectStoreContainerMetadata = (& podman container inspect uok-next-object-store-1 |
+            Out-String | ConvertFrom-Json)
+    if ($LASTEXITCODE -ne 0 -or $objectStoreContainerMetadata.Count -ne 1 -or
+        $runningObjectStoreImageId -ne $objectStoreImageId -or
+        $objectStoreContainerMetadata[0].Config.User -ne "10001:10001") {
+        throw "The object store is not running the approved non-root image identity"
     }
 
     & podman compose -f $composePath exec -T postgres psql `
@@ -320,6 +361,14 @@ try {
         throw "The authenticated metrics endpoint did not expose repository telemetry"
     }
 
+    $objectStoreQualification = (& podman exec uok-next-app-a-1 /app/bin/uok_next rpc `
+            "UokNext.Release.ObjectStoreQualification.run!()" | Out-String)
+    if ($LASTEXITCODE -ne 0 -or
+        $objectStoreQualification -notmatch
+            'Object-store create-only, integrity, and deletion qualification passed') {
+        throw "The immutable bounded object-store qualification failed"
+    }
+
     & podman compose -f $composePath stop app-a
     if ($LASTEXITCODE -ne 0) {
         throw "Unable to stop the first application replica for failover qualification"
@@ -356,6 +405,9 @@ try {
         image_id = $imageId
         app_a_image_id = $appAImageId
         app_b_image_id = $appBImageId
+        object_store_image = $objectStoreImageReference
+        object_store_image_id = $objectStoreImageId
+        object_store_round_trip = "create, collision rejection, read-after-write digest verification, and delete passed"
         replicas = 2
         single_replica_failover = "4 readiness and release probes passed"
     } | ConvertTo-Json

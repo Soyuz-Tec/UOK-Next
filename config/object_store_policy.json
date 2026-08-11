@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "protocol": "S3",
+  "local_qualifier": {
+    "provider": "SeaweedFS",
+    "version": "4.37",
+    "license": "Apache-2.0",
+    "image": "docker.io/chrislusf/seaweedfs@sha256:f898c91e42d7da5f4bb13f1efd424ff03ba85b420312eb929708a384e8a8b03d",
+    "bucket": "uok-evidence",
+    "host_port": 18333,
+    "container_user": "10001:10001"
+  },
+  "contract": {
+    "maximum_object_bytes": 8388608,
+    "maximum_control_response_bytes": 65536,
+    "initial_state": "quarantined",
+    "digest": "SHA-256",
+    "key_source": "server-derived",
+    "metadata_authority": "PostgreSQL",
+    "browser_direct_access": false,
+    "production_provider_selected": false
+  }
+}

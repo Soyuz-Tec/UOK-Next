@@ -73,19 +73,34 @@
   checks in PR #7 and was squash-merged. The exact merged revision was rebuilt
   into both local application replicas; readiness/release identity and
   single-replica failover passed without bypassing a delivery gate.
+- ADR-0009 establishes a provider-neutral S3 evidence-byte boundary. The
+  digest-pinned SeaweedFS 4.37 local/CI qualifier runs non-root with bounded
+  resources, fresh credentials, loopback-only exposure, and unused external
+  surfaces disabled or unexposed; it is not a production-provider selection.
+- Evidence candidates are limited to 8 MiB, start quarantined, use allowlisted
+  media types and server-derived tenant/evidence/content-addressed keys, and
+  must pass read-after-write byte-count and SHA-256 verification. PostgreSQL
+  remains the metadata, policy, audit, review, retention, and deletion authority.
+- The 8 MiB ceiling is fail-closed in runtime and domain code, S3 control
+  responses are capped at 64 KiB, and duplicate immutable keys are rejected in
+  both CI and local qualification.
+- The local qualification command now starts PostgreSQL and S3-compatible
+  object storage, exercises put/collision-rejection/read/verify/delete, and
+  keeps the object store present during replica identity and failover checks.
 
 ## Gate 1 remaining work
 
-1. Add a pinned local S3-compatible object-storage dependency and prove a
-   bounded evidence-object contract without moving policy into the store.
-2. Close Gate 1 only after that final candidate passes the same protected CI,
-   security, merged-revision rebuild, identity, and failover qualification.
+1. Pass the expanded protected CI and security gates for the object-storage
+   candidate.
+2. Close Gate 1 only after the protected merged revision is rebuilt and passes
+   database, object-store, release-identity, and failover qualification.
 
 ## Explicitly not yet implemented
 
 - Production identity/OIDC, session management, user-facing business APIs,
-  business-module React UI, durable outbox delivery, jobs/workflows, object storage,
-  external integrations, BI projections, or blockchain anchoring.
+  business-module React UI, durable outbox delivery, jobs/workflows, production
+  evidence metadata/commands, external integrations, BI projections, or
+  blockchain anchoring.
 - The local two-replica qualifier is not a production topology. PostgreSQL 19
   is still a single local dependency and no backup/restore receipt exists.
 - Production deployment is blocked on a selected platform, managed secrets,
@@ -94,6 +109,5 @@
 
 ## Next action
 
-Add the Gate 1 object-storage development dependency and bounded evidence-object
-contract while preserving PostgreSQL metadata authority, the selected Ecto
-implementation, and the kernel boundaries.
+Qualify, protect, merge, and rebuild the Gate 1 object-storage candidate from
+its exact merged revision; then make Gate 2 kernel v0 the one active focus.

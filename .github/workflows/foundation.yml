@@ -35,6 +35,9 @@ jobs:
       - name: Verify PostgreSQL architecture policy
         shell: pwsh
         run: .\scripts\verify_database_policy.ps1
+      - name: Verify object-storage architecture policy
+        shell: pwsh
+        run: .\scripts\verify_object_storage_policy.ps1
       - name: Verify artifact-integrity control
         shell: pwsh
         run: .\test\security\artifact_integrity_test.ps1
@@ -61,6 +64,28 @@ jobs:
           --health-interval 2s
           --health-timeout 3s
           --health-retries 20
+      object-store:
+        image: docker.io/chrislusf/seaweedfs@sha256:f898c91e42d7da5f4bb13f1efd424ff03ba85b420312eb929708a384e8a8b03d
+        env:
+          AWS_ACCESS_KEY_ID: uok_ci_object_store_access_01
+          AWS_SECRET_ACCESS_KEY: uok_ci_object_store_secret_0123456789abcdef
+          S3_BUCKET: uok-evidence
+        ports:
+          - 8333:8333
+        options: >-
+          --user 10001:10001
+          --read-only
+          --tmpfs /tmp:rw,size=33554432,mode=1777
+          --tmpfs /data:rw,size=268435456,mode=1777
+          --cap-drop ALL
+          --security-opt no-new-privileges:true
+          --pids-limit 256
+          --memory 512m
+          --cpus 1.0
+          --health-cmd "curl -fsS http://127.0.0.1:9333/cluster/status"
+          --health-interval 3s
+          --health-timeout 2s
+          --health-retries 20
     env:
       MIX_ENV: test
       UOK_DB_HOST: 127.0.0.1
@@ -69,6 +94,12 @@ jobs:
       UOK_DB_PASSWORD: uok_next_ci_only_0123456789abcdef
       UOK_TEST_DB_NAME: uok_next_test
       UOK_BUILD_REVISION: ${{ github.sha }}
+      UOK_OBJECT_STORE_INTEGRATION: "true"
+      UOK_OBJECT_STORE_TEST_HOST: 127.0.0.1
+      UOK_OBJECT_STORE_TEST_PORT: 8333
+      UOK_OBJECT_STORE_ACCESS_KEY: uok_ci_object_store_access_01
+      UOK_OBJECT_STORE_SECRET_KEY: uok_ci_object_store_secret_0123456789abcdef
+      UOK_OBJECT_STORE_BUCKET: uok-evidence
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -112,7 +143,42 @@ jobs:
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
           DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
+          OBJECT_STORE_URL: https://objects.example.invalid
+          OBJECT_STORE_ACCESS_KEY: uok_ci_object_store_access_01
+          OBJECT_STORE_SECRET_KEY: uok_ci_object_store_secret_0123456789abcdef
+          OBJECT_STORE_BUCKET: uok-evidence
         run: mix run --no-start scripts/verify_production_security.exs
+      - name: Reject missing object-store credentials
+        env:
+          MIX_ENV: prod
+          DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
+          SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+          PHX_HOST: uok-next.example.invalid
+          DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
+          OBJECT_STORE_URL: https://objects.example.invalid
+          OBJECT_STORE_ACCESS_KEY: uok_ci_object_store_access_01
+          OBJECT_STORE_BUCKET: uok-evidence
+        run: |
+          if mix run --no-start -e 'System.halt(0)'; then
+            echo "Production unexpectedly accepted a missing object-store secret"
+            exit 1
+          fi
+      - name: Reject plaintext production object storage
+        env:
+          MIX_ENV: prod
+          DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
+          SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+          PHX_HOST: uok-next.example.invalid
+          DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
+          OBJECT_STORE_URL: http://objects.example.invalid
+          OBJECT_STORE_ACCESS_KEY: uok_ci_object_store_access_01
+          OBJECT_STORE_SECRET_KEY: uok_ci_object_store_secret_0123456789abcdef
+          OBJECT_STORE_BUCKET: uok-evidence
+        run: |
+          if mix run --no-start -e 'System.halt(0)'; then
+            echo "Production unexpectedly accepted plaintext object storage"
+            exit 1
+          fi
       - name: Reject database URL TLS-policy overrides
         env:
           MIX_ENV: prod
@@ -158,6 +224,10 @@ jobs:
           PHX_HOST: localhost
           UOK_DEPLOYMENT_PROFILE: local_qualification
           METRICS_ACCESS_TOKEN: local-qualification-ci-metrics-token
+          OBJECT_STORE_URL: http://object-store:8333
+          OBJECT_STORE_ACCESS_KEY: uok_ci_object_store_access_01
+          OBJECT_STORE_SECRET_KEY: uok_ci_object_store_secret_0123456789abcdef
+          OBJECT_STORE_BUCKET: uok-evidence
         run: mix run --no-start scripts/verify_local_qualification_security.exs
       - name: Reject invalid bounded runtime settings
         env:
