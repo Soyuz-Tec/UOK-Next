@@ -21,3 +21,41 @@ jobs:
       - name: Verify code discipline
         shell: pwsh
         run: .\scripts\verify_code_discipline.ps1
+
+  verify-application:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
+        env:
+          POSTGRES_USER: uok_next
+          POSTGRES_PASSWORD: uok_next_ci_only
+          POSTGRES_DB: uok_next_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U uok_next -d uok_next_test"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      MIX_ENV: test
+      UOK_DB_HOST: 127.0.0.1
+      UOK_DB_PORT: 5432
+      UOK_DB_USER: uok_next
+      UOK_DB_PASSWORD: uok_next_ci_only
+      UOK_TEST_DB_NAME: uok_next_test
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install pinned Erlang and Elixir
+        uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124 # v1.24.1
+        with:
+          otp-version: "28.4"
+          elixir-version: "1.20.2"
+      - name: Fetch dependencies
+        run: mix deps.get
+      - name: Verify application
+        run: mix quality
+      - name: Audit Hex advisories
+        run: mix hex.audit

@@ -11,9 +11,9 @@ evidence, policy, audit lineage, and recoverability.
 
 ## Current state
 
-**Foundation Gate 0 is in progress.** The repository currently contains the
-durable product and architecture controls required before application
-scaffolding begins. No production capability is claimed.
+**Gate 1 is in progress.** The durable foundation is established and the
+Phoenix runtime/framework spike is being built. No production business
+capability is claimed.
 
 The target stack is:
 
@@ -39,6 +39,7 @@ Read these files in order before making a material change:
 7. [Roadmap](docs/ROADMAP.md)
 8. [Development continuity](docs/DEVELOPMENT_CONTINUITY.md)
 9. [Decision log](docs/DECISION_LOG.md)
+10. [Gate 1 framework spike](docs/GATE_1_FRAMEWORK_SPIKE.md)
 
 Machine-readable architecture authority is in
 [`config/module_catalog.json`](config/module_catalog.json).
@@ -62,3 +63,15 @@ Install or activate the pinned Windows Elixir/Erlang toolchain with:
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup_elixir_toolchain.ps1 -PersistUserPath
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\setup_framework_tools.ps1
 ```
+
+Start the pinned local PostgreSQL dependency and run the application checks:
+
+```powershell
+podman compose up -d postgres
+mix setup
+mix quality
+```
+
+The committed defaults bind PostgreSQL to `127.0.0.1:15432` and are strictly
+for local development. Copy `.env.example` to `.env` only when local overrides
+are required; production credentials must come from a deployment secret store.

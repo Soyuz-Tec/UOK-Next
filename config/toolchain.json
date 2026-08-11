@@ -12,12 +12,20 @@
     "python": "3.14.6",
     "podman": "5.8.3"
   },
+  "framework_spike": {
+    "ash": "~> 3.31",
+    "ash_postgres": "~> 2.11",
+    "ash_phoenix": "~> 2.3",
+    "postgrex": "~> 0.22.4",
+    "credo": "~> 1.7",
+    "sobelow": "~> 0.15.0"
+  },
+  "infrastructure": {
+    "postgres": "18.4",
+    "postgres_image": "docker.io/library/postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15"
+  },
   "deferred_pins": [
-    "ash",
-    "ash_postgres",
     "oban",
-    "postgres_container",
     "object_storage_container"
   ]
 }
-

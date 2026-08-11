@@ -1,6 +1,6 @@
 # UOK Next Architecture
 
-**Status:** Accepted target architecture; implementation not yet scaffolded
+**Status:** Accepted target architecture; Gate 1 implementation scaffolded
 
 ## 1. Architecture objective
 
@@ -159,4 +159,3 @@ Priority order:
 5. availability and real-time responsiveness;
 6. throughput and analytical performance;
 7. extensibility without uncontrolled runtime plugins.
-

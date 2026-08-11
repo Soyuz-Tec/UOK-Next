@@ -4,13 +4,14 @@
 
 **Repository:** `C:\Users\vasan\OneDrive\Documents\uok 2`
 
-**Git state at foundation start:** empty repository, branch `master`, no commits,
-no configured remote
+**Canonical repository:** `https://github.com/Soyuz-Tec/UOK-Next`
+
+**Visibility/default branch:** public, protected `main`
 
 ## One active focus
 
-**Foundation Gate 0: make product intent, architecture, ownership, decisions,
-focus, and verification durable before application scaffolding.**
+**Gate 1: prove the Phoenix runtime skeleton and compare selective Ash against
+explicit Elixir/Ecto for one tenant-scoped party-onboarding slice.**
 
 ## Verified in this increment
 
@@ -32,22 +33,32 @@ focus, and verification durable before application scaffolding.**
   Windows installer.
 - Hex 2.5.1, Rebar3, and the pinned Phoenix 1.8.9 generator are installed and
   verified through the checked-in framework-tool setup script.
+- The public GitHub repository exists, `main` is protected, foundation CI is
+  required, administrators are included, direct force-push/deletion is denied,
+  conversations must resolve, and squash/linear history is enforced.
+- The API-only Phoenix 1.8.9 skeleton and versioned `/api/v1/health` endpoint
+  are scaffolded on `codex/gate-1-framework-spike` for verification.
+- PostgreSQL 18.4 is pinned by multi-platform image digest, runs locally on
+  loopback port 15432, and passed the Ecto setup/test path.
+- Phoenix, Ash candidate, PostgreSQL adapter, Credo, and Sobelow dependencies
+  are locked; `mix quality`, `mix hex.audit`, foundation verification, and code
+  discipline verification pass locally.
+- A live Bandit smoke test returned the expected release identity from
+  `GET /api/v1/health` on `127.0.0.1`.
 
-## Foundation Gate 0 remaining work
+## Gate 1 remaining work
 
-1. Create and configure the authorized public `Soyuz-Tec/UOK-Next` repository.
-2. Configure the protected default branch when initial GitHub checks exist.
-3. Scaffold the bounded framework spike and pin only its directly selected
-   dependencies.
-4. Record the framework-spike ADR outcome after executable comparison.
+1. Implement equivalent explicit Elixir/Ecto and Ash party-onboarding paths.
+2. Run the evaluation matrix and record ADR-0002's final decision.
+3. Retain the selected implementation and remove the losing candidate.
 
 ## Explicitly not yet implemented
 
-- Phoenix, Ash, React, database, object storage, jobs, APIs, modules, UI, CI
-  runtime, deployment, integrations, or blockchain anchoring.
+- Party onboarding, Ash selection, React, persistent business modules, object
+  storage, durable jobs, integrations, or blockchain anchoring.
 - No production-readiness claim exists.
 
 ## Next action
 
-Scaffold the bounded framework spike without beginning business feature
-breadth.
+Implement the explicit Elixir/Ecto party-onboarding path and its shared
+contract tests before implementing the equivalent Ash candidate.
