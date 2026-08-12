@@ -287,9 +287,10 @@
 
 ## Next action
 
-Begin the second sequential Gate 3 vertical: product and sourcing-lane
-authority. Declare record ownership, commands, queries, events, policies,
-tenant constraints, evidence, recovery, and rollback before implementation;
-then qualify the real API and UI path before opening RFQ/comparison scope.
-Preserve the delivered party-onboarding contracts and keep the active focus on
-Gate 3.
+Implement and qualify the second sequential Gate 3 vertical: product,
+location, and sourcing-lane authority. ADR-0015 declares the separate systems
+of record, public dependencies, commands, queries, events, permissions,
+tenant constraints, evidence-backed lane decision, recovery, and rollback.
+Preserve the delivered party-onboarding contracts and do not open
+RFQ/comparison scope until this vertical passes executable API, database,
+object-storage, UI, security, and protected-delivery gates.

@@ -72,7 +72,8 @@ function Invoke-Gate3EvidenceUpload {
         [Parameter(Mandatory = $true)][string]$Token,
         [Parameter(Mandatory = $true)][string]$IdempotencyKey,
         [Parameter(Mandatory = $true)][string]$EvidenceId,
-        [Parameter(Mandatory = $true)][int]$ExpectedVersion
+        [Parameter(Mandatory = $true)][int]$ExpectedVersion,
+        [string]$Reason = "Attach qualification registration evidence"
     )
 
     $client = [Net.Http.HttpClient]::new()
@@ -85,7 +86,7 @@ function Invoke-Gate3EvidenceUpload {
         $form.Add([Net.Http.StringContent]::new($ExpectedVersion.ToString()), "expected_version")
         $form.Add([Net.Http.StringContent]::new("confidential"), "classification")
         $form.Add(
-            [Net.Http.StringContent]::new("Attach qualification registration evidence"),
+            [Net.Http.StringContent]::new($Reason),
             "reason"
         )
         $bytes = [Text.Encoding]::UTF8.GetBytes(
@@ -507,6 +508,104 @@ try {
         throw "The Gate 3 party-onboarding journey did not reach verified approval"
     }
 
+    $productHeaders = @{
+        Authorization = "Bearer $accessToken"
+        "Idempotency-Key" = [Guid]::NewGuid().ToString()
+    }
+    $productBody = @{
+        stable_identifier = "product-$flowId"
+        name = "Gate 3 Qualification Product"
+        product_kind = "commodity"
+        base_unit_code = "MT"
+        reason = "Prove governed product authority"
+    } | ConvertTo-Json -Compress
+    $product = Invoke-RestMethod -Uri "$baseUri/products" -Method Post `
+        -Headers $productHeaders -ContentType "application/json" `
+        -Body $productBody -TimeoutSec 10
+
+    $locations = @()
+    foreach ($location in @(
+            @{ suffix = "origin"; name = "Qualification Origin"; country = "GH" },
+            @{ suffix = "destination"; name = "Qualification Destination"; country = "GB" }
+        )) {
+        $locationHeaders = @{
+            Authorization = "Bearer $accessToken"
+            "Idempotency-Key" = [Guid]::NewGuid().ToString()
+        }
+        $locationBody = @{
+            stable_identifier = "$($location.suffix)-$flowId"
+            name = $location.name
+            country_code = $location.country
+            location_kind = "port"
+            reason = "Prove governed route location authority"
+        } | ConvertTo-Json -Compress
+        $createdLocation = Invoke-RestMethod -Uri "$baseUri/locations" -Method Post `
+            -Headers $locationHeaders -ContentType "application/json" `
+            -Body $locationBody -TimeoutSec 10
+        $locations += $createdLocation.data
+    }
+
+    $laneHeaders = @{
+        Authorization = "Bearer $accessToken"
+        "Idempotency-Key" = [Guid]::NewGuid().ToString()
+    }
+    $laneBody = @{
+        stable_identifier = "lane-$flowId"
+        name = "Gate 3 Qualification Sourcing Lane"
+        supplier_party_id = $party.data.id
+        product_id = $product.data.id
+        origin_location_id = $locations[0].id
+        destination_location_id = $locations[1].id
+        reason = "Prove governed sourcing authority"
+    } | ConvertTo-Json -Compress
+    $lane = Invoke-RestMethod -Uri "$baseUri/sourcing-lanes" -Method Post `
+        -Headers $laneHeaders -ContentType "application/json" -Body $laneBody -TimeoutSec 10
+
+    $laneEvidenceId = [Guid]::NewGuid().ToString()
+    $laneEvidenceKey = [Guid]::NewGuid().ToString()
+    $laneEvidenced = Invoke-Gate3EvidenceUpload `
+        -Uri "$baseUri/sourcing-lanes/$($lane.data.id)/evidence" `
+        -Token $accessToken -IdempotencyKey $laneEvidenceKey `
+        -EvidenceId $laneEvidenceId -ExpectedVersion ([int]$lane.data.lock_version) `
+        -Reason "Attach qualification sourcing authority evidence"
+    $laneEvidenceReplay = Invoke-Gate3EvidenceUpload `
+        -Uri "$baseUri/sourcing-lanes/$($lane.data.id)/evidence" `
+        -Token $accessToken -IdempotencyKey $laneEvidenceKey `
+        -EvidenceId $laneEvidenceId -ExpectedVersion ([int]$lane.data.lock_version) `
+        -Reason "Attach qualification sourcing authority evidence"
+
+    $laneTasks = Invoke-RestMethod -Uri "$baseUri/review-tasks" `
+        -Headers $readHeaders -TimeoutSec 10
+    $laneTask = @($laneTasks.data | Where-Object subject_id -eq $lane.data.id)
+    if ($laneTask.Count -ne 1 -or $laneEvidenced.data.status -ne "evidence_submitted" -or
+        $laneEvidenceReplay.data.review_task.id -ne $laneEvidenced.data.review_task.id) {
+        throw "The Gate 3 sourcing evidence or exact-task replay contract failed"
+    }
+
+    $laneDecisionHeaders = @{
+        Authorization = "Bearer $accessToken"
+        "Idempotency-Key" = [Guid]::NewGuid().ToString()
+    }
+    $laneDecisionBody = @{
+        decision = "approve"
+        reason = "Qualification sourcing evidence passed governed review"
+        task_id = $laneTask[0].id
+        expected_version = [int]$laneEvidenced.data.lock_version
+    } | ConvertTo-Json -Compress
+    $laneApproved = Invoke-RestMethod `
+        -Uri "$baseUri/sourcing-lanes/$($lane.data.id)/decision" `
+        -Method Post -Headers $laneDecisionHeaders -ContentType "application/json" `
+        -Body $laneDecisionBody -TimeoutSec 10
+    $laneDetail = Invoke-RestMethod -Uri "$baseUri/sourcing-lanes/$($lane.data.id)" `
+        -Headers $readHeaders -TimeoutSec 10
+
+    if ($laneApproved.data.status -ne "approved" -or $laneDetail.data.status -ne "approved" -or
+        @($laneDetail.data.evidence_objects).Count -ne 1 -or
+        $laneDetail.data.supplier_party_id -ne $party.data.id -or
+        $laneDetail.data.product_id -ne $product.data.id) {
+        throw "The Gate 3 product-sourcing journey did not reach verified approval"
+    }
+
     $appAImageId = Get-ContainerImageId -Container "uok-next-app-a-1"
     $appBImageId = Get-ContainerImageId -Container "uok-next-app-b-1"
     if ($appAImageId -ne $imageId -or $appBImageId -ne $imageId) {
@@ -582,6 +681,9 @@ try {
         party_onboarding_tenant_id = $env:UOK_LOCAL_TENANT_ID
         party_onboarding_flow = "authenticated create, evidence, replay, task, approval, and final read passed"
         party_onboarding_qualified_party_id = $party.data.id
+        product_sourcing_flow = "product, two locations, approved supplier, lane, evidence replay, exact task, approval, and final read passed"
+        product_sourcing_qualified_product_id = $product.data.id
+        product_sourcing_qualified_lane_id = $lane.data.id
         local_identity_credential_path = $identityCredentialPath
         replicas = 2
         single_replica_failover = "4 readiness and release probes passed"

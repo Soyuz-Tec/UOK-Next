@@ -11,8 +11,38 @@ defmodule UokNext.Modules.Platform.Evidence.Public do
   @spec store_party_candidate(String.t(), String.t(), map(), binary(), term(), String.t()) ::
           tuple()
   def store_party_candidate(evidence_id, party_id, attrs, content, context, idempotency_key) do
+    store_candidate(
+      evidence_id,
+      "party",
+      party_id,
+      attrs,
+      content,
+      context,
+      idempotency_key
+    )
+  end
+
+  @spec store_candidate(String.t(), String.t(), String.t(), map(), binary(), term(), String.t()) ::
+          tuple()
+  def store_candidate(
+        evidence_id,
+        subject_type,
+        subject_id,
+        attrs,
+        content,
+        context,
+        idempotency_key
+      ) do
     with {:ok, stored} <-
-           build_and_store(evidence_id, party_id, attrs, content, context, idempotency_key) do
+           build_and_store(
+             evidence_id,
+             subject_type,
+             subject_id,
+             attrs,
+             content,
+             context,
+             idempotency_key
+           ) do
       EvidenceCandidates.verify(
         EctoEvidenceCandidateStore,
         evidence_id,
@@ -25,21 +55,44 @@ defmodule UokNext.Modules.Platform.Evidence.Public do
 
   @spec get_verified_candidate(String.t(), String.t(), term()) :: tuple()
   def get_verified_candidate(evidence_id, party_id, context) do
+    get_verified_candidate(evidence_id, "party", party_id, context)
+  end
+
+  @spec get_verified_candidate(String.t(), String.t(), String.t(), term()) :: tuple()
+  def get_verified_candidate(evidence_id, subject_type, subject_id, context) do
     EvidenceCandidates.get_verified(
       EctoEvidenceCandidateStore,
       evidence_id,
-      "party",
-      party_id,
+      subject_type,
+      subject_id,
       context
     )
   end
 
   @spec list_party_evidence(String.t(), term()) :: tuple()
   def list_party_evidence(party_id, context) do
-    EvidenceCandidates.list_for_subject(EctoEvidenceCandidateStore, "party", party_id, context)
+    list_subject_evidence("party", party_id, context)
   end
 
-  defp build_and_store(evidence_id, party_id, attrs, content, context, idempotency_key) do
+  @spec list_subject_evidence(String.t(), String.t(), term()) :: tuple()
+  def list_subject_evidence(subject_type, subject_id, context) do
+    EvidenceCandidates.list_for_subject(
+      EctoEvidenceCandidateStore,
+      subject_type,
+      subject_id,
+      context
+    )
+  end
+
+  defp build_and_store(
+         evidence_id,
+         subject_type,
+         subject_id,
+         attrs,
+         content,
+         context,
+         idempotency_key
+       ) do
     object_attrs = %{
       id: evidence_id,
       tenant_id: context.tenant_id,
@@ -50,7 +103,7 @@ defmodule UokNext.Modules.Platform.Evidence.Public do
       with {:ok, _prepared, _disposition} <-
              EvidenceCandidates.prepare(
                EctoEvidenceCandidateStore,
-               prepare_attrs(evidence, party_id, attrs),
+               prepare_attrs(evidence, subject_type, subject_id, attrs),
                context,
                IdempotencyKey.derive(idempotency_key, "evidence-prepare")
              ) do
@@ -66,11 +119,11 @@ defmodule UokNext.Modules.Platform.Evidence.Public do
     EvidenceObject.new(attrs, content, maximum)
   end
 
-  defp prepare_attrs(evidence, party_id, attrs) do
+  defp prepare_attrs(evidence, subject_type, subject_id, attrs) do
     %{
       id: evidence.id,
-      subject_type: "party",
-      subject_id: party_id,
+      subject_type: subject_type,
+      subject_id: subject_id,
       classification: value(attrs, :classification),
       content_type: evidence.content_type,
       byte_size: evidence.byte_size,

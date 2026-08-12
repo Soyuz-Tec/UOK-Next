@@ -66,10 +66,18 @@ config :uok_next, :local_qualification_identity, %{
   permissions: [
     "evidence:read",
     "evidence:upload",
+    "locations:create",
+    "locations:read",
     "parties:approve",
     "parties:create",
     "parties:evidence:submit",
     "parties:read",
+    "products:create",
+    "products:read",
+    "sourcing:lanes:approve",
+    "sourcing:lanes:create",
+    "sourcing:lanes:evidence:submit",
+    "sourcing:lanes:read",
     "workflow:tasks:read"
   ]
 }

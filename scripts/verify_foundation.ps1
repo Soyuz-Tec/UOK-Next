@@ -36,6 +36,8 @@ $requiredFiles = @(
     "docs/adr/0011-governed-human-task-kernel.md",
     "docs/adr/0012-provider-neutral-connector-receipts.md",
     "docs/adr/0013-governed-non-executing-agent-plans.md",
+    "docs/adr/0014-gate-3-party-onboarding-vertical.md",
+    "docs/adr/0015-product-location-and-sourcing-lane-authority.md",
     "config/module_catalog.json",
     "config/external_identity_policy.json",
     "config/database_policy.json",

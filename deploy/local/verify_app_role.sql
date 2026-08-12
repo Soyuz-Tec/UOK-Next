@@ -53,6 +53,9 @@ BEGIN
     has_table_privilege('uok_app', 'public.kernel_audit_events', 'SELECT,INSERT') AND
     has_table_privilege('uok_app', 'public.kernel_outbox_events', 'SELECT,INSERT') AND
     has_table_privilege('uok_app', 'public.master_parties', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.master_products', 'SELECT,INSERT') AND
+    has_table_privilege('uok_app', 'public.master_locations', 'SELECT,INSERT') AND
+    has_table_privilege('uok_app', 'public.trade_sourcing_lanes', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_workflow_human_tasks', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_integrations_connector_receipts', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_agents_plans', 'SELECT,INSERT,UPDATE') AND
@@ -76,6 +79,13 @@ BEGIN
       ('public', 'master_parties', 'SELECT'),
       ('public', 'master_parties', 'INSERT'),
       ('public', 'master_parties', 'UPDATE'),
+      ('public', 'master_products', 'SELECT'),
+      ('public', 'master_products', 'INSERT'),
+      ('public', 'master_locations', 'SELECT'),
+      ('public', 'master_locations', 'INSERT'),
+      ('public', 'trade_sourcing_lanes', 'SELECT'),
+      ('public', 'trade_sourcing_lanes', 'INSERT'),
+      ('public', 'trade_sourcing_lanes', 'UPDATE'),
       ('public', 'platform_workflow_human_tasks', 'SELECT'),
       ('public', 'platform_workflow_human_tasks', 'INSERT'),
       ('public', 'platform_workflow_human_tasks', 'UPDATE'),

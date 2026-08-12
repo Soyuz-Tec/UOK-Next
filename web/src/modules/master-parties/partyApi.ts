@@ -27,9 +27,6 @@ export type Party = {
   evidence_objects?: EvidenceObject[];
 };
 
-type ApiError = { error?: { message?: string } };
-type Envelope<T> = { data: T };
-
 export type CreatePartyInput = {
   stable_identifier: string;
   legal_name: string;
@@ -38,31 +35,16 @@ export type CreatePartyInput = {
   reason: string;
 };
 
-async function request<T>(path: string, token: string, init: RequestInit = {}): Promise<T> {
-  const response = await fetch(path, {
-    ...init,
-    credentials: "same-origin",
-    headers: { authorization: `Bearer ${token}`, ...init.headers },
-  });
-  const body = (await response.json()) as Envelope<T> & ApiError;
-
-  if (!response.ok) {
-    throw new Error(body.error?.message ?? "The request was rejected");
-  }
-
-  return body.data;
-}
-
 export function listParties(token: string): Promise<Party[]> {
-  return request<Party[]>("/api/v1/parties?limit=100", token);
+  return authorizedRequest<Party[]>("/api/v1/parties?limit=100", token);
 }
 
 export function listReviewTasks(token: string): Promise<ReviewTask[]> {
-  return request<ReviewTask[]>("/api/v1/review-tasks", token);
+  return authorizedRequest<ReviewTask[]>("/api/v1/review-tasks", token);
 }
 
 export function createParty(token: string, input: CreatePartyInput): Promise<Party> {
-  return request<Party>("/api/v1/parties", token, {
+  return authorizedRequest<Party>("/api/v1/parties", token, {
     method: "POST",
     headers: { "content-type": "application/json", "idempotency-key": crypto.randomUUID() },
     body: JSON.stringify(input),
@@ -83,7 +65,7 @@ export function uploadEvidence(
   form.set("reason", reason);
   form.set("file", file);
 
-  return request<Party>(`/api/v1/parties/${party.id}/evidence`, token, {
+  return authorizedRequest<Party>(`/api/v1/parties/${party.id}/evidence`, token, {
     method: "POST",
     headers: { "idempotency-key": crypto.randomUUID() },
     body: form,
@@ -97,7 +79,7 @@ export function decideParty(
   decision: "approve" | "hold",
   reason: string,
 ): Promise<Party> {
-  return request<Party>(`/api/v1/parties/${party.id}/decision`, token, {
+  return authorizedRequest<Party>(`/api/v1/parties/${party.id}/decision`, token, {
     method: "POST",
     headers: { "content-type": "application/json", "idempotency-key": crypto.randomUUID() },
     body: JSON.stringify({
@@ -108,3 +90,4 @@ export function decideParty(
     }),
   });
 }
+import { authorizedRequest } from "../../shared/authorizedApi";
