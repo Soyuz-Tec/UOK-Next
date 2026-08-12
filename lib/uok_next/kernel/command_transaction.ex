@@ -20,7 +20,7 @@ defmodule UokNext.Kernel.CommandTransaction do
   @idempotency_pattern ~r/^[A-Za-z0-9][A-Za-z0-9._:-]{7,127}$/
 
   @type operation_result ::
-          {:ok, map(), map(), [map()]}
+          {:ok, map(), map() | [map()], [map()]}
           | {:error, CommandError.t()}
 
   @spec execute(CommandContext.t(), String.t(), String.t(), term(), (-> operation_result())) ::
@@ -57,7 +57,7 @@ defmodule UokNext.Kernel.CommandTransaction do
     case operation.() do
       {:ok, response, audit, events} ->
         now = DateTime.utc_now()
-        insert_audit!(context, receipt_id, audit, now)
+        insert_audits!(context, receipt_id, audit, now)
         insert_events!(context, receipt_id, events, now)
         complete_receipt!(receipt_id, response, now)
         {:ok, response, :executed}
@@ -121,25 +121,28 @@ defmodule UokNext.Kernel.CommandTransaction do
       is_map(receipt.response)
   end
 
-  defp insert_audit!(context, receipt_id, audit, now) do
-    Repo.insert_all(AuditEvent, [
-      %{
-        id: Ecto.UUID.generate(),
-        tenant_id: context.tenant_id,
-        actor_id: context.actor_id,
-        correlation_id: context.correlation_id,
-        command_receipt_id: receipt_id,
-        action: Map.fetch!(audit, :action),
-        resource_type: Map.fetch!(audit, :resource_type),
-        resource_id: Map.fetch!(audit, :resource_id),
-        outcome: Map.get(audit, :outcome, "succeeded"),
-        reason: Map.fetch!(audit, :reason),
-        classification: Map.get(audit, :classification, "internal"),
-        metadata: Map.get(audit, :metadata, %{}),
-        occurred_at: now,
-        inserted_at: now
-      }
-    ])
+  defp insert_audits!(context, receipt_id, audits, now) do
+    rows = audits |> List.wrap() |> Enum.map(&audit_row(&1, context, receipt_id, now))
+    Repo.insert_all(AuditEvent, rows)
+  end
+
+  defp audit_row(audit, context, receipt_id, now) do
+    %{
+      id: Ecto.UUID.generate(),
+      tenant_id: context.tenant_id,
+      actor_id: context.actor_id,
+      correlation_id: context.correlation_id,
+      command_receipt_id: receipt_id,
+      action: Map.fetch!(audit, :action),
+      resource_type: Map.fetch!(audit, :resource_type),
+      resource_id: Map.fetch!(audit, :resource_id),
+      outcome: Map.get(audit, :outcome, "succeeded"),
+      reason: Map.fetch!(audit, :reason),
+      classification: Map.get(audit, :classification, "internal"),
+      metadata: Map.get(audit, :metadata, %{}),
+      occurred_at: now,
+      inserted_at: now
+    }
   end
 
   defp insert_events!(context, receipt_id, events, now) do

@@ -5,6 +5,7 @@ defmodule UokNext.Modules.Master.Parties.ContractTest do
 
   alias UokNext.Kernel.{AuditEvent, CommandReceipt, OutboxEvent}
   alias UokNext.Modules.Master.Parties.Public
+  alias UokNext.Modules.Platform.Workflow.Infrastructure.HumanTaskRecord
 
   test "the selected implementation preserves the complete command contract" do
     context = context()
@@ -26,17 +27,23 @@ defmodule UokNext.Modules.Master.Parties.ContractTest do
     assert {:ok, approved, :executed} =
              Public.decide(
                party["id"],
-               %{"decision" => "approve", "reason" => "Evidence passed compliance review"},
+               %{
+                 "decision" => "approve",
+                 "reason" => "Evidence passed compliance review",
+                 "task_id" => evidenced["review_task"]["id"]
+               },
                evidenced["lock_version"],
                context,
                Ecto.UUID.generate()
              )
 
     assert approved["status"] == "approved"
+    assert approved["review_task"]["status"] == "completed"
     assert approved["lock_version"] == 3
     assert Repo.aggregate(CommandReceipt, :count) == 3
-    assert Repo.aggregate(AuditEvent, :count) == 3
-    assert Repo.aggregate(OutboxEvent, :count) == 3
+    assert Repo.aggregate(AuditEvent, :count) == 5
+    assert Repo.aggregate(OutboxEvent, :count) == 5
+    assert Repo.aggregate(HumanTaskRecord, :count) == 1
   end
 
   test "the selected contract fails closed across authorization, tenancy, and concurrency" do
@@ -54,7 +61,7 @@ defmodule UokNext.Modules.Master.Parties.ContractTest do
     assert {:error, hidden} = Public.get(party["id"], context())
     assert hidden.code == "not_found"
 
-    assert {:ok, _evidenced, :executed} =
+    assert {:ok, evidenced, :executed} =
              Public.submit_evidence(
                party["id"],
                evidence_attrs(),
@@ -66,7 +73,11 @@ defmodule UokNext.Modules.Master.Parties.ContractTest do
     assert {:error, stale} =
              Public.decide(
                party["id"],
-               %{"decision" => "hold", "reason" => "Review requires clarification"},
+               %{
+                 "decision" => "hold",
+                 "reason" => "Review requires clarification",
+                 "task_id" => evidenced["review_task"]["id"]
+               },
                party["lock_version"],
                owner_context,
                Ecto.UUID.generate()

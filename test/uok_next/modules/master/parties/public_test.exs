@@ -6,6 +6,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
   alias UokNext.Kernel.{AuditEvent, CommandReceipt, OutboxEvent, TenantTransaction}
   alias UokNext.Modules.Master.Parties.Infrastructure.PartyRecord
   alias UokNext.Modules.Master.Parties.Public
+  alias UokNext.Modules.Platform.Workflow.Infrastructure.HumanTaskRecord
 
   describe "create_draft/3" do
     test "commits party state, receipt, audit, and outbox atomically" do
@@ -129,11 +130,16 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
 
       assert evidenced["status"] == "evidence_submitted"
       assert evidenced["lock_version"] == 2
+      assert evidenced["review_task"]["status"] == "open"
 
       assert {:ok, approved, :executed} =
                Public.decide(
                  party["id"],
-                 %{"decision" => "approve", "reason" => "Evidence passed compliance review"},
+                 %{
+                   "decision" => "approve",
+                   "reason" => "Evidence passed compliance review",
+                   "task_id" => evidenced["review_task"]["id"]
+                 },
                  evidenced["lock_version"],
                  context,
                  Ecto.UUID.generate()
@@ -141,8 +147,11 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
 
       assert approved["status"] == "approved"
       assert approved["lock_version"] == 3
-      assert tenant_count(AuditEvent, context) == 3
-      assert tenant_count(OutboxEvent, context) == 3
+      assert approved["review_task"]["status"] == "completed"
+      assert approved["review_task"]["resolution"] == "approve"
+      assert tenant_count(HumanTaskRecord, context) == 1
+      assert tenant_count(AuditEvent, context) == 5
+      assert tenant_count(OutboxEvent, context) == 5
       assert tenant_count(CommandReceipt, context) == 3
     end
 
@@ -153,7 +162,11 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:error, missing_evidence} =
                Public.decide(
                  party["id"],
-                 %{"decision" => "approve", "reason" => "Attempt approval without evidence"},
+                 %{
+                   "decision" => "approve",
+                   "reason" => "Attempt approval without evidence",
+                   "task_id" => Ecto.UUID.generate()
+                 },
                  party["lock_version"],
                  context,
                  Ecto.UUID.generate()
@@ -173,7 +186,11 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:error, stale} =
                Public.decide(
                  party["id"],
-                 %{"decision" => "hold", "reason" => "Review requires clarification"},
+                 %{
+                   "decision" => "hold",
+                   "reason" => "Review requires clarification",
+                   "task_id" => evidenced["review_task"]["id"]
+                 },
                  party["lock_version"],
                  context,
                  Ecto.UUID.generate()
@@ -181,6 +198,152 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
 
       assert stale.code == "stale_state"
       assert evidenced["status"] == "evidence_submitted"
+      assert tenant_one(HumanTaskRecord, context).status == "open"
+    end
+
+    test "rejects a task for a different subject and rolls back the command receipt" do
+      context = context()
+      first_party = create_party(context)
+      second_party = create_party(context)
+
+      assert {:ok, first, :executed} =
+               Public.submit_evidence(
+                 first_party["id"],
+                 evidence_attrs(),
+                 first_party["lock_version"],
+                 context,
+                 Ecto.UUID.generate()
+               )
+
+      assert {:ok, second, :executed} =
+               Public.submit_evidence(
+                 second_party["id"],
+                 evidence_attrs(),
+                 second_party["lock_version"],
+                 context,
+                 Ecto.UUID.generate()
+               )
+
+      receipts_before = tenant_count(CommandReceipt, context)
+
+      assert {:error, mismatch} =
+               Public.decide(
+                 second_party["id"],
+                 %{
+                   "decision" => "approve",
+                   "reason" => "Attempt to substitute another review task",
+                   "task_id" => first["review_task"]["id"]
+                 },
+                 second["lock_version"],
+                 context,
+                 Ecto.UUID.generate()
+               )
+
+      assert mismatch.code == "validation_failed"
+      assert tenant_count(CommandReceipt, context) == receipts_before
+      assert tenant_count(HumanTaskRecord, context) == 2
+      assert Enum.all?(tenant_all(HumanTaskRecord, context), &(&1.status == "open"))
+    end
+
+    test "replays the completed decision but rejects consumed-task reuse as a new command" do
+      context = context()
+      party = create_party(context)
+
+      assert {:ok, evidenced, :executed} =
+               Public.submit_evidence(
+                 party["id"],
+                 evidence_attrs(),
+                 party["lock_version"],
+                 context,
+                 Ecto.UUID.generate()
+               )
+
+      decision = %{
+        "decision" => "approve",
+        "reason" => "Evidence passed compliance review",
+        "task_id" => evidenced["review_task"]["id"]
+      }
+
+      decision_key = Ecto.UUID.generate()
+
+      assert {:ok, approved, :executed} =
+               Public.decide(
+                 party["id"],
+                 decision,
+                 evidenced["lock_version"],
+                 context,
+                 decision_key
+               )
+
+      counts = evidence_counts(context)
+
+      assert {:ok, ^approved, :replayed} =
+               Public.decide(
+                 party["id"],
+                 decision,
+                 evidenced["lock_version"],
+                 context,
+                 decision_key
+               )
+
+      assert evidence_counts(context) == counts
+
+      assert {:error, consumed} =
+               Public.decide(
+                 party["id"],
+                 decision,
+                 approved["lock_version"],
+                 context,
+                 Ecto.UUID.generate()
+               )
+
+      assert consumed.code == "validation_failed"
+      assert evidence_counts(context) == counts
+      assert tenant_one(HumanTaskRecord, context).status == "completed"
+    end
+
+    test "tenant mismatch hides the review task and preserves both records" do
+      owner_context = context()
+      other_context = context(%{tenant_id: owner_context.tenant_id})
+      foreign_context = context()
+      party = create_party(owner_context)
+
+      assert {:ok, evidenced, :executed} =
+               Public.submit_evidence(
+                 party["id"],
+                 evidence_attrs(),
+                 party["lock_version"],
+                 owner_context,
+                 Ecto.UUID.generate()
+               )
+
+      foreign_party = create_party(foreign_context)
+
+      assert {:ok, foreign_evidenced, :executed} =
+               Public.submit_evidence(
+                 foreign_party["id"],
+                 evidence_attrs(),
+                 foreign_party["lock_version"],
+                 foreign_context,
+                 Ecto.UUID.generate()
+               )
+
+      assert {:error, hidden} =
+               Public.decide(
+                 party["id"],
+                 %{
+                   "decision" => "approve",
+                   "reason" => "Attempt cross-tenant task substitution",
+                   "task_id" => foreign_evidenced["review_task"]["id"]
+                 },
+                 evidenced["lock_version"],
+                 other_context,
+                 Ecto.UUID.generate()
+               )
+
+      assert hidden.code == "not_found"
+      assert tenant_one(HumanTaskRecord, owner_context).status == "open"
+      assert tenant_one(HumanTaskRecord, foreign_context).status == "open"
     end
 
     test "tenant mismatch is indistinguishable from an unknown record" do
@@ -206,13 +369,25 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
     test "database row-level security rejects an unset or different tenant" do
       owner_context = context()
       other_context = context()
-      _party = create_party(owner_context)
+      party = create_party(owner_context)
+
+      assert {:ok, _evidenced, :executed} =
+               Public.submit_evidence(
+                 party["id"],
+                 evidence_attrs(),
+                 party["lock_version"],
+                 owner_context,
+                 Ecto.UUID.generate()
+               )
 
       Repo.query!("SET LOCAL ROLE pg_read_all_data", [], log: false)
       Repo.query!("SELECT set_config('uok.tenant_id', '', true)", [], log: false)
       assert Repo.aggregate(PartyRecord, :count) == 0
+      assert Repo.aggregate(HumanTaskRecord, :count) == 0
       assert tenant_count(PartyRecord, other_context) == 0
+      assert tenant_count(HumanTaskRecord, other_context) == 0
       assert tenant_count(PartyRecord, owner_context) == 1
+      assert tenant_count(HumanTaskRecord, owner_context) == 1
     end
 
     test "denies each consequential action without its named permission" do
@@ -235,14 +410,61 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
                )
 
       assert denied.code == "forbidden"
+
+      assert {:ok, evidenced, :executed} =
+               Public.submit_evidence(
+                 party["id"],
+                 evidence_attrs(),
+                 party["lock_version"],
+                 owner_context,
+                 Ecto.UUID.generate()
+               )
+
+      assert {:error, decision_denied} =
+               Public.decide(
+                 party["id"],
+                 %{
+                   "decision" => "approve",
+                   "reason" => "Attempt decision without approval authority",
+                   "task_id" => evidenced["review_task"]["id"]
+                 },
+                 evidenced["lock_version"],
+                 evidence_context,
+                 Ecto.UUID.generate()
+               )
+
+      assert decision_denied.code == "forbidden"
+      assert tenant_one(HumanTaskRecord, owner_context).status == "open"
     end
   end
 
   defp tenant_count(schema, context) do
-    TenantTransaction.run(context, fn -> Repo.aggregate(schema, :count) end)
+    TenantTransaction.run(context, fn ->
+      Repo.aggregate(
+        from(record in schema, where: record.tenant_id == ^context.tenant_id),
+        :count
+      )
+    end)
   end
 
   defp tenant_one(schema, context) do
-    TenantTransaction.run(context, fn -> Repo.one!(schema) end)
+    TenantTransaction.run(context, fn ->
+      Repo.one!(from record in schema, where: record.tenant_id == ^context.tenant_id)
+    end)
+  end
+
+  defp tenant_all(schema, context) do
+    TenantTransaction.run(context, fn ->
+      Repo.all(from record in schema, where: record.tenant_id == ^context.tenant_id)
+    end)
+  end
+
+  defp evidence_counts(context) do
+    %{
+      receipts: tenant_count(CommandReceipt, context),
+      audits: tenant_count(AuditEvent, context),
+      events: tenant_count(OutboxEvent, context),
+      tasks: tenant_count(HumanTaskRecord, context)
+    }
   end
 end

@@ -42,6 +42,7 @@ defmodule UokNextWeb.Spikes.PartyControllerTest do
         |> post(~p"/api/v1/spikes/explicit/parties/#{party["id"]}/decision", %{
           "decision" => "approve",
           "reason" => "Evidence passed compliance review",
+          "task_id" => evidenced["review_task"]["id"],
           "expected_version" => evidenced["lock_version"]
         })
         |> json_response(200)

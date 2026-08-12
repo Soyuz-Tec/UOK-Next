@@ -32,6 +32,7 @@ $requiredFiles = @(
     "docs/adr/0008-react-typescript-delivery-foundation.md",
     "docs/adr/0009-provider-neutral-s3-evidence-object-foundation.md",
     "docs/adr/0010-role-based-external-system-identification.md",
+    "docs/adr/0011-governed-human-task-kernel.md",
     "config/module_catalog.json",
     "config/external_identity_policy.json",
     "config/database_policy.json",
