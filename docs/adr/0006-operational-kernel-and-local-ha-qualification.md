@@ -4,6 +4,8 @@
 
 **Date:** 2026-08-11
 
+**Amended:** 2026-08-12
+
 ## Context
 
 The first business slice needs durable command semantics and production-shaped
@@ -37,6 +39,12 @@ also does not yet define a trusted production ingress or backup target.
   also establishes a live session under the stale authorization, blocks new
   non-superuser connections, terminates existing client sessions, and proves
   that the stale session cannot survive reconciliation.
+- The local qualifier must also serve the read-only browser shell through its
+  loopback proxy. Plaintext delivery is excluded from the HTTPS redirect only
+  when the explicit local profile, loopback request host, private container
+  binding, isolated database host, and isolated object-store transport all
+  match. Any missing invariant fails closed, and production never activates
+  this exception.
 - Until a production ingress ADR proves TLS termination, header sanitization,
   network isolation, and source identity, the default production endpoint
   remains loopback-only and PostgreSQL TLS remains mandatory.
@@ -48,6 +56,11 @@ release-identity requests after HAProxy's bounded failure-detection window when
 one of two healthy application replicas is deliberately stopped. Commands must
 remain atomic under database errors and replay the same completed result for
 the same tenant, key, command, and payload.
+
+The same qualifier must follow the shell route through the proxy to an HTTP 200
+HTML response. Production configuration tests must prove that the local
+exception is inactive and that spoofed host and forwarded-protocol headers do
+not bypass the HTTPS redirect.
 
 Provisional production objectives are 99.9% monthly API availability, a
 15-minute recovery point objective, and a 60-minute recovery time objective.
@@ -81,5 +94,7 @@ backup/restore evidence, monitoring destinations, and rollback qualification.
 - two healthy replicas through HAProxy, authenticated metrics, immutable image
   and per-replica release-identity verification, and a live single-replica
   failover request;
+- loopback browser-shell proof plus positive local-profile and negative
+  non-local/production transport tests;
 - architecture, static analysis, dependency audit, container scan, and a
   repository-wide Codex Security assessment before publication.

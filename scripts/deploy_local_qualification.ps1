@@ -346,7 +346,8 @@ try {
         throw "The local qualification proxy failed to start"
     }
 
-    $baseUri = "http://127.0.0.1:$Port/api/v1"
+    $baseOrigin = "http://127.0.0.1:$Port"
+    $baseUri = "$baseOrigin/api/v1"
     $ready = $null
     foreach ($attempt in 1..15) {
         try {
@@ -362,6 +363,12 @@ try {
     }
     if ($null -eq $ready) {
         throw "The local qualification endpoint did not become ready"
+    }
+
+    $shell = Invoke-WebRequest -Uri "$baseOrigin/" -MaximumRedirection 3 `
+        -TimeoutSec 10 -UseBasicParsing
+    if ($shell.StatusCode -ne 200 -or $shell.Content -notmatch '<title>UOK Next</title>') {
+        throw "The local qualification browser shell was not reachable through the proxy"
     }
 
     $appAImageId = Get-ContainerImageId -Container "uok-next-app-a-1"
@@ -435,6 +442,7 @@ try {
         object_store_image = $objectStoreImageReference
         object_store_image_id = $objectStoreImageId
         object_store_round_trip = "create, collision rejection, read-after-write digest verification, and delete passed"
+        browser_shell = "HTTP 200 through the isolated local qualification proxy"
         replicas = 2
         single_replica_failover = "4 readiness and release probes passed"
     } | ConvertTo-Json

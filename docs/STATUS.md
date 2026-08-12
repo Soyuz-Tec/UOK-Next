@@ -49,7 +49,10 @@
 - The supported local qualifier runs one migration job and two identical app
   replicas behind HAProxy. Readiness, release identity, metrics authorization,
   reconciled least-privileged database access, DNS refresh, per-replica image
-  identity, and single-replica failover have been exercised on Podman.
+  identity, single-replica failover, and an HTTP 200 browser-shell request have
+  been exercised on Podman. Plaintext shell delivery fails closed unless the
+  explicit local profile, loopback host, private container binding, isolated
+  database, and isolated object store all match; production HTTPS is unchanged.
 - Application tests include authorization, input, tenant mismatch, database
   row-level isolation, atomic audit/outbox/receipt creation, replay conflict,
   stale state, unavailable dependencies, schema-readiness failure paths, and a
@@ -193,6 +196,10 @@
 - Gate 2 Kernel v0 is therefore qualified for local development and CI. This
   is not a production-readiness, production-availability, or completed
   user-facing business-operation claim.
+- A final browser smoke identified and closed a local-only transport gap: the
+  qualifier now proves that the shell is reachable through its loopback proxy,
+  while negative configuration checks prove non-local hosts and production
+  profiles still redirect to HTTPS.
 
 ## Explicitly not yet implemented
 

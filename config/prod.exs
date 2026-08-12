@@ -6,6 +6,7 @@ import Config
 config :uok_next, UokNextWeb.Endpoint,
   force_ssl: [
     exclude: [
+      conn: {UokNextWeb.LocalQualificationTransport, :http_allowed?, []},
       paths: [
         "/api/v1/health",
         "/api/v1/health/live",

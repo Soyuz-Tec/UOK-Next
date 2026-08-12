@@ -56,6 +56,8 @@ $requiredFiles = @(
     "scripts/verify_web_foundation.ps1",
     "scripts/security/ArtifactIntegrity.psm1",
     "scripts/verify_production_security.exs",
+    "scripts/verify_local_qualification_security.exs",
+    "lib/uok_next_web/local_qualification_transport.ex",
     "lib/uok_next/modules/platform/evidence/infrastructure/bounded_req_http_client.ex",
     "deploy/postgres/bootstrap.sql",
     "deploy/postgres/verify_core_baseline.sql",
