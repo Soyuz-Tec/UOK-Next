@@ -66,6 +66,28 @@ function Get-ReplicaRelease {
     $response | ConvertFrom-Json
 }
 
+function Test-NativeCommand {
+    param(
+        [Parameter(Mandatory = $true)][string]$FilePath,
+        [Parameter(Mandatory = $true)][string[]]$Arguments
+    )
+
+    # Windows PowerShell converts native stderr into error records. Expected
+    # probe failures and Podman's external-provider banner must not bypass the
+    # retry policy when the script otherwise runs fail-fast.
+    $previousErrorActionPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = "SilentlyContinue"
+        & $FilePath @Arguments *> $null
+        $succeeded = $LASTEXITCODE -eq 0
+    }
+    finally {
+        $ErrorActionPreference = $previousErrorActionPreference
+    }
+
+    $succeeded
+}
+
 Push-Location $repoRoot
 try {
     $revision = (& git rev-parse HEAD).Trim()
@@ -136,9 +158,11 @@ try {
 
     $databaseReady = $false
     foreach ($attempt in 1..15) {
-        & podman compose -f $composePath exec -T postgres pg_isready `
-            -U "${env:UOK_DB_USER}" -d "${env:UOK_DB_NAME}" 2>$null | Out-Null
-        if ($LASTEXITCODE -eq 0) {
+        $databaseProbeArguments = @(
+            "compose", "-f", $composePath, "exec", "-T", "postgres", "pg_isready",
+            "-U", $env:UOK_DB_USER, "-d", $env:UOK_DB_NAME
+        )
+        if (Test-NativeCommand -FilePath "podman" -Arguments $databaseProbeArguments) {
             $databaseReady = $true
             break
         }
@@ -155,9 +179,11 @@ try {
 
     $objectStoreReady = $false
     foreach ($attempt in 1..20) {
-        & podman exec uok-next-object-store-1 curl -fsS `
-            http://127.0.0.1:9333/cluster/status 2>$null | Out-Null
-        if ($LASTEXITCODE -eq 0) {
+        $objectStoreProbeArguments = @(
+            "exec", "uok-next-object-store-1", "curl", "-fsS",
+            "http://127.0.0.1:9333/cluster/status"
+        )
+        if (Test-NativeCommand -FilePath "podman" -Arguments $objectStoreProbeArguments) {
             $objectStoreReady = $true
             break
         }
@@ -352,7 +378,8 @@ try {
 
     $release = Invoke-RestMethod -Uri "$baseUri/release" -TimeoutSec 10
     $headers = @{ Authorization = "Bearer $($env:UOK_LOCAL_METRICS_TOKEN)" }
-    $metrics = Invoke-WebRequest -Uri "$baseUri/metrics" -Headers $headers -TimeoutSec 10
+    $metrics = Invoke-WebRequest -Uri "$baseUri/metrics" -Headers $headers `
+        -TimeoutSec 10 -UseBasicParsing
 
     if ($ready.status -ne "ready" -or $release.revision -ne $revision) {
         throw "The deployed release identity or readiness response is incorrect"

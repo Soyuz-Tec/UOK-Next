@@ -8,7 +8,7 @@
 
 ## One active focus
 
-**Gate 1: complete the reproducible framework and kernel skeleton.**
+**Gate 2: integrate and negative-test Kernel v0.**
 
 ## Verified foundation
 
@@ -23,7 +23,7 @@
 - `main` is protected; Foundation CI, review resolution, linear history, and
   administrative enforcement remain delivery gates.
 
-## Implemented in the current Gate 1 increment
+## Gate 1 exit evidence
 
 - Equivalent explicit Ecto and Ash party-onboarding candidates were built
   against one contract and measured. ADR-0002 selects explicit Elixir/Ecto;
@@ -88,12 +88,21 @@
   object storage, exercises put/collision-rejection/read/verify/delete, and
   keeps the object store present during replica identity and failover checks.
 
-## Gate 1 remaining work
+## Gate 1 closure evidence
 
-1. Pass the expanded protected CI and security gates for the object-storage
-   candidate.
-2. Close Gate 1 only after the protected merged revision is rebuilt and passes
-   database, object-store, release-identity, and failover qualification.
+- The provider-neutral evidence-object increment passed the protected
+  foundation, application, and immutable-release checks in PR #9 and was
+  squash-merged to protected `main`.
+- The supported clean-revision qualifier rebuilt the application image and
+  proved the PostgreSQL 19 baseline, least-privileged role reconciliation,
+  object create/collision rejection/read-after-write digest verification/delete,
+  per-replica image and release identity, authenticated metrics, readiness, and
+  four consecutive one-replica failover probes.
+- The qualifier now handles expected native readiness failures without letting
+  Windows PowerShell stderr records bypass bounded retries, and its HTTP probe
+  remains non-interactive on Windows PowerShell 5.
+- Gate 1 is therefore complete for the local/CI foundation. This is not a
+  production-readiness or production-availability claim.
 
 ## Explicitly not yet implemented
 
@@ -109,5 +118,7 @@
 
 ## Next action
 
-Qualify, protect, merge, and rebuild the Gate 1 object-storage candidate from
-its exact merged revision; then make Gate 2 kernel v0 the one active focus.
+Implement the smallest Gate 2 vertical that integrates the remaining Kernel v0
+contracts—actor context, human tasks, connector receipts, and governed agent
+plans—through the existing policy, idempotency, transaction, audit, evidence,
+and outbox path, with negative authorization and recovery tests.

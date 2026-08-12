@@ -11,11 +11,11 @@ evidence, policy, audit lineage, and recoverability.
 
 ## Current state
 
-**Gate 1 is in final qualification.** The durable command kernel, first
-governed party-onboarding slice, module-neutral React shell, PostgreSQL 19
-platform, and provider-neutral S3 evidence-byte boundary are implemented. The
-candidate must still pass protected merge and exact-revision qualification
-before Gate 2 becomes active. No production business capability is claimed.
+**Gate 1 is complete and Gate 2 Kernel v0 is active.** The durable command
+kernel, first governed party-onboarding slice, module-neutral React shell,
+PostgreSQL 19 platform, and provider-neutral S3 evidence-byte boundary have
+passed protected CI and clean-revision local HA qualification. No production
+business capability or production topology is claimed.
 
 The target stack is:
 

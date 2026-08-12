@@ -1,6 +1,6 @@
 # UOK Next Architecture
 
-**Status:** Accepted target architecture; Gate 1 implementation scaffolded
+**Status:** Accepted target architecture; Gate 1 qualified, Gate 2 active
 
 ## 1. Architecture objective
 
