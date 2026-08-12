@@ -40,6 +40,17 @@ Exit when the proving operation in `docs/PRODUCT_CHARTER.md` works through the
 real API, database, object store, UI, policies, audit, jobs, reporting, and
 recovery path without prototype-only state.
 
+Gate 3 advances sequentially rather than opening every context at once:
+
+1. qualify tenant-authenticated party onboarding through real evidence and an
+   exact human decision;
+2. add product and sourcing-lane authority only after the first vertical passes;
+3. continue through RFQ/comparison, commitment proposal, evidence approval,
+   shipment readiness GO/HOLD, and the governed report.
+
+Completing the first vertical is necessary evidence, not the Gate 3 exit by
+itself.
+
 ## Gate 4: Specialist integration
 
 Exit when the external communications and collaborative-canvas systems are

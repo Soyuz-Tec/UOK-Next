@@ -43,6 +43,14 @@ server-owned commands and queries but never becomes authoritative for tenant,
 authorization, approval, audit, evidence, or business transitions. The delivery
 toolchain and deferrals are governed by ADR-0008.
 
+The first Gate 3 identity surface is restricted to local qualification. A
+high-entropy clone-local access code is constant-time checked server-side and
+exchanged for a short-lived signed token containing a fixed tenant, actor, and
+permission set. The browser cannot submit these claims. Production does not
+configure this adapter and remains blocked on a standards-based identity
+selection, session/revocation design, and trusted ingress. ADR-0014 governs the
+bounded exception.
+
 ### PostgreSQL
 
 The transactional system of record for kernel and in-process business modules.
@@ -64,6 +72,13 @@ selection or policy authority. ADR-0009 governs this boundary.
 Candidate bytes are capped at 8 MiB, S3 control responses at 64 KiB, writes use
 create-only semantics, and read-back verifies exact length plus SHA-256 before
 any future command may promote an object.
+
+Gate 3 preflights the tenant-owned subject and expected version before reading
+or persisting upload bytes, then persists a tenant- and subject-bound evidence
+record before byte storage. It verifies the immutable object and finalizes
+metadata through a second idempotent command. A retry can recover an already
+stored exact object; it cannot overwrite or delete it. Only verified metadata
+bound to the exact party can open the onboarding review task.
 
 ### Durable work layer
 

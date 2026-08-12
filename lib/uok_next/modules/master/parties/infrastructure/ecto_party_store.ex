@@ -30,6 +30,16 @@ defmodule UokNext.Modules.Master.Parties.Infrastructure.EctoPartyStore do
   end
 
   @impl true
+  def list(tenant_id, limit, _context) do
+    from(party in PartyRecord,
+      where: party.tenant_id == ^tenant_id,
+      order_by: [desc: party.inserted_at, desc: party.id],
+      limit: ^limit
+    )
+    |> Repo.all()
+  end
+
+  @impl true
   def update(record, _action, attrs, _context) do
     record
     |> PartyRecord.transition_changeset(attrs)

@@ -57,6 +57,26 @@ config :logger, level: :warning
 
 config :uok_next, framework_spike_routes: true
 config :uok_next, metrics_access_token: "uok-next-test-metrics-token-only"
+config :uok_next, deployment_profile: :local_qualification
+
+config :uok_next, :local_qualification_identity, %{
+  tenant_id: "11111111-1111-4111-8111-111111111111",
+  actor_id: "22222222-2222-4222-8222-222222222222",
+  access_code: "uok-next-test-access-code-00000001",
+  permissions: [
+    "evidence:read",
+    "evidence:upload",
+    "parties:approve",
+    "parties:create",
+    "parties:evidence:submit",
+    "parties:read",
+    "workflow:tasks:read"
+  ]
+}
+
+config :uok_next, :object_store,
+  adapter: UokNext.ObjectStoreStub,
+  max_object_bytes: 8_388_608
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime

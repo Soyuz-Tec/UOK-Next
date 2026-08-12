@@ -52,7 +52,11 @@ BEGIN
     has_table_privilege('uok_app', 'public.kernel_command_receipts', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.kernel_audit_events', 'SELECT,INSERT') AND
     has_table_privilege('uok_app', 'public.kernel_outbox_events', 'SELECT,INSERT') AND
-    has_table_privilege('uok_app', 'public.master_parties', 'SELECT,INSERT,UPDATE')
+    has_table_privilege('uok_app', 'public.master_parties', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.platform_workflow_human_tasks', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.platform_integrations_connector_receipts', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.platform_agents_plans', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.platform_evidence_objects', 'SELECT,INSERT,UPDATE')
   ) THEN
     RAISE EXCEPTION 'uok_app is missing an expected table privilege';
   END IF;
@@ -71,7 +75,19 @@ BEGIN
       ('public', 'kernel_outbox_events', 'INSERT'),
       ('public', 'master_parties', 'SELECT'),
       ('public', 'master_parties', 'INSERT'),
-      ('public', 'master_parties', 'UPDATE')
+      ('public', 'master_parties', 'UPDATE'),
+      ('public', 'platform_workflow_human_tasks', 'SELECT'),
+      ('public', 'platform_workflow_human_tasks', 'INSERT'),
+      ('public', 'platform_workflow_human_tasks', 'UPDATE'),
+      ('public', 'platform_integrations_connector_receipts', 'SELECT'),
+      ('public', 'platform_integrations_connector_receipts', 'INSERT'),
+      ('public', 'platform_integrations_connector_receipts', 'UPDATE'),
+      ('public', 'platform_agents_plans', 'SELECT'),
+      ('public', 'platform_agents_plans', 'INSERT'),
+      ('public', 'platform_agents_plans', 'UPDATE'),
+      ('public', 'platform_evidence_objects', 'SELECT'),
+      ('public', 'platform_evidence_objects', 'INSERT'),
+      ('public', 'platform_evidence_objects', 'UPDATE')
     );
 
   IF unexpected_privileges > 0 THEN

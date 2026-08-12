@@ -66,6 +66,48 @@ function Get-ReplicaRelease {
     $response | ConvertFrom-Json
 }
 
+function Invoke-Gate3EvidenceUpload {
+    param(
+        [Parameter(Mandatory = $true)][string]$Uri,
+        [Parameter(Mandatory = $true)][string]$Token,
+        [Parameter(Mandatory = $true)][string]$IdempotencyKey,
+        [Parameter(Mandatory = $true)][string]$EvidenceId,
+        [Parameter(Mandatory = $true)][int]$ExpectedVersion
+    )
+
+    $client = [Net.Http.HttpClient]::new()
+    $form = [Net.Http.MultipartFormDataContent]::new()
+    try {
+        $client.DefaultRequestHeaders.Authorization =
+            [Net.Http.Headers.AuthenticationHeaderValue]::new("Bearer", $Token)
+        $client.DefaultRequestHeaders.Add("Idempotency-Key", $IdempotencyKey)
+        $form.Add([Net.Http.StringContent]::new($EvidenceId), "evidence_id")
+        $form.Add([Net.Http.StringContent]::new($ExpectedVersion.ToString()), "expected_version")
+        $form.Add([Net.Http.StringContent]::new("confidential"), "classification")
+        $form.Add(
+            [Net.Http.StringContent]::new("Attach qualification registration evidence"),
+            "reason"
+        )
+        $bytes = [Text.Encoding]::UTF8.GetBytes(
+            "UOK Next Gate 3 qualification evidence $EvidenceId"
+        )
+        $file = [Net.Http.ByteArrayContent]::new($bytes)
+        $file.Headers.ContentType = [Net.Http.Headers.MediaTypeHeaderValue]::new("text/plain")
+        $form.Add($file, "file", "qualification-evidence.txt")
+
+        $response = $client.PostAsync($Uri, $form).GetAwaiter().GetResult()
+        $body = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+        if (-not $response.IsSuccessStatusCode) {
+            throw "The Gate 3 evidence command was rejected with HTTP $([int]$response.StatusCode)"
+        }
+        $body | ConvertFrom-Json
+    }
+    finally {
+        $form.Dispose()
+        $client.Dispose()
+    }
+}
+
 function Test-NativeCommand {
     param(
         [Parameter(Mandatory = $true)][string]$FilePath,
@@ -107,6 +149,35 @@ try {
     $env:UOK_OBJECT_STORE_SECRET_KEY = New-RandomHex -Bytes 48
     $env:UOK_OBJECT_STORE_BUCKET = "uok-evidence"
     $env:UOK_OBJECT_STORE_PORT = "18333"
+
+    $identityCredentialPath = Get-UokCloneLocalCredentialPath `
+        -RepositoryRoot $repoRoot -CredentialName "uok-local-identity.json"
+    $identityCredential = Read-UokCloneLocalCredential -Path $identityCredentialPath
+    if ([string]::IsNullOrWhiteSpace($identityCredential)) {
+        $identity = [ordered]@{
+            tenant_id = [Guid]::NewGuid().ToString()
+            actor_id = [Guid]::NewGuid().ToString()
+            access_code = New-RandomHex -Bytes 32
+        }
+        Write-UokCloneLocalCredential -Path $identityCredentialPath `
+            -Value ($identity | ConvertTo-Json -Compress)
+    }
+    else {
+        try {
+            $identity = $identityCredential | ConvertFrom-Json
+        }
+        catch {
+            throw "The clone-local qualification identity is malformed"
+        }
+    }
+    if ($identity.tenant_id -notmatch '^[0-9a-fA-F-]{36}$' -or
+        $identity.actor_id -notmatch '^[0-9a-fA-F-]{36}$' -or
+        $identity.access_code -notmatch '^[a-f0-9]{64}$') {
+        throw "The clone-local qualification identity is invalid"
+    }
+    $env:UOK_LOCAL_TENANT_ID = [Guid]::Parse($identity.tenant_id).ToString()
+    $env:UOK_LOCAL_ACTOR_ID = [Guid]::Parse($identity.actor_id).ToString()
+    $env:UOK_LOCAL_ACCESS_CODE = [string]$identity.access_code
     if ([string]::IsNullOrWhiteSpace($env:UOK_DB_USER)) {
         $env:UOK_DB_USER = "uok_next"
     }
@@ -371,6 +442,71 @@ try {
         throw "The local qualification browser shell was not reachable through the proxy"
     }
 
+    $sessionBody = @{ access_code = $env:UOK_LOCAL_ACCESS_CODE } | ConvertTo-Json -Compress
+    $session = Invoke-RestMethod -Uri "$baseUri/session" -Method Post `
+        -ContentType "application/json" -Body $sessionBody -TimeoutSec 10
+    $accessToken = [string]$session.data.access_token
+    if ($accessToken.Length -lt 32 -or
+        $session.data.identity.tenant_id -ne $env:UOK_LOCAL_TENANT_ID) {
+        throw "The local qualification session did not bind the configured tenant"
+    }
+
+    $flowId = [Guid]::NewGuid().ToString()
+    $authHeaders = @{
+        Authorization = "Bearer $accessToken"
+        "Idempotency-Key" = [Guid]::NewGuid().ToString()
+    }
+    $partyBody = @{
+        stable_identifier = "qualification-$flowId"
+        legal_name = "Gate 3 Qualification Party"
+        country_code = "GH"
+        party_kind = "organization"
+        reason = "Prove the complete governed onboarding journey"
+    } | ConvertTo-Json -Compress
+    $party = Invoke-RestMethod -Uri "$baseUri/parties" -Method Post -Headers $authHeaders `
+        -ContentType "application/json" -Body $partyBody -TimeoutSec 10
+
+    $evidenceId = [Guid]::NewGuid().ToString()
+    $evidenceKey = [Guid]::NewGuid().ToString()
+    $evidenced = Invoke-Gate3EvidenceUpload `
+        -Uri "$baseUri/parties/$($party.data.id)/evidence" `
+        -Token $accessToken -IdempotencyKey $evidenceKey `
+        -EvidenceId $evidenceId -ExpectedVersion ([int]$party.data.lock_version)
+    $evidenceReplay = Invoke-Gate3EvidenceUpload `
+        -Uri "$baseUri/parties/$($party.data.id)/evidence" `
+        -Token $accessToken -IdempotencyKey $evidenceKey `
+        -EvidenceId $evidenceId -ExpectedVersion ([int]$party.data.lock_version)
+
+    $readHeaders = @{ Authorization = "Bearer $accessToken" }
+    $tasks = Invoke-RestMethod -Uri "$baseUri/review-tasks" -Headers $readHeaders -TimeoutSec 10
+    $task = @($tasks.data | Where-Object subject_id -eq $party.data.id)
+    if ($task.Count -ne 1 -or $evidenced.data.status -ne "evidence_submitted" -or
+        $evidenceReplay.data.review_task.id -ne $evidenced.data.review_task.id) {
+        throw "The Gate 3 evidence or exact-task replay contract failed"
+    }
+
+    $decisionHeaders = @{
+        Authorization = "Bearer $accessToken"
+        "Idempotency-Key" = [Guid]::NewGuid().ToString()
+    }
+    $decisionBody = @{
+        decision = "approve"
+        reason = "Qualification evidence passed governed review"
+        task_id = $task[0].id
+        expected_version = [int]$evidenced.data.lock_version
+    } | ConvertTo-Json -Compress
+    $approved = Invoke-RestMethod -Uri "$baseUri/parties/$($party.data.id)/decision" `
+        -Method Post -Headers $decisionHeaders -ContentType "application/json" `
+        -Body $decisionBody -TimeoutSec 10
+    $partyDetail = Invoke-RestMethod -Uri "$baseUri/parties/$($party.data.id)" `
+        -Headers $readHeaders -TimeoutSec 10
+
+    if ($approved.data.status -ne "approved" -or $partyDetail.data.status -ne "approved" -or
+        @($partyDetail.data.evidence_objects).Count -ne 1 -or
+        $partyDetail.data.evidence_objects[0].state -ne "verified") {
+        throw "The Gate 3 party-onboarding journey did not reach verified approval"
+    }
+
     $appAImageId = Get-ContainerImageId -Container "uok-next-app-a-1"
     $appBImageId = Get-ContainerImageId -Container "uok-next-app-b-1"
     if ($appAImageId -ne $imageId -or $appBImageId -ne $imageId) {
@@ -443,6 +579,10 @@ try {
         object_store_image_id = $objectStoreImageId
         object_store_round_trip = "create, collision rejection, read-after-write digest verification, and delete passed"
         browser_shell = "HTTP 200 through the isolated local qualification proxy"
+        party_onboarding_tenant_id = $env:UOK_LOCAL_TENANT_ID
+        party_onboarding_flow = "authenticated create, evidence, replay, task, approval, and final read passed"
+        party_onboarding_qualified_party_id = $party.data.id
+        local_identity_credential_path = $identityCredentialPath
         replicas = 2
         single_replica_failover = "4 readiness and release probes passed"
     } | ConvertTo-Json

@@ -30,6 +30,11 @@ defmodule UokNext.Modules.Master.Parties.Public do
     )
   end
 
+  @spec preflight_evidence(String.t(), integer(), UokNext.Kernel.CommandContext.t()) :: tuple()
+  def preflight_evidence(party_id, expected_version, context) do
+    Onboarding.preflight_evidence(EctoPartyStore, party_id, expected_version, context)
+  end
+
   @spec decide(String.t(), map(), integer(), UokNext.Kernel.CommandContext.t(), String.t()) ::
           tuple()
   def decide(party_id, attrs, expected_version, context, idempotency_key) do
@@ -38,4 +43,7 @@ defmodule UokNext.Modules.Master.Parties.Public do
 
   @spec get(String.t(), UokNext.Kernel.CommandContext.t()) :: tuple()
   def get(party_id, context), do: Onboarding.get(EctoPartyStore, party_id, context)
+
+  @spec list(pos_integer(), UokNext.Kernel.CommandContext.t()) :: tuple()
+  def list(limit, context), do: Onboarding.list(EctoPartyStore, limit, context)
 end

@@ -14,4 +14,6 @@ defmodule UokNext.Modules.Platform.Workflow.Application.HumanTaskStore do
             ) :: {:ok, persisted_record()} | :not_found
   @callback complete(persisted_record(), map(), UokNext.Kernel.CommandContext.t()) ::
               {:ok, persisted_record()} | {:error, :stale | map()}
+  @callback list_open(Ecto.UUID.t(), [String.t()], UokNext.Kernel.CommandContext.t()) ::
+              [persisted_record()]
 end

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { usePlatformStatus } from "./usePlatformStatus";
 
 const foundationAreas = [
@@ -33,7 +35,9 @@ const moduleGroups = [
   "External systems",
 ] as const;
 
-export function AppShell() {
+type Props = { children?: ReactNode };
+
+export function AppShell({ children }: Props) {
   const platformStatus = usePlatformStatus();
 
   return (
@@ -60,11 +64,11 @@ export function AppShell() {
 
       <aside className="sidebar" aria-label="Platform navigation">
         <nav>
-          <a className="nav-link nav-link--active" href="#overview" aria-current="page">
+          <a className="nav-link nav-link--active" href="#party-onboarding" aria-current="page">
             <span className="nav-icon" aria-hidden="true">
               01
             </span>
-            Foundation
+            Party onboarding
           </a>
           <a className="nav-link" href="#module-map">
             <span className="nav-icon" aria-hidden="true">
@@ -81,107 +85,115 @@ export function AppShell() {
         </nav>
         <div className="gate-card">
           <span className="eyebrow eyebrow--light">Active focus</span>
-          <strong>Gate 2</strong>
-          <p>Kernel v0</p>
-          <div className="progress-track" aria-label="Gate 2 kernel progress">
+          <strong>Gate 3</strong>
+          <p>First business operation</p>
+          <div className="progress-track" aria-label="Gate 3 operation progress">
             <span />
           </div>
         </div>
       </aside>
 
       <main id="main-content">
-        <section className="hero" id="overview" aria-labelledby="hero-title">
-          <div>
-            <span className="eyebrow">Operational foundation</span>
-            <h1 id="hero-title">One trusted path from decision to evidence.</h1>
-            <p className="hero-copy">
-              The shell exposes platform readiness without taking business authority away from the
-              Elixir kernel. Modules arrive only when their policies, ownership, and recovery path
-              are proven.
-            </p>
-          </div>
-          <div className="readiness-card">
-            <div className="readiness-head">
-              <span
-                className={`readiness-symbol readiness-symbol--${platformStatus.phase}`}
-                aria-hidden="true"
-              />
-              <span>
-                <small>Runtime contract</small>
-                <strong>{platformStatus.label}</strong>
-              </span>
-            </div>
-            <p>{platformStatus.detail}</p>
-            <dl>
+        {children ?? (
+          <>
+            <section className="hero" id="overview" aria-labelledby="hero-title">
               <div>
-                <dt>UI authority</dt>
-                <dd>Presentation only</dd>
+                <span className="eyebrow">Operational foundation</span>
+                <h1 id="hero-title">One trusted path from decision to evidence.</h1>
+                <p className="hero-copy">
+                  The shell exposes platform readiness without taking business authority away from
+                  the Elixir kernel. Modules arrive only when their policies, ownership, and
+                  recovery path are proven.
+                </p>
               </div>
+              <div className="readiness-card">
+                <div className="readiness-head">
+                  <span
+                    className={`readiness-symbol readiness-symbol--${platformStatus.phase}`}
+                    aria-hidden="true"
+                  />
+                  <span>
+                    <small>Runtime contract</small>
+                    <strong>{platformStatus.label}</strong>
+                  </span>
+                </div>
+                <p>{platformStatus.detail}</p>
+                <dl>
+                  <div>
+                    <dt>UI authority</dt>
+                    <dd>Presentation only</dd>
+                  </div>
+                  <div>
+                    <dt>Business policy</dt>
+                    <dd>Server enforced</dd>
+                  </div>
+                  <div>
+                    <dt>Release model</dt>
+                    <dd>One artifact</dd>
+                  </div>
+                </dl>
+              </div>
+            </section>
+
+            <section className="section-block" aria-labelledby="foundation-title">
+              <div className="section-heading">
+                <div>
+                  <span className="eyebrow">Current evidence</span>
+                  <h2 id="foundation-title">Foundation at a glance</h2>
+                </div>
+                <span className="truth-label">No production claim</span>
+              </div>
+              <div className="foundation-grid">
+                {foundationAreas.map((area) => (
+                  <article className="foundation-card" key={area.title}>
+                    <span className="eyebrow">{area.eyebrow}</span>
+                    <h3>{area.title}</h3>
+                    <p>{area.detail}</p>
+                    <span className="card-state">{area.state}</span>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section
+              className="section-block module-section"
+              id="module-map"
+              aria-labelledby="modules-title"
+            >
+              <div className="section-heading">
+                <div>
+                  <span className="eyebrow">Bounded architecture</span>
+                  <h2 id="modules-title">Module map</h2>
+                </div>
+                <p>Visible boundaries, deliberately inactive.</p>
+              </div>
+              <div className="module-list">
+                {moduleGroups.map((moduleName, index) => (
+                  <div className="module-row" key={moduleName}>
+                    <span className="module-number">{String(index + 1).padStart(2, "0")}</span>
+                    <strong>{moduleName}</strong>
+                    <span>Reserved</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section
+              className="boundary-banner"
+              id="release-boundary"
+              aria-labelledby="boundary-title"
+            >
               <div>
-                <dt>Business policy</dt>
-                <dd>Server enforced</dd>
+                <span className="eyebrow eyebrow--light">Release boundary</span>
+                <h2 id="boundary-title">React is compiled into the Phoenix release.</h2>
               </div>
-              <div>
-                <dt>Release model</dt>
-                <dd>One artifact</dd>
-              </div>
-            </dl>
-          </div>
-        </section>
-
-        <section className="section-block" aria-labelledby="foundation-title">
-          <div className="section-heading">
-            <div>
-              <span className="eyebrow">Current evidence</span>
-              <h2 id="foundation-title">Foundation at a glance</h2>
-            </div>
-            <span className="truth-label">No production claim</span>
-          </div>
-          <div className="foundation-grid">
-            {foundationAreas.map((area) => (
-              <article className="foundation-card" key={area.title}>
-                <span className="eyebrow">{area.eyebrow}</span>
-                <h3>{area.title}</h3>
-                <p>{area.detail}</p>
-                <span className="card-state">{area.state}</span>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section
-          className="section-block module-section"
-          id="module-map"
-          aria-labelledby="modules-title"
-        >
-          <div className="section-heading">
-            <div>
-              <span className="eyebrow">Bounded architecture</span>
-              <h2 id="modules-title">Module map</h2>
-            </div>
-            <p>Visible boundaries, deliberately inactive.</p>
-          </div>
-          <div className="module-list">
-            {moduleGroups.map((moduleName, index) => (
-              <div className="module-row" key={moduleName}>
-                <span className="module-number">{String(index + 1).padStart(2, "0")}</span>
-                <strong>{moduleName}</strong>
-                <span>Reserved</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="boundary-banner" id="release-boundary" aria-labelledby="boundary-title">
-          <div>
-            <span className="eyebrow eyebrow--light">Release boundary</span>
-            <h2 id="boundary-title">React is compiled into the Phoenix release.</h2>
-          </div>
-          <p>
-            One lockfile, immutable hashed assets, same-origin APIs, and a restrictive content
-            security policy keep the initial delivery boundary small and inspectable.
-          </p>
-        </section>
+              <p>
+                One lockfile, immutable hashed assets, same-origin APIs, and a restrictive content
+                security policy keep the initial delivery boundary small and inspectable.
+              </p>
+            </section>
+          </>
+        )}
       </main>
     </div>
   );

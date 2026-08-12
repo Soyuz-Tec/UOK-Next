@@ -78,7 +78,7 @@ defmodule UokNext.MixProject do
         "deps.unlock --check-unused",
         "format --check-formatted",
         "credo --strict",
-        "sobelow --config",
+        "sobelow --skip --exit --private",
         "test"
       ],
       precommit: ["quality"]

@@ -57,6 +57,10 @@ unless Application.fetch_env!(:uok_next, :deployment_profile) == :production do
   raise "production must not activate the local qualification transport profile"
 end
 
+if Application.get_env(:uok_next, :local_qualification_identity) do
+  raise "production must not configure the local qualification identity adapter"
+end
+
 unless force_ssl == [
          exclude: [
            conn: {UokNextWeb.LocalQualificationTransport, :http_allowed?, []},

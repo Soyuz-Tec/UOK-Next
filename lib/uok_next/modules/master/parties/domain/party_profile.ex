@@ -32,8 +32,9 @@ defmodule UokNext.Modules.Master.Parties.Domain.PartyProfile do
   def validate_create(_attrs), do: error("command", "must be an object")
 
   @spec validate_evidence(String.t(), map()) :: {:ok, map()} | {:error, validation_error()}
-  def validate_evidence(status, attrs) when status in ["draft", "hold"] and is_map(attrs) do
-    with {:ok, evidence_id} <- uuid(value(attrs, "evidence_id"), "evidence_id"),
+  def validate_evidence(status, attrs) when is_map(attrs) do
+    with :ok <- validate_evidence_state(status),
+         {:ok, evidence_id} <- uuid(value(attrs, "evidence_id"), "evidence_id"),
          {:ok, sha256} <- sha256(value(attrs, "sha256")),
          {:ok, classification} <-
            member(value(attrs, "classification"), "classification", @classifications),
@@ -51,6 +52,13 @@ defmodule UokNext.Modules.Master.Parties.Domain.PartyProfile do
   end
 
   def validate_evidence(_status, _attrs) do
+    error("status", "does not allow evidence submission")
+  end
+
+  @spec validate_evidence_state(String.t()) :: :ok | {:error, validation_error()}
+  def validate_evidence_state(status) when status in ["draft", "hold"], do: :ok
+
+  def validate_evidence_state(_status) do
     error("status", "does not allow evidence submission")
   end
 

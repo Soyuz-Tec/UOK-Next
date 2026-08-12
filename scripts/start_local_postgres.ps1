@@ -21,6 +21,9 @@ function New-RandomBytes {
 
 $env:UOK_LOCAL_SECRET_KEY_BASE = [Convert]::ToBase64String((New-RandomBytes -Count 64))
 $env:UOK_LOCAL_METRICS_TOKEN = [Convert]::ToBase64String((New-RandomBytes -Count 48))
+$env:UOK_LOCAL_ACCESS_CODE = ([BitConverter]::ToString((New-RandomBytes -Count 32))).Replace("-", "").ToLowerInvariant()
+$env:UOK_LOCAL_TENANT_ID = [Guid]::NewGuid().ToString()
+$env:UOK_LOCAL_ACTOR_ID = [Guid]::NewGuid().ToString()
 $env:UOK_APP_DB_PASSWORD = ([BitConverter]::ToString((New-RandomBytes -Count 32))).Replace("-", "").ToLowerInvariant()
 if ([string]::IsNullOrWhiteSpace($env:UOK_DB_USER)) {
     $env:UOK_DB_USER = "uok_next"

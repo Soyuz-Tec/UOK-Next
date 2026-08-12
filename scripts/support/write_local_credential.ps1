@@ -1,6 +1,9 @@
 function Get-UokCloneLocalCredentialPath {
     [CmdletBinding()]
-    param([Parameter(Mandatory = $true)][string]$RepositoryRoot)
+    param(
+        [Parameter(Mandatory = $true)][string]$RepositoryRoot,
+        [ValidatePattern('^[a-z0-9][a-z0-9.-]{2,63}$')][string]$CredentialName = "uok-db-password"
+    )
 
     if ($env:OS -ne "Windows_NT") {
         throw "Clone-local credential storage currently requires Windows"
@@ -25,7 +28,7 @@ function Get-UokCloneLocalCredentialPath {
     $cloneHash = ([BitConverter]::ToString($hashBytes)).Replace("-", "").ToLowerInvariant()
 
     $credentialRoot = Join-Path $localApplicationData "UOK-Next\credentials"
-    $credentialPath = Join-Path $credentialRoot "$cloneHash\uok-db-password"
+    $credentialPath = Join-Path $credentialRoot "$cloneHash\$CredentialName"
     $resolvedRoot = [IO.Path]::GetFullPath($credentialRoot).TrimEnd('\') + '\'
     $resolvedCredential = [IO.Path]::GetFullPath($credentialPath)
 
@@ -39,6 +42,18 @@ function Get-UokCloneLocalCredentialPath {
     $resolvedCredential
 }
 
+function Read-UokCloneLocalCredential {
+    [CmdletBinding()]
+    param([Parameter(Mandatory = $true)][string]$Path)
+
+    if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
+        return $null
+    }
+
+    Assert-UokRestrictedCredentialAcl -Path $Path -AllowedSids (Get-UokCredentialAllowedSids)
+    [IO.File]::ReadAllText($Path)
+}
+
 function Write-UokCloneLocalCredential {
     [CmdletBinding()]
     param(
@@ -50,10 +65,7 @@ function Write-UokCloneLocalCredential {
         throw "Clone-local credential ACL enforcement currently requires Windows"
     }
 
-    $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent().User
-    $system = [Security.Principal.SecurityIdentifier]::new("S-1-5-18")
-    $administrators = [Security.Principal.SecurityIdentifier]::new("S-1-5-32-544")
-    $allowedSids = @($currentUser, $system, $administrators)
+    $allowedSids = @(Get-UokCredentialAllowedSids)
     $directory = Split-Path -Parent $Path
 
     [IO.Directory]::CreateDirectory($directory) | Out-Null
@@ -74,6 +86,14 @@ function Write-UokCloneLocalCredential {
     }
 
     Assert-UokRestrictedCredentialAcl -Path $Path -AllowedSids $allowedSids
+}
+
+function Get-UokCredentialAllowedSids {
+    @(
+        [Security.Principal.WindowsIdentity]::GetCurrent().User,
+        [Security.Principal.SecurityIdentifier]::new("S-1-5-18"),
+        [Security.Principal.SecurityIdentifier]::new("S-1-5-32-544")
+    )
 }
 
 function Assert-UokRestrictedCredentialAcl {

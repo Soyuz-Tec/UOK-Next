@@ -37,6 +37,20 @@ defmodule UokNext.Modules.Platform.Evidence.Infrastructure.S3ObjectStore do
   end
 
   @impl true
+  def ensure(%EvidenceObject{} = evidence, content) do
+    case put(evidence, content) do
+      {:ok, receipt} ->
+        {:ok, receipt, :created}
+
+      {:error, :object_exists} ->
+        {:ok, receipt(evidence, %{}), :existing}
+
+      {:error, reason} ->
+        {:error, reason}
+    end
+  end
+
+  @impl true
   def fetch(%EvidenceObject{} = evidence) do
     with {:ok, head} <- request(S3.head_object(bucket(), evidence.object_key)),
          :ok <- verify_content_length(head, evidence.byte_size),
@@ -62,6 +76,7 @@ defmodule UokNext.Modules.Platform.Evidence.Infrastructure.S3ObjectStore do
     case ExAws.request(operation, request_config()) do
       {:ok, response} -> {:ok, response}
       {:error, {:http_error, 404, _response}} -> {:error, :not_found}
+      {:error, {:http_error, 412, _response}} -> {:error, :object_exists}
       {:error, _reason} -> {:error, :object_store_unavailable}
     end
   rescue

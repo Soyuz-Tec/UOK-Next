@@ -20,6 +20,13 @@ required_bounded_token = fn name, minimum, maximum ->
   end
 end
 
+required_uuid = fn name ->
+  case System.get_env(name) |> Ecto.UUID.cast() do
+    {:ok, uuid} -> uuid
+    :error -> raise "#{name} must be a UUID"
+  end
+end
+
 required_object_store_url = fn local_qualification? ->
   value = System.get_env("OBJECT_STORE_URL")
   uri = if is_binary(value), do: URI.parse(value), else: %URI{}
@@ -74,6 +81,23 @@ if config_env() == :prod do
   config :uok_next,
          :deployment_profile,
          if(local_qualification?, do: :local_qualification, else: :production)
+
+  if local_qualification? do
+    config :uok_next, :local_qualification_identity, %{
+      tenant_id: required_uuid.("UOK_LOCAL_TENANT_ID"),
+      actor_id: required_uuid.("UOK_LOCAL_ACTOR_ID"),
+      access_code: required_bounded_token.("UOK_LOCAL_ACCESS_CODE", 32, 128),
+      permissions: [
+        "evidence:read",
+        "evidence:upload",
+        "parties:approve",
+        "parties:create",
+        "parties:evidence:submit",
+        "parties:read",
+        "workflow:tasks:read"
+      ]
+    }
+  end
 
   database_url =
     case System.get_env("DATABASE_URL") do

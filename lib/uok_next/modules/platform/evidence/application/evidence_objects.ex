@@ -22,6 +22,15 @@ defmodule UokNext.Modules.Platform.Evidence.Application.EvidenceObjects do
     end
   end
 
+  @spec ensure_candidate(map(), binary(), module()) ::
+          {:ok, %{evidence: EvidenceObject.t(), receipt: map()}} | {:error, atom()}
+  def ensure_candidate(attrs, content, adapter \\ configured_adapter()) do
+    with {:ok, evidence} <- EvidenceObject.new(attrs, content, maximum_bytes()),
+         {:ok, receipt, disposition} <- adapter.ensure(evidence, content) do
+      verify_ensured_candidate(evidence, receipt, disposition, adapter)
+    end
+  end
+
   @spec delete_candidate(EvidenceObject.t(), module()) :: :ok | {:error, atom()}
   def delete_candidate(evidence, adapter \\ configured_adapter()), do: adapter.delete(evidence)
 
@@ -32,14 +41,33 @@ defmodule UokNext.Modules.Platform.Evidence.Application.EvidenceObjects do
   defp validate_receipt(_receipt, _evidence), do: {:error, :invalid_storage_receipt}
 
   defp verify_stored_candidate(evidence, receipt, adapter) do
+    case verify_candidate(evidence, receipt, adapter) do
+      {:ok, result} ->
+        {:ok, result}
+
+      {:error, reason} ->
+        _cleanup_result = adapter.delete(evidence)
+        {:error, reason}
+    end
+  end
+
+  defp verify_ensured_candidate(evidence, receipt, :created, adapter) do
+    verify_stored_candidate(evidence, receipt, adapter)
+  end
+
+  defp verify_ensured_candidate(evidence, receipt, :existing, adapter) do
+    verify_candidate(evidence, receipt, adapter)
+  end
+
+  defp verify_ensured_candidate(_evidence, _receipt, _disposition, _adapter) do
+    {:error, :invalid_storage_receipt}
+  end
+
+  defp verify_candidate(evidence, receipt, adapter) do
     with :ok <- validate_receipt(receipt, evidence),
          {:ok, stored_content} <- adapter.fetch(evidence),
          :ok <- EvidenceObject.verify_content(evidence, stored_content) do
       {:ok, %{evidence: evidence, receipt: receipt}}
-    else
-      {:error, reason} ->
-        _cleanup_result = adapter.delete(evidence)
-        {:error, reason}
     end
   end
 

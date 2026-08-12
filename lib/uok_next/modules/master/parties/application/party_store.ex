@@ -15,6 +15,8 @@ defmodule UokNext.Modules.Master.Parties.Application.PartyStore do
               UokNext.Kernel.CommandContext.t()
             ) ::
               {:ok, persisted_record()} | :not_found
+  @callback list(Ecto.UUID.t(), pos_integer(), UokNext.Kernel.CommandContext.t()) ::
+              [persisted_record()]
   @callback update(
               persisted_record(),
               :submit_evidence | :decide,

@@ -80,6 +80,7 @@ a {
   display: inline-flex;
   gap: 0.85rem;
   align-items: center;
+  min-height: 2.75rem;
   color: white;
   text-decoration: none;
 }
@@ -237,7 +238,7 @@ a {
 
 .progress-track span {
   display: block;
-  width: 8%;
+  width: 32%;
   height: 100%;
   background: #95b9a2;
 }
@@ -562,7 +563,7 @@ h2 {
   }
 
   .nav-link {
-    min-height: 2.6rem;
+    min-height: 2.75rem;
   }
 
   .gate-card {

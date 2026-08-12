@@ -1,8 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
+import { Gate3Application } from "./application/Gate3Application";
 import { AppShell } from "./shell/AppShell";
 import "./shell/app-shell.css";
+import "./modules/master-parties/party-onboarding.css";
 
 const root = document.getElementById("root");
 
@@ -12,6 +14,8 @@ if (root === null) {
 
 createRoot(root).render(
   <StrictMode>
-    <AppShell />
+    <AppShell>
+      <Gate3Application />
+    </AppShell>
   </StrictMode>,
 );

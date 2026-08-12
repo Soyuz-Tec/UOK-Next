@@ -1,7 +1,7 @@
 defmodule UokNext.Modules.Platform.Workflow.Application.HumanTasks do
   @moduledoc false
 
-  alias UokNext.Kernel.{CommandContext, CommandError}
+  alias UokNext.Kernel.{CommandContext, CommandError, TenantTransaction}
   alias UokNext.Modules.Platform.Workflow.Domain.HumanTask
 
   @spec open(module(), map(), CommandContext.t()) ::
@@ -22,6 +22,17 @@ defmodule UokNext.Modules.Platform.Workflow.Application.HumanTasks do
          {:ok, completion} <- validate(HumanTask.validate_completion(task, attrs)),
          {:ok, completed} <- complete_task(store, task, completion, context) do
       {:ok, view(completed)}
+    end
+  end
+
+  @spec list_open(module(), CommandContext.t()) :: {:ok, [map()]} | {:error, CommandError.t()}
+  def list_open(store, context) do
+    with :ok <- require_permission(context, "workflow:tasks:read") do
+      permissions = context.permissions |> MapSet.to_list() |> Enum.sort()
+
+      TenantTransaction.run(context, fn ->
+        {:ok, store.list_open(context.tenant_id, permissions, context) |> Enum.map(&view/1)}
+      end)
     end
   end
 

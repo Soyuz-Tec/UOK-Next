@@ -201,14 +201,75 @@
   while negative configuration checks prove non-local hosts and production
   profiles still redirect to HTTPS.
 
+## Gate 3 party-onboarding candidate
+
+- The first module-owned browser workspace now drives draft creation, bounded
+  evidence upload, review-task visibility, and approve/hold decisions through
+  the real versioned API. Tenant, actor, permissions, correlation, idempotency,
+  and transitions remain server-owned.
+- The isolated qualifier has a stable clone-local identity and high-entropy
+  access code protected by restrictive operating-system ACLs. Successful login
+  returns an eight-hour signed tenant token; invalid credentials, forged
+  tokens, and production-profile activation fail closed. This is not the
+  production identity selection.
+- `platform.evidence` now owns persisted tenant/subject metadata with forced
+  row-level security, immutable object identity, bounded classifications and
+  content types, exact size and SHA-256, a pending/verified lifecycle, and a
+  digest-only storage receipt.
+- Evidence upload is a recoverable prepare/store/verify sequence. The object
+  key is server-derived, byte storage is create-only and read-after-write
+  verified, and a retry after storage verifies the existing object instead of
+  overwriting or deleting it.
+- New uploads require a server-owned permission, tenant, party lifecycle, and
+  expected-version preflight before file bytes are read or persisted. Exact
+  verified replays skip the upload path and reach the idempotent party command;
+  the final mutation repeats validation under a row lock.
+- Party evidence submission now fails unless the evidence record is verified,
+  belongs to the tenant, and is bound to the exact party. The resulting review
+  task remains subject/version-bound and is consumed atomically with party
+  decision, receipt, audit, and outbox state.
+- Open-task queries require an inbox permission and return only tasks whose
+  recorded decision permission is held by the actor. The API publishes its
+  versioned machine-readable contract.
+- Candidate tests cover the complete API journey and replay plus invalid login,
+  forged token, missing authorization, stale state, unsupported upload, tenant
+  and subject substitution, forced row-level security, retry recovery, zero
+  persistence for unknown/stale subjects, and ownership-safe cleanup after
+  object verification failure.
+- A complete security diff review first validated three low-severity findings:
+  pre-existing-object cleanup ownership, access-code receipt output, and upload
+  persistence before party preflight. All three were corrected and regression
+  tested. The post-remediation review closed 80 of 80 inventory items with zero
+  findings and no deferred proof gaps. Backend quality passed 83 tests with one
+  live-object-store test reserved for deployment; frontend quality passed four
+  files and five tests; static security, architecture, database, object-store,
+  identity, credential ACL, artifact-integrity, and advisory checks passed.
+- Exact candidate revision `79f5813eb2769ed2db18f01b360ab9ead9724c76`
+  was rebuilt as immutable local image
+  `3d823ddcbf63ce5b92f9f0cf18940c930839ad8067bc9625362062e3568eeeb5`.
+  The qualifier proved PostgreSQL 19 startup and migrations, the real object
+  create/collision/read-after-write/delete path, identical identity across two
+  replicas, four one-replica failover probes, and the authenticated
+  create/evidence/replay/task/approval/final-read journey.
+- Rendered qualification passed at 1440-by-900 and 390-by-844 through the local
+  proxy. Both viewports had no page-level horizontal overflow or browser
+  console warnings/errors; primary brand and navigation targets were at least
+  44 pixels, and the mobile party list collapsed to content height. The final
+  responsive patch received a separate complete security review with zero
+  findings and no deferred proof gaps.
+- ADR-0014 records the identity, evidence choreography, recovery, API, and UI
+  boundaries. Protected CI and an exact merged-revision redeployment remain
+  required before this candidate is called delivered.
+
 ## Explicitly not yet implemented
 
-- Production identity/OIDC, session management, user-facing business APIs,
-  business-module React UI, durable outbox delivery, scheduled jobs, general
-  workflow definitions, task inbox/assignment/escalation, production evidence
-  metadata/commands, live connector transport/credentials/retry scheduling,
-  server-owned agent runbook definitions, model/tool execution, agent
-  scheduling/budgets, BI projections, or evidence anchoring.
+- Production identity/OIDC and session revocation, business APIs beyond party
+  onboarding, durable outbox delivery, scheduled jobs, general workflow
+  definitions, task assignment/delegation/escalation/notification, evidence
+  malware scanning/promotion/retention/deletion, live connector transport and
+  credential/retry scheduling, server-owned agent runbook definitions,
+  model/tool execution, agent scheduling/budgets, BI projections, or evidence
+  anchoring.
 - The local two-replica qualifier is not a production topology. PostgreSQL 19
   is still a single local dependency and no backup/restore receipt exists.
 - Production deployment is blocked on a selected platform, managed secrets,
@@ -217,9 +278,8 @@
 
 ## Next action
 
-Define and deliver the first Gate 3 vertical as a real tenant-authenticated
-party-onboarding journey through the application API, evidence-object boundary,
-human review task, module-owned web UI, audit/outbox records, operational
-telemetry, and recovery tests. Preserve the existing command contracts and add
-no product/sourcing, RFQ, commitment, shipment, or reporting breadth until this
-first vertical has executable end-to-end proof.
+Deliver the qualified Gate 3 party-onboarding candidate through protected CI,
+then rebuild and redeploy the exact merged revision before advancing the active
+focus. Preserve the existing command contracts and add no product, sourcing,
+RFQ, commitment, shipment, or reporting breadth until protected delivery is
+complete.
