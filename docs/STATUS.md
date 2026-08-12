@@ -20,6 +20,11 @@
   immutable digests and fail closed on identity mismatch.
 - Architecture, module ownership, code discipline, production transport
   controls, and release decisions are repository-owned and machine-checked.
+- External systems now use stable role-based identities in product-facing
+  architecture, catalogs, contracts, UI, and documentation. Exact
+  implementation identities are restricted to reproducibility, security,
+  licensing, interoperability, operations, and selection-decision evidence;
+  the module catalog rejects every field outside its governed role schema.
 - `main` is protected; Foundation CI, review resolution, linear history, and
   administrative enforcement remain delivery gates.
 

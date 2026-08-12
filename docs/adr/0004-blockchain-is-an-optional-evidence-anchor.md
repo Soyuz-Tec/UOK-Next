@@ -6,8 +6,8 @@
 
 ## Context
 
-The existing Nitro repository is an unchanged upstream fork and does not
-implement a UOK business capability. Running a chain would add consensus,
+The existing chain prototype repository is an unchanged upstream fork and does
+not implement a UOK business capability. Running a chain would add consensus,
 sequencing, bridge, key, availability, privacy, cost, licensing, and operational
 responsibilities unrelated to the first business outcomes.
 
@@ -29,4 +29,3 @@ Anchoring may prove integrity and approximate existence time; it does not prove
 the truth, legality, or authority of the underlying evidence. Smart settlement,
 payments, custody, tokenization, and autonomous contract enforcement require
 separate legal, security, financial, and operational decisions.
-

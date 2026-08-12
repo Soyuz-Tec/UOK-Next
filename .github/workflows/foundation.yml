@@ -23,6 +23,9 @@ jobs:
       - name: Verify architecture foundation
         shell: pwsh
         run: .\scripts\verify_foundation.ps1
+      - name: Negative-test external identity policy
+        shell: pwsh
+        run: .\test\architecture\external_identity_policy_test.ps1
       - name: Verify web foundation policy
         shell: pwsh
         run: .\scripts\verify_web_foundation.ps1

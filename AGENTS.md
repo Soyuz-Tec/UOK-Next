@@ -40,12 +40,19 @@ authoritative than conversation history or model memory.
   integration contracts. They do not write another module's tables.
 - Kernel dependencies point inward and never import business modules. Module
   dependencies are declared, public-only, and acyclic.
-- K-Comms owns communication content and delivery state.
-- K-Board owns collaborative canvas operations and convergence state.
-- Odoo may own explicitly selected back-office records; it never shares the
-  application database.
+- The external communications system owns communication content and delivery
+  state.
+- The external collaborative-canvas system owns canvas operations and
+  convergence state.
+- A selected back-office system may own explicitly selected records; it never
+  shares the application database.
 - Blockchain may own anchor receipts only. It is never the operational source
   of truth, identity authority, workflow engine, or document store.
+- Product-facing code, contracts, catalogs, UI, and documentation identify
+  external systems by stable business role, not by company or product name.
+  Exact implementation identities appear only where build reproducibility,
+  security provenance, licensing, interoperability, or operations require
+  them, as governed by ADR-0010.
 - AI output is advisory until accepted through deterministic policy, a human
   decision, or an explicitly authorized low-risk command.
 

@@ -24,6 +24,7 @@ PR, or `docs/STATUS.md` entry:
 - migrations and compatibility;
 - tests and runtime evidence;
 - deployment, monitoring, rollback, and remaining risk;
+- external-system role identifiers and any justified exact technical identity;
 - ADR or documentation updates.
 
 ## End-of-task protocol
@@ -43,6 +44,10 @@ PR, or `docs/STATUS.md` entry:
 - No broad horizontal framework work without a consumer in the active slice.
 - No new service, language, datastore, or infrastructure product without an
   ADR and a measured requirement.
+- No company or product identity in product-facing code, contracts, UI,
+  catalogs, examples, or documentation. Use role-based external-system
+  identifiers and confine exact implementation identities to the evidence
+  contexts governed by ADR-0010.
 - No duplicated business record for UI convenience; use projections.
 - No “done” based on code presence alone.
 - Every deferred item has a named gate or is explicitly rejected.
@@ -65,4 +70,3 @@ Product outcome
 The module catalog is the first machine-readable traceability artifact. API,
 event, permission, migration, and metric catalogs will be added as their
 respective kernel capabilities become executable.
-

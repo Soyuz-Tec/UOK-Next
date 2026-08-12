@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "mode": "role_based",
+  "external_roles": [
+    {"id": "communications_system", "display_name": "External communications system"},
+    {"id": "collaborative_canvas_system", "display_name": "External collaborative-canvas system"},
+    {"id": "document_intelligence_workers", "display_name": "Document-intelligence workers"},
+    {"id": "analytics_execution_plane", "display_name": "Analytics execution plane"},
+    {"id": "back_office_system", "display_name": "Selected back-office system"},
+    {"id": "evidence_anchor", "display_name": "Evidence-anchor system"}
+  ],
+  "allowed_catalog_fields": [
+    "id",
+    "display_name",
+    "identity_class",
+    "status",
+    "record_types"
+  ],
+  "exact_identity_contexts": [
+    "dependency_manifest_or_lock",
+    "build_or_runtime_provenance",
+    "license_or_attribution",
+    "security_advisory_or_vulnerability_evidence",
+    "interoperability_configuration",
+    "operator_runbook",
+    "implementation_selection_adr"
+  ]
+}

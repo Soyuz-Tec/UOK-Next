@@ -124,7 +124,31 @@ state-machine, reconciliation, and policy invariants.
 - New languages, databases, queues, workflow products, or deployment platforms
   require an ADR and measured need.
 
-## 8. Security-by-construction discipline
+## 8. External-identity discipline
+
+- Product-facing source, APIs, events, catalogs, UI, fixtures, examples,
+  diagrams, assessments, and documentation identify an external system by its
+  business role, never by a company, product, account, or tenant-specific name.
+- Stable role identifiers survive implementation changes. Provider bindings
+  belong in deployment configuration behind typed anti-corruption adapters;
+  they never become domain record types, module identifiers, permission names,
+  event types, or user-interface labels.
+- Exact implementation identity is permitted only when reproducible builds,
+  dependency locks, security provenance, vulnerability response, licensing,
+  interoperability, operator procedures, or an implementation-selection ADR
+  would otherwise become unverifiable.
+- Required exact identities must be minimal, attributable, and kept out of
+  business payloads, logs, screenshots, examples, and public comparisons. This
+  rule never removes license notices, security evidence, or software-bill-of-
+  materials data.
+- User-entered organization and counterparty names are governed business data,
+  not implementation identities; preserve them under tenant, privacy,
+  retention, and authorization policy.
+- `config/external_identity_policy.json` and the foundation verifier enforce
+  the approved role identifiers and an exact field schema for external-system
+  entries in the module catalog.
+
+## 9. Security-by-construction discipline
 
 - Treat every external value, header, identifier, file, event, model output,
   and integration response as attacker-controlled until its boundary proves
@@ -155,7 +179,7 @@ state-machine, reconciliation, and policy invariants.
   operation, prerequisites, impact, counterevidence, and remaining uncertainty.
   "Hacker-proof" is treated as a defense-in-depth goal, never a guarantee.
 
-## 9. Review and commit discipline
+## 10. Review and commit discipline
 
 - One change solves one reviewable problem and advances the active gate.
 - Avoid unrelated formatting, renaming, abstraction, or dependency churn.

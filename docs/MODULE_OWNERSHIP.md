@@ -38,12 +38,12 @@ explains its intent.
 
 | System | Authority | Integration rule |
 |---|---|---|
-| K-Comms | communication content, delivery, calls, presence, membership | UOK stores typed business links and minimal projections; K-Comms reauthorizes access |
-| K-Board | canvas operations, convergence, snapshots | UOK supplies scoped authorization and business links; it does not implement a second merge engine |
-| Python workers | job-local extraction and inference results | results return as proposals/evidence and require UOK validation |
-| Rust analytics | analytical execution over governed projections | no direct business mutation |
-| Odoo | only selected accounting, localization, HR, or inventory records declared by ADR | APIs/events only; no shared database |
-| Blockchain anchor | evidence-root submission and confirmation receipts | asynchronous and non-blocking; no PII or documents on-chain |
+| External communications system | communication content, delivery, calls, presence, membership | UOK stores typed business links and minimal projections; the owning system reauthorizes access |
+| External collaborative-canvas system | canvas operations, convergence, snapshots | UOK supplies scoped authorization and business links; it does not implement a second merge engine |
+| Document-intelligence workers | job-local extraction and inference results | results return as proposals/evidence and require UOK validation |
+| Analytics execution plane | analytical execution over governed projections | no direct business mutation |
+| Selected back-office system | only accounting, localization, HR, or inventory records selected by ADR | APIs/events only; no shared database |
+| Evidence-anchor system | evidence-root submission and confirmation receipts | asynchronous and non-blocking; no PII or source documents leave the governed evidence boundary |
 
 ## Ownership change rule
 
@@ -51,3 +51,8 @@ Changing a system of record requires an ADR, migration and reconciliation plan,
 dual-run or cutover evidence, rollback, retention decision, and updates to both
 this document and `config/module_catalog.json`.
 
+External-system names in product-facing material are role-based. Deployment
+configuration may bind a role to an implementation, but that binding never
+changes the role identifier or data-ownership contract. ADR-0010 and
+`config/external_identity_policy.json` govern the exception for exact technical
+identities.
