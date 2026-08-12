@@ -81,6 +81,19 @@ row-level security fail closed. This is evidence for side-effect delivery, not
 an external-record replica or a live connector implementation. ADR-0012
 governs the primitive.
 
+### Governed agents
+
+The Gate 2 agent primitive accepts only bounded advisory plans. A plan binds a
+stable runbook key/version to one tenant and governed subject version, stores a
+server-derived digest over an acyclic graph of allowlisted non-executing step
+kinds, and atomically opens an exact human review task. Approval or hold records
+review evidence but always returns and emits `execution_authorized: false`.
+Plan input cannot name models, tools, endpoints, arguments, or commands, and no
+agent path invokes a connector, scheduler, model, tool, or business command.
+Runbook definitions, model/tool execution, scheduling, budgets, and command
+authorization require later explicit verticals and decisions. ADR-0013 governs
+this boundary.
+
 ### Specialist runtimes
 
 - The external communications system owns messages, conversation membership,

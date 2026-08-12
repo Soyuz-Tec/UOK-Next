@@ -145,6 +145,27 @@
   file with no reportable finding. It reviewed permission/tenant boundaries,
   retry and deadline abuse, raw-content exclusion, transaction rollback,
   database constraints, and supply-chain impact.
+- The `platform.agents` plan vertical now persists a server-digested, bounded
+  acyclic step graph bound to one tenant, runbook identity, governed subject
+  version, and exact human review task. Proposal and decision atomically include
+  command receipts, audit events, and outbox events.
+- Plan input rejects model, prompt, tool, endpoint, argument, and command fields.
+  Approval or hold changes review state only; public responses, audit evidence,
+  and events retain `execution_authorized: false`, and tests prove no connector
+  receipt is created.
+- ADR-0013 records this non-executing boundary. Named permissions, deterministic
+  digest/duplicate protection, replay/conflict, invalid and cyclic graphs,
+  stale state, exact-task/tenant substitution, consumed-task reuse, rollback,
+  and forced row-level security are negative-tested.
+- The application compiles with warnings as errors; 67 tests pass with one
+  environment-gated test excluded; static analysis, the web security scan,
+  architecture boundaries, and code discipline pass for the agent increment.
+- A complete security diff scan closed all nine changed production and
+  migration worklist rows with complete coverage and no reportable finding. It
+  reviewed graph and input bounds, named permissions, tenant/subject/task
+  substitution, stale and replay behavior, execution-field rejection,
+  approval-to-execution separation, atomic rollback, database constraints, and
+  supply-chain impact.
 
 ## Explicitly not yet implemented
 
@@ -152,7 +173,8 @@
   business-module React UI, durable outbox delivery, scheduled jobs, general
   workflow definitions, task inbox/assignment/escalation, production evidence
   metadata/commands, live connector transport/credentials/retry scheduling,
-  governed agent plans, BI projections, or evidence anchoring.
+  server-owned agent runbook definitions, model/tool execution, agent
+  scheduling/budgets, BI projections, or evidence anchoring.
 - The local two-replica qualifier is not a production topology. PostgreSQL 19
   is still a single local dependency and no backup/restore receipt exists.
 - Production deployment is blocked on a selected platform, managed secrets,
@@ -161,8 +183,7 @@
 
 ## Next action
 
-Implement governed agent plans as bounded, tenant-scoped proposals. Validate a
-deterministic acyclic step graph, bind it to one subject version and runbook
-identity, open an exact human review task atomically, and ensure approval never
-dispatches a business command or tool. Negative-test permission, tenant/task/
-subject substitution, stale state, replay, invalid graphs, and rollback.
+Run the complete security, foundation, application, database, release, and
+two-replica recovery qualification over the integrated Gate 2 kernel. If the
+protected merged revision passes, record Gate 2 closure and activate Gate 3 as
+the single focus without claiming a user-facing business operation exists.
