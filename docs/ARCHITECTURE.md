@@ -130,6 +130,9 @@ cross-module private imports fail architecture verification.
   unrestricted CRUD.
 - Multi-record work within the monolith uses explicit application services and
   database transactions.
+- A consequential human decision completes an exact tenant-, subject-, and
+  subject-version-bound task in the same command transaction as business state,
+  receipts, audit evidence, and outbox events.
 - Long-running or external work uses durable jobs, resumable workflow state,
   idempotent steps, receipts, timeouts, and compensation where possible.
 - A playbook coordinates module-owned commands and human tasks. It never owns

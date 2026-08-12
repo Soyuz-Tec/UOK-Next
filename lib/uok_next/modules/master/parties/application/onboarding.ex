@@ -4,11 +4,13 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
   alias UokNext.Kernel.{CommandContext, CommandError, CommandTransaction, TenantTransaction}
   alias UokNext.Modules.Master.Parties.Domain.PartyProfile
   alias UokNext.Modules.Master.Parties.Policies.Authorization
+  alias UokNext.Modules.Platform.Workflow.Public, as: Workflow
 
   @create_permission "parties:create"
   @read_permission "parties:read"
   @evidence_permission "parties:evidence:submit"
   @approve_permission "parties:approve"
+  @review_task_kind "master.parties.onboarding_review"
 
   @spec create_draft(module(), map(), CommandContext.t(), String.t()) ::
           {:ok, map(), :executed | :replayed} | {:error, CommandError.t()}
@@ -50,15 +52,16 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
   def decide(store, party_id, attrs, expected_version, context, idempotency_key) do
     with :ok <- Authorization.require_permission(context, @approve_permission),
          {:ok, id} <- cast_uuid(party_id),
+         {:ok, task_id} <- cast_task_id(attrs),
          {:ok, version} <- cast_version(expected_version) do
-      payload = %{party_id: id, expected_version: version, decision: attrs}
+      payload = %{party_id: id, task_id: task_id, expected_version: version, decision: attrs}
 
       CommandTransaction.execute(
         context,
         "master.parties.decide_onboarding",
         idempotency_key,
         payload,
-        fn -> decision_operation(store, id, attrs, version, context) end
+        fn -> decision_operation(store, id, task_id, attrs, version, context) end
       )
     end
   end
@@ -112,17 +115,25 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
                evidence_submitted_at: DateTime.utc_now()
              },
              context
-           ) do
-      response = party_view(updated)
-      audit = audit(updated, "submit_evidence", command.reason)
-      {:ok, response, audit, [event(updated, "onboarding_evidence_submitted")]}
+           ),
+         {:ok, task} <- open_review_task(updated, command.reason, context) do
+      response = updated |> party_view() |> Map.put("review_task", task)
+
+      audits = [
+        audit(updated, "submit_evidence", command.reason),
+        task_audit(task, "open", command.reason)
+      ]
+
+      events = [event(updated, "onboarding_evidence_submitted"), task_event(task, "opened")]
+      {:ok, response, audits, events}
     end
   end
 
-  defp decision_operation(store, id, attrs, expected_version, context) do
+  defp decision_operation(store, id, task_id, attrs, expected_version, context) do
     with {:ok, party} <- fetch_locked(store, id, context),
          :ok <- require_version(party, expected_version),
          {:ok, command} <- validate_decision(party.status, party.evidence_metadata, attrs),
+         {:ok, task} <- complete_review_task(task_id, party, command, context),
          {:ok, updated} <-
            update_party(
              store,
@@ -134,9 +145,44 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
       event_name =
         if command.decision == "approve", do: "onboarding_approved", else: "onboarding_held"
 
-      response = party_view(updated)
-      {:ok, response, audit(updated, event_name, command.reason), [event(updated, event_name)]}
+      response = updated |> party_view() |> Map.put("review_task", task)
+
+      audits = [
+        audit(updated, event_name, command.reason),
+        task_audit(task, "complete", command.reason)
+      ]
+
+      events = [event(updated, event_name), task_event(task, "completed")]
+      {:ok, response, audits, events}
     end
+  end
+
+  defp open_review_task(party, reason, context) do
+    Workflow.open_human_task(
+      %{
+        task_kind: @review_task_kind,
+        subject_type: "party",
+        subject_id: party.id,
+        subject_version: party.lock_version,
+        required_permission: @approve_permission,
+        reason: reason
+      },
+      context
+    )
+  end
+
+  defp complete_review_task(task_id, party, command, context) do
+    Workflow.complete_human_task(
+      task_id,
+      %{
+        subject_type: "party",
+        subject_id: party.id,
+        subject_version: party.lock_version,
+        resolution: command.decision,
+        reason: command.reason
+      },
+      context
+    )
   end
 
   defp decision_changes(command, actor_id) do
@@ -183,6 +229,18 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
     end
   end
 
+  defp cast_task_id(attrs) when is_map(attrs) do
+    attrs
+    |> Map.get("task_id", Map.get(attrs, :task_id))
+    |> cast_uuid()
+    |> map_task_id_error()
+  end
+
+  defp cast_task_id(_attrs), do: validation_error(%{task_id: ["must be a UUID"]})
+
+  defp map_task_id_error({:ok, id}), do: {:ok, id}
+  defp map_task_id_error({:error, _error}), do: validation_error(%{task_id: ["must be a UUID"]})
+
   defp cast_version(value) when is_integer(value) and value > 0, do: {:ok, value}
 
   defp cast_version(_value),
@@ -225,6 +283,37 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
       aggregate_version: party.lock_version,
       classification: "internal",
       payload: %{"party_id" => party.id, "status" => party.status}
+    }
+  end
+
+  defp task_audit(task, action, reason) do
+    %{
+      action: "platform.workflow.human_task.#{action}",
+      resource_type: "human_task",
+      resource_id: task["id"],
+      reason: reason,
+      classification: "internal",
+      metadata: %{
+        "status" => task["status"],
+        "subject_id" => task["subject_id"],
+        "subject_type" => task["subject_type"]
+      }
+    }
+  end
+
+  defp task_event(task, lifecycle) do
+    %{
+      name: "platform.workflow.human_task_#{lifecycle}",
+      aggregate_type: "human_task",
+      aggregate_id: task["id"],
+      aggregate_version: task["lock_version"],
+      classification: "internal",
+      payload: %{
+        "human_task_id" => task["id"],
+        "status" => task["status"],
+        "subject_id" => task["subject_id"],
+        "subject_type" => task["subject_type"]
+      }
     }
   end
 

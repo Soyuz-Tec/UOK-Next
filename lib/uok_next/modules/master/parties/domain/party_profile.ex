@@ -68,8 +68,7 @@ defmodule UokNext.Modules.Master.Parties.Domain.PartyProfile do
 
   defp decision_allowed("evidence_submitted", evidence, "approve") when is_map(evidence), do: :ok
 
-  defp decision_allowed(status, _evidence, "hold") when status in ["draft", "evidence_submitted"],
-    do: :ok
+  defp decision_allowed("evidence_submitted", _evidence, "hold"), do: :ok
 
   defp decision_allowed(_status, _evidence, "approve") do
     error("evidence", "must be submitted before approval")

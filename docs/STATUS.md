@@ -1,6 +1,6 @@
 # Current Build Status
 
-**Snapshot date:** 2026-08-11
+**Snapshot date:** 2026-08-12
 
 **Canonical repository:** `https://github.com/Soyuz-Tec/UOK-Next`
 
@@ -109,12 +109,35 @@
 - Gate 1 is therefore complete for the local/CI foundation. This is not a
   production-readiness or production-availability claim.
 
+## Gate 2 verified progress
+
+- The existing tenant and actor command context now governs the first
+  `platform.workflow` vertical. Submitting party-onboarding evidence atomically
+  opens one review task bound to the tenant, party identifier, exact party
+  version, and `parties:approve` permission.
+- Approval or hold requires and atomically completes that exact open task in
+  the same command transaction as the party transition, command receipt, two
+  append-only audit events, and two outbox events.
+- Workflow rows use forced database row-level security, tenant-scoped locked
+  reads, database lifecycle constraints, and optimistic locking. Cross-tenant
+  and cross-subject task substitution, missing permission, stale state,
+  consumed-task reuse, idempotent replay, and replay conflict are
+  negative-tested.
+- ADR-0011 records the bounded human-task model. General workflow definitions,
+  assignment, delegation, escalation, cancellation, inbox queries, and
+  notification delivery remain explicitly outside this increment.
+- The application compiled with warnings as errors; 47 tests passed with one
+  environment-gated test excluded; architecture-boundary and code-discipline
+  checks passed; and a complete security diff review found no validated
+  exploitable path in the ten changed production and migration files.
+
 ## Explicitly not yet implemented
 
 - Production identity/OIDC, session management, user-facing business APIs,
-  business-module React UI, durable outbox delivery, jobs/workflows, production
-  evidence metadata/commands, external integrations, BI projections, or
-  blockchain anchoring.
+  business-module React UI, durable outbox delivery, scheduled jobs, general
+  workflow definitions, task inbox/assignment/escalation, production evidence
+  metadata/commands, external integrations, BI projections, or evidence
+  anchoring.
 - The local two-replica qualifier is not a production topology. PostgreSQL 19
   is still a single local dependency and no backup/restore receipt exists.
 - Production deployment is blocked on a selected platform, managed secrets,
@@ -123,7 +146,9 @@
 
 ## Next action
 
-Implement the smallest Gate 2 vertical that integrates the remaining Kernel v0
-contracts—actor context, human tasks, connector receipts, and governed agent
-plans—through the existing policy, idempotency, transaction, audit, evidence,
-and outbox path, with negative authorization and recovery tests.
+Implement a provider-neutral connector-receipt vertical that records one
+outbound attempt and reconciled outcome through the existing tenant/actor,
+policy, idempotency, transaction, audit, evidence, and outbox path. Require
+immutable request identity, bounded response evidence, retry classification,
+and negative authorization, tenant-substitution, duplicate-delivery, timeout,
+and recovery tests before beginning governed agent plans.
