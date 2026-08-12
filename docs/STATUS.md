@@ -201,7 +201,7 @@
   while negative configuration checks prove non-local hosts and production
   profiles still redirect to HTTPS.
 
-## Gate 3 party-onboarding candidate
+## Gate 3 party-onboarding delivery evidence
 
 - The first module-owned browser workspace now drives draft creation, bounded
   evidence upload, review-task visibility, and approve/hold decisions through
@@ -231,7 +231,7 @@
 - Open-task queries require an inbox permission and return only tasks whose
   recorded decision permission is held by the actor. The API publishes its
   versioned machine-readable contract.
-- Candidate tests cover the complete API journey and replay plus invalid login,
+- Tests cover the complete API journey and replay plus invalid login,
   forged token, missing authorization, stale state, unsupported upload, tenant
   and subject substitution, forced row-level security, retry recovery, zero
   persistence for unknown/stale subjects, and ownership-safe cleanup after
@@ -258,8 +258,17 @@
   responsive patch received a separate complete security review with zero
   findings and no deferred proof gaps.
 - ADR-0014 records the identity, evidence choreography, recovery, API, and UI
-  boundaries. Protected CI and an exact merged-revision redeployment remain
-  required before this candidate is called delivered.
+  boundaries.
+- Protected foundation, application, and immutable-release checks passed in
+  PR #17, which was squash-merged to `main` as
+  `cd6c6415dc58132f7d7941509fa3c7202d0ed5ea`. That exact protected revision
+  was rebuilt as image
+  `2619d9f336a0acbfc4bffac4df08e6296ab240420f28a8898ff0b3dbaf98bb18`.
+  Database and object-storage qualification, identical two-replica identity,
+  four one-replica failover probes, the authenticated end-to-end business
+  flow, and rendered desktop/mobile smoke all passed again. The first Gate 3
+  vertical is delivered; this is necessary evidence, not the complete Gate 3
+  exit.
 
 ## Explicitly not yet implemented
 
@@ -278,8 +287,9 @@
 
 ## Next action
 
-Deliver the qualified Gate 3 party-onboarding candidate through protected CI,
-then rebuild and redeploy the exact merged revision before advancing the active
-focus. Preserve the existing command contracts and add no product, sourcing,
-RFQ, commitment, shipment, or reporting breadth until protected delivery is
-complete.
+Begin the second sequential Gate 3 vertical: product and sourcing-lane
+authority. Declare record ownership, commands, queries, events, policies,
+tenant constraints, evidence, recovery, and rollback before implementation;
+then qualify the real API and UI path before opening RFQ/comparison scope.
+Preserve the delivered party-onboarding contracts and keep the active focus on
+Gate 3.
