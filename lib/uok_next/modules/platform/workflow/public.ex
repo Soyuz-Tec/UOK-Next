@@ -17,4 +17,7 @@ defmodule UokNext.Modules.Platform.Workflow.Public do
   def complete_human_task(task_id, attrs, context) do
     HumanTasks.complete(EctoHumanTaskStore, task_id, attrs, context)
   end
+
+  @spec list_open_human_tasks(UokNext.Kernel.CommandContext.t()) :: tuple()
+  def list_open_human_tasks(context), do: HumanTasks.list_open(EctoHumanTaskStore, context)
 end

@@ -11,7 +11,7 @@ config :uok_next,
   build_revision: System.get_env("UOK_BUILD_REVISION", "uncommitted"),
   ecto_repos: [UokNext.Repo],
   generators: [timestamp_type: :utc_datetime_usec, binary_id: true],
-  required_schema_version: 20_260_811_160_000,
+  required_schema_version: 20_260_812_180_000,
   database_target_major: 19,
   database_prerelease_allowed: true
 

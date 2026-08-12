@@ -10,12 +10,20 @@ if ($developmentConfig -match 'show_sensitive_data_on_connection_error\s*:\s*tru
     throw "Development database errors must not disclose connection credentials"
 }
 
+$qualificationScript = Get-Content -LiteralPath `
+    (Join-Path $repoRoot "scripts\deploy_local_qualification.ps1") -Raw
+if ($qualificationScript -match 'party_onboarding_access_code\s*=') {
+    throw "The qualification receipt must not disclose the local access code"
+}
+
 $tempRoot = [IO.Path]::GetTempPath()
 $testRoot = Join-Path $tempRoot ("uok-next-credential-test-" + [guid]::NewGuid().ToString("N"))
 $credentialPath = Join-Path $testRoot "uok-db-password"
 
 try {
     $cloneCredential = Get-UokCloneLocalCredentialPath -RepositoryRoot $repoRoot
+    $identityCredential = Get-UokCloneLocalCredentialPath `
+        -RepositoryRoot $repoRoot -CredentialName "uok-local-identity.json"
     $localApplicationData = [Environment]::GetFolderPath(
         [Environment+SpecialFolder]::LocalApplicationData
     )
@@ -28,10 +36,15 @@ try {
         )) {
         throw "The supported clone credential path is not isolated from the repository"
     }
+    if ([IO.Path]::GetFileName($identityCredential) -cne "uok-local-identity.json" -or
+        [IO.Path]::GetDirectoryName($identityCredential) -cne
+            [IO.Path]::GetDirectoryName($cloneCredential)) {
+        throw "Named clone-local credentials must remain in the same protected clone directory"
+    }
 
     Write-UokCloneLocalCredential -Path $credentialPath -Value ("a" * 64)
 
-    if ([IO.File]::ReadAllText($credentialPath) -cne ("a" * 64)) {
+    if ((Read-UokCloneLocalCredential -Path $credentialPath) -cne ("a" * 64)) {
         throw "The clone-local credential content was not written exactly"
     }
 

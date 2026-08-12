@@ -34,6 +34,18 @@ defmodule UokNext.Modules.Platform.Workflow.Infrastructure.EctoHumanTaskStore do
     |> normalize_update()
   end
 
+  @impl true
+  def list_open(tenant_id, permissions, _context) do
+    from(task in HumanTaskRecord,
+      where:
+        task.tenant_id == ^tenant_id and task.status == "open" and
+          task.required_permission in ^permissions,
+      order_by: [asc: task.inserted_at, asc: task.id],
+      limit: 100
+    )
+    |> Repo.all()
+  end
+
   defp normalize_fetch(nil), do: :not_found
   defp normalize_fetch(record), do: {:ok, record}
   defp normalize_write({:ok, record}), do: {:ok, record}

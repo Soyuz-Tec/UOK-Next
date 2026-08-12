@@ -18,7 +18,7 @@ defmodule UokNext.Modules.Master.Parties.ContractTest do
     assert {:ok, evidenced, :executed} =
              Public.submit_evidence(
                party["id"],
-               evidence_attrs(),
+               persisted_evidence_attrs(context, party),
                party["lock_version"],
                context,
                Ecto.UUID.generate()
@@ -64,7 +64,7 @@ defmodule UokNext.Modules.Master.Parties.ContractTest do
     assert {:ok, evidenced, :executed} =
              Public.submit_evidence(
                party["id"],
-               evidence_attrs(),
+               persisted_evidence_attrs(owner_context, party),
                party["lock_version"],
                owner_context,
                Ecto.UUID.generate()

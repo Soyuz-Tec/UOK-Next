@@ -15,6 +15,11 @@ defmodule UokNextWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticated_api do
+    plug :accepts, ["json"]
+    plug UokNextWeb.AuthenticateAccess
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
 
@@ -36,6 +41,20 @@ defmodule UokNextWeb.Router do
     get "/health/startup", HealthController, :startup
     get "/release", HealthController, :release
     get "/metrics", MetricsController, :show
+    get "/openapi.json", OpenApiController, :show
+    post "/session", SessionController, :create
+  end
+
+  scope "/api/v1", UokNextWeb do
+    pipe_through :authenticated_api
+
+    get "/session", SessionController, :show
+    get "/parties", PartyController, :index
+    post "/parties", PartyController, :create
+    get "/parties/:id", PartyController, :show
+    post "/parties/:id/evidence", EvidenceController, :create
+    post "/parties/:id/decision", PartyController, :decide
+    get "/review-tasks", WorkflowController, :index
   end
 
   if Application.compile_env(:uok_next, :framework_spike_routes, false) do

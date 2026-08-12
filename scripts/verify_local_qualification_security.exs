@@ -33,6 +33,24 @@ unless Application.fetch_env!(:uok_next, :deployment_profile) == :local_qualific
   raise "local qualification must use its explicit deployment profile"
 end
 
+local_identity = Application.fetch_env!(:uok_next, :local_qualification_identity)
+
+unless match?({:ok, _tenant_id}, Ecto.UUID.cast(local_identity.tenant_id)) and
+         match?({:ok, _actor_id}, Ecto.UUID.cast(local_identity.actor_id)) and
+         is_binary(local_identity.access_code) and byte_size(local_identity.access_code) in 32..128 and
+         Enum.sort(local_identity.permissions) ==
+           Enum.sort([
+             "evidence:read",
+             "evidence:upload",
+             "parties:approve",
+             "parties:create",
+             "parties:evidence:submit",
+             "parties:read",
+             "workflow:tasks:read"
+           ]) do
+  raise "local qualification identity must be server-owned and least-authorized"
+end
+
 local_browser_conn =
   :get
   |> Plug.Test.conn("/")

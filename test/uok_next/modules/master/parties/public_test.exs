@@ -115,6 +115,48 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
   end
 
   describe "onboarding transitions" do
+    test "preflights permission, tenant visibility, state, and version before evidence storage" do
+      owner_context = context()
+      party = create_party(owner_context)
+
+      assert :ok =
+               Public.preflight_evidence(
+                 party["id"],
+                 party["lock_version"],
+                 owner_context
+               )
+
+      assert {:error, stale} =
+               Public.preflight_evidence(
+                 party["id"],
+                 party["lock_version"] + 1,
+                 owner_context
+               )
+
+      assert stale.code == "stale_state"
+
+      assert {:error, hidden} =
+               Public.preflight_evidence(
+                 party["id"],
+                 party["lock_version"],
+                 context()
+               )
+
+      assert hidden.code == "not_found"
+
+      denied_context =
+        context(%{tenant_id: owner_context.tenant_id, permissions: ["parties:read"]})
+
+      assert {:error, denied} =
+               Public.preflight_evidence(
+                 party["id"],
+                 party["lock_version"],
+                 denied_context
+               )
+
+      assert denied.code == "forbidden"
+    end
+
     test "submits evidence and approves through versioned named commands" do
       context = context()
       party = create_party(context)
@@ -122,7 +164,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:ok, evidenced, :executed} =
                Public.submit_evidence(
                  party["id"],
-                 evidence_attrs(),
+                 persisted_evidence_attrs(context, party),
                  party["lock_version"],
                  context,
                  Ecto.UUID.generate()
@@ -177,7 +219,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:ok, evidenced, :executed} =
                Public.submit_evidence(
                  party["id"],
-                 evidence_attrs(),
+                 persisted_evidence_attrs(context, party),
                  party["lock_version"],
                  context,
                  Ecto.UUID.generate()
@@ -209,7 +251,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:ok, first, :executed} =
                Public.submit_evidence(
                  first_party["id"],
-                 evidence_attrs(),
+                 persisted_evidence_attrs(context, first_party),
                  first_party["lock_version"],
                  context,
                  Ecto.UUID.generate()
@@ -218,7 +260,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:ok, second, :executed} =
                Public.submit_evidence(
                  second_party["id"],
-                 evidence_attrs(),
+                 persisted_evidence_attrs(context, second_party),
                  second_party["lock_version"],
                  context,
                  Ecto.UUID.generate()
@@ -252,7 +294,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:ok, evidenced, :executed} =
                Public.submit_evidence(
                  party["id"],
-                 evidence_attrs(),
+                 persisted_evidence_attrs(context, party),
                  party["lock_version"],
                  context,
                  Ecto.UUID.generate()
@@ -311,7 +353,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:ok, evidenced, :executed} =
                Public.submit_evidence(
                  party["id"],
-                 evidence_attrs(),
+                 persisted_evidence_attrs(owner_context, party),
                  party["lock_version"],
                  owner_context,
                  Ecto.UUID.generate()
@@ -322,7 +364,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:ok, foreign_evidenced, :executed} =
                Public.submit_evidence(
                  foreign_party["id"],
-                 evidence_attrs(),
+                 persisted_evidence_attrs(foreign_context, foreign_party),
                  foreign_party["lock_version"],
                  foreign_context,
                  Ecto.UUID.generate()
@@ -357,7 +399,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:error, hidden} =
                Public.submit_evidence(
                  party["id"],
-                 evidence_attrs(),
+                 persisted_evidence_attrs(owner_context, party),
                  party["lock_version"],
                  other_context,
                  Ecto.UUID.generate()
@@ -374,7 +416,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:ok, _evidenced, :executed} =
                Public.submit_evidence(
                  party["id"],
-                 evidence_attrs(),
+                 persisted_evidence_attrs(owner_context, party),
                  party["lock_version"],
                  owner_context,
                  Ecto.UUID.generate()
@@ -403,7 +445,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:error, denied} =
                Public.submit_evidence(
                  party["id"],
-                 evidence_attrs(),
+                 persisted_evidence_attrs(owner_context, party),
                  party["lock_version"],
                  evidence_context,
                  Ecto.UUID.generate()
@@ -414,7 +456,7 @@ defmodule UokNext.Modules.Master.Parties.PublicTest do
       assert {:ok, evidenced, :executed} =
                Public.submit_evidence(
                  party["id"],
-                 evidence_attrs(),
+                 persisted_evidence_attrs(owner_context, party),
                  party["lock_version"],
                  owner_context,
                  Ecto.UUID.generate()

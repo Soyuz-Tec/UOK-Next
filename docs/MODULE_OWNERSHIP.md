@@ -9,7 +9,7 @@ explains its intent.
 
 | Module | Owns | Does not own |
 |---|---|---|
-| `platform.identity` | tenants, organizations, actors, sessions, service identities | parties and counterparties |
+| `platform.identity` | tenants, organizations, actors, sessions, service identities; isolated local qualification authentication | parties and counterparties, production identity-provider policy |
 | `platform.modules` | module catalog, lifecycle, tenant enablement | business records |
 | `platform.policy` | permissions, capability checks, policy decisions | domain approval facts |
 | `platform.workflow` | workflow instances, human tasks, approval requests, escalations | source business records coordinated by a workflow |

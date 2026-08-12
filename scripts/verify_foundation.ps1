@@ -211,6 +211,52 @@ foreach ($owner in $allOwners) {
     }
 }
 
+$moduleIds = @($catalog.modules | ForEach-Object id)
+$dependencyGraph = @{}
+foreach ($module in $catalog.modules) {
+    $dependencies = @(
+        $module.dependencies |
+            Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) }
+    )
+    $dependencyGraph[$module.id] = $dependencies
+    foreach ($dependency in $dependencies) {
+        if ($moduleIds -cnotcontains $dependency) {
+            throw "Module '$($module.id)' declares unknown dependency '$dependency'"
+        }
+        if ($dependency -eq $module.id) {
+            throw "Module '$($module.id)' cannot depend on itself"
+        }
+    }
+}
+
+function Assert-AcyclicModule {
+    param(
+        [Parameter(Mandatory = $true)][string]$ModuleId,
+        [Parameter(Mandatory = $true)][hashtable]$Graph,
+        [Parameter(Mandatory = $true)][hashtable]$Visiting,
+        [Parameter(Mandatory = $true)][hashtable]$Visited
+    )
+
+    if ($Visiting[$ModuleId]) {
+        throw "Module dependency cycle detected at '$ModuleId'"
+    }
+    if ($Visited[$ModuleId]) {
+        return
+    }
+
+    $Visiting[$ModuleId] = $true
+    foreach ($dependency in @($Graph[$ModuleId])) {
+        Assert-AcyclicModule -ModuleId $dependency -Graph $Graph -Visiting $Visiting -Visited $Visited
+    }
+    $Visiting.Remove($ModuleId)
+    $Visited[$ModuleId] = $true
+}
+
+$visitedModules = @{}
+foreach ($moduleId in $moduleIds) {
+    Assert-AcyclicModule -ModuleId $moduleId -Graph $dependencyGraph -Visiting @{} -Visited $visitedModules
+}
+
 $statusText = Get-Content -LiteralPath (Join-Path $repoRoot "docs/STATUS.md") -Raw
 if ($statusText -notmatch "## One active focus") {
     throw "docs/STATUS.md must contain the single-focus heading"

@@ -10,3 +10,7 @@ GRANT SELECT, INSERT, UPDATE ON TABLE kernel_command_receipts TO uok_app;
 GRANT SELECT, INSERT ON TABLE kernel_audit_events TO uok_app;
 GRANT SELECT, INSERT ON TABLE kernel_outbox_events TO uok_app;
 GRANT SELECT, INSERT, UPDATE ON TABLE master_parties TO uok_app;
+GRANT SELECT, INSERT, UPDATE ON TABLE platform_workflow_human_tasks TO uok_app;
+GRANT SELECT, INSERT, UPDATE ON TABLE platform_integrations_connector_receipts TO uok_app;
+GRANT SELECT, INSERT, UPDATE ON TABLE platform_agents_plans TO uok_app;
+GRANT SELECT, INSERT, UPDATE ON TABLE platform_evidence_objects TO uok_app;

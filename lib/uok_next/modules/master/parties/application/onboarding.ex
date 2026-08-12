@@ -4,6 +4,7 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
   alias UokNext.Kernel.{CommandContext, CommandError, CommandTransaction, TenantTransaction}
   alias UokNext.Modules.Master.Parties.Domain.PartyProfile
   alias UokNext.Modules.Master.Parties.Policies.Authorization
+  alias UokNext.Modules.Platform.Evidence.Public, as: Evidence
   alias UokNext.Modules.Platform.Workflow.Public, as: Workflow
 
   @create_permission "parties:create"
@@ -47,6 +48,18 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
     end
   end
 
+  @spec preflight_evidence(module(), String.t(), integer(), CommandContext.t()) ::
+          :ok | {:error, CommandError.t()}
+  def preflight_evidence(store, party_id, expected_version, context) do
+    with :ok <- Authorization.require_permission(context, @evidence_permission),
+         {:ok, id} <- cast_uuid(party_id),
+         {:ok, version} <- cast_version(expected_version) do
+      TenantTransaction.run(context, fn ->
+        preflight_evidence_scoped(store, id, version, context)
+      end)
+    end
+  end
+
   @spec decide(module(), String.t(), map(), integer(), CommandContext.t(), String.t()) ::
           {:ok, map(), :executed | :replayed} | {:error, CommandError.t()}
   def decide(store, party_id, attrs, expected_version, context, idempotency_key) do
@@ -75,10 +88,36 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
     end
   end
 
+  @spec list(module(), pos_integer(), CommandContext.t()) ::
+          {:ok, [map()]} | {:error, CommandError.t()}
+  def list(store, limit, context) when is_integer(limit) and limit in 1..100 do
+    with :ok <- Authorization.require_permission(context, @read_permission) do
+      TenantTransaction.run(context, fn ->
+        {:ok, store.list(context.tenant_id, limit, context) |> Enum.map(&party_view/1)}
+      end)
+    end
+  end
+
+  def list(_store, _limit, _context),
+    do: validation_error(%{limit: ["must be between 1 and 100"]})
+
   defp get_scoped(store, id, context) do
     case store.fetch(id, context.tenant_id, context) do
       {:ok, party} -> {:ok, party_view(party)}
       :not_found -> not_found()
+    end
+  end
+
+  defp preflight_evidence_scoped(store, id, expected_version, context) do
+    case store.fetch(id, context.tenant_id, context) do
+      {:ok, party} ->
+        case require_version(party, expected_version) do
+          :ok -> map_state_validation(PartyProfile.validate_evidence_state(party.status))
+          {:error, %CommandError{} = error} -> {:error, error}
+        end
+
+      :not_found ->
+        not_found()
     end
   end
 
@@ -103,7 +142,8 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
   defp evidence_operation(store, id, attrs, expected_version, context) do
     with {:ok, party} <- fetch_locked(store, id, context),
          :ok <- require_version(party, expected_version),
-         {:ok, command} <- validate_evidence(party.status, attrs),
+         {:ok, evidence} <- verified_evidence(id, attrs, context),
+         {:ok, command} <- validate_evidence(party.status, attrs, evidence),
          {:ok, updated} <-
            update_party(
              store,
@@ -215,12 +255,28 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
     map_validation(PartyProfile.validate_evidence(status, attrs))
   end
 
+  defp validate_evidence(status, attrs, evidence) do
+    trusted_attrs =
+      attrs
+      |> Map.put("sha256", evidence["sha256"])
+      |> Map.put("classification", evidence["classification"])
+
+    validate_evidence(status, trusted_attrs)
+  end
+
+  defp verified_evidence(party_id, attrs, context) do
+    evidence_id = Map.get(attrs, "evidence_id", Map.get(attrs, :evidence_id))
+    Evidence.get_verified_candidate(evidence_id, party_id, context)
+  end
+
   defp validate_decision(status, evidence, attrs) do
     map_validation(PartyProfile.validate_decision(status, evidence, attrs))
   end
 
   defp map_validation({:ok, value}), do: {:ok, value}
   defp map_validation({:error, details}), do: validation_error(details)
+  defp map_state_validation(:ok), do: :ok
+  defp map_state_validation({:error, details}), do: validation_error(details)
 
   defp cast_uuid(value) do
     case Ecto.UUID.cast(value) do

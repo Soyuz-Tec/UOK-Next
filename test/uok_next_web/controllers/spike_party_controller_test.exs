@@ -29,7 +29,8 @@ defmodule UokNextWeb.Spikes.PartyControllerTest do
         |> authenticated(context, Ecto.UUID.generate())
         |> post(
           ~p"/api/v1/spikes/explicit/parties/#{party["id"]}/evidence",
-          Map.put(evidence_attrs(), "expected_version", party["lock_version"])
+          persisted_evidence_attrs(context, party)
+          |> Map.put("expected_version", party["lock_version"])
         )
         |> json_response(200)
 

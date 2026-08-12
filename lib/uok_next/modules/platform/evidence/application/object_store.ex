@@ -15,8 +15,12 @@ defmodule UokNext.Modules.Platform.Evidence.Application.ObjectStore do
           optional(:etag) => String.t() | nil
         }
 
+  @type ensure_disposition :: :created | :existing
+
   @callback ready?() :: :ok | {:error, atom()}
   @callback put(EvidenceObject.t(), binary()) :: {:ok, receipt()} | {:error, atom()}
+  @callback ensure(EvidenceObject.t(), binary()) ::
+              {:ok, receipt(), ensure_disposition()} | {:error, atom()}
   @callback fetch(EvidenceObject.t()) :: {:ok, binary()} | {:error, atom()}
   @callback delete(EvidenceObject.t()) :: :ok | {:error, atom()}
 end
