@@ -8,7 +8,7 @@
 
 ## One active focus
 
-**Gate 2: integrate and negative-test Kernel v0.**
+**Gate 3: deliver the first end-to-end business operation.**
 
 ## Verified foundation
 
@@ -167,6 +167,33 @@
   approval-to-execution separation, atomic rollback, database constraints, and
   supply-chain impact.
 
+## Gate 2 closure evidence
+
+- The governed human-task, connector-receipt, and non-executing agent-plan
+  increments passed protected foundation, application, and release checks and
+  were squash-merged through PRs #12, #13, and #14 as revisions
+  `0c3c8e510575cdae5688a6a0116b5b90a9ceb512`,
+  `456e7b678f756e9f69889ced728e2b2585b447e1`, and
+  `2e96d88df67878d9b7023a49020487dfff2834ac`.
+- On exact protected-main revision
+  `2e96d88df67878d9b7023a49020487dfff2834ac`, compilation with warnings as
+  errors, 67 application tests with one environment-gated test excluded,
+  static analysis, the web security scan, and foundation, architecture,
+  code-discipline, database, object-storage, external-identity, and web checks
+  passed.
+- The exact merged revision was rebuilt as immutable local image
+  `babcfa8667e1aad4be24f6b6df6a44c34e94bb069b959dd669e772464d3d7174`.
+  The qualifier proved the PostgreSQL 19 baseline and migrations,
+  least-privileged role reconciliation, unsafe-role rejection, object
+  create/collision rejection/read-after-write digest verification/delete,
+  authenticated metrics, readiness and release identity, identical identity
+  across two replicas, and four consecutive one-replica failover probes.
+- The complete Gate 2 exit mapping, reproducible commands, residual risks, and
+  rollback boundary are recorded in `docs/GATE_2_KERNEL_V0.md`.
+- Gate 2 Kernel v0 is therefore qualified for local development and CI. This
+  is not a production-readiness, production-availability, or completed
+  user-facing business-operation claim.
+
 ## Explicitly not yet implemented
 
 - Production identity/OIDC, session management, user-facing business APIs,
@@ -183,7 +210,9 @@
 
 ## Next action
 
-Run the complete security, foundation, application, database, release, and
-two-replica recovery qualification over the integrated Gate 2 kernel. If the
-protected merged revision passes, record Gate 2 closure and activate Gate 3 as
-the single focus without claiming a user-facing business operation exists.
+Define and deliver the first Gate 3 vertical as a real tenant-authenticated
+party-onboarding journey through the application API, evidence-object boundary,
+human review task, module-owned web UI, audit/outbox records, operational
+telemetry, and recovery tests. Preserve the existing command contracts and add
+no product/sourcing, RFQ, commitment, shipment, or reporting breadth until this
+first vertical has executable end-to-end proof.
