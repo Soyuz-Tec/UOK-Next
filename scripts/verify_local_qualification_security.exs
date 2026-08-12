@@ -2,6 +2,7 @@ repo_config = Application.fetch_env!(:uok_next, UokNext.Repo)
 endpoint_config = Application.fetch_env!(:uok_next, UokNextWeb.Endpoint)
 build_revision = Application.fetch_env!(:uok_next, :build_revision)
 object_store = Application.fetch_env!(:uok_next, :object_store)
+force_ssl = endpoint_config |> Keyword.fetch!(:force_ssl) |> Plug.SSL.init()
 
 unless is_binary(build_revision) and Regex.match?(~r/\A[0-9a-f]{40}\z/, build_revision) do
   raise "local qualification release identity must be compiled from a full Git revision"
@@ -26,6 +27,30 @@ end
 
 unless endpoint_config[:http][:ip] == {0, 0, 0, 0} do
   raise "local qualification container must bind its private container interface"
+end
+
+unless Application.fetch_env!(:uok_next, :deployment_profile) == :local_qualification do
+  raise "local qualification must use its explicit deployment profile"
+end
+
+local_browser_conn =
+  :get
+  |> Plug.Test.conn("/")
+  |> Map.put(:host, "127.0.0.1")
+  |> Plug.SSL.call(force_ssl)
+
+if local_browser_conn.halted do
+  raise "the isolated local browser path must remain reachable over loopback HTTP"
+end
+
+non_local_browser_conn =
+  :get
+  |> Plug.Test.conn("/")
+  |> Map.put(:host, "example.invalid")
+  |> Plug.SSL.call(force_ssl)
+
+unless non_local_browser_conn.halted and non_local_browser_conn.status == 301 do
+  raise "the local profile must not permit plaintext browser delivery for a non-local host"
 end
 
 unless is_binary(Application.fetch_env!(:uok_next, :metrics_access_token)) do

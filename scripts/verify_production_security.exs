@@ -53,8 +53,17 @@ health_paths = [
   "/api/v1/metrics"
 ]
 
-unless force_ssl == [exclude: [paths: health_paths]] do
-  raise "production force_ssl may exclude only the declared orchestrator health paths"
+unless Application.fetch_env!(:uok_next, :deployment_profile) == :production do
+  raise "production must not activate the local qualification transport profile"
+end
+
+unless force_ssl == [
+         exclude: [
+           conn: {UokNextWeb.LocalQualificationTransport, :http_allowed?, []},
+           paths: health_paths
+         ]
+       ] do
+  raise "production force_ssl must retain only the fail-closed local guard and health paths"
 end
 
 unless http[:ip] == {0, 0, 0, 0, 0, 0, 0, 1} do

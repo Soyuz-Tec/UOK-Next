@@ -74,6 +74,8 @@ Results:
   embedded the exact 40-character merged revision;
 - both application replicas ran that identical image;
 - readiness, release identity, and authenticated metrics passed;
+- the browser shell returned HTTP 200 through the isolated loopback proxy,
+  guarded by fail-closed local profile and dependency invariants;
 - object create, collision rejection, read-after-write length/digest
   verification, and delete passed;
 - four consecutive readiness and release probes passed while one replica was
@@ -91,6 +93,8 @@ Results:
   and evidence anchoring are not implemented.
 - The two-replica local qualifier is neither a selected production topology nor
   production availability evidence.
+- Loopback HTTP exists only for the isolated local qualification profile. It is
+  not an approved production transport or trusted TLS-ingress design.
 
 ## Rollback
 

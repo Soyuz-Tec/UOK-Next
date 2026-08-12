@@ -71,6 +71,10 @@ if config_env() == :prod do
   deployment_profile = System.get_env("UOK_DEPLOYMENT_PROFILE", "production")
   local_qualification? = deployment_profile == "local_qualification"
 
+  config :uok_next,
+         :deployment_profile,
+         if(local_qualification?, do: :local_qualification, else: :production)
+
   database_url =
     case System.get_env("DATABASE_URL") do
       value when is_binary(value) and value != "" -> value

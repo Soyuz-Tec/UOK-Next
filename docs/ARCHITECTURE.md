@@ -195,6 +195,13 @@ and worker roles from the same release. Clustering, service extraction,
 distributed streaming, and analytical storage are evidence-triggered
 evolutions, not initial assumptions.
 
+The supported local qualifier exposes the read-only shell over loopback HTTP
+only when the explicit local deployment profile, local host, private container
+binding, isolated database host, and isolated object-store transport all match.
+Every other host or deployment profile remains subject to the mandatory HTTPS
+redirect. Production checks prove that spoofed hosts and forwarded protocol
+headers cannot activate the local exception.
+
 ## 10. Quality attributes
 
 Priority order:
