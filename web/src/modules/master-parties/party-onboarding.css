@@ -333,6 +333,11 @@ button:disabled {
     min-height: auto;
   }
 
+  .party-list,
+  .work-panel {
+    min-height: auto;
+  }
+
   .workflow-steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
