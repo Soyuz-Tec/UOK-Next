@@ -30,11 +30,11 @@
     {"id": "public.publishing", "status": "planned", "record_types": ["publication_snapshot", "public_release"]}
   ],
   "external_systems": [
-    {"id": "k_comms", "status": "existing", "record_types": ["conversation", "communication_membership", "message", "communication_attachment", "call_session", "presence_state"]},
-    {"id": "k_board", "status": "existing", "record_types": ["canvas_document", "canvas_operation", "canvas_snapshot"]},
-    {"id": "python_workers", "status": "planned", "record_types": ["document_extraction_result", "model_inference_result"]},
-    {"id": "rust_analytics", "status": "planned", "record_types": ["analytical_execution_receipt"]},
-    {"id": "odoo", "status": "optional", "record_types": ["general_ledger_entry", "tax_record", "payroll_record"]},
-    {"id": "blockchain_anchor", "status": "deferred", "record_types": ["evidence_anchor_receipt"]}
+    {"id": "communications_system", "display_name": "External communications system", "identity_class": "role_based", "status": "existing", "record_types": ["conversation", "communication_membership", "message", "communication_attachment", "call_session", "presence_state"]},
+    {"id": "collaborative_canvas_system", "display_name": "External collaborative-canvas system", "identity_class": "role_based", "status": "existing", "record_types": ["canvas_document", "canvas_operation", "canvas_snapshot"]},
+    {"id": "document_intelligence_workers", "display_name": "Document-intelligence workers", "identity_class": "role_based", "status": "planned", "record_types": ["document_extraction_result", "model_inference_result"]},
+    {"id": "analytics_execution_plane", "display_name": "Analytics execution plane", "identity_class": "role_based", "status": "planned", "record_types": ["analytical_execution_receipt"]},
+    {"id": "back_office_system", "display_name": "Selected back-office system", "identity_class": "role_based", "status": "optional", "record_types": ["general_ledger_entry", "tax_record", "payroll_record"]},
+    {"id": "evidence_anchor", "display_name": "Evidence-anchor system", "identity_class": "role_based", "status": "deferred", "record_types": ["evidence_anchor_receipt"]}
   ]
 }

@@ -24,10 +24,11 @@ The target stack is:
 - explicit Elixir/Ecto application services; the completed bounded spike did
   not justify adopting Ash in the production dependency graph;
 - React and TypeScript for internal, partner, public, and field/PWA surfaces;
-- Rust for collaboration and analytical engines;
-- Python for OCR, document intelligence, and AI workers;
-- K-Comms, K-Board, Odoo, and optional blockchain anchoring behind explicit
-  authority-preserving integration contracts.
+- bounded specialist runtimes for collaboration, document intelligence, and
+  analytical execution;
+- external communications, collaborative-canvas, selected back-office, and
+  optional evidence-anchor systems behind explicit authority-preserving
+  integration contracts.
 
 ## Start here
 
@@ -47,6 +48,8 @@ Read these files in order before making a material change:
 
 Machine-readable architecture authority is in
 [`config/module_catalog.json`](config/module_catalog.json).
+External-system naming authority is in
+[`config/external_identity_policy.json`](config/external_identity_policy.json).
 
 ## Verify the foundation
 
@@ -54,6 +57,7 @@ From PowerShell:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_foundation.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\test\architecture\external_identity_policy_test.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_code_discipline.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_architecture_boundaries.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_database_policy.ps1
@@ -61,9 +65,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_object_stor
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify_web_foundation.ps1
 ```
 
-This verifies that required authority documents exist, module and external
-system identifiers are unique, and no record type has more than one declared
-system of record.
+This verifies that required authority documents exist, external systems use
+approved role-based identifiers, module and external-system identifiers are
+unique, and no record type has more than one declared system of record.
 
 Install or activate the pinned Windows Elixir/Erlang toolchain with:
 

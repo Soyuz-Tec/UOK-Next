@@ -31,7 +31,9 @@ $requiredFiles = @(
     "docs/adr/0007-postgresql-19-data-platform-foundation.md",
     "docs/adr/0008-react-typescript-delivery-foundation.md",
     "docs/adr/0009-provider-neutral-s3-evidence-object-foundation.md",
+    "docs/adr/0010-role-based-external-system-identification.md",
     "config/module_catalog.json",
+    "config/external_identity_policy.json",
     "config/database_policy.json",
     "config/object_store_policy.json",
     "config/toolchain.json",
@@ -44,6 +46,7 @@ $requiredFiles = @(
     "scripts/support/write_local_credential.ps1",
     "scripts/verify_code_discipline.ps1",
     "scripts/verify_architecture_boundaries.ps1",
+    "scripts/verify_external_identity_policy.ps1",
     "scripts/verify_database_policy.ps1",
     "scripts/verify_object_storage_policy.ps1",
     "scripts/verify_web_foundation.ps1",
@@ -55,6 +58,7 @@ $requiredFiles = @(
     "deploy/postgres/verify_local_platform.sql",
     "test/security/artifact_integrity_test.ps1",
     "test/security/local_credential_acl_test.ps1",
+    "test/architecture/external_identity_policy_test.ps1",
     "web/package.json",
     "web/package-lock.json",
     "web/tsconfig.json",
@@ -75,12 +79,17 @@ if ($missing.Count -gt 0) {
 
 $catalogPath = Join-Path $repoRoot "config/module_catalog.json"
 $catalog = Get-Content -LiteralPath $catalogPath -Raw | ConvertFrom-Json
+$externalIdentityPolicyPath = Join-Path $repoRoot "config/external_identity_policy.json"
 $toolchainPath = Join-Path $repoRoot "config/toolchain.json"
 $toolchain = Get-Content -LiteralPath $toolchainPath -Raw | ConvertFrom-Json
 
 if ($catalog.schema_version -ne 1) {
     throw "Unsupported module catalog schema version: $($catalog.schema_version)"
 }
+
+& (Join-Path $repoRoot "scripts/verify_external_identity_policy.ps1") `
+    -CatalogPath $catalogPath `
+    -PolicyPath $externalIdentityPolicyPath
 
 if ($toolchain.schema_version -ne 1) {
     throw "Unsupported toolchain schema version: $($toolchain.schema_version)"

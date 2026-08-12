@@ -20,11 +20,11 @@ flowchart LR
     UI --> Core["UOK Next modular monolith<br/>Elixir, Phoenix, OTP"]
     Core --> Data["PostgreSQL"]
     Core --> Objects["Object storage"]
-    Core --> Comms["K-Comms"]
-    Core --> Board["K-Board Rust engine"]
-    Core --> Workers["Python document and AI workers"]
-    Core --> Analytics["Rust analytics plane"]
-    Core --> ERP["Odoo or selected back-office system"]
+    Core --> Comms["External communications system"]
+    Core --> Board["External collaborative-canvas system"]
+    Core --> Workers["Document-intelligence workers"]
+    Core --> Analytics["Analytics execution plane"]
+    Core --> ERP["Selected back-office system"]
     Core --> Chain["Optional evidence anchor"]
 ```
 
@@ -73,16 +73,18 @@ never rely on an uncommitted in-memory message.
 
 ### Specialist runtimes
 
-- K-Comms owns messages, conversation membership, attachments, calls,
-  presence, notifications, retention, and communication audit.
-- K-Board owns canvas operations, convergence, snapshots, and offline merge.
-- Python workers own bounded OCR, extraction, classification, and model calls;
-  they do not own business decisions.
-- Rust analytics owns high-throughput analytical execution over governed
-  exports and projections, not transactional records.
-- Odoo owns only explicitly selected back-office record types.
-- A blockchain adapter owns submission and confirmation receipts for evidence
-  roots only.
+- The external communications system owns messages, conversation membership,
+  attachments, calls, presence, notifications, retention, and communication
+  audit.
+- The external collaborative-canvas system owns canvas operations,
+  convergence, snapshots, and offline merge.
+- Document-intelligence workers own bounded extraction, classification, and
+  model execution; they do not own business decisions.
+- The analytics execution plane owns high-throughput analytical execution over
+  governed exports and projections, not transactional records.
+- A selected back-office system owns only explicitly selected record types.
+- An evidence-anchor adapter owns submission and confirmation receipts for
+  evidence roots only.
 
 ## 4. Kernel responsibilities
 
@@ -139,7 +141,7 @@ cross-module private imports fail architecture verification.
 - Operational BI begins with versioned metric definitions, projections, and
   materialized views.
 - Transactional outbox/CDC may later feed Parquet in object storage.
-- Rust/DataFusion is a candidate for analytical execution only after measured
+- A separate analytical execution plane is a candidate only after measured
   workload shows PostgreSQL read models are insufficient.
 - Every metric must declare grain, dimensions, filters, currency/time rules,
   owner, freshness, lineage, and reconciliation tests.
@@ -153,6 +155,9 @@ cross-module private imports fail architecture verification.
   source or business records.
 - High-impact actions require deterministic policy and human approval.
 - External services reauthorize access within their own ownership boundary.
+- Product-facing code, APIs, events, catalogs, diagrams, and documentation use
+  role-based external-system identities. Exact implementation names are
+  confined to the technical evidence contexts governed by ADR-0010.
 - Audit evidence is append-only and privacy-aware; hash integrity does not
   replace access control, retention, or lawful deletion policy.
 

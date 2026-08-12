@@ -42,9 +42,9 @@ recovery path without prototype-only state.
 
 ## Gate 4: Specialist integration
 
-Exit when K-Comms and K-Board are connected through typed, independently
-authorized contracts with idempotency, health, failure, reconciliation, and
-end-to-end evidence.
+Exit when the external communications and collaborative-canvas systems are
+connected through typed, independently authorized contracts with idempotency,
+health, failure, reconciliation, and end-to-end evidence.
 
 ## Gate 5: Business breadth
 
@@ -55,9 +55,10 @@ operational evidence, and recovery.
 
 ## Gate 6: Back-office integration
 
-Select Odoo or another maintained system for the back-office capabilities that
-should not be rebuilt. Prove ownership, reconciliation, upgrades, degraded
-operation, and rollback before production data cutover.
+Select a maintained back-office system for the capabilities that should not be
+rebuilt. Prove ownership, reconciliation, upgrades, degraded operation, and
+rollback before production data cutover. Product-facing contracts retain the
+role-based system identity regardless of implementation.
 
 ## Gate 7: Production qualification
 
