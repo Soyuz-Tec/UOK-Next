@@ -14,7 +14,7 @@
     {"id": "platform.policy", "status": "planned", "record_types": ["permission", "role_grant", "policy_decision"]},
     {"id": "platform.workflow", "status": "in_progress", "record_types": ["workflow_definition", "workflow_instance", "human_task", "approval_request", "escalation"]},
     {"id": "platform.evidence", "status": "in_progress", "record_types": ["evidence_object", "evidence_review", "audit_event", "integrity_manifest"]},
-    {"id": "platform.integrations", "status": "planned", "record_types": ["connector_definition", "external_reference", "integration_receipt"]},
+    {"id": "platform.integrations", "status": "in_progress", "record_types": ["connector_definition", "external_reference", "integration_receipt"]},
     {"id": "platform.agents", "status": "planned", "record_types": ["agent_runbook", "agent_run", "agent_plan", "agent_approval", "agent_tool_receipt"]},
     {"id": "master.parties", "status": "in_progress", "record_types": ["party", "party_alias", "party_role", "party_relationship", "operating_site", "onboarding_profile"]},
     {"id": "master.products", "status": "planned", "record_types": ["product", "product_classification", "unit_definition", "quality_template"]},
