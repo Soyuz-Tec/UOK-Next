@@ -244,10 +244,22 @@
   live-object-store test reserved for deployment; frontend quality passed four
   files and five tests; static security, architecture, database, object-store,
   identity, credential ACL, artifact-integrity, and advisory checks passed.
+- Exact candidate revision `79f5813eb2769ed2db18f01b360ab9ead9724c76`
+  was rebuilt as immutable local image
+  `3d823ddcbf63ce5b92f9f0cf18940c930839ad8067bc9625362062e3568eeeb5`.
+  The qualifier proved PostgreSQL 19 startup and migrations, the real object
+  create/collision/read-after-write/delete path, identical identity across two
+  replicas, four one-replica failover probes, and the authenticated
+  create/evidence/replay/task/approval/final-read journey.
+- Rendered qualification passed at 1440-by-900 and 390-by-844 through the local
+  proxy. Both viewports had no page-level horizontal overflow or browser
+  console warnings/errors; primary brand and navigation targets were at least
+  44 pixels, and the mobile party list collapsed to content height. The final
+  responsive patch received a separate complete security review with zero
+  findings and no deferred proof gaps.
 - ADR-0014 records the identity, evidence choreography, recovery, API, and UI
-  boundaries. Protected CI, exact-revision deployment, real object-store API
-  proof, and rendered desktop/mobile proof remain required before this
-  candidate is called qualified.
+  boundaries. Protected CI and an exact merged-revision redeployment remain
+  required before this candidate is called delivered.
 
 ## Explicitly not yet implemented
 
@@ -266,9 +278,8 @@
 
 ## Next action
 
-Commit the reviewed Gate 3 party-onboarding candidate, qualify the exact
-revision through the real local two-replica runtime and rendered desktop/mobile
-behavior, then deliver it through protected CI and redeploy the exact merged
-revision. Preserve the existing command contracts and add no product, sourcing,
-RFQ, commitment, shipment, or reporting breadth until this vertical has
-executable end-to-end proof.
+Deliver the qualified Gate 3 party-onboarding candidate through protected CI,
+then rebuild and redeploy the exact merged revision before advancing the active
+focus. Preserve the existing command contracts and add no product, sourcing,
+RFQ, commitment, shipment, or reporting breadth until protected delivery is
+complete.
