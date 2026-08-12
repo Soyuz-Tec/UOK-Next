@@ -33,6 +33,7 @@ $requiredFiles = @(
     "docs/adr/0009-provider-neutral-s3-evidence-object-foundation.md",
     "docs/adr/0010-role-based-external-system-identification.md",
     "docs/adr/0011-governed-human-task-kernel.md",
+    "docs/adr/0012-provider-neutral-connector-receipts.md",
     "config/module_catalog.json",
     "config/external_identity_policy.json",
     "config/database_policy.json",

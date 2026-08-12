@@ -126,18 +126,33 @@
 - ADR-0011 records the bounded human-task model. General workflow definitions,
   assignment, delegation, escalation, cancellation, inbox queries, and
   notification delivery remain explicitly outside this increment.
-- The application compiled with warnings as errors; 47 tests passed with one
+- The `platform.integrations` connector-receipt vertical now atomically records
+  one immutable outbound attempt and one versioned reconciled outcome with its
+  command receipt, audit event, and outbox event. It does not perform network
+  delivery or copy an external record.
+- Request identity, governed subject/version, delivery identity, retry lineage,
+  and server deadline are immutable. Outcome evidence is digest/reference only;
+  raw remote responses are rejected. Only retryable or timed-out attempts can
+  produce the next matching attempt.
+- ADR-0012 records the receipt and recovery boundary. Named permissions,
+  replay/conflict, duplicate delivery, immutable lineage, retry-after-success,
+  timeout/recovery, stale state, raw-response rejection, tenant substitution,
+  and forced row-level security are negative-tested.
+- The application compiles with warnings as errors; 57 tests pass with one
   environment-gated test excluded; architecture-boundary and code-discipline
-  checks passed; and a complete security diff review found no validated
-  exploitable path in the ten changed production and migration files.
+  checks pass for the connector increment.
+- A complete security diff scan closed every changed production and migration
+  file with no reportable finding. It reviewed permission/tenant boundaries,
+  retry and deadline abuse, raw-content exclusion, transaction rollback,
+  database constraints, and supply-chain impact.
 
 ## Explicitly not yet implemented
 
 - Production identity/OIDC, session management, user-facing business APIs,
   business-module React UI, durable outbox delivery, scheduled jobs, general
   workflow definitions, task inbox/assignment/escalation, production evidence
-  metadata/commands, external integrations, BI projections, or evidence
-  anchoring.
+  metadata/commands, live connector transport/credentials/retry scheduling,
+  governed agent plans, BI projections, or evidence anchoring.
 - The local two-replica qualifier is not a production topology. PostgreSQL 19
   is still a single local dependency and no backup/restore receipt exists.
 - Production deployment is blocked on a selected platform, managed secrets,
@@ -146,9 +161,8 @@
 
 ## Next action
 
-Implement a provider-neutral connector-receipt vertical that records one
-outbound attempt and reconciled outcome through the existing tenant/actor,
-policy, idempotency, transaction, audit, evidence, and outbox path. Require
-immutable request identity, bounded response evidence, retry classification,
-and negative authorization, tenant-substitution, duplicate-delivery, timeout,
-and recovery tests before beginning governed agent plans.
+Implement governed agent plans as bounded, tenant-scoped proposals. Validate a
+deterministic acyclic step graph, bind it to one subject version and runbook
+identity, open an exact human review task atomically, and ensure approval never
+dispatches a business command or tool. Negative-test permission, tenant/task/
+subject substitution, stale state, replay, invalid graphs, and rollback.

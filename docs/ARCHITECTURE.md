@@ -71,6 +71,16 @@ PostgreSQL-backed outbox and jobs provide retries, schedules, external side
 effects, integration receipts, and dead-letter review. Business transactions
 never rely on an uncommitted in-memory message.
 
+The Gate 2 connector-receipt primitive records each outbound attempt before a
+transport can act. Tenant, connector role, operation, delivery key, request
+digest, subject identity/version, attempt lineage, and deadline are immutable.
+Reconciliation stores only bounded outcome metadata and digests, never raw
+remote content. A retry must descend from an exact retryable or timed-out
+attempt; server time, named permissions, optimistic concurrency, and forced
+row-level security fail closed. This is evidence for side-effect delivery, not
+an external-record replica or a live connector implementation. ADR-0012
+governs the primitive.
+
 ### Specialist runtimes
 
 - The external communications system owns messages, conversation membership,
