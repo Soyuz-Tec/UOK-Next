@@ -400,6 +400,25 @@
   current candidate remediates it with the deadline/invitation invariant.
   Frontend type checks, lint, unit tests, and production build cover the new
   RFQ/comparison workspace.
+- Exact candidate revision `d9d400a360b042887f43537696f48cda4253c82b`
+  was rebuilt as immutable local image
+  `8808475b8ca83754bd14db081f67efa378d5c300563f17cafa6222274feda8e5`.
+  The first runtime attempt exposed missing least-privilege grants for the five
+  new tenant tables; the grants, exact-grant verifier, and database-policy
+  regression were corrected before this successful run. The clean-revision
+  qualifier then passed PostgreSQL 19 startup and all migrations,
+  least-privileged role reconciliation and unsafe-role rejection, immutable
+  evidence-object create/collision/read-after-write/delete, the authenticated
+  requisition/RFQ/two-quote/evidence/deterministic-comparison/exact-task/
+  approval journey, identical image and release identity across two replicas,
+  and four one-replica failover probes. It created qualified RFQ
+  `a0a4a299-64b6-4900-98bb-ba9e19f65630` and comparison
+  `47f41d4d-f930-43ff-8f7f-3092fb1fd863`.
+- Rendered candidate proof passed at 1440-by-900 and 390-by-844. The RFQ
+  workspace used a 1,053-pixel desktop canvas and a 338-pixel mobile canvas;
+  both viewports had no horizontal overflow, no visible interactive control
+  below 44 pixels, and no browser warning or error. The deployed comparison
+  was visibly `approved` with the lower total price ranked first.
 - ADR-0019 records the ownership, attribution, formula, evidence, approval,
   commitment-exclusion, and recovery boundaries. This remains candidate
   evidence until protected checks, merge, exact-revision build, qualifier,
