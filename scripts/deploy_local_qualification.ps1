@@ -795,6 +795,69 @@ try {
         throw "The purchase commitment proposal did not reach safe exact approval"
     }
 
+    $readinessBody = @{
+        stable_identifier = "shipment-readiness-$flowId"
+        purchase_commitment_proposal_id = $proposalApproved.data.id
+        expected_proposal_version = [int]$proposalApproved.data.lock_version
+        reason = "Open one source-bound non-executing shipment-readiness gate"
+    } | ConvertTo-Json -Compress
+    $readiness = Invoke-RestMethod -Uri "$baseUri/shipment-readiness-cases" -Method Post `
+        -Headers @{
+            Authorization = "Bearer $accessToken"
+            "Idempotency-Key" = [Guid]::NewGuid().ToString()
+        } -ContentType "application/json" -Body $readinessBody -TimeoutSec 10
+    $pendingReadinessChecks = @(
+        $readiness.data.checklist_snapshot.checks | Where-Object status -eq "pending"
+    )
+    if ($readiness.data.status -ne "draft" -or $pendingReadinessChecks.Count -ne 1 -or
+        $pendingReadinessChecks[0].code -ne "verified_operational_readiness_evidence" -or
+        $readiness.data.source_snapshot.purchase_commitment_proposal_id -ne $proposal.data.id -or
+        $readiness.data.shipment_created -or $readiness.data.dispatch_created -or
+        $readiness.data.inventory_effect_created -or $readiness.data.finance_effect_created -or
+        $readiness.data.external_effect_created) {
+        throw "The source-derived shipment-readiness boundary failed"
+    }
+
+    $readinessEvidenced = Invoke-Gate3EvidenceUpload `
+        -Uri "$baseUri/shipment-readiness-cases/$($readiness.data.id)/evidence" `
+        -Token $accessToken -IdempotencyKey ([Guid]::NewGuid().ToString()) `
+        -EvidenceId ([Guid]::NewGuid().ToString()) `
+        -ExpectedVersion ([int]$readiness.data.lock_version) `
+        -Reason "Attach the reviewed operational-readiness evidence bundle"
+    $readinessTasks = Invoke-RestMethod -Uri "$baseUri/review-tasks" `
+        -Headers $readHeaders -TimeoutSec 10
+    $readinessTask = @($readinessTasks.data | Where-Object subject_id -eq $readiness.data.id)
+    $incompleteReadinessChecks = @(
+        $readinessEvidenced.data.checklist_snapshot.checks | Where-Object status -ne "passed"
+    )
+    if ($readinessEvidenced.data.status -ne "awaiting_review" -or
+        $readinessTask.Count -ne 1 -or $incompleteReadinessChecks.Count -ne 0 -or
+        $readinessTask[0].id -ne $readinessEvidenced.data.review_task.id) {
+        throw "The shipment-readiness evidence, checklist, or exact-task contract failed"
+    }
+
+    $readinessDecisionBody = @{
+        decision = "go"
+        reason = "Record exact human GO without releasing downstream execution"
+        task_id = $readinessTask[0].id
+        expected_version = [int]$readinessEvidenced.data.lock_version
+    } | ConvertTo-Json -Compress
+    $readinessGo = Invoke-RestMethod `
+        -Uri "$baseUri/shipment-readiness-cases/$($readiness.data.id)/decision" -Method Post `
+        -Headers @{
+            Authorization = "Bearer $accessToken"
+            "Idempotency-Key" = [Guid]::NewGuid().ToString()
+        } -ContentType "application/json" -Body $readinessDecisionBody -TimeoutSec 10
+    $readinessCases = Invoke-RestMethod -Uri "$baseUri/shipment-readiness-cases?limit=100" `
+        -Headers $readHeaders -TimeoutSec 10
+    $qualifiedReadiness = @($readinessCases.data | Where-Object id -eq $readiness.data.id)
+    if ($readinessGo.data.status -ne "go" -or $qualifiedReadiness.Count -ne 1 -or
+        $qualifiedReadiness[0].status -ne "go" -or $readinessGo.data.shipment_created -or
+        $readinessGo.data.dispatch_created -or $readinessGo.data.inventory_effect_created -or
+        $readinessGo.data.finance_effect_created -or $readinessGo.data.external_effect_created) {
+        throw "The shipment-readiness case did not reach safe exact GO"
+    }
+
     $appAImageId = Get-ContainerImageId -Container "uok-next-app-a-1"
     $appBImageId = Get-ContainerImageId -Container "uok-next-app-b-1"
     if ($appAImageId -ne $imageId -or $appBImageId -ne $imageId) {
@@ -878,6 +941,8 @@ try {
         procurement_qualified_comparison_id = $comparison.data.id
         purchase_commitment_proposal_flow = "source-derived terms, verified evidence, exact task, approval, final read, and no downstream or external effect passed"
         purchase_commitment_qualified_proposal_id = $proposal.data.id
+        shipment_readiness_flow = "source-derived proposal, server checklist, verified evidence, exact task, GO, final read, and five false effect boundaries passed"
+        shipment_readiness_qualified_case_id = $readiness.data.id
         local_identity_credential_path = $identityCredentialPath
         replicas = 2
         single_replica_failover = "4 readiness and release probes passed"

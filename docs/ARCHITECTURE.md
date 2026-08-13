@@ -105,6 +105,16 @@ inventory movement. The single-workspace handoff removes term re-entry without
 weakening source lineage, concurrency, tenant isolation, or approval authority.
 ADR-0020 governs this boundary.
 
+The fifth Gate 3 vertical gives `trade.shipments` authority over a
+non-executing shipment-readiness case bound to one exact approved proposal.
+The server derives its source snapshot and checklist; the browser can select
+only the proposal, attach one verified case-bound evidence bundle, and submit
+an exact GO or HOLD decision through the governed human task. GO remains a
+review fact. Every response, audit record, and event keeps shipment, dispatch,
+inventory, finance, and external effects false. HOLD can be corrected through
+fresh evidence and a fresh exact task without erasing prior history. ADR-0021
+governs this boundary.
+
 ### Durable work layer
 
 PostgreSQL-backed outbox and jobs provide retries, schedules, external side

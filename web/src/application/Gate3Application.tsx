@@ -4,6 +4,7 @@ import { PartyOnboardingWorkspace } from "../modules/master-parties/PartyOnboard
 import { QualificationSignIn } from "../modules/platform-identity/QualificationSignIn";
 import { verifySession, type Session } from "../modules/platform-identity/sessionApi";
 import { PurchaseCommitmentWorkspace } from "../modules/trade-contracts/PurchaseCommitmentWorkspace";
+import { ShipmentReadinessWorkspace } from "../modules/trade-shipments/ShipmentReadinessWorkspace";
 import { ProductSourcingWorkspace } from "../modules/trade-sourcing/ProductSourcingWorkspace";
 import { ProcurementWorkspace } from "../modules/trade-sourcing/ProcurementWorkspace";
 
@@ -63,6 +64,16 @@ export function Gate3Application() {
   if (surface === "#commitment-proposal") {
     return (
       <PurchaseCommitmentWorkspace
+        token={session.accessToken}
+        tenantId={session.identity.tenant_id}
+        onSignOut={signOut}
+      />
+    );
+  }
+
+  if (surface === "#shipment-readiness") {
+    return (
+      <ShipmentReadinessWorkspace
         token={session.accessToken}
         tenantId={session.identity.tenant_id}
         onSignOut={signOut}

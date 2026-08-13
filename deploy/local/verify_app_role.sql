@@ -62,6 +62,7 @@ BEGIN
     has_table_privilege('uok_app', 'public.trade_supplier_quotes', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.trade_quote_comparisons', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.trade_purchase_commitment_proposals', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.trade_shipment_readiness_cases', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_workflow_human_tasks', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_integrations_connector_receipts', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_agents_plans', 'SELECT,INSERT,UPDATE') AND
@@ -109,6 +110,9 @@ BEGIN
       ('public', 'trade_purchase_commitment_proposals', 'SELECT'),
       ('public', 'trade_purchase_commitment_proposals', 'INSERT'),
       ('public', 'trade_purchase_commitment_proposals', 'UPDATE'),
+      ('public', 'trade_shipment_readiness_cases', 'SELECT'),
+      ('public', 'trade_shipment_readiness_cases', 'INSERT'),
+      ('public', 'trade_shipment_readiness_cases', 'UPDATE'),
       ('public', 'platform_workflow_human_tasks', 'SELECT'),
       ('public', 'platform_workflow_human_tasks', 'INSERT'),
       ('public', 'platform_workflow_human_tasks', 'UPDATE'),

@@ -83,6 +83,14 @@ defmodule UokNextWeb.Router do
          :create
 
     post "/purchase-commitment-proposals/:id/decision", CommitmentController, :decide
+    get "/shipment-readiness-cases", ReadinessController, :index
+    post "/shipment-readiness-cases", ReadinessController, :create
+
+    post "/shipment-readiness-cases/:id/evidence",
+         ReadinessEvidenceController,
+         :create
+
+    post "/shipment-readiness-cases/:id/decision", ReadinessController, :decide
     get "/review-tasks", WorkflowController, :index
   end
 

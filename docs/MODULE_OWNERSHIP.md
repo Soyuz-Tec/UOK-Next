@@ -27,7 +27,7 @@ explains its intent.
 | `operations.work` | native projects, work items, dependencies, calendars, comments |
 | `trade.sourcing` | sourcing lanes, requisitions, RFQs, quote comparisons |
 | `trade.contracts` | source-bound internal purchase-commitment proposals; future purchase/sale contracts, amendments, and external commercial commitments require separate authority |
-| `trade.shipments` | shipment plans, containers, milestones, logistics exceptions |
+| `trade.shipments` | source-bound non-executing shipment-readiness cases; future shipment plans, containers, milestones, execution, and logistics exceptions require separate authority |
 | `trade.quality` | lots, samples, measurements, inspections, claims |
 | `trade.compliance` | standards, requirements, clearance cases, compliance decisions |
 | `trade.finance` | trade economics, landed cost, funding plans, FX exposure, risk controls |
