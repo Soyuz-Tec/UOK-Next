@@ -48,21 +48,28 @@ Gate 3 advances sequentially rather than opening every context at once:
 3. continue through RFQ/comparison, commitment proposal, evidence approval,
    shipment readiness GO/HOLD, and the governed report.
 
-The RFQ/comparison increment is governed by ADR-0019. Its protected delivery
-must prove requisition, approved supplier invitation, evidence-bound quotes,
-deterministic snapshot, exact human approval, and recovery without creating a
-purchase commitment. The next bounded context opens only after that evidence
-is qualified on the exact merged revision.
+The RFQ/comparison increment governed by ADR-0019 has passed protected
+delivery, exact merged-revision qualification, two-replica failover, and
+rendered desktop/mobile proof. It proves requisition, approved supplier
+invitation, evidence-bound quotes, a deterministic snapshot, exact human
+approval, and recovery without creating a purchase commitment.
+
+The active next increment is the purchase-commitment proposal. It must consume
+one exact approved comparison, reauthorize against current source state, bind
+the material commitment evidence, and pass an exact human approval or HOLD.
+Proposal approval must remain distinct from contract formation, payment,
+inventory movement, and connector delivery until those boundaries have their
+own recorded authority and recovery design.
 
 Completing the first vertical is necessary evidence, not the Gate 3 exit by
 itself.
 
-AI remains advisory throughout the active RFQ and quote-comparison slice. That
-slice must first prove deterministic commands, policies, evidence, exact human
-decisions, recovery, and reportable outcomes. It does not open model/tool
-execution, persistent agent memory, dynamic module installation, or tenant
-module enablement. ADR-0017 and ADR-0018 define those later prerequisites
-without changing the active delivery focus.
+AI remains advisory throughout the active commitment-proposal slice. The
+delivered RFQ oracle and this next slice must preserve deterministic commands,
+policies, evidence, exact human decisions, recovery, and reportable outcomes.
+They do not open model/tool execution, persistent agent memory, dynamic module
+installation, or tenant module enablement. ADR-0017 and ADR-0018 define those
+later prerequisites without changing the active delivery focus.
 
 ## Gate 4: Specialist integration
 

@@ -1,6 +1,6 @@
 # Current Build Status
 
-**Snapshot date:** 2026-08-12
+**Snapshot date:** 2026-08-13
 
 **Canonical repository:** `https://github.com/Soyuz-Tec/UOK-Next`
 
@@ -366,9 +366,9 @@
   non-executing plans remain the only delivered agent surface, and the current
   compiled static module composition remains the supported Gate 3 release.
 
-## Gate 3 RFQ and quote-comparison candidate
+## Gate 3 RFQ and quote-comparison delivery evidence
 
-- `trade.sourcing` now has a candidate requisition, RFQ invitation, supplier
+- `trade.sourcing` now has a delivered requisition, RFQ invitation, supplier
   quote, and quote-comparison vertical. Requisitions bind an exact approved
   sourcing-lane version and product base unit. RFQs bind an exact requisition
   transition, one settlement currency, a future response deadline, and two to
@@ -392,12 +392,13 @@
   security, bounded decimals, lifecycle constraints, uniqueness, and
   optimistic locking. The local qualification identity gained only the ten
   named permissions required by this slice.
-- Candidate backend tests cover the complete public/API flow, replay,
+- Backend tests cover the complete public/API flow, replay,
   deterministic ranking, premature-close rejection, stale decision, missing
   permission, cross-tenant and non-invited supplier substitution, insufficient
   submitted quotes, evidence binding, exact task, and persistence. The
   captured security diff review found the premature-close weakness and the
-  current candidate remediates it with the deadline/invitation invariant.
+  delivered implementation remediates it with the deadline/invitation
+  invariant.
   Frontend type checks, lint, unit tests, and production build cover the new
   RFQ/comparison workspace.
 - Exact candidate revision `d9d400a360b042887f43537696f48cda4253c82b`
@@ -419,10 +420,27 @@
   both viewports had no horizontal overflow, no visible interactive control
   below 44 pixels, and no browser warning or error. The deployed comparison
   was visibly `approved` with the lower total price ranked first.
+- Protected PR #22 passed Foundation, Application, and Release checks and was
+  squash-merged to protected `main` as exact revision
+  `95ca2a36b4e2906fc63c32268e71f94be3dc2f87`.
+- The exact merged revision was rebuilt as local image
+  `a436e63b1732268853901c3e291f33505ed5e04e4fc8aee100a0a4882b7bf898`.
+  The supported qualifier repeated PostgreSQL 19 startup and migrations,
+  least-privileged role reconciliation and unsafe-role rejection, immutable
+  evidence-object create/collision/read-after-write/delete, the authenticated
+  requisition/RFQ/two-quote/evidence/deterministic-comparison/exact-task/
+  approval journey, identical image and release identity across two replicas,
+  and four one-replica failover probes. It created qualified RFQ
+  `20cee897-2d1e-4bc1-bdb0-f1d49f398bee` and comparison
+  `5740bd95-dd29-4aba-9042-1487b2793269`.
+- Rendered exact-merge proof repeated the desktop and mobile checks with no
+  horizontal overflow, sub-44-pixel visible control, browser warning, or
+  browser error; the approved deterministic ranking remained visible.
 - ADR-0019 records the ownership, attribution, formula, evidence, approval,
-  commitment-exclusion, and recovery boundaries. This remains candidate
-  evidence until protected checks, merge, exact-revision build, qualifier,
-  failover, and rendered desktop/mobile smoke pass.
+  commitment-exclusion, and recovery boundaries. The third sequential Gate 3
+  vertical is therefore delivered. Gate 3 itself remains active because the
+  commitment, shipment-readiness, governed-reporting, jobs, and recovery exit
+  evidence is not complete.
 
 ## Explicitly not yet implemented
 
@@ -447,12 +465,13 @@
 
 ## Next action
 
-Qualify the third sequential Gate 3 vertical on the exact candidate revision:
-complete backend/frontend/foundation/security checks, protected delivery,
-exact merged-revision image build, PostgreSQL and object-store qualification,
-two-replica identity and failover, authenticated end-to-end RFQ/comparison
-recovery, and rendered desktop/mobile smoke. Do not open purchase commitment
-scope until this evidence passes and is recorded here.
+Design and deliver the next bounded Gate 3 vertical: a purchase-commitment
+proposal that consumes one exact approved comparison snapshot but creates no
+contract, payment, inventory movement, or connector side effect. Record its
+authority, current-state reauthorization, evidence, approval/HOLD, idempotency,
+concurrency, audit, recovery, and rollback boundaries in an ADR before opening
+the reachable command surface. Qualify it through the same protected,
+exact-revision, two-replica, end-to-end, and rendered-evidence gates.
 
 AI execution and module-installation implementation remain deferred. This
-architecture update does not create a second active delivery focus.
+status advance does not create a second active delivery focus.
