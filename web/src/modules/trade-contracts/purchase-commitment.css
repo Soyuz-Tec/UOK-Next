@@ -1,0 +1,147 @@
+.commitment-workspace {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.commitment-create,
+.proposal-list {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: #f7f6ef;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+}
+
+.commitment-create {
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.7fr) auto;
+  align-items: end;
+}
+
+.commitment-create h2,
+.proposal-list h2 {
+  margin: 0.2rem 0 0;
+}
+
+.commitment-create p {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+}
+
+.commitment-create label,
+.proposal-evidence-action {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.commitment-create select {
+  min-height: 2.8rem;
+  padding: 0.65rem 0.75rem;
+  color: var(--ink);
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+}
+
+.proposal-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+}
+
+.proposal-card header,
+.proposal-card footer,
+.source-lineage {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.proposal-card header small {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--muted);
+}
+
+.proposal-terms {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 0;
+}
+
+.proposal-terms div {
+  min-width: 0;
+  padding: 0.75rem;
+  background: #f7f8f3;
+  border-radius: 0.45rem;
+}
+
+.proposal-terms dt {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.proposal-terms dd {
+  margin: 0.25rem 0 0;
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.source-lineage {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.source-lineage span {
+  padding: 0.35rem 0.55rem;
+  background: var(--mint);
+  border-radius: 999px;
+}
+
+.proposal-evidence-action {
+  min-height: 2.8rem;
+  align-content: center;
+}
+
+.proposal-card footer {
+  justify-content: flex-end;
+}
+
+.boundary-confirmation {
+  margin: 0;
+  padding: 0.75rem;
+  color: #244c34;
+  background: var(--mint);
+  border-radius: 0.45rem;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .commitment-create {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 620px) {
+  .proposal-terms {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .proposal-card footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

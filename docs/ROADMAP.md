@@ -54,12 +54,20 @@ rendered desktop/mobile proof. It proves requisition, approved supplier
 invitation, evidence-bound quotes, a deterministic snapshot, exact human
 approval, and recovery without creating a purchase commitment.
 
-The active next increment is the purchase-commitment proposal. It must consume
-one exact approved comparison, reauthorize against current source state, bind
-the material commitment evidence, and pass an exact human approval or HOLD.
-Proposal approval must remain distinct from contract formation, payment,
+The active increment is the ADR-0020 purchase-commitment proposal candidate. It
+consumes one exact approved comparison, reauthorizes current comparison, RFQ,
+requisition, quote, supplier, terms, and evidence state, binds the internal
+proposal evidence, and passes an exact human approval or HOLD. Its product-
+neutral benchmark removes commercial-term re-entry while preserving the proven
+separation between source selection, internal approval, and downstream
+issuance. Proposal approval remains distinct from contract formation, payment,
 inventory movement, and connector delivery until those boundaries have their
 own recorded authority and recovery design.
+
+Source, API, database, UI, policy, dependency, and security checks pass for the
+candidate. It is delivered only after protected review plus exact committed and
+merged-revision two-replica, object-store, PostgreSQL, failover, and rendered
+desktop/mobile qualification.
 
 Completing the first vertical is necessary evidence, not the Gate 3 exit by
 itself.

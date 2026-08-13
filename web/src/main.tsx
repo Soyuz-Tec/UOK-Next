@@ -7,6 +7,7 @@ import "./shell/app-shell.css";
 import "./modules/master-parties/party-onboarding.css";
 import "./modules/trade-sourcing/product-sourcing.css";
 import "./modules/trade-sourcing/procurement.css";
+import "./modules/trade-contracts/purchase-commitment.css";
 
 const root = document.getElementById("root");
 

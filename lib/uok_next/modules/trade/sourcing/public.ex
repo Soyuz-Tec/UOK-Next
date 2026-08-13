@@ -2,6 +2,7 @@ defmodule UokNext.Modules.Trade.Sourcing.Public do
   @moduledoc "Supported command and query boundary for `trade.sourcing`."
 
   alias UokNext.Modules.Trade.Sourcing.Application.{
+    CommitmentSources,
     QuoteComparisons,
     Requisitions,
     Rfqs,
@@ -106,4 +107,14 @@ defmodule UokNext.Modules.Trade.Sourcing.Public do
 
   def list_quote_comparisons(limit, context),
     do: QuoteComparisons.list(EctoProcurementStore, limit, context)
+
+  @doc "Returns a locked, current, server-derived source for a commitment proposal."
+  def require_commitment_source(comparison_id, expected_version, context) do
+    CommitmentSources.require_current(
+      EctoProcurementStore,
+      comparison_id,
+      expected_version,
+      context
+    )
+  end
 end

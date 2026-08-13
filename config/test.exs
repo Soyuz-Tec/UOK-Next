@@ -64,6 +64,10 @@ config :uok_next, :local_qualification_identity, %{
   actor_id: "22222222-2222-4222-8222-222222222222",
   access_code: "uok-next-test-access-code-00000001",
   permissions: [
+    "contracts:commitment-proposals:approve",
+    "contracts:commitment-proposals:create",
+    "contracts:commitment-proposals:evidence:submit",
+    "contracts:commitment-proposals:read",
     "evidence:read",
     "evidence:upload",
     "locations:create",

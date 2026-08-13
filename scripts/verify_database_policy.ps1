@@ -103,6 +103,7 @@ $procurementRuntimePrivileges = [ordered]@{
     trade_rfq_suppliers = "SELECT, INSERT"
     trade_supplier_quotes = "SELECT, INSERT, UPDATE"
     trade_quote_comparisons = "SELECT, INSERT, UPDATE"
+    trade_purchase_commitment_proposals = "SELECT, INSERT, UPDATE"
 }
 
 foreach ($entry in $procurementRuntimePrivileges.GetEnumerator()) {

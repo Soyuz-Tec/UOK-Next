@@ -442,10 +442,42 @@
   commitment, shipment-readiness, governed-reporting, jobs, and recovery exit
   evidence is not complete.
 
+## Gate 3 purchase-commitment proposal candidate
+
+- ADR-0020 assigns `purchase_commitment_proposal` to `trade.contracts` as an
+  internal, non-binding proposal. It accepts one exact approved comparison and
+  derives all commercial terms and lineage through the public sourcing
+  contract; clients cannot submit supplier, quantity, price, currency,
+  delivery, recommendation, or evidence fields.
+- The candidate implements authenticated create/list, bounded evidence upload,
+  exact human approve/HOLD, optimistic concurrency, idempotency, atomic audit
+  and outbox records, forced tenant row-level security, composite source
+  references, and a single decision workspace. Every response, audit, and event
+  explicitly records that no commitment or external effect was created.
+- The workflow benchmark preserves the proven separation between source
+  selection, internal approval, and downstream issuance while removing term
+  re-entry and cross-document navigation. `docs/ENGINEERING_STANDARDS.md` now
+  requires a measurable, product-neutral outcome benchmark for every future
+  feature without weakening security, accessibility, audit, or recovery.
+- Focused backend/API/OpenAPI tests pass, including permission denial, tenant,
+  source, evidence and task substitution, stale comparison/RFQ/quote state,
+  client term injection, duplicate proposal, replay, HOLD recovery, and proof
+  of no connector receipt. The completed 29-file security diff review found no
+  reportable vulnerability; its one non-reportable RFQ-version hardening
+  observation was corrected and regression-tested before delivery.
+- The frontend passes formatting, linting, current and compatibility type
+  checks, eight tests, and a production asset build. The full backend quality
+  gate passes 99 tests with one object-store integration test reserved for the
+  immutable runtime qualifier; dependency and policy verifiers are clean.
+- This remains a release candidate, not a delivered vertical. Exact committed
+  revision image qualification, PostgreSQL/object-store proof, two-replica
+  failover, rendered desktop/mobile verification, protected review, merge, and
+  exact merged-revision requalification remain mandatory.
+
 ## Explicitly not yet implemented
 
-- Production identity/OIDC and session revocation, purchase commitment and
-  business APIs beyond the delivered sourcing boundary, durable outbox
+- Production identity/OIDC and session revocation, binding purchase contract or
+  order formation and business APIs beyond the proposal boundary, durable outbox
   delivery, scheduled jobs, general workflow
   definitions, task assignment/delegation/escalation/notification, evidence
   malware scanning/promotion/retention/deletion, live connector transport and
@@ -465,13 +497,11 @@
 
 ## Next action
 
-Design and deliver the next bounded Gate 3 vertical: a purchase-commitment
-proposal that consumes one exact approved comparison snapshot but creates no
-contract, payment, inventory movement, or connector side effect. Record its
-authority, current-state reauthorization, evidence, approval/HOLD, idempotency,
-concurrency, audit, recovery, and rollback boundaries in an ADR before opening
-the reachable command surface. Qualify it through the same protected,
-exact-revision, two-replica, end-to-end, and rendered-evidence gates.
+Commit the purchase-commitment proposal candidate, qualify that exact clean
+revision through the immutable two-replica PostgreSQL/object-store journey,
+verify the rendered desktop and mobile workflow, deliver it through protected
+review, and repeat the same qualification on the exact merged revision. Do not
+begin shipment readiness until this vertical's delivery evidence is closed.
 
 AI execution and module-installation implementation remain deferred. This
 status advance does not create a second active delivery focus.
