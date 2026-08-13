@@ -116,6 +116,17 @@ Runbook definitions, model/tool execution, scheduling, budgets, and command
 authorization require later explicit verticals and decisions. ADR-0013 governs
 this boundary.
 
+AI compatibility means deterministic governance of probabilistic work, not an
+intelligent kernel. Prompts, retrieved content, model output, persistent
+context, and tool responses remain untrusted. Model and document-intelligence
+execution belongs in bounded specialist workers behind typed ports. A
+server-owned runbook constrains schemas, evidence, data classification, tools,
+proposed commands, delegated identity, approval policy, budgets, retries,
+recursion, recovery, and evaluation thresholds. Every proposed mutation is
+reauthorized as a current typed business command; no plan, memory, model, or
+tool can issue permissions or bypass exact human review. ADR-0017 governs this
+target and does not declare executable agents implemented.
+
 ### Specialist runtimes
 
 - The external communications system owns messages, conversation membership,
@@ -167,6 +178,15 @@ Each module declares:
 
 Unknown dependencies, duplicate record ownership, undeclared permissions, and
 cross-module private imports fail architecture verification.
+
+The backend kernel is already module-neutral, but current Gate 3 composition is
+static. `platform.modules` will own reviewed module manifests, compatibility,
+tenant enablement, surface registration, and verification receipts. Compiled
+module entry points remain in the application composition root; the kernel and
+shared shell consume validated descriptors rather than business-module names.
+Source-to-catalog dependency checks, module-owned migration metadata,
+kernel-only boot, and disabled-module boot are required before installability
+is claimed. ADR-0018 governs the transition.
 
 ## 6. Action and workflow model
 

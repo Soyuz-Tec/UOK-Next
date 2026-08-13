@@ -51,11 +51,19 @@ Gate 3 advances sequentially rather than opening every context at once:
 Completing the first vertical is necessary evidence, not the Gate 3 exit by
 itself.
 
+AI remains advisory throughout the active RFQ and quote-comparison slice. That
+slice must first prove deterministic commands, policies, evidence, exact human
+decisions, recovery, and reportable outcomes. It does not open model/tool
+execution, persistent agent memory, dynamic module installation, or tenant
+module enablement. ADR-0017 and ADR-0018 define those later prerequisites
+without changing the active delivery focus.
+
 ## Gate 4: Specialist integration
 
-Exit when the external communications and collaborative-canvas systems are
-connected through typed, independently authorized contracts with idempotency,
-health, failure, reconciliation, and end-to-end evidence.
+Exit when specialist systems, including bounded model and document-intelligence
+workers where justified, are connected through typed, independently authorized
+contracts with idempotency, health, failure, reconciliation, and end-to-end
+evidence. Specialist execution never owns business command authority.
 
 ## Gate 5: Business breadth
 

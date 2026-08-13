@@ -39,6 +39,8 @@ $requiredFiles = @(
     "docs/adr/0014-gate-3-party-onboarding-vertical.md",
     "docs/adr/0015-product-location-and-sourcing-lane-authority.md",
     "docs/adr/0016-security-scan-artifact-sealing-waiver.md",
+    "docs/adr/0017-deterministic-ai-authority-boundary.md",
+    "docs/adr/0018-module-neutral-composition-and-installation.md",
     "config/module_catalog.json",
     "config/external_identity_policy.json",
     "config/database_policy.json",

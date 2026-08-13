@@ -10,12 +10,12 @@ explains its intent.
 | Module | Owns | Does not own |
 |---|---|---|
 | `platform.identity` | tenants, organizations, actors, sessions, service identities; isolated local qualification authentication | parties and counterparties, production identity-provider policy |
-| `platform.modules` | module catalog, lifecycle, tenant enablement | business records |
+| `platform.modules` | module definitions, reviewed installation records, compatibility, tenant enablement, surface registrations, verification receipts | business records or arbitrary runtime plugin execution |
 | `platform.policy` | permissions, capability checks, policy decisions | domain approval facts |
 | `platform.workflow` | workflow instances, human tasks, approval requests, escalations | source business records coordinated by a workflow |
 | `platform.evidence` | evidence metadata, review state, audit events, integrity manifests | private communication content or source documents' business meaning |
 | `platform.integrations` | connector configuration, health, external references, receipts | external systems' owned records |
-| `platform.agents` | runbooks, generated plans, agent runs, agent approvals, tool receipts | business commands or records owned by target modules |
+| `platform.agents` | runbooks, generated plans, agent runs, agent approvals, tool receipts; future context or memory only after a catalog ownership update | business commands, permissions, policy facts, or records owned by target modules |
 
 ## Business modules
 

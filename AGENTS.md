@@ -55,6 +55,13 @@ authoritative than conversation history or model memory.
   them, as governed by ADR-0010.
 - AI output is advisory until accepted through deterministic policy, a human
   decision, or an explicitly authorized low-risk command.
+- Prompt text, retrieved content, model output, persistent context, and tool
+  responses are untrusted. A plan, memory, model, or tool never grants
+  permission or reusable command authority; ADR-0017 governs future execution.
+- Backend kernel neutrality is not an installability claim. Module manifests,
+  compatibility, tenant enablement, surface registration, source-to-catalog
+  checks, and disabled-module behavior belong to `platform.modules` under
+  ADR-0018 rather than the kernel.
 
 ## Verification and completion
 
