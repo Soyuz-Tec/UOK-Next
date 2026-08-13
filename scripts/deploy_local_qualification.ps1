@@ -741,6 +741,60 @@ try {
         throw "The Gate 3 quote comparison did not reach exact human approval"
     }
 
+    $proposalBody = @{
+        stable_identifier = "commitment-proposal-$flowId"
+        quote_comparison_id = $comparisonApproved.data.id
+        expected_comparison_version = [int]$comparisonApproved.data.lock_version
+        reason = "Prove a source-derived non-binding purchase commitment proposal"
+    } | ConvertTo-Json -Compress
+    $proposal = Invoke-RestMethod -Uri "$baseUri/purchase-commitment-proposals" -Method Post `
+        -Headers @{
+            Authorization = "Bearer $accessToken"
+            "Idempotency-Key" = [Guid]::NewGuid().ToString()
+        } -ContentType "application/json" -Body $proposalBody -TimeoutSec 10
+    if ($proposal.data.status -ne "draft" -or
+        $proposal.data.selected_quote_id -ne $comparisonApproved.data.recommended_quote_id -or
+        $proposal.data.source_snapshot.quote_comparison_id -ne $comparisonApproved.data.id -or
+        $proposal.data.commitment_created -or $proposal.data.external_effect_created) {
+        throw "The source-derived purchase commitment proposal boundary failed"
+    }
+
+    $proposalEvidenced = Invoke-Gate3EvidenceUpload `
+        -Uri "$baseUri/purchase-commitment-proposals/$($proposal.data.id)/evidence" `
+        -Token $accessToken -IdempotencyKey ([Guid]::NewGuid().ToString()) `
+        -EvidenceId ([Guid]::NewGuid().ToString()) `
+        -ExpectedVersion ([int]$proposal.data.lock_version) `
+        -Reason "Attach reviewed internal commitment rationale"
+    $proposalTasks = Invoke-RestMethod -Uri "$baseUri/review-tasks" `
+        -Headers $readHeaders -TimeoutSec 10
+    $proposalTask = @($proposalTasks.data | Where-Object subject_id -eq $proposal.data.id)
+    if ($proposalEvidenced.data.status -ne "awaiting_review" -or $proposalTask.Count -ne 1 -or
+        $proposalTask[0].id -ne $proposalEvidenced.data.review_task.id) {
+        throw "The purchase commitment evidence or exact-task contract failed"
+    }
+
+    $proposalDecisionBody = @{
+        decision = "approve"
+        reason = "Approve the exact source-bound internal proposal"
+        task_id = $proposalTask[0].id
+        expected_version = [int]$proposalEvidenced.data.lock_version
+    } | ConvertTo-Json -Compress
+    $proposalApproved = Invoke-RestMethod `
+        -Uri "$baseUri/purchase-commitment-proposals/$($proposal.data.id)/decision" -Method Post `
+        -Headers @{
+            Authorization = "Bearer $accessToken"
+            "Idempotency-Key" = [Guid]::NewGuid().ToString()
+        } -ContentType "application/json" -Body $proposalDecisionBody -TimeoutSec 10
+    $proposals = Invoke-RestMethod -Uri "$baseUri/purchase-commitment-proposals?limit=100" `
+        -Headers $readHeaders -TimeoutSec 10
+    $qualifiedProposal = @($proposals.data | Where-Object id -eq $proposal.data.id)
+    if ($proposalApproved.data.status -ne "approved" -or $qualifiedProposal.Count -ne 1 -or
+        $qualifiedProposal[0].status -ne "approved" -or
+        $qualifiedProposal[0].source_snapshot.selected_quote_id -ne $submittedQuotes[1].id -or
+        $proposalApproved.data.commitment_created -or $proposalApproved.data.external_effect_created) {
+        throw "The purchase commitment proposal did not reach safe exact approval"
+    }
+
     $appAImageId = Get-ContainerImageId -Container "uok-next-app-a-1"
     $appBImageId = Get-ContainerImageId -Container "uok-next-app-b-1"
     if ($appAImageId -ne $imageId -or $appBImageId -ne $imageId) {
@@ -822,6 +876,8 @@ try {
         procurement_comparison_flow = "requisition, RFQ, two attributable quotes, verified evidence, deterministic ranking, exact task, and approval passed"
         procurement_qualified_rfq_id = $rfq.data.id
         procurement_qualified_comparison_id = $comparison.data.id
+        purchase_commitment_proposal_flow = "source-derived terms, verified evidence, exact task, approval, final read, and no downstream or external effect passed"
+        purchase_commitment_qualified_proposal_id = $proposal.data.id
         local_identity_credential_path = $identityCredentialPath
         replicas = 2
         single_replica_failover = "4 readiness and release probes passed"

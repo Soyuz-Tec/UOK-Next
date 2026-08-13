@@ -26,7 +26,7 @@ explains its intent.
 | `master.locations` | countries, locations, corridors, route references |
 | `operations.work` | native projects, work items, dependencies, calendars, comments |
 | `trade.sourcing` | sourcing lanes, requisitions, RFQs, quote comparisons |
-| `trade.contracts` | purchase/sale contracts, amendments, commercial commitments |
+| `trade.contracts` | source-bound internal purchase-commitment proposals; future purchase/sale contracts, amendments, and external commercial commitments require separate authority |
 | `trade.shipments` | shipment plans, containers, milestones, logistics exceptions |
 | `trade.quality` | lots, samples, measurements, inspections, claims |
 | `trade.compliance` | standards, requirements, clearance cases, compliance decisions |

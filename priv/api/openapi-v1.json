@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "UOK Next API",
-    "version": "0.3.0",
-    "description": "Tenant-authenticated Gate 3 sourcing and deterministic procurement-comparison contract."
+    "version": "0.4.0",
+    "description": "Tenant-authenticated Gate 3 sourcing, deterministic comparison, and non-binding purchase-commitment proposal contract."
   },
   "servers": [{"url": "/api/v1"}],
   "paths": {
@@ -252,6 +252,38 @@
         "responses": {"200": {"description": "Comparison decision committed"}, "409": {"$ref": "#/components/responses/Error"}, "422": {"$ref": "#/components/responses/Error"}}
       }
     },
+    "/purchase-commitment-proposals": {
+      "get": {
+        "summary": "List source-bound purchase-commitment proposals",
+        "security": [{"bearerAuth": []}],
+        "responses": {"200": {"description": "Tenant commitment-proposal collection"}}
+      },
+      "post": {
+        "summary": "Create a non-binding proposal from one exact approved comparison",
+        "security": [{"bearerAuth": []}],
+        "parameters": [{"$ref": "#/components/parameters/IdempotencyKey"}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreatePurchaseCommitmentProposal"}}}},
+        "responses": {"201": {"description": "Non-binding proposal created"}, "404": {"$ref": "#/components/responses/Error"}, "409": {"$ref": "#/components/responses/Error"}, "422": {"$ref": "#/components/responses/Error"}}
+      }
+    },
+    "/purchase-commitment-proposals/{id}/evidence": {
+      "post": {
+        "summary": "Verify proposal evidence and open an exact review task",
+        "security": [{"bearerAuth": []}],
+        "parameters": [{"$ref": "#/components/parameters/EntityId"}, {"$ref": "#/components/parameters/IdempotencyKey"}],
+        "requestBody": {"required": true, "content": {"multipart/form-data": {"schema": {"$ref": "#/components/schemas/EvidenceUpload"}}}},
+        "responses": {"200": {"description": "Evidence verified and proposal submitted"}, "409": {"$ref": "#/components/responses/Error"}, "422": {"$ref": "#/components/responses/Error"}, "503": {"$ref": "#/components/responses/Error"}}
+      }
+    },
+    "/purchase-commitment-proposals/{id}/decision": {
+      "post": {
+        "summary": "Approve or hold an exact proposal review task without creating a commitment",
+        "security": [{"bearerAuth": []}],
+        "parameters": [{"$ref": "#/components/parameters/EntityId"}, {"$ref": "#/components/parameters/IdempotencyKey"}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PurchaseCommitmentProposalDecision"}}}},
+        "responses": {"200": {"description": "Proposal decision recorded; no commitment or external effect created"}, "409": {"$ref": "#/components/responses/Error"}, "422": {"$ref": "#/components/responses/Error"}}
+      }
+    },
     "/review-tasks": {
       "get": {
         "summary": "List open human tasks the current actor may decide",
@@ -406,6 +438,28 @@
         }
       },
       "QuoteComparisonDecision": {
+        "type": "object",
+        "required": ["decision", "reason", "task_id", "expected_version"],
+        "additionalProperties": false,
+        "properties": {
+          "decision": {"type": "string", "enum": ["approve", "hold"]},
+          "reason": {"type": "string", "minLength": 3, "maxLength": 500},
+          "task_id": {"type": "string", "format": "uuid"},
+          "expected_version": {"type": "integer", "minimum": 1}
+        }
+      },
+      "CreatePurchaseCommitmentProposal": {
+        "type": "object",
+        "required": ["stable_identifier", "quote_comparison_id", "expected_comparison_version", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "stable_identifier": {"type": "string", "minLength": 3, "maxLength": 100},
+          "quote_comparison_id": {"type": "string", "format": "uuid"},
+          "expected_comparison_version": {"type": "integer", "minimum": 1},
+          "reason": {"type": "string", "minLength": 3, "maxLength": 500}
+        }
+      },
+      "PurchaseCommitmentProposalDecision": {
         "type": "object",
         "required": ["decision", "reason", "task_id", "expected_version"],
         "additionalProperties": false,

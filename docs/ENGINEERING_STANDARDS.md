@@ -211,7 +211,27 @@ state-machine, reconciliation, and policy invariants.
   deterministic command oracle, negative authorization and tenant tests,
   incident controls, monitored rollout, recovery, and rollback evidence.
 
-## 11. Review and commit discipline
+## 11. Outcome-benchmark discipline
+
+- Before designing a feature, compare its complete user outcome with current,
+  proven enterprise workflows serving the same business role. Use authoritative
+  public evidence and record the durable control or workflow pattern without
+  importing third-party product identity into product-facing material.
+- Preserve controls that protect correctness, authority, auditability,
+  accessibility, recovery, and regulatory obligations. Do not imitate screens,
+  terminology, or complexity merely because they are established.
+- State the intended improvement as a measurable workflow hypothesis: fewer
+  decisions, steps, handoffs, duplicate fields, page transitions, or failure
+  recoveries; lower completion time or error rate; or greater automation under
+  the same or stronger controls.
+- Every user-facing vertical must verify both its business invariant and its
+  workflow claim through tests, rendered evidence, or measured instrumentation.
+  A faster path that weakens authorization, evidence, accessibility, or recovery
+  fails the benchmark.
+- Revisit the comparison when the business outcome, target user, regulation,
+  integration boundary, or reference workflow changes materially.
+
+## 12. Review and commit discipline
 
 - One change solves one reviewable problem and advances the active gate.
 - Avoid unrelated formatting, renaming, abstraction, or dependency churn.

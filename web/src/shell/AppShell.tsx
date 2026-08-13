@@ -105,9 +105,21 @@ export function AppShell({ children }: Props) {
             </span>
             RFQ &amp; comparison
           </a>
-          <a className="nav-link" href="#release-boundary">
+          <a
+            className={
+              activeHash === "#commitment-proposal" ? "nav-link nav-link--active" : "nav-link"
+            }
+            href="#commitment-proposal"
+            aria-current={activeHash === "#commitment-proposal" ? "page" : undefined}
+          >
             <span className="nav-icon" aria-hidden="true">
               04
+            </span>
+            Commitment proposal
+          </a>
+          <a className="nav-link" href="#release-boundary">
+            <span className="nav-icon" aria-hidden="true">
+              05
             </span>
             Release boundary
           </a>
@@ -117,7 +129,7 @@ export function AppShell({ children }: Props) {
           <strong>Gate 3</strong>
           <p>First business operation</p>
           <div className="progress-track" aria-label="Gate 3 operation progress">
-            <span style={{ width: "48%" }} />
+            <span style={{ width: "61%" }} />
           </div>
         </div>
       </aside>

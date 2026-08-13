@@ -75,6 +75,14 @@ defmodule UokNextWeb.Router do
     get "/quote-comparisons", ProcurementController, :comparisons_index
     post "/quote-comparisons", ProcurementController, :comparison_create
     post "/quote-comparisons/:id/decision", ProcurementController, :comparison_decide
+    get "/purchase-commitment-proposals", CommitmentController, :index
+    post "/purchase-commitment-proposals", CommitmentController, :create
+
+    post "/purchase-commitment-proposals/:id/evidence",
+         PurchaseCommitmentEvidenceController,
+         :create
+
+    post "/purchase-commitment-proposals/:id/decision", CommitmentController, :decide
     get "/review-tasks", WorkflowController, :index
   end
 

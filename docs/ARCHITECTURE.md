@@ -95,6 +95,16 @@ by same-currency total price, delivery days, and stable identifier. Comparison
 approval records a decision only and cannot create a purchase commitment.
 ADR-0019 governs this boundary.
 
+The fourth Gate 3 vertical gives `trade.contracts` authority over an internal,
+non-binding purchase-commitment proposal. It accepts only one exact approved
+comparison reference and derives every commercial term and evidence reference
+through the public sourcing contract. Creation, evidence submission, and the
+exact human decision each revalidate current source state. Approval explicitly
+creates no contract, order, supplier communication, payment instruction, or
+inventory movement. The single-workspace handoff removes term re-entry without
+weakening source lineage, concurrency, tenant isolation, or approval authority.
+ADR-0020 governs this boundary.
+
 ### Durable work layer
 
 PostgreSQL-backed outbox and jobs provide retries, schedules, external side
