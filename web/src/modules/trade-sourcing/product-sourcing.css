@@ -1,0 +1,56 @@
+.sourcing-workspace {
+  width: min(100%, 82rem);
+  margin: 0 auto;
+}
+
+.reference-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.compact-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+}
+
+.compact-form > .eyebrow,
+.compact-form > h2,
+.compact-form > button {
+  grid-column: 1 / -1;
+}
+
+.sourcing-grid {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.65fr) minmax(0, 1.35fr);
+  gap: 1rem;
+}
+
+.lane-list {
+  padding: 1.25rem;
+  background: #f7f6ef;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+}
+
+.setup-note {
+  padding: 0.8rem;
+  color: #6d5934;
+  background: #f4ead7;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .reference-grid,
+  .sourcing-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .compact-form {
+    grid-template-columns: 1fr;
+  }
+}

@@ -44,6 +44,10 @@ defmodule UokNext.Modules.Master.Parties.Public do
   @spec get(String.t(), UokNext.Kernel.CommandContext.t()) :: tuple()
   def get(party_id, context), do: Onboarding.get(EctoPartyStore, party_id, context)
 
+  @spec require_approved(String.t(), UokNext.Kernel.CommandContext.t()) :: tuple()
+  def require_approved(party_id, context),
+    do: Onboarding.require_approved(EctoPartyStore, party_id, context)
+
   @spec list(pos_integer(), UokNext.Kernel.CommandContext.t()) :: tuple()
   def list(limit, context), do: Onboarding.list(EctoPartyStore, limit, context)
 end

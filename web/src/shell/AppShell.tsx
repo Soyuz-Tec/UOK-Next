@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import { usePlatformStatus } from "./usePlatformStatus";
 
@@ -39,6 +39,13 @@ type Props = { children?: ReactNode };
 
 export function AppShell({ children }: Props) {
   const platformStatus = usePlatformStatus();
+  const [activeHash, setActiveHash] = useState(window.location.hash || "#party-onboarding");
+
+  useEffect(() => {
+    const updateHash = () => setActiveHash(window.location.hash || "#party-onboarding");
+    window.addEventListener("hashchange", updateHash);
+    return () => window.removeEventListener("hashchange", updateHash);
+  }, []);
 
   return (
     <div className="app-frame">
@@ -64,17 +71,29 @@ export function AppShell({ children }: Props) {
 
       <aside className="sidebar" aria-label="Platform navigation">
         <nav>
-          <a className="nav-link nav-link--active" href="#party-onboarding" aria-current="page">
+          <a
+            className={
+              activeHash === "#party-onboarding" ? "nav-link nav-link--active" : "nav-link"
+            }
+            href="#party-onboarding"
+            aria-current={activeHash === "#party-onboarding" ? "page" : undefined}
+          >
             <span className="nav-icon" aria-hidden="true">
               01
             </span>
             Party onboarding
           </a>
-          <a className="nav-link" href="#module-map">
+          <a
+            className={
+              activeHash === "#product-sourcing" ? "nav-link nav-link--active" : "nav-link"
+            }
+            href="#product-sourcing"
+            aria-current={activeHash === "#product-sourcing" ? "page" : undefined}
+          >
             <span className="nav-icon" aria-hidden="true">
               02
             </span>
-            Module map
+            Product sourcing
           </a>
           <a className="nav-link" href="#release-boundary">
             <span className="nav-icon" aria-hidden="true">

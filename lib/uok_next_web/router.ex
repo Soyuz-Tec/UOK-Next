@@ -54,6 +54,17 @@ defmodule UokNextWeb.Router do
     get "/parties/:id", PartyController, :show
     post "/parties/:id/evidence", EvidenceController, :create
     post "/parties/:id/decision", PartyController, :decide
+    get "/products", ProductController, :index
+    post "/products", ProductController, :create
+    get "/products/:id", ProductController, :show
+    get "/locations", LocationController, :index
+    post "/locations", LocationController, :create
+    get "/locations/:id", LocationController, :show
+    get "/sourcing-lanes", SourcingLaneController, :index
+    post "/sourcing-lanes", SourcingLaneController, :create
+    get "/sourcing-lanes/:id", SourcingLaneController, :show
+    post "/sourcing-lanes/:id/evidence", SourcingLaneEvidenceController, :create
+    post "/sourcing-lanes/:id/decision", SourcingLaneController, :decide
     get "/review-tasks", WorkflowController, :index
   end
 

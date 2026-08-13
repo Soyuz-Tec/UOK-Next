@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { PartyOnboardingWorkspace } from "../modules/master-parties/PartyOnboardingWorkspace";
 import { QualificationSignIn } from "../modules/platform-identity/QualificationSignIn";
 import { verifySession, type Session } from "../modules/platform-identity/sessionApi";
+import { ProductSourcingWorkspace } from "../modules/trade-sourcing/ProductSourcingWorkspace";
 
 const storageKey = "uok-next-local-session-v1";
 
@@ -17,6 +18,13 @@ function storedSession(): Session | undefined {
 
 export function Gate3Application() {
   const [session, setSession] = useState<Session | undefined>(storedSession);
+  const [surface, setSurface] = useState(window.location.hash);
+
+  useEffect(() => {
+    const updateSurface = () => setSurface(window.location.hash);
+    window.addEventListener("hashchange", updateSurface);
+    return () => window.removeEventListener("hashchange", updateSurface);
+  }, []);
 
   useEffect(() => {
     if (session === undefined) return;
@@ -36,8 +44,16 @@ export function Gate3Application() {
     setSession(undefined);
   }
 
-  return session === undefined ? (
-    <QualificationSignIn onAuthenticated={authenticated} />
+  if (session === undefined) {
+    return <QualificationSignIn onAuthenticated={authenticated} />;
+  }
+
+  return surface === "#product-sourcing" ? (
+    <ProductSourcingWorkspace
+      token={session.accessToken}
+      tenantId={session.identity.tenant_id}
+      onSignOut={signOut}
+    />
   ) : (
     <PartyOnboardingWorkspace
       token={session.accessToken}

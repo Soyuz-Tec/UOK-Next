@@ -88,6 +88,18 @@ defmodule UokNext.Modules.Master.Parties.Application.Onboarding do
     end
   end
 
+  @spec require_approved(module(), String.t(), CommandContext.t()) ::
+          {:ok, map()} | {:error, CommandError.t()}
+  def require_approved(store, party_id, context) do
+    with {:ok, party} <- get(store, party_id, context),
+         true <- party["status"] == "approved" do
+      {:ok, party}
+    else
+      false -> not_found()
+      {:error, %CommandError{} = error} -> {:error, error}
+    end
+  end
+
   @spec list(module(), pos_integer(), CommandContext.t()) ::
           {:ok, [map()]} | {:error, CommandError.t()}
   def list(store, limit, context) when is_integer(limit) and limit in 1..100 do

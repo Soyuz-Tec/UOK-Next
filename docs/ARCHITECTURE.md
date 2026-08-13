@@ -80,6 +80,13 @@ metadata through a second idempotent command. A retry can recover an already
 stored exact object; it cannot overwrite or delete it. Only verified metadata
 bound to the exact party can open the onboarding review task.
 
+The second Gate 3 vertical reuses the same evidence lifecycle for a sourcing
+lane. `master.products` and `master.locations` own active reference records;
+`trade.sourcing` owns only the lane and resolves approved parties, products,
+and locations through public module queries. Composite tenant foreign keys
+reinforce the references, while evidence and the exact human task remain
+separately owned platform records. ADR-0015 governs this boundary.
+
 ### Durable work layer
 
 PostgreSQL-backed outbox and jobs provide retries, schedules, external side

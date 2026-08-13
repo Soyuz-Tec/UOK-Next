@@ -5,6 +5,7 @@ import { Gate3Application } from "./application/Gate3Application";
 import { AppShell } from "./shell/AppShell";
 import "./shell/app-shell.css";
 import "./modules/master-parties/party-onboarding.css";
+import "./modules/trade-sourcing/product-sourcing.css";
 
 const root = document.getElementById("root");
 
