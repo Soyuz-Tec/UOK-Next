@@ -54,27 +54,30 @@ rendered desktop/mobile proof. It proves requisition, approved supplier
 invitation, evidence-bound quotes, a deterministic snapshot, exact human
 approval, and recovery without creating a purchase commitment.
 
-The active increment is the ADR-0020 purchase-commitment proposal candidate. It
-consumes one exact approved comparison, reauthorizes current comparison, RFQ,
-requisition, quote, supplier, terms, and evidence state, binds the internal
-proposal evidence, and passes an exact human approval or HOLD. Its product-
-neutral benchmark removes commercial-term re-entry while preserving the proven
-separation between source selection, internal approval, and downstream
-issuance. Proposal approval remains distinct from contract formation, payment,
-inventory movement, and connector delivery until those boundaries have their
-own recorded authority and recovery design.
+The ADR-0020 purchase-commitment proposal increment has passed protected
+delivery, exact committed- and merged-revision qualification, two-replica
+failover, PostgreSQL/object-store proof, and rendered desktop/mobile checks. It
+consumes one exact approved comparison, reauthorizes the current source chain,
+binds internal proposal evidence, and records an exact human approval or HOLD.
+Its product-neutral benchmark removes commercial-term re-entry while preserving
+the proven separation between source selection, internal approval, and
+downstream issuance. Proposal approval remains distinct from contract
+formation, payment, inventory movement, and connector delivery.
 
-Source, API, database, UI, policy, dependency, and security checks pass for the
-candidate. It is delivered only after protected review plus exact committed and
-merged-revision two-replica, object-store, PostgreSQL, failover, and rendered
-desktop/mobile qualification.
+The active increment is now shipment-readiness GO/HOLD. Before opening its
+reachable command surface, compare the complete operator outcome with proven
+enterprise execution workflows, record a measurable faster-path hypothesis,
+and define ownership, evidence, freshness, exact decision, idempotency,
+concurrency, audit, recovery, rollback, and downstream-effect boundaries in an
+ADR. This remains the same single Gate 3 delivery focus.
 
 Completing the first vertical is necessary evidence, not the Gate 3 exit by
 itself.
 
-AI remains advisory throughout the active commitment-proposal slice. The
-delivered RFQ oracle and this next slice must preserve deterministic commands,
-policies, evidence, exact human decisions, recovery, and reportable outcomes.
+AI remains advisory throughout the active shipment-readiness slice. The
+delivered RFQ oracle and commitment proposal plus this next slice must preserve
+deterministic commands, policies, evidence, exact human decisions, recovery,
+and reportable outcomes.
 They do not open model/tool execution, persistent agent memory, dynamic module
 installation, or tenant module enablement. ADR-0017 and ADR-0018 define those
 later prerequisites without changing the active delivery focus.
