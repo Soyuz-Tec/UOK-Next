@@ -336,6 +336,36 @@
   and quote comparison, commitment proposal, shipment readiness, and governed
   reporting have not yet passed equivalent end-to-end evidence.
 
+## AI-compatible kernel and module-neutrality decision
+
+- A read-only assessment of protected revision
+  `529ae395d47ee5862325d13d8936ffe3935a1b70` found no business-module or HTTP
+  dependency in the backend kernel. Business modules depend inward on generic
+  command, tenant, idempotency, audit, outbox, health, and release primitives.
+  Architecture-boundary verification passed for 66 source files,
+  code-discipline verification passed for 127 production files, and foundation
+  verification retained an acyclic graph of 19 modules with 95 uniquely owned
+  record types.
+- Current cross-module production imports use declared `Public` contracts, but
+  source imports are not yet mechanically reconciled with the module catalog.
+  The shared UI shell and application composition also contain static Party and
+  Sourcing navigation. These are disclosed installability gaps, not backend
+  kernel-policy leakage.
+- ADR-0017 establishes that the kernel deterministically governs AI instead of
+  embedding probabilistic authority. Prompt text, retrieved content, model
+  output, persistent context, and tool responses are untrusted and advisory.
+  Future agent execution requires server-owned runbooks, narrow delegated
+  identity, typed tools, fresh command authorization, memory isolation,
+  provenance, budgets, evaluations, incident controls, and recovery.
+- ADR-0018 assigns module manifests, compatibility, tenant enablement, surface
+  registration, and verification receipts to `platform.modules`. It requires
+  source-to-catalog dependency enforcement, module-owned migration metadata,
+  registry-derived UI surfaces, kernel-only boot, and disabled-module boot
+  before installable sub-app independence is claimed.
+- These are accepted target decisions, not implemented capability. ADR-0013's
+  non-executing plans remain the only delivered agent surface, and the current
+  compiled static module composition remains the supported Gate 3 release.
+
 ## Explicitly not yet implemented
 
 - Production identity/OIDC and session revocation, business APIs beyond party
@@ -346,6 +376,11 @@
   credential/retry scheduling, server-owned agent runbook definitions,
   model/tool execution, agent scheduling/budgets, BI projections, or evidence
   anchoring.
+- Module installation, tenant enablement, compatibility enforcement, dynamic
+  surface registration, source-to-catalog import reconciliation, module-owned
+  migration receipts, kernel-only boot qualification, disabled-module boot
+  qualification, persistent agent memory, delegated agent capabilities, tool
+  authorization, agent evaluations, or agent incident controls.
 - The local two-replica qualifier is not a production topology. PostgreSQL 19
   is still a single local dependency and no backup/restore receipt exists.
 - Production deployment is blocked on a selected platform, managed secrets,
@@ -361,3 +396,6 @@ contracts; bind the new records to the exact approved lane and versions; and
 do not open purchase commitment scope until API, database, evidence, policy,
 audit, workflow, recovery, UI, security, protected delivery, and exact merged
 revision qualification pass.
+
+AI execution and module-installation implementation remain deferred. This
+architecture update does not create a second active delivery focus.

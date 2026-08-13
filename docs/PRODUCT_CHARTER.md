@@ -65,6 +65,12 @@ test data, but the kernel and data model must remain commodity-neutral.
 - No module writes another module's private data.
 - No AI, blockchain, communications provider, UI, or integration becomes a
   second command bus or permission system.
+- Prompt text, retrieved context, model output, agent memory, and tool responses
+  are untrusted inputs. None can grant authority, satisfy approval, or become a
+  policy fact without deterministic validation and attributable acceptance.
+- An AI-proposed mutation uses a typed business command with fresh tenant,
+  permission, subject-version, idempotency, evidence, policy, and human-review
+  checks. Plan approval is never reusable execution authority.
 - Missing required evidence produces HOLD, not an optimistic assumption.
 - External side effects are idempotent, receipt-backed, observable, and
   recoverable.
@@ -83,4 +89,3 @@ test data, but the kernel and data model must remain commodity-neutral.
 - Starting with microservices, Kafka, Kubernetes, or a data lake before proven
   load and isolation requirements exist.
 - Porting prototype files line by line merely to retain sunk cost.
-

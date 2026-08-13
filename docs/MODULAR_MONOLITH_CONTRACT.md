@@ -163,3 +163,28 @@ The accepted module identifiers and record ownership are defined in
 individual entities. They may gain internal subdomains without becoming new
 top-level modules or services.
 
+## 10. Module-neutral composition maturity
+
+Backend kernel neutrality and module installability are separate claims. The
+kernel is neutral when it imports no business module and exposes only
+product-neutral primitives. Installability additionally requires governed
+module manifests, compatibility, tenant enablement, surface discovery,
+migration ownership, disabled-module behavior, and recovery evidence.
+
+The current Gate 3 application uses a static composition root and hard-coded
+business navigation. This is a bounded delivery mechanism, not the final module
+installation model. It does not authorize moving module discovery into the
+kernel.
+
+`platform.modules` will own installation and enablement records. One reviewed
+release initially contains every eligible module; enabling a module activates
+only validated commands, routes, consumers, scheduled work, and UI surfaces.
+Arbitrary downloaded executable plugins are prohibited. Disabling a module
+preserves its authoritative data until governed export, retention, and
+retirement complete.
+
+Architecture verification must eventually derive backend and frontend
+cross-module dependencies from source, match them to the catalog, require
+public-only access, and reject reverse or cyclic edges. A kernel-only boot and
+disabled-module boot are required before the application claims installable
+sub-app independence. ADR-0018 records the complete decision.

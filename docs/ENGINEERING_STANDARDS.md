@@ -179,7 +179,39 @@ state-machine, reconciliation, and policy invariants.
   operation, prerequisites, impact, counterevidence, and remaining uncertainty.
   "Hacker-proof" is treated as a defense-in-depth goal, never a guarantee.
 
-## 10. Review and commit discipline
+## 10. AI and agent discipline
+
+- Keep model, prompt, retrieval, memory, and tool implementation concerns out of
+  the product-neutral kernel. They enter through typed, bounded ports and
+  replaceable role-based bindings.
+- Treat prompts, retrieved documents, model output, agent memory, and tool
+  responses as attacker-influenced data. Delimit, classify, validate, bound,
+  attribute, and audit them before use or persistence.
+- An agent has a distinct service identity and narrower delegated capability.
+  It never inherits an actor's full session, creates permissions, approves its
+  own work, or selects its own risk tier.
+- Tools expose allowlisted typed operations, not generic database, filesystem,
+  process, network, secret, or mutation access. Reauthorize every proposed
+  business command against current tenant, permission, state, evidence, policy,
+  idempotency, and human-task requirements.
+- Persistent context requires declared ownership, tenant/actor/runbook/purpose
+  isolation, provenance, classification, expiry, size limits, integrity,
+  versioning, review, and revocation. Memory never overrides system policy.
+- Runbooks declare schemas, allowed reads and proposed commands, evidence,
+  approval, budgets, retries, recursion, timeouts, recovery, and release
+  evaluation thresholds. Unlimited loops, tool chains, retries, tokens, time,
+  or cost are prohibited.
+- Record sufficient provenance to reproduce and assess material output without
+  leaking sensitive prompts, credentials, private context, or protected raw
+  content into general logs and events.
+- Changes to runbooks, execution bindings, prompt templates, retrieval sources,
+  tools, memory policy, or approval policy require task evaluations and
+  adversarial regression checks proportionate to their risk.
+- Consequential execution remains disabled until a bounded vertical has an ADR,
+  deterministic command oracle, negative authorization and tenant tests,
+  incident controls, monitored rollout, recovery, and rollback evidence.
+
+## 11. Review and commit discipline
 
 - One change solves one reviewable problem and advances the active gate.
 - Avoid unrelated formatting, renaming, abstraction, or dependency churn.
