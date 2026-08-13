@@ -270,7 +270,7 @@
   vertical is delivered; this is necessary evidence, not the complete Gate 3
   exit.
 
-## Gate 3 product-sourcing candidate evidence
+## Gate 3 product-sourcing delivery evidence
 
 - `master.products`, `master.locations`, and `trade.sourcing` now own separate
   tenant-safe records. Product and location references are active bounded
@@ -314,9 +314,27 @@
   risk; protected CI, review, security, and exact-revision release gates are not
   waived.
 - ADR-0015 records the module ownership, command, evidence, workflow, API,
-  recovery, and RFQ-exclusion boundaries. This candidate evidence does not
-  close the vertical until protected delivery and exact merged-revision
-  qualification pass.
+  recovery, and RFQ-exclusion boundaries for the delivered increment.
+- Protected foundation, application, and immutable-release checks passed in
+  PR #19, which was squash-merged to `main` as
+  `6628b49626ad618286b6cacc8034ce789b9b5e03`. That exact protected revision
+  was rebuilt as image
+  `9fcefd4f0cf011b830c956770088e42b969b004c280e1f0a688a305f007b6905`.
+- Exact merged-revision qualification passed PostgreSQL 19 startup and all
+  migrations, least-privileged role reconciliation, unsafe-role rejection,
+  immutable evidence-object create/collision/read-after-write/delete, the
+  authenticated party/product/two-location/lane/evidence/replay/exact-task/
+  approval/final-read flow, identical identity across two replicas, and four
+  one-replica failover probes. It created qualified product
+  `7fc840cd-f93d-4f88-a296-92b8bc038280` and lane
+  `78458e59-5d23-4188-8786-b8cc0f19f9a8`.
+- The exact merged UI route returned HTTP 200. At 1440-by-900 the sourcing
+  workspace occupied 1,069 pixels of the governed desktop canvas; at
+  390-by-844 it collapsed to the 375-pixel document width. Neither viewport
+  had horizontal overflow or an interactive target below 44 pixels.
+- The second Gate 3 vertical is delivered. Gate 3 remains active because RFQ
+  and quote comparison, commitment proposal, shipment readiness, and governed
+  reporting have not yet passed equivalent end-to-end evidence.
 
 ## Explicitly not yet implemented
 
@@ -336,9 +354,10 @@
 
 ## Next action
 
-Deliver the qualified product, location, and sourcing-lane candidate through
-protected CI and review, then rebuild and qualify the exact merged revision.
-Preserve the delivered party-onboarding contracts and do not open RFQ or quote
-comparison scope until protected delivery, exact-revision database and object
-storage checks, the authenticated sourcing journey, two-replica identity,
-failover, and rendered desktop/mobile smoke all pass.
+Define and implement the third sequential Gate 3 vertical: purchase
+requisition, RFQ, supplier quote, and attributable quote comparison under
+`trade.sourcing`. Preserve the delivered party, product, location, and lane
+contracts; bind the new records to the exact approved lane and versions; and
+do not open purchase commitment scope until API, database, evidence, policy,
+audit, workflow, recovery, UI, security, protected delivery, and exact merged
+revision qualification pass.
