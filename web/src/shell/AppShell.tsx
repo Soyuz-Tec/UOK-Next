@@ -95,9 +95,19 @@ export function AppShell({ children }: Props) {
             </span>
             Product sourcing
           </a>
-          <a className="nav-link" href="#release-boundary">
+          <a
+            className={activeHash === "#rfq-comparison" ? "nav-link nav-link--active" : "nav-link"}
+            href="#rfq-comparison"
+            aria-current={activeHash === "#rfq-comparison" ? "page" : undefined}
+          >
             <span className="nav-icon" aria-hidden="true">
               03
+            </span>
+            RFQ &amp; comparison
+          </a>
+          <a className="nav-link" href="#release-boundary">
+            <span className="nav-icon" aria-hidden="true">
+              04
             </span>
             Release boundary
           </a>
@@ -107,7 +117,7 @@ export function AppShell({ children }: Props) {
           <strong>Gate 3</strong>
           <p>First business operation</p>
           <div className="progress-track" aria-label="Gate 3 operation progress">
-            <span />
+            <span style={{ width: "48%" }} />
           </div>
         </div>
       </aside>

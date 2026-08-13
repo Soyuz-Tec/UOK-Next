@@ -366,10 +366,49 @@
   non-executing plans remain the only delivered agent surface, and the current
   compiled static module composition remains the supported Gate 3 release.
 
+## Gate 3 RFQ and quote-comparison candidate
+
+- `trade.sourcing` now has a candidate requisition, RFQ invitation, supplier
+  quote, and quote-comparison vertical. Requisitions bind an exact approved
+  sourcing-lane version and product base unit. RFQs bind an exact requisition
+  transition, one settlement currency, a future response deadline, and two to
+  twenty distinct approved supplier Party versions.
+- Supplier quotes are accepted only for invited approved suppliers, the exact
+  requisition quantity, and RFQ currency. A draft becomes submitted only after
+  verified evidence bound to the exact quote is available through the existing
+  immutable evidence boundary.
+- Comparison creation requires at least two submitted quotes. While the
+  response deadline is open, every invited supplier must have submitted;
+  afterward, the two-response floor applies. The check and transition share
+  the RFQ lock, close the RFQ against further quotes, and store a versioned
+  deterministic ranking snapshot ordered by total price, delivery days, and
+  stable identifier. The server owns the recommendation; the UI and request
+  cannot submit it.
+- One exact comparison-version human task governs approve or HOLD. The decision
+  atomically updates the comparison and RFQ with command receipt, append-only
+  audit, and outbox events. It does not create a purchase commitment or any
+  external side effect.
+- Five tenant tables have composite tenant references, forced row-level
+  security, bounded decimals, lifecycle constraints, uniqueness, and
+  optimistic locking. The local qualification identity gained only the ten
+  named permissions required by this slice.
+- Candidate backend tests cover the complete public/API flow, replay,
+  deterministic ranking, premature-close rejection, stale decision, missing
+  permission, cross-tenant and non-invited supplier substitution, insufficient
+  submitted quotes, evidence binding, exact task, and persistence. The
+  captured security diff review found the premature-close weakness and the
+  current candidate remediates it with the deadline/invitation invariant.
+  Frontend type checks, lint, unit tests, and production build cover the new
+  RFQ/comparison workspace.
+- ADR-0019 records the ownership, attribution, formula, evidence, approval,
+  commitment-exclusion, and recovery boundaries. This remains candidate
+  evidence until protected checks, merge, exact-revision build, qualifier,
+  failover, and rendered desktop/mobile smoke pass.
+
 ## Explicitly not yet implemented
 
-- Production identity/OIDC and session revocation, business APIs beyond party
-  onboarding and product/location/sourcing-lane authority, durable outbox
+- Production identity/OIDC and session revocation, purchase commitment and
+  business APIs beyond the delivered sourcing boundary, durable outbox
   delivery, scheduled jobs, general workflow
   definitions, task assignment/delegation/escalation/notification, evidence
   malware scanning/promotion/retention/deletion, live connector transport and
@@ -389,13 +428,12 @@
 
 ## Next action
 
-Define and implement the third sequential Gate 3 vertical: purchase
-requisition, RFQ, supplier quote, and attributable quote comparison under
-`trade.sourcing`. Preserve the delivered party, product, location, and lane
-contracts; bind the new records to the exact approved lane and versions; and
-do not open purchase commitment scope until API, database, evidence, policy,
-audit, workflow, recovery, UI, security, protected delivery, and exact merged
-revision qualification pass.
+Qualify the third sequential Gate 3 vertical on the exact candidate revision:
+complete backend/frontend/foundation/security checks, protected delivery,
+exact merged-revision image build, PostgreSQL and object-store qualification,
+two-replica identity and failover, authenticated end-to-end RFQ/comparison
+recovery, and rendered desktop/mobile smoke. Do not open purchase commitment
+scope until this evidence passes and is recorded here.
 
 AI execution and module-installation implementation remain deferred. This
 architecture update does not create a second active delivery focus.

@@ -87,6 +87,14 @@ and locations through public module queries. Composite tenant foreign keys
 reinforce the references, while evidence and the exact human task remain
 separately owned platform records. ADR-0015 governs this boundary.
 
+The third Gate 3 vertical extends `trade.sourcing` through requisition, RFQ,
+attributable supplier quote, deterministic comparison, and exact human review.
+Every handoff binds the source record version. Quote source bytes use the same
+verified evidence boundary; the comparison stores a versioned snapshot ordered
+by same-currency total price, delivery days, and stable identifier. Comparison
+approval records a decision only and cannot create a purchase commitment.
+ADR-0019 governs this boundary.
+
 ### Durable work layer
 
 PostgreSQL-backed outbox and jobs provide retries, schedules, external side
@@ -198,6 +206,9 @@ is claimed. ADR-0018 governs the transition.
 - A consequential human decision completes an exact tenant-, subject-, and
   subject-version-bound task in the same command transaction as business state,
   receipts, audit evidence, and outbox events.
+- A deterministic comparison closes mutable input before creating its snapshot;
+  recommendations remain reproducible and cannot be supplied by the UI, a
+  model, or an integration.
 - Long-running or external work uses durable jobs, resumable workflow state,
   idempotent steps, receipts, timeouts, and compensation where possible.
 - A playbook coordinates module-owned commands and human tasks. It never owns

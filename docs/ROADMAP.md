@@ -48,6 +48,12 @@ Gate 3 advances sequentially rather than opening every context at once:
 3. continue through RFQ/comparison, commitment proposal, evidence approval,
    shipment readiness GO/HOLD, and the governed report.
 
+The RFQ/comparison increment is governed by ADR-0019. Its protected delivery
+must prove requisition, approved supplier invitation, evidence-bound quotes,
+deterministic snapshot, exact human approval, and recovery without creating a
+purchase commitment. The next bounded context opens only after that evidence
+is qualified on the exact merged revision.
+
 Completing the first vertical is necessary evidence, not the Gate 3 exit by
 itself.
 

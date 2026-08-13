@@ -508,6 +508,48 @@ try {
         throw "The Gate 3 party-onboarding journey did not reach verified approval"
     }
 
+    $secondPartyHeaders = @{
+        Authorization = "Bearer $accessToken"
+        "Idempotency-Key" = [Guid]::NewGuid().ToString()
+    }
+    $secondPartyBody = @{
+        stable_identifier = "qualification-second-$flowId"
+        legal_name = "Gate 3 Qualification Supplier Two"
+        country_code = "GH"
+        party_kind = "organization"
+        reason = "Create a second attributable RFQ supplier"
+    } | ConvertTo-Json -Compress
+    $secondParty = Invoke-RestMethod -Uri "$baseUri/parties" -Method Post `
+        -Headers $secondPartyHeaders -ContentType "application/json" `
+        -Body $secondPartyBody -TimeoutSec 10
+    $secondPartyEvidence = Invoke-Gate3EvidenceUpload `
+        -Uri "$baseUri/parties/$($secondParty.data.id)/evidence" `
+        -Token $accessToken -IdempotencyKey ([Guid]::NewGuid().ToString()) `
+        -EvidenceId ([Guid]::NewGuid().ToString()) `
+        -ExpectedVersion ([int]$secondParty.data.lock_version) `
+        -Reason "Attach second supplier qualification evidence"
+    $secondPartyTasks = Invoke-RestMethod -Uri "$baseUri/review-tasks" `
+        -Headers $readHeaders -TimeoutSec 10
+    $secondPartyTask = @($secondPartyTasks.data | Where-Object subject_id -eq $secondParty.data.id)
+    if ($secondPartyTask.Count -ne 1) {
+        throw "The second supplier exact review task was not opened"
+    }
+    $secondPartyDecisionBody = @{
+        decision = "approve"
+        reason = "Second supplier evidence passed governed review"
+        task_id = $secondPartyTask[0].id
+        expected_version = [int]$secondPartyEvidence.data.lock_version
+    } | ConvertTo-Json -Compress
+    $secondPartyApproved = Invoke-RestMethod `
+        -Uri "$baseUri/parties/$($secondParty.data.id)/decision" -Method Post `
+        -Headers @{
+            Authorization = "Bearer $accessToken"
+            "Idempotency-Key" = [Guid]::NewGuid().ToString()
+        } -ContentType "application/json" -Body $secondPartyDecisionBody -TimeoutSec 10
+    if ($secondPartyApproved.data.status -ne "approved") {
+        throw "The second RFQ supplier did not reach governed approval"
+    }
+
     $productHeaders = @{
         Authorization = "Bearer $accessToken"
         "Idempotency-Key" = [Guid]::NewGuid().ToString()
@@ -606,6 +648,99 @@ try {
         throw "The Gate 3 product-sourcing journey did not reach verified approval"
     }
 
+    $requisitionBody = @{
+        stable_identifier = "requisition-$flowId"
+        sourcing_lane_id = $lane.data.id
+        quantity = "25"
+        unit_code = "MT"
+        required_by = [DateTime]::UtcNow.AddDays(30).ToString("yyyy-MM-dd")
+        reason = "Prove a version-bound purchasing requirement"
+    } | ConvertTo-Json -Compress
+    $requisition = Invoke-RestMethod -Uri "$baseUri/purchase-requisitions" -Method Post `
+        -Headers @{
+            Authorization = "Bearer $accessToken"
+            "Idempotency-Key" = [Guid]::NewGuid().ToString()
+        } -ContentType "application/json" -Body $requisitionBody -TimeoutSec 10
+
+    $rfqBody = @{
+        stable_identifier = "rfq-$flowId"
+        requisition_id = $requisition.data.id
+        expected_version = [int]$requisition.data.lock_version
+        settlement_currency_code = "USD"
+        response_deadline = [DateTime]::UtcNow.AddDays(7).ToString("o")
+        supplier_party_ids = @($party.data.id, $secondParty.data.id)
+        reason = "Prove approved supplier invitation authority"
+    } | ConvertTo-Json -Depth 4 -Compress
+    $rfq = Invoke-RestMethod -Uri "$baseUri/rfqs" -Method Post `
+        -Headers @{
+            Authorization = "Bearer $accessToken"
+            "Idempotency-Key" = [Guid]::NewGuid().ToString()
+        } -ContentType "application/json" -Body $rfqBody -TimeoutSec 10
+
+    $submittedQuotes = @()
+    foreach ($offer in @(
+            @{ supplier_id = $party.data.id; price = "100"; days = 14; suffix = "first" },
+            @{ supplier_id = $secondParty.data.id; price = "90"; days = 21; suffix = "second" }
+        )) {
+        $quoteBody = @{
+            stable_identifier = "quote-$($offer.suffix)-$flowId"
+            rfq_id = $rfq.data.id
+            supplier_party_id = $offer.supplier_id
+            quoted_quantity = "25"
+            unit_price = $offer.price
+            currency_code = "USD"
+            delivery_days = $offer.days
+            reason = "Record an attributable qualification quote"
+        } | ConvertTo-Json -Compress
+        $quote = Invoke-RestMethod -Uri "$baseUri/supplier-quotes" -Method Post `
+            -Headers @{
+                Authorization = "Bearer $accessToken"
+                "Idempotency-Key" = [Guid]::NewGuid().ToString()
+            } -ContentType "application/json" -Body $quoteBody -TimeoutSec 10
+        $submittedQuote = Invoke-Gate3EvidenceUpload `
+            -Uri "$baseUri/supplier-quotes/$($quote.data.id)/evidence" `
+            -Token $accessToken -IdempotencyKey ([Guid]::NewGuid().ToString()) `
+            -EvidenceId ([Guid]::NewGuid().ToString()) `
+            -ExpectedVersion ([int]$quote.data.lock_version) `
+            -Reason "Attach attributable quote source evidence"
+        $submittedQuotes += $submittedQuote.data
+    }
+
+    $comparisonBody = @{
+        stable_identifier = "comparison-$flowId"
+        rfq_id = $rfq.data.id
+        expected_version = [int]$rfq.data.lock_version
+        reason = "Prove deterministic quote comparison"
+    } | ConvertTo-Json -Compress
+    $comparison = Invoke-RestMethod -Uri "$baseUri/quote-comparisons" -Method Post `
+        -Headers @{
+            Authorization = "Bearer $accessToken"
+            "Idempotency-Key" = [Guid]::NewGuid().ToString()
+        } -ContentType "application/json" -Body $comparisonBody -TimeoutSec 10
+    $comparisonTasks = Invoke-RestMethod -Uri "$baseUri/review-tasks" `
+        -Headers $readHeaders -TimeoutSec 10
+    $comparisonTask = @($comparisonTasks.data | Where-Object subject_id -eq $comparison.data.id)
+    if ($comparisonTask.Count -ne 1 -or $comparison.data.recommended_quote_id -ne $submittedQuotes[1].id -or
+        @($comparison.data.ranking_snapshot.ranking).Count -ne 2) {
+        throw "The deterministic quote comparison or exact review task failed"
+    }
+
+    $comparisonDecisionBody = @{
+        decision = "approve"
+        reason = "Attributable quote comparison passed governed review"
+        task_id = $comparisonTask[0].id
+        expected_version = [int]$comparison.data.lock_version
+    } | ConvertTo-Json -Compress
+    $comparisonApproved = Invoke-RestMethod `
+        -Uri "$baseUri/quote-comparisons/$($comparison.data.id)/decision" -Method Post `
+        -Headers @{
+            Authorization = "Bearer $accessToken"
+            "Idempotency-Key" = [Guid]::NewGuid().ToString()
+        } -ContentType "application/json" -Body $comparisonDecisionBody -TimeoutSec 10
+    if ($comparisonApproved.data.status -ne "approved") {
+        throw "The Gate 3 quote comparison did not reach exact human approval"
+    }
+
     $appAImageId = Get-ContainerImageId -Container "uok-next-app-a-1"
     $appBImageId = Get-ContainerImageId -Container "uok-next-app-b-1"
     if ($appAImageId -ne $imageId -or $appBImageId -ne $imageId) {
@@ -684,6 +819,9 @@ try {
         product_sourcing_flow = "product, two locations, approved supplier, lane, evidence replay, exact task, approval, and final read passed"
         product_sourcing_qualified_product_id = $product.data.id
         product_sourcing_qualified_lane_id = $lane.data.id
+        procurement_comparison_flow = "requisition, RFQ, two attributable quotes, verified evidence, deterministic ranking, exact task, and approval passed"
+        procurement_qualified_rfq_id = $rfq.data.id
+        procurement_qualified_comparison_id = $comparison.data.id
         local_identity_credential_path = $identityCredentialPath
         replicas = 2
         single_replica_failover = "4 readiness and release probes passed"
