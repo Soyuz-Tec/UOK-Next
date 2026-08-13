@@ -64,23 +64,29 @@ the proven separation between source selection, internal approval, and
 downstream issuance. Proposal approval remains distinct from contract
 formation, payment, inventory movement, and connector delivery.
 
-The active shipment-readiness GO/HOLD increment is governed by ADR-0021. Its
-candidate implementation consumes one exact approved proposal, derives the
-commercial source and server-owned checklist, accepts one case-bound readiness
-evidence bundle, and records an exact GO or HOLD. The measurable faster path is
-three operator actions, zero commercial-term re-entry, and zero cross-document
-navigation. It deliberately creates no shipment, dispatch, inventory, finance,
-or external effect. Protected delivery and exact merged-revision runtime and
-rendered evidence remain required before this fifth vertical is delivered.
-This remains the same single Gate 3 delivery focus.
+The delivered shipment-readiness GO/HOLD increment is governed by ADR-0021. It
+consumes one exact approved proposal, derives the commercial source and
+server-owned checklist, accepts one case-bound readiness evidence bundle, and
+records an exact GO or HOLD. The measurable faster path is three operator
+actions, zero commercial-term re-entry, and zero cross-document navigation. It
+deliberately creates no shipment, dispatch, inventory, finance, or external
+effect. Protected delivery, exact merged-revision runtime, two-replica failover,
+and rendered desktop/mobile evidence passed. The fifth vertical is delivered
+and Gate 3 remains the single active focus.
+
+The next Gate 3 vertical is governed operational reporting. Before code, its
+ADR and product-neutral benchmark must define record ownership, authorization,
+freshness, reconciliation, failure behavior, accessibility, measurable
+operator actions, and the boundary that prevents a reporting projection from
+becoming a business-command authority or second system of record.
 
 Completing the first vertical is necessary evidence, not the Gate 3 exit by
 itself.
 
-AI remains advisory throughout the active shipment-readiness slice. The
-delivered RFQ oracle and commitment proposal plus this next slice must preserve
-deterministic commands, policies, evidence, exact human decisions, recovery,
-and reportable outcomes.
+AI remains advisory throughout Gate 3. The delivered RFQ oracle, commitment
+proposal, and shipment-readiness gate plus the next reporting slice must
+preserve deterministic commands, policies, evidence, exact human decisions,
+recovery, and reportable outcomes.
 They do not open model/tool execution, persistent agent memory, dynamic module
 installation, or tenant module enablement. ADR-0017 and ADR-0018 define those
 later prerequisites without changing the active delivery focus.
