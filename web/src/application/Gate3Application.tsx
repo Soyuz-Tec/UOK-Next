@@ -4,6 +4,7 @@ import { PartyOnboardingWorkspace } from "../modules/master-parties/PartyOnboard
 import { QualificationSignIn } from "../modules/platform-identity/QualificationSignIn";
 import { verifySession, type Session } from "../modules/platform-identity/sessionApi";
 import { ProductSourcingWorkspace } from "../modules/trade-sourcing/ProductSourcingWorkspace";
+import { ProcurementWorkspace } from "../modules/trade-sourcing/ProcurementWorkspace";
 
 const storageKey = "uok-next-local-session-v1";
 
@@ -46,6 +47,16 @@ export function Gate3Application() {
 
   if (session === undefined) {
     return <QualificationSignIn onAuthenticated={authenticated} />;
+  }
+
+  if (surface === "#rfq-comparison") {
+    return (
+      <ProcurementWorkspace
+        token={session.accessToken}
+        tenantId={session.identity.tenant_id}
+        onSignOut={signOut}
+      />
+    );
   }
 
   return surface === "#product-sourcing" ? (

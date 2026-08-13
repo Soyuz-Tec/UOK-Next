@@ -50,10 +50,20 @@ unless match?({:ok, _tenant_id}, Ecto.UUID.cast(local_identity.tenant_id)) and
              "parties:read",
              "products:create",
              "products:read",
+             "sourcing:comparisons:approve",
+             "sourcing:comparisons:create",
+             "sourcing:comparisons:read",
              "sourcing:lanes:approve",
              "sourcing:lanes:create",
              "sourcing:lanes:evidence:submit",
              "sourcing:lanes:read",
+             "sourcing:quotes:create",
+             "sourcing:quotes:evidence:submit",
+             "sourcing:quotes:read",
+             "sourcing:requisitions:create",
+             "sourcing:requisitions:read",
+             "sourcing:rfqs:create",
+             "sourcing:rfqs:read",
              "workflow:tasks:read"
            ]) do
   raise "local qualification identity must be server-owned and least-authorized"

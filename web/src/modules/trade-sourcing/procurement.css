@@ -1,0 +1,128 @@
+.procurement-workspace {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.procurement-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.compact-command {
+  display: grid;
+  align-content: start;
+  gap: 0.9rem;
+}
+
+.compact-command h2,
+.comparison-panel h2 {
+  margin: 0;
+}
+
+.compact-command label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.compact-command input,
+.compact-command select {
+  min-height: 2.8rem;
+  padding: 0.65rem 0.75rem;
+  color: var(--ink);
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+}
+
+.compact-command select[multiple] {
+  min-height: 7rem;
+}
+
+.quote-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.45rem 0.8rem;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.quote-row strong,
+.quote-row small {
+  display: block;
+}
+
+.quote-row small {
+  margin-top: 0.2rem;
+  color: var(--muted);
+}
+
+.file-action {
+  grid-column: 1 / -1;
+}
+
+.comparison-panel {
+  padding: 1.4rem;
+  background: #f7f6ef;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+}
+
+.comparison-card {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+}
+
+.comparison-card header,
+.comparison-card footer,
+.ranking-row {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ranking-table {
+  display: grid;
+  gap: 0.4rem;
+  margin: 1rem 0;
+}
+
+.ranking-row {
+  padding: 0.7rem;
+  color: var(--muted);
+  background: #f7f8f3;
+  border-radius: 0.45rem;
+  font-size: 0.82rem;
+}
+
+.ranking-row--recommended {
+  color: var(--ink);
+  background: var(--mint);
+  outline: 1px solid #a9c5af;
+}
+
+.comparison-card footer {
+  justify-content: flex-end;
+}
+
+@media (max-width: 900px) {
+  .procurement-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .ranking-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    justify-content: initial;
+  }
+}

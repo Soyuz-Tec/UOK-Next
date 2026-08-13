@@ -94,6 +94,29 @@ if ($composeText -notmatch 'PG_UNICODE_FAST' -or
     throw "Database initialization, certificate trust, or primary-targeting controls are missing"
 }
 
+$grantText = Get-Content -LiteralPath (Join-Path $repoRoot "deploy\local\grant_app_role.sql") -Raw
+$grantVerificationText = Get-Content -LiteralPath `
+    (Join-Path $repoRoot "deploy\local\verify_app_role.sql") -Raw
+$procurementRuntimePrivileges = [ordered]@{
+    trade_purchase_requisitions = "SELECT, INSERT, UPDATE"
+    trade_rfqs = "SELECT, INSERT, UPDATE"
+    trade_rfq_suppliers = "SELECT, INSERT"
+    trade_supplier_quotes = "SELECT, INSERT, UPDATE"
+    trade_quote_comparisons = "SELECT, INSERT, UPDATE"
+}
+
+foreach ($entry in $procurementRuntimePrivileges.GetEnumerator()) {
+    $compactPrivileges = $entry.Value.Replace(" ", "")
+    $grantPattern = "GRANT $([Regex]::Escape($entry.Value)) ON TABLE $($entry.Key) TO uok_app;"
+    $verificationPattern =
+        "has_table_privilege\('uok_app', 'public\.$($entry.Key)', '$compactPrivileges'\)"
+
+    if ($grantText -notmatch $grantPattern -or
+        $grantVerificationText -notmatch $verificationPattern) {
+        throw "Runtime database privileges for '$($entry.Key)' are missing or unverified"
+    }
+}
+
 Write-Output "Database policy verification passed."
 Write-Output "Qualified PostgreSQL $($postgres.compatibility_release); production target is major $($postgres.target_major) GA."
 Write-Output "Application pools consume $applicationConnections of $nonReservedConnections non-reserved local slots."

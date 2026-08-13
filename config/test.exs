@@ -74,10 +74,20 @@ config :uok_next, :local_qualification_identity, %{
     "parties:read",
     "products:create",
     "products:read",
+    "sourcing:comparisons:approve",
+    "sourcing:comparisons:create",
+    "sourcing:comparisons:read",
     "sourcing:lanes:approve",
     "sourcing:lanes:create",
     "sourcing:lanes:evidence:submit",
     "sourcing:lanes:read",
+    "sourcing:quotes:create",
+    "sourcing:quotes:evidence:submit",
+    "sourcing:quotes:read",
+    "sourcing:requisitions:create",
+    "sourcing:requisitions:read",
+    "sourcing:rfqs:create",
+    "sourcing:rfqs:read",
     "workflow:tasks:read"
   ]
 }

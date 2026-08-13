@@ -187,6 +187,13 @@ defmodule UokNext.Kernel.CommandTransaction do
     |> then(&:crypto.hash(:sha256, &1))
   end
 
+  defp canonicalize(%Decimal{} = value), do: {"decimal", Decimal.to_string(value, :normal)}
+  defp canonicalize(%Date{} = value), do: {"date", Date.to_iso8601(value)}
+  defp canonicalize(%DateTime{} = value), do: {"datetime", DateTime.to_iso8601(value)}
+
+  defp canonicalize(%NaiveDateTime{} = value),
+    do: {"naive_datetime", NaiveDateTime.to_iso8601(value)}
+
   defp canonicalize(value) when is_map(value) do
     value
     |> Enum.map(fn {key, item} -> {to_string(key), canonicalize(item)} end)

@@ -65,6 +65,16 @@ defmodule UokNextWeb.Router do
     get "/sourcing-lanes/:id", SourcingLaneController, :show
     post "/sourcing-lanes/:id/evidence", SourcingLaneEvidenceController, :create
     post "/sourcing-lanes/:id/decision", SourcingLaneController, :decide
+    get "/purchase-requisitions", ProcurementController, :requisitions_index
+    post "/purchase-requisitions", ProcurementController, :requisition_create
+    get "/rfqs", ProcurementController, :rfqs_index
+    post "/rfqs", ProcurementController, :rfq_create
+    get "/supplier-quotes", ProcurementController, :quotes_index
+    post "/supplier-quotes", ProcurementController, :quote_create
+    post "/supplier-quotes/:id/evidence", SupplierQuoteEvidenceController, :create
+    get "/quote-comparisons", ProcurementController, :comparisons_index
+    post "/quote-comparisons", ProcurementController, :comparison_create
+    post "/quote-comparisons/:id/decision", ProcurementController, :comparison_decide
     get "/review-tasks", WorkflowController, :index
   end
 
