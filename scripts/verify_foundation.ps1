@@ -38,6 +38,7 @@ $requiredFiles = @(
     "docs/adr/0013-governed-non-executing-agent-plans.md",
     "docs/adr/0014-gate-3-party-onboarding-vertical.md",
     "docs/adr/0015-product-location-and-sourcing-lane-authority.md",
+    "docs/adr/0016-security-scan-artifact-sealing-waiver.md",
     "config/module_catalog.json",
     "config/external_identity_policy.json",
     "config/database_policy.json",

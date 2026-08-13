@@ -270,10 +270,59 @@
   vertical is delivered; this is necessary evidence, not the complete Gate 3
   exit.
 
+## Gate 3 product-sourcing candidate evidence
+
+- `master.products`, `master.locations`, and `trade.sourcing` now own separate
+  tenant-safe records. Product and location references are active bounded
+  commands; a sourcing lane binds an approved supplier, active product, and
+  distinct active route endpoints without copying master data.
+- Lane evidence uses the delivered immutable evidence boundary. Submission
+  opens one exact version-bound review task; approve or HOLD atomically consumes
+  that task with command receipt, audit, outbox, and lane transition state.
+  Resubmission after HOLD clears the prior decision metadata, requires fresh
+  verified evidence, and opens a new exact task. Reuse of the consumed task is
+  rejected and regression-tested.
+- Forced row-level security, composite tenant foreign keys, lifecycle
+  constraints, server-owned permissions, stable identifiers, optimistic
+  concurrency, idempotent replay/conflict behavior, and cross-tenant/reference/
+  task substitution failures are executable database and application tests.
+- Candidate revision `070e3e2017c46b1eb97ee06f31766ae14e1b2929` was
+  rebuilt as local image
+  `ec0caef994db82be4660acb6d35a0bd7458da8d70d9d26256ba020ccd0fb4da6`.
+  The supported qualifier proved PostgreSQL 19 startup and migrations,
+  least-privileged role reconciliation, real immutable evidence-object
+  create/collision/read-after-write/delete, the authenticated approved-party/
+  product/two-location/lane/evidence/task/approval/final-read journey,
+  identical identity across two replicas, and four one-replica failover probes.
+- Rendered candidate proof at 1440-by-900 and 390-by-844 found no horizontal
+  overflow or console warnings/errors. Navigation, primary actions, and lane
+  controls remained at least 44 pixels high. The desktop shell spans the full
+  viewport and gives the sourcing work area a 1,053-pixel governed canvas.
+- Backend quality passed 91 tests with one live-object-store test reserved for
+  deployment. Frontend quality passed five files and six tests. Formatting,
+  dual type checks, linting, compilation with warnings as errors, static
+  analysis, dependency audits, architecture, code discipline, database,
+  object-store, external-identity, credential-ACL, production-configuration,
+  and artifact-integrity checks passed.
+- The first sealed security review found one low-severity HOLD-resubmission
+  lifecycle defect, which was corrected and regression-tested. The final
+  immutable revision-range review inspected all 50 changed files, deferred
+  none, and reported zero findings, but its finalizer could not seal the report
+  because required snapshot-digest metadata was absent. ADR-0016 records the
+  product owner's explicit waiver for that artifact-sealing defect only. The
+  absence of a canonical sealed post-fix bundle remains a disclosed residual
+  risk; protected CI, review, security, and exact-revision release gates are not
+  waived.
+- ADR-0015 records the module ownership, command, evidence, workflow, API,
+  recovery, and RFQ-exclusion boundaries. This candidate evidence does not
+  close the vertical until protected delivery and exact merged-revision
+  qualification pass.
+
 ## Explicitly not yet implemented
 
 - Production identity/OIDC and session revocation, business APIs beyond party
-  onboarding, durable outbox delivery, scheduled jobs, general workflow
+  onboarding and product/location/sourcing-lane authority, durable outbox
+  delivery, scheduled jobs, general workflow
   definitions, task assignment/delegation/escalation/notification, evidence
   malware scanning/promotion/retention/deletion, live connector transport and
   credential/retry scheduling, server-owned agent runbook definitions,
@@ -287,10 +336,9 @@
 
 ## Next action
 
-Implement and qualify the second sequential Gate 3 vertical: product,
-location, and sourcing-lane authority. ADR-0015 declares the separate systems
-of record, public dependencies, commands, queries, events, permissions,
-tenant constraints, evidence-backed lane decision, recovery, and rollback.
-Preserve the delivered party-onboarding contracts and do not open
-RFQ/comparison scope until this vertical passes executable API, database,
-object-storage, UI, security, and protected-delivery gates.
+Deliver the qualified product, location, and sourcing-lane candidate through
+protected CI and review, then rebuild and qualify the exact merged revision.
+Preserve the delivered party-onboarding contracts and do not open RFQ or quote
+comparison scope until protected delivery, exact-revision database and object
+storage checks, the authenticated sourcing journey, two-replica identity,
+failover, and rendered desktop/mobile smoke all pass.
