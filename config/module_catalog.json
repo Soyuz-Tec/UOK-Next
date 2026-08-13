@@ -22,7 +22,7 @@
     {"id": "operations.work", "status": "planned", "record_types": ["project", "work_item", "work_dependency", "work_calendar", "work_comment"]},
     {"id": "trade.sourcing", "status": "in_progress", "dependencies": ["master.parties", "master.products", "master.locations", "platform.evidence", "platform.workflow"], "record_types": ["sourcing_lane", "purchase_requisition", "rfq", "supplier_quote", "quote_comparison"]},
     {"id": "trade.contracts", "status": "in_progress", "dependencies": ["trade.sourcing", "platform.evidence", "platform.workflow"], "record_types": ["purchase_commitment_proposal", "purchase_contract", "sales_contract", "contract_amendment", "commercial_commitment"]},
-    {"id": "trade.shipments", "status": "planned", "record_types": ["shipment_plan", "container", "shipment_milestone", "logistics_exception"]},
+    {"id": "trade.shipments", "status": "in_progress", "dependencies": ["trade.contracts", "platform.evidence", "platform.workflow"], "record_types": ["shipment_readiness_case", "shipment_plan", "container", "shipment_milestone", "logistics_exception"]},
     {"id": "trade.quality", "status": "planned", "record_types": ["quality_lot", "sample", "quality_measurement", "inspection", "quality_claim"]},
     {"id": "trade.compliance", "status": "planned", "record_types": ["standard", "compliance_requirement", "clearance_case", "compliance_decision"]},
     {"id": "trade.finance", "status": "planned", "record_types": ["trade_economics", "landed_cost", "funding_plan", "fx_exposure", "risk_control"]},

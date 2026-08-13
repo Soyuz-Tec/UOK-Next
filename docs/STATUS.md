@@ -491,6 +491,39 @@
   above 44 pixels. The fourth sequential Gate 3 vertical is therefore
   delivered, while Gate 3 remains active.
 
+## Gate 3 shipment-readiness candidate
+
+- ADR-0021 assigns `shipment_readiness_case` to `trade.shipments` as a
+  non-executing gate over one exact approved purchase-commitment proposal. The
+  server derives the complete commercial source and versioned checklist;
+  clients can select only the proposal, attach one exact case-bound evidence
+  bundle, and submit GO or HOLD.
+- The candidate implements authenticated create/list, strict server-owned
+  fields, bounded evidence preflight and upload, exact human tasks, GO/HOLD,
+  HOLD resubmission recovery, idempotency, optimistic concurrency, atomic audit
+  and outbox records, a composite tenant source reference, and forced row-level
+  security. Every response, audit, and event keeps shipment, dispatch,
+  inventory, finance, and external-effect flags false.
+- The product-neutral benchmark preserves the proven separation between
+  readiness and later execution while reducing the operator path to three
+  actions, zero commercial-term re-entry, and zero cross-document navigation.
+  Shipment planning, booking, dispatch, inventory, finance, or connector work
+  remains outside this authority.
+- Backend quality passes 105 tests with one object-store integration test
+  reserved for the immutable runtime qualifier. Frontend formatting, lint,
+  current and compatibility type checks, ten tests, and production build pass.
+  Architecture, code-discipline, database, object-storage, external-identity,
+  web-foundation, dependency-advisory, and package-vulnerability checks pass.
+- The sealed security diff review completed all 27 changed production-source
+  worklist rows with no reportable finding. It traced authentication and named
+  permissions, tenant/RLS scope, current-source and task/evidence binding,
+  stale/replay/concurrency behavior, upload bounds, atomic receipt/audit/outbox
+  behavior, and the explicit no-downstream-effect boundary.
+- This is candidate evidence, not delivery evidence. Protected review, exact
+  committed- and merged-revision qualification, two-replica failover, and
+  rendered desktop/mobile workflow proof remain required before the fifth Gate
+  3 vertical is delivered.
+
 ## Explicitly not yet implemented
 
 - Production identity/OIDC and session revocation, binding purchase contract or
@@ -514,14 +547,12 @@
 
 ## Next action
 
-Design the next bounded Gate 3 vertical: shipment-readiness GO/HOLD. First
-benchmark the complete operator outcome against proven enterprise execution
-workflows and state a measurable faster-path hypothesis. Record its owning
-module, source freshness, evidence, exact human authority, idempotency,
-concurrency, audit, recovery, rollback, and downstream-effect boundary in an
-ADR before opening a reachable command surface. Preserve a non-binding HOLD and
-do not create dispatch, inventory, finance, or external effects without their
-own later authority.
+Deliver the ADR-0021 shipment-readiness candidate through protected review,
+then rebuild and qualify the exact merged revision through PostgreSQL 19,
+object storage, the complete authenticated sourcing-to-readiness journey,
+two-replica identity, single-replica failover, and rendered desktop/mobile
+workflow proof. Do not advance to governed reporting until this vertical has
+that exact delivery evidence.
 
 AI execution and module-installation implementation remain deferred. This
 status advance does not create a second active delivery focus.

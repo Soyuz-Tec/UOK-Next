@@ -19,6 +19,7 @@ GRANT SELECT, INSERT ON TABLE trade_rfq_suppliers TO uok_app;
 GRANT SELECT, INSERT, UPDATE ON TABLE trade_supplier_quotes TO uok_app;
 GRANT SELECT, INSERT, UPDATE ON TABLE trade_quote_comparisons TO uok_app;
 GRANT SELECT, INSERT, UPDATE ON TABLE trade_purchase_commitment_proposals TO uok_app;
+GRANT SELECT, INSERT, UPDATE ON TABLE trade_shipment_readiness_cases TO uok_app;
 GRANT SELECT, INSERT, UPDATE ON TABLE platform_workflow_human_tasks TO uok_app;
 GRANT SELECT, INSERT, UPDATE ON TABLE platform_integrations_connector_receipts TO uok_app;
 GRANT SELECT, INSERT, UPDATE ON TABLE platform_agents_plans TO uok_app;

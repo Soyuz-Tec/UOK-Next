@@ -6,6 +6,7 @@ defmodule UokNext.ProcurementFixtures do
   alias UokNext.Modules.Master.Parties.Public, as: Parties
   alias UokNext.Modules.Master.Products.Public, as: Products
   alias UokNext.Modules.Platform.Evidence.Infrastructure.EvidenceCandidateRecord
+  alias UokNext.Modules.Trade.Contracts.Public, as: Contracts
   alias UokNext.Modules.Trade.Sourcing.Public, as: Sourcing
   alias UokNext.PartyOnboardingFixtures
   alias UokNext.Repo
@@ -25,6 +26,10 @@ defmodule UokNext.ProcurementFixtures do
     "parties:read",
     "products:create",
     "products:read",
+    "shipments:readiness:create",
+    "shipments:readiness:decide",
+    "shipments:readiness:evidence:submit",
+    "shipments:readiness:read",
     "sourcing:comparisons:approve",
     "sourcing:comparisons:create",
     "sourcing:comparisons:read",
@@ -118,6 +123,55 @@ defmodule UokNext.ProcurementFixtures do
       requisition: requisition,
       rfq: rfq
     }
+  end
+
+  def approved_proposal(context) do
+    source = approved_comparison(context)
+
+    {:ok, proposal, :executed} =
+      Contracts.create_purchase_commitment_proposal(
+        %{
+          "stable_identifier" => unique("commitment-proposal"),
+          "quote_comparison_id" => source.comparison["id"],
+          "expected_comparison_version" => source.comparison["lock_version"],
+          "reason" => "Create a source-derived proposal fixture"
+        },
+        source.comparison["lock_version"],
+        context,
+        Ecto.UUID.generate()
+      )
+
+    evidence_id =
+      persisted_evidence(
+        context,
+        "purchase_commitment_proposal",
+        proposal["id"],
+        "commitment proposal"
+      )
+
+    {:ok, submitted, :executed} =
+      Contracts.submit_purchase_commitment_evidence(
+        proposal["id"],
+        %{"evidence_id" => evidence_id, "reason" => "Submit proposal evidence fixture"},
+        proposal["lock_version"],
+        context,
+        Ecto.UUID.generate()
+      )
+
+    {:ok, approved, :executed} =
+      Contracts.decide_purchase_commitment_proposal(
+        submitted["id"],
+        %{
+          "decision" => "approve",
+          "reason" => "Approve proposal fixture",
+          "task_id" => submitted["review_task"]["id"]
+        },
+        submitted["lock_version"],
+        context,
+        Ecto.UUID.generate()
+      )
+
+    Map.put(source, :proposal, approved)
   end
 
   def persisted_evidence(context, subject_type, subject_id, label) do

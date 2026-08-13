@@ -555,6 +555,11 @@ h2 {
     height: auto;
     padding: 0.65rem 1.2rem;
     overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .sidebar::-webkit-scrollbar {
+    display: none;
   }
 
   .sidebar nav {

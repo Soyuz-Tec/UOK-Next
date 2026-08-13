@@ -64,12 +64,15 @@ the proven separation between source selection, internal approval, and
 downstream issuance. Proposal approval remains distinct from contract
 formation, payment, inventory movement, and connector delivery.
 
-The active increment is now shipment-readiness GO/HOLD. Before opening its
-reachable command surface, compare the complete operator outcome with proven
-enterprise execution workflows, record a measurable faster-path hypothesis,
-and define ownership, evidence, freshness, exact decision, idempotency,
-concurrency, audit, recovery, rollback, and downstream-effect boundaries in an
-ADR. This remains the same single Gate 3 delivery focus.
+The active shipment-readiness GO/HOLD increment is governed by ADR-0021. Its
+candidate implementation consumes one exact approved proposal, derives the
+commercial source and server-owned checklist, accepts one case-bound readiness
+evidence bundle, and records an exact GO or HOLD. The measurable faster path is
+three operator actions, zero commercial-term re-entry, and zero cross-document
+navigation. It deliberately creates no shipment, dispatch, inventory, finance,
+or external effect. Protected delivery and exact merged-revision runtime and
+rendered evidence remain required before this fifth vertical is delivered.
+This remains the same single Gate 3 delivery focus.
 
 Completing the first vertical is necessary evidence, not the Gate 3 exit by
 itself.
