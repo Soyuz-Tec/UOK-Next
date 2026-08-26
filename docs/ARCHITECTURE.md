@@ -43,13 +43,27 @@ server-owned commands and queries but never becomes authoritative for tenant,
 authorization, approval, audit, evidence, or business transitions. The delivery
 toolchain and deferrals are governed by ADR-0008.
 
-The first Gate 3 identity surface is restricted to local qualification. A
+The Gate 3 identity surface is restricted to local qualification. A
 high-entropy clone-local access code is constant-time checked server-side and
-exchanged for a short-lived signed token containing a fixed tenant, actor, and
-permission set. The browser cannot submit these claims. Production does not
-configure this adapter and remains blocked on a standards-based identity
-selection, session/revocation design, and trusted ingress. ADR-0014 governs the
-bounded exception.
+exchanged for a random opaque session containing no authority claims. Only its
+digest, fixed bootstrap tenant and actor, expiry, and revocation state are held
+in PostgreSQL. That bootstrap administrator can create tenant-owned
+regular users with one of two allowlisted party-onboarding access profiles and
+a temporary password. First login grants only password-change authority; the
+user must replace the temporary secret before business permissions are issued.
+
+Regular-user passwords use a versioned, salted, deliberately expensive
+verifier. Their random opaque sessions are persisted only as token digests,
+expire after eight hours, revalidate actor status and credential generation on
+every request, and are revocable across both application replicas. Shared
+PostgreSQL throttling bounds password guessing; all unknown usernames share one
+bounded throttle bucket, and the login route accepts only JSON so browser-simple
+cross-origin forms cannot reach authentication work. Browser-submitted tenant,
+actor, role, and permission claims are ignored. The actor UUID is distinct from
+business-party identity. Production does not configure either local adapter and
+remains blocked on a standards-based identity selection, production session and
+recovery policy, multifactor authentication, and trusted ingress. ADR-0014 and
+ADR-0024 govern these bounded exceptions.
 
 ### PostgreSQL
 

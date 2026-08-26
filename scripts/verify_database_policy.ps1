@@ -97,7 +97,7 @@ if ($composeText -notmatch 'PG_UNICODE_FAST' -or
 $grantText = Get-Content -LiteralPath (Join-Path $repoRoot "deploy\local\grant_app_role.sql") -Raw
 $grantVerificationText = Get-Content -LiteralPath `
     (Join-Path $repoRoot "deploy\local\verify_app_role.sql") -Raw
-$procurementRuntimePrivileges = [ordered]@{
+$runtimePrivileges = [ordered]@{
     trade_purchase_requisitions = "SELECT, INSERT, UPDATE"
     trade_rfqs = "SELECT, INSERT, UPDATE"
     trade_rfq_suppliers = "SELECT, INSERT"
@@ -105,9 +105,14 @@ $procurementRuntimePrivileges = [ordered]@{
     trade_quote_comparisons = "SELECT, INSERT, UPDATE"
     trade_purchase_commitment_proposals = "SELECT, INSERT, UPDATE"
     trade_shipment_readiness_cases = "SELECT, INSERT, UPDATE"
+    platform_identity_users = "SELECT, INSERT, UPDATE"
+    platform_identity_password_credentials = "SELECT, INSERT, UPDATE"
+    platform_identity_sessions = "SELECT, INSERT, UPDATE"
+    platform_identity_bootstrap_sessions = "SELECT, INSERT, UPDATE"
+    platform_identity_login_throttles = "SELECT, INSERT, UPDATE, DELETE"
 }
 
-foreach ($entry in $procurementRuntimePrivileges.GetEnumerator()) {
+foreach ($entry in $runtimePrivileges.GetEnumerator()) {
     $compactPrivileges = $entry.Value.Replace(" ", "")
     $grantPattern = "GRANT $([Regex]::Escape($entry.Value)) ON TABLE $($entry.Key) TO uok_app;"
     $verificationPattern =

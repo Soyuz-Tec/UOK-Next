@@ -3,7 +3,13 @@ import { useEffect, useState } from "react";
 import { PartyOnboardingWorkspace } from "../modules/master-parties/PartyOnboardingWorkspace";
 import { OperationalReportWorkspace } from "../modules/intelligence-bi/OperationalReportWorkspace";
 import { QualificationSignIn } from "../modules/platform-identity/QualificationSignIn";
-import { verifySession, type Session } from "../modules/platform-identity/sessionApi";
+import { PasswordActivation } from "../modules/platform-identity/PasswordActivation";
+import { UserAccessWorkspace } from "../modules/platform-identity/UserAccessWorkspace";
+import {
+  revokeSession,
+  verifySession,
+  type Session,
+} from "../modules/platform-identity/sessionApi";
 import { PurchaseCommitmentWorkspace } from "../modules/trade-contracts/PurchaseCommitmentWorkspace";
 import { ShipmentReadinessWorkspace } from "../modules/trade-shipments/ShipmentReadinessWorkspace";
 import { ProductSourcingWorkspace } from "../modules/trade-sourcing/ProductSourcingWorkspace";
@@ -14,7 +20,9 @@ const storageKey = "uok-next-local-session-v1";
 function storedSession(): Session | undefined {
   try {
     const value = sessionStorage.getItem(storageKey);
-    return value === null ? undefined : (JSON.parse(value) as Session);
+    if (value === null) return undefined;
+    const parsed = JSON.parse(value) as Session;
+    return { ...parsed, passwordChangeRequired: parsed.passwordChangeRequired ?? false };
   } catch {
     return undefined;
   }
@@ -23,6 +31,7 @@ function storedSession(): Session | undefined {
 export function Gate3Application() {
   const [session, setSession] = useState<Session | undefined>(storedSession);
   const [surface, setSurface] = useState(window.location.hash);
+  const [signOutError, setSignOutError] = useState<string | undefined>();
 
   useEffect(() => {
     const updateSurface = () => setSurface(window.location.hash);
@@ -40,69 +49,105 @@ export function Gate3Application() {
 
   function authenticated(nextSession: Session) {
     sessionStorage.setItem(storageKey, JSON.stringify(nextSession));
+    setSignOutError(undefined);
     setSession(nextSession);
   }
 
-  function signOut() {
+  function clearSession() {
     sessionStorage.removeItem(storageKey);
     setSession(undefined);
+  }
+
+  async function signOut() {
+    if (session === undefined) return;
+
+    setSignOutError(undefined);
+
+    try {
+      await revokeSession(session);
+      clearSession();
+    } catch {
+      setSignOutError("Sign out was not confirmed. Your session remains active; try again.");
+    }
   }
 
   if (session === undefined) {
     return <QualificationSignIn onAuthenticated={authenticated} />;
   }
 
-  if (surface === "#rfq-comparison") {
-    return (
+  if (session.passwordChangeRequired) {
+    return <PasswordActivation session={session} onCompleted={clearSession} />;
+  }
+
+  let workspace;
+
+  if (surface === "#users-access") {
+    workspace = (
+      <UserAccessWorkspace
+        token={session.accessToken}
+        tenantId={session.identity.tenant_id}
+        onSignOut={signOut}
+      />
+    );
+  } else if (surface === "#rfq-comparison") {
+    workspace = (
       <ProcurementWorkspace
         token={session.accessToken}
         tenantId={session.identity.tenant_id}
         onSignOut={signOut}
       />
     );
-  }
-
-  if (surface === "#commitment-proposal") {
-    return (
+  } else if (surface === "#commitment-proposal") {
+    workspace = (
       <PurchaseCommitmentWorkspace
         token={session.accessToken}
         tenantId={session.identity.tenant_id}
         onSignOut={signOut}
       />
     );
-  }
-
-  if (surface === "#shipment-readiness") {
-    return (
+  } else if (surface === "#shipment-readiness") {
+    workspace = (
       <ShipmentReadinessWorkspace
         token={session.accessToken}
         tenantId={session.identity.tenant_id}
         onSignOut={signOut}
       />
     );
-  }
-
-  if (surface === "#operational-report") {
-    return (
+  } else if (surface === "#operational-report") {
+    workspace = (
       <OperationalReportWorkspace
         token={session.accessToken}
         tenantId={session.identity.tenant_id}
         onSignOut={signOut}
       />
     );
+  } else if (surface === "#product-sourcing") {
+    workspace = (
+      <ProductSourcingWorkspace
+        token={session.accessToken}
+        tenantId={session.identity.tenant_id}
+        onSignOut={signOut}
+      />
+    );
+  } else {
+    workspace = (
+      <PartyOnboardingWorkspace
+        token={session.accessToken}
+        tenantId={session.identity.tenant_id}
+        permissions={session.identity.permissions}
+        onSignOut={signOut}
+      />
+    );
   }
 
-  return surface === "#product-sourcing" ? (
-    <ProductSourcingWorkspace
-      token={session.accessToken}
-      tenantId={session.identity.tenant_id}
-      onSignOut={signOut}
-    />
-  ) : (
-    <PartyOnboardingWorkspace
-      token={session.accessToken}
-      tenantId={session.identity.tenant_id}
-      onSignOut={signOut}
-    />
+  return (
+    <>
+      {signOutError !== undefined && (
+        <div className="workspace-error" role="alert">
+          {signOutError}
+        </div>
+      )}
+      {workspace}
+    </>
   );
 }

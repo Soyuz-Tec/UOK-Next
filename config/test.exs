@@ -71,6 +71,7 @@ config :uok_next, :local_qualification_identity, %{
     "contracts:commitment-proposals:read",
     "evidence:read",
     "evidence:upload",
+    "identity:users:manage",
     "locations:create",
     "locations:read",
     "parties:approve",
@@ -101,6 +102,8 @@ config :uok_next, :local_qualification_identity, %{
     "workflow:tasks:read"
   ]
 }
+
+config :uok_next, password_hash_iterations: 1_000
 
 config :uok_next, :object_store,
   adapter: UokNext.ObjectStoreStub,

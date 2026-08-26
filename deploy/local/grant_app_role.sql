@@ -24,3 +24,8 @@ GRANT SELECT, INSERT, UPDATE ON TABLE platform_workflow_human_tasks TO uok_app;
 GRANT SELECT, INSERT, UPDATE ON TABLE platform_integrations_connector_receipts TO uok_app;
 GRANT SELECT, INSERT, UPDATE ON TABLE platform_agents_plans TO uok_app;
 GRANT SELECT, INSERT, UPDATE ON TABLE platform_evidence_objects TO uok_app;
+GRANT SELECT, INSERT, UPDATE ON TABLE platform_identity_users TO uok_app;
+GRANT SELECT, INSERT, UPDATE ON TABLE platform_identity_password_credentials TO uok_app;
+GRANT SELECT, INSERT, UPDATE ON TABLE platform_identity_sessions TO uok_app;
+GRANT SELECT, INSERT, UPDATE ON TABLE platform_identity_bootstrap_sessions TO uok_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE platform_identity_login_throttles TO uok_app;

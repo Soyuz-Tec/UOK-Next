@@ -14,7 +14,10 @@ defmodule UokNextWeb.AuthenticateAccess do
     with {:ok, token} <- bearer_token(conn),
          {:ok, identity} <- Identity.verify_access_token(token),
          {:ok, context} <- command_context(identity) do
-      assign(conn, :command_context, context)
+      conn
+      |> assign(:authenticated_identity, identity)
+      |> assign(:command_context, context)
+      |> assign(:access_token, token)
     else
       _failure -> reject(conn)
     end

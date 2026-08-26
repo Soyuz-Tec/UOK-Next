@@ -46,6 +46,7 @@ unless match?({:ok, _tenant_id}, Ecto.UUID.cast(local_identity.tenant_id)) and
              "contracts:commitment-proposals:read",
              "evidence:read",
              "evidence:upload",
+             "identity:users:manage",
              "locations:create",
              "locations:read",
              "parties:approve",

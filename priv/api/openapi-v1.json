@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "UOK Next API",
-    "version": "0.6.0",
-    "description": "Tenant-authenticated Gate 3 operation and governed read-only reporting contract."
+    "version": "0.7.0",
+    "description": "Tenant-authenticated Gate 3 operation, local attributable user access, and governed read-only reporting contract."
   },
   "servers": [{"url": "/api/v1"}],
   "paths": {
@@ -15,20 +15,109 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": ["access_code"],
-                "additionalProperties": false,
-                "properties": {"access_code": {"type": "string", "minLength": 32, "maxLength": 128}}
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": ["access_code"],
+                    "additionalProperties": false,
+                    "properties": {"access_code": {"type": "string", "minLength": 32, "maxLength": 128}}
+                  },
+                  {
+                    "type": "object",
+                    "required": ["username", "password"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "username": {"type": "string", "minLength": 3, "maxLength": 64},
+                      "password": {"type": "string", "minLength": 1, "maxLength": 128}
+                    }
+                  }
+                ]
               }
             }
           }
         },
-        "responses": {"201": {"description": "Signed tenant session"}, "401": {"$ref": "#/components/responses/Error"}}
+        "responses": {
+          "201": {"description": "Tenant session"},
+          "401": {"$ref": "#/components/responses/Error"},
+          "415": {"$ref": "#/components/responses/Error"},
+          "429": {"$ref": "#/components/responses/Error"}
+        }
       },
       "get": {
         "summary": "Read the authenticated identity",
         "security": [{"bearerAuth": []}],
         "responses": {"200": {"description": "Current identity"}, "401": {"$ref": "#/components/responses/Error"}}
+      },
+      "delete": {
+        "summary": "Revoke the current local session",
+        "security": [{"bearerAuth": []}],
+        "responses": {"200": {"description": "Session revocation result"}, "401": {"$ref": "#/components/responses/Error"}}
+      }
+    },
+    "/session/password": {
+      "post": {
+        "summary": "Replace a temporary password and activate the local user",
+        "security": [{"bearerAuth": []}],
+        "parameters": [{"$ref": "#/components/parameters/IdempotencyKey"}],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["current_password", "new_password", "new_password_confirmation"],
+                "additionalProperties": false,
+                "properties": {
+                  "current_password": {"type": "string", "minLength": 1, "maxLength": 128},
+                  "new_password": {"type": "string", "minLength": 15, "maxLength": 128},
+                  "new_password_confirmation": {"type": "string", "minLength": 15, "maxLength": 128}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {"description": "User activated and existing sessions revoked"},
+          "401": {"$ref": "#/components/responses/Error"},
+          "403": {"$ref": "#/components/responses/Error"},
+          "409": {"$ref": "#/components/responses/Error"},
+          "422": {"$ref": "#/components/responses/Error"}
+        }
+      }
+    },
+    "/identity/users": {
+      "get": {
+        "summary": "List local qualification users",
+        "security": [{"bearerAuth": []}],
+        "responses": {
+          "200": {"description": "Tenant local-user directory"},
+          "403": {"$ref": "#/components/responses/Error"}
+        }
+      },
+      "post": {
+        "summary": "Create a pending local qualification user",
+        "security": [{"bearerAuth": []}],
+        "parameters": [{"$ref": "#/components/parameters/IdempotencyKey"}],
+        "requestBody": {
+          "required": true,
+          "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreateLocalUser"}}}
+        },
+        "responses": {
+          "201": {"description": "Pending user created; no password returned"},
+          "403": {"$ref": "#/components/responses/Error"},
+          "409": {"$ref": "#/components/responses/Error"},
+          "422": {"$ref": "#/components/responses/Error"}
+        }
+      }
+    },
+    "/identity/access-profiles": {
+      "get": {
+        "summary": "List allowlisted local onboarding access profiles",
+        "security": [{"bearerAuth": []}],
+        "responses": {
+          "200": {"description": "Local access profiles and server-owned permissions"},
+          "403": {"$ref": "#/components/responses/Error"}
+        }
       }
     },
     "/parties": {
@@ -381,6 +470,21 @@
       "IdempotencyKey": {"name": "Idempotency-Key", "in": "header", "required": true, "schema": {"type": "string", "minLength": 8, "maxLength": 128}}
     },
     "schemas": {
+      "CreateLocalUser": {
+        "type": "object",
+        "required": ["username", "display_name", "access_profile", "temporary_password", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "username": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,63}$"},
+          "display_name": {"type": "string", "minLength": 2, "maxLength": 120},
+          "access_profile": {
+            "type": "string",
+            "enum": ["entity_onboarding_operator", "entity_onboarding_reviewer"]
+          },
+          "temporary_password": {"type": "string", "minLength": 15, "maxLength": 128},
+          "reason": {"type": "string", "minLength": 3, "maxLength": 500}
+        }
+      },
       "CreateParty": {
         "type": "object",
         "required": ["stable_identifier", "legal_name", "country_code", "party_kind", "reason"],

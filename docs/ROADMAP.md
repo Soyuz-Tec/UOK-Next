@@ -83,6 +83,17 @@ The vertical is not yet recorded as delivered because the required exact-merge
 rendered desktop/mobile proof is blocked by an unavailable admin-enforced
 in-app browser policy check.
 
+ADR-0024 adds the local attributable-user increment inside the existing Gate 3
+identity boundary. The clone-local access code remains bootstrap administration;
+it creates a server-revocable opaque session rather than a reusable bearer with
+embedded authority. Unknown usernames share one bounded throttle bucket, and
+the login boundary accepts JSON only. The access code itself is never a user.
+regular users receive a temporary password, must replace it before any business
+permission is issued, and then operate through an expiring database-revocable
+session with one of two party-onboarding access profiles. This is required
+multi-actor evidence for the proving operation, not a production identity or
+federation selection.
+
 Completing the first vertical is necessary evidence, not the Gate 3 exit by
 itself.
 

@@ -72,9 +72,9 @@ defmodule UokNextWeb.Gate3PartyOnboardingTest do
     assert tenant_count(PartyRecord, context) == 1
     assert tenant_count(EvidenceCandidateRecord, context) == 1
     assert tenant_count(HumanTaskRecord, context) == 1
-    assert tenant_count(CommandReceipt, context) == 5
-    assert tenant_count(AuditEvent, context) == 7
-    assert tenant_count(OutboxEvent, context) == 7
+    assert tenant_count(CommandReceipt, context) == 6
+    assert tenant_count(AuditEvent, context) == 8
+    assert tenant_count(OutboxEvent, context) == 8
   end
 
   test "rejects missing authentication, invalid access, stale state, and unsupported uploads", %{
@@ -86,6 +86,7 @@ defmodule UokNextWeb.Gate3PartyOnboardingTest do
 
     invalid_login =
       build_conn()
+      |> put_req_header("content-type", "application/json")
       |> post(~p"/api/v1/session", %{"access_code" => String.duplicate("x", 32)})
       |> json_response(401)
 
@@ -164,6 +165,7 @@ defmodule UokNextWeb.Gate3PartyOnboardingTest do
   defp sign_in(conn) do
     response =
       conn
+      |> put_req_header("content-type", "application/json")
       |> post(~p"/api/v1/session", %{"access_code" => @access_code})
       |> json_response(201)
       |> Map.fetch!("data")

@@ -194,6 +194,7 @@ defmodule UokNextWeb.Gate3SourcingAuthorityTest do
 
   defp sign_in(conn) do
     conn
+    |> put_req_header("content-type", "application/json")
     |> post(~p"/api/v1/session", %{"access_code" => @access_code})
     |> json_response(201)
     |> get_in(["data", "access_token"])

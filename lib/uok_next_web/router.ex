@@ -15,6 +15,11 @@ defmodule UokNextWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :session_create do
+    plug :accepts, ["json"]
+    plug UokNextWeb.RequireJsonContentType
+  end
+
   pipeline :authenticated_api do
     plug :accepts, ["json"]
     plug UokNextWeb.AuthenticateAccess
@@ -42,6 +47,11 @@ defmodule UokNextWeb.Router do
     get "/release", HealthController, :release
     get "/metrics", MetricsController, :show
     get "/openapi.json", OpenApiController, :show
+  end
+
+  scope "/api/v1", UokNextWeb do
+    pipe_through :session_create
+
     post "/session", SessionController, :create
   end
 
@@ -49,6 +59,11 @@ defmodule UokNextWeb.Router do
     pipe_through :authenticated_api
 
     get "/session", SessionController, :show
+    delete "/session", SessionController, :delete
+    post "/session/password", SessionController, :change_password
+    get "/identity/users", LocalUserController, :index
+    post "/identity/users", LocalUserController, :create
+    get "/identity/access-profiles", LocalUserController, :profiles
     get "/parties", PartyController, :index
     post "/parties", PartyController, :create
     get "/parties/:id", PartyController, :show
