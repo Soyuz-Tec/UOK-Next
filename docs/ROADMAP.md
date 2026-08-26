@@ -74,11 +74,14 @@ effect. Protected delivery, exact merged-revision runtime, two-replica failover,
 and rendered desktop/mobile evidence passed. The fifth vertical is delivered
 and Gate 3 remains the single active focus.
 
-The next Gate 3 vertical is governed operational reporting. Before code, its
-ADR and product-neutral benchmark must define record ownership, authorization,
-freshness, reconciliation, failure behavior, accessibility, measurable
-operator actions, and the boundary that prevents a reporting projection from
-becoming a business-command authority or second system of record.
+The governed operational-reporting implementation is merged under ADR-0023 and
+has passed protected CI, exact merged-revision runtime, PostgreSQL/object-store
+qualification, the full business journey, deterministic reconciliation, and
+two-replica failover. Its live, read-only projection remains product-neutral
+and never becomes business-command authority or a second system of record.
+The vertical is not yet recorded as delivered because the required exact-merge
+rendered desktop/mobile proof is blocked by an unavailable admin-enforced
+in-app browser policy check.
 
 Completing the first vertical is necessary evidence, not the Gate 3 exit by
 itself.
