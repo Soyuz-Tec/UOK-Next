@@ -21,11 +21,44 @@ export type Location = {
 export type ProductInput = Omit<Product, "id" | "status"> & { reason: string };
 export type LocationInput = Omit<Location, "id" | "status"> & { reason: string };
 
+export type MajorSeaportCountry = {
+  country_code: string;
+  country_name: string;
+  port_count: number;
+};
+
+export type MajorSeaport = {
+  reference_code: string;
+  country_code: string;
+  country_name: string;
+  name: string;
+  harbor_scale: "large" | "medium" | "small" | "very_small" | "unclassified";
+  catalog_number: string;
+};
+
+export type MajorSeaportCatalog<T> = {
+  catalog_version: string;
+  items: T[];
+};
+
 export const listProducts = (token: string) =>
   authorizedRequest<Product[]>("/api/v1/products?limit=100", token);
 
 export const listLocations = (token: string) =>
   authorizedRequest<Location[]>("/api/v1/locations?limit=100", token);
+
+export const listMajorSeaportCountries = (token: string) =>
+  authorizedRequest<MajorSeaportCatalog<MajorSeaportCountry>>(
+    "/api/v1/location-references/major-seaports/countries",
+    token,
+  );
+
+export const listMajorSeaports = (token: string, countryCode: string, signal?: AbortSignal) =>
+  authorizedRequest<MajorSeaportCatalog<MajorSeaport>>(
+    `/api/v1/location-references/major-seaports?country_code=${encodeURIComponent(countryCode)}`,
+    token,
+    signal === undefined ? {} : { signal },
+  );
 
 export const createProduct = (token: string, input: ProductInput) =>
   authorizedRequest<Product>("/api/v1/products", token, {

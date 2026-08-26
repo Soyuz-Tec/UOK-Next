@@ -2,6 +2,7 @@ defmodule UokNext.Modules.Master.Locations.Public do
   @moduledoc "Supported command and query boundary for `master.locations`."
 
   alias UokNext.Modules.Master.Locations.Application.Locations
+  alias UokNext.Modules.Master.Locations.Application.MajorSeaportReferences
   alias UokNext.Modules.Master.Locations.Infrastructure.EctoLocationStore
 
   @spec create(map(), UokNext.Kernel.CommandContext.t(), String.t()) :: tuple()
@@ -17,4 +18,11 @@ defmodule UokNext.Modules.Master.Locations.Public do
 
   @spec list(pos_integer(), UokNext.Kernel.CommandContext.t()) :: tuple()
   def list(limit, context), do: Locations.list(EctoLocationStore, limit, context)
+
+  @spec list_major_seaport_countries(UokNext.Kernel.CommandContext.t()) :: tuple()
+  def list_major_seaport_countries(context), do: MajorSeaportReferences.countries(context)
+
+  @spec list_major_seaports(String.t(), UokNext.Kernel.CommandContext.t()) :: tuple()
+  def list_major_seaports(country_code, context),
+    do: MajorSeaportReferences.list(country_code, context)
 end

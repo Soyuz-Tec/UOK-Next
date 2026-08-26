@@ -22,6 +22,167 @@
   grid-column: 1 / -1;
 }
 
+.reference-form-heading,
+.reference-intro,
+.reference-mode,
+.seaport-selector,
+.manual-location-fields,
+.location-form > .field-message,
+.location-preview,
+.reference-success {
+  grid-column: 1 / -1;
+}
+
+.reference-form-heading {
+  display: flex;
+  gap: 1rem;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.reference-form-heading h2 {
+  margin-bottom: 0;
+}
+
+.authority-count {
+  flex: 0 0 auto;
+  padding: 0.4rem 0.65rem;
+  color: #355c4b;
+  background: #e5ede7;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.reference-intro {
+  max-width: 34rem;
+  margin: -0.2rem 0 0.35rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.reference-mode {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem;
+  padding: 0.3rem;
+  background: #eef1ec;
+  border-radius: 0.65rem;
+}
+
+.reference-mode button {
+  min-height: 2.75rem;
+  color: #365044;
+  background: transparent;
+  border-color: transparent;
+}
+
+.reference-mode button.reference-mode--active {
+  color: #173d2d;
+  background: white;
+  border-color: #cbd8cf;
+  box-shadow: 0 0.15rem 0.5rem rgb(23 61 45 / 8%);
+}
+
+.seaport-selector,
+.manual-location-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.seaport-selector > .field-message,
+.manual-location-fields > label,
+.catalog-status {
+  grid-column: 1 / -1;
+}
+
+.catalog-status {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+  margin-top: -0.25rem;
+  color: #52675e;
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+
+.field-hint,
+.field-message {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.74rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.field-hint {
+  color: var(--muted);
+}
+
+.field-message--error {
+  color: #8a2f2f;
+}
+
+.field-message--notice {
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  color: #655024;
+  background: #f5eedb;
+  border-left: 0.2rem solid #b99a4a;
+  border-radius: 0.35rem;
+}
+
+.location-preview {
+  padding: 1rem;
+  background: #eef3ef;
+  border: 1px solid #d5e0d8;
+  border-radius: 0.65rem;
+}
+
+.location-preview > strong {
+  display: block;
+  margin: 0.25rem 0 0.75rem;
+  color: #173d2d;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+}
+
+.location-preview-grid {
+  display: grid;
+  grid-template-columns: 0.7fr 0.7fr 1.6fr;
+  gap: 0.75rem;
+}
+
+.location-preview-grid span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: #274a3b;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.location-preview-grid small {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--muted);
+  font-size: 0.67rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.reference-success {
+  margin: 0;
+  padding: 0.8rem 0.9rem;
+  color: #285843;
+  background: #e8f2eb;
+  border-left: 0.2rem solid #4c8a68;
+  border-radius: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
 .sourcing-grid {
   display: grid;
   grid-template-columns: minmax(16rem, 0.65fr) minmax(0, 1.35fr);
@@ -51,6 +212,15 @@
 
 @media (max-width: 620px) {
   .compact-form {
+    grid-template-columns: 1fr;
+  }
+
+  .location-preview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .seaport-selector,
+  .manual-location-fields {
     grid-template-columns: 1fr;
   }
 }

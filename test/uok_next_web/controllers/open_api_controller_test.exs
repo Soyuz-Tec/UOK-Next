@@ -8,6 +8,8 @@ defmodule UokNextWeb.OpenApiControllerTest do
     assert Map.has_key?(contract["paths"], "/parties/{id}/evidence")
     assert Map.has_key?(contract["paths"], "/products")
     assert Map.has_key?(contract["paths"], "/locations")
+    assert Map.has_key?(contract["paths"], "/location-references/major-seaports")
+    assert Map.has_key?(contract["paths"], "/location-references/major-seaports/countries")
     assert Map.has_key?(contract["paths"], "/sourcing-lanes/{id}/evidence")
     assert Map.has_key?(contract["paths"], "/purchase-requisitions")
     assert Map.has_key?(contract["paths"], "/rfqs")
@@ -19,7 +21,7 @@ defmodule UokNextWeb.OpenApiControllerTest do
     assert Map.has_key?(contract["paths"], "/shipment-readiness-cases")
     assert Map.has_key?(contract["paths"], "/shipment-readiness-cases/{id}/evidence")
     assert Map.has_key?(contract["paths"], "/shipment-readiness-cases/{id}/decision")
-    assert contract["info"]["version"] == "0.5.0"
+    assert contract["info"]["version"] == "0.5.1"
     assert contract["components"]["securitySchemes"]["bearerAuth"]["scheme"] == "bearer"
   end
 end

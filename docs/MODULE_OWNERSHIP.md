@@ -23,7 +23,7 @@ explains its intent.
 |---|---|
 | `master.parties` | parties, aliases, roles, relationships, sites, onboarding profiles |
 | `master.products` | products, classifications, units, quality templates |
-| `master.locations` | countries, locations, corridors, route references |
+| `master.locations` | countries, versioned major-seaport references, tenant locations, corridors, route references |
 | `operations.work` | native projects, work items, dependencies, calendars, comments |
 | `trade.sourcing` | sourcing lanes, requisitions, RFQs, quote comparisons |
 | `trade.contracts` | source-bound internal purchase-commitment proposals; future purchase/sale contracts, amendments, and external commercial commitments require separate authority |
