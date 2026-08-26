@@ -49,8 +49,11 @@ defmodule UokNext.Modules.Master.Locations.MajorSeaportReferencesTest do
     assert invalid.code == "validation_failed"
   end
 
-  @tag :tmp_dir
-  test "bounds reference artifacts and UTF-8 text by encoded bytes", %{tmp_dir: tmp_dir} do
+  test "bounds reference artifacts and UTF-8 text by encoded bytes" do
+    tmp_dir = Path.join(System.tmp_dir!(), "uok-seaport-test-#{Ecto.UUID.generate()}")
+    File.mkdir_p!(tmp_dir)
+    on_exit(fn -> File.rm_rf(tmp_dir) end)
+
     bounded_path = Path.join(tmp_dir, "bounded.json")
     oversized_path = Path.join(tmp_dir, "oversized.json")
     File.write!(bounded_path, "1234")

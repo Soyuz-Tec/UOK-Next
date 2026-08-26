@@ -11,21 +11,29 @@ defmodule UokNext.Modules.Trade.Sourcing.Application.CommitmentSources do
     with :ok <- Support.authorize(context, @read_permission),
          {:ok, id} <- Support.cast_uuid(comparison_id, :comparison_id),
          {:ok, version} <- Support.cast_version(expected_version) do
-      TenantTransaction.run(context, fn -> locked_source(store, id, version, context) end)
+      TenantTransaction.run(context, fn -> source(store, id, version, context, lock: true) end)
     end
   end
 
-  defp locked_source(store, id, version, context) do
-    with {:ok, comparison} <- fetch_comparison(store, id, context),
+  def project_current(store, comparison_id, expected_version, context) do
+    with :ok <- Support.authorize(context, @read_permission),
+         {:ok, id} <- Support.cast_uuid(comparison_id, :comparison_id),
+         {:ok, version} <- Support.cast_version(expected_version) do
+      TenantTransaction.run(context, fn -> source(store, id, version, context, []) end)
+    end
+  end
+
+  defp source(store, id, version, context, options) do
+    with {:ok, comparison} <- fetch_comparison(store, id, context, options),
          :ok <- Support.require_version(comparison, version),
          :ok <- require_status(comparison, "approved", "comparison is not approved"),
-         {:ok, rfq} <- fetch_rfq(store, comparison.rfq_id, context),
+         {:ok, rfq} <- fetch_rfq(store, comparison.rfq_id, context, options),
          :ok <- require_decided_rfq_version(rfq, comparison),
          :ok <- require_status(rfq, "compared", "RFQ is not in compared state"),
-         {:ok, requisition} <- fetch_requisition(store, rfq.requisition_id, context),
+         {:ok, requisition} <- fetch_requisition(store, rfq.requisition_id, context, options),
          :ok <- Support.require_version(requisition, rfq.requisition_version),
          {:ok, row} <- recommended_row(comparison),
-         {:ok, quote} <- fetch_quote(store, comparison.recommended_quote_id, context),
+         {:ok, quote} <- fetch_quote(store, comparison.recommended_quote_id, context, options),
          :ok <- require_status(quote, "submitted", "recommended quote is not submitted"),
          :ok <- source_versions_match(quote, row),
          :ok <- source_terms_match(quote, rfq, row),
@@ -34,20 +42,20 @@ defmodule UokNext.Modules.Trade.Sourcing.Application.CommitmentSources do
     end
   end
 
-  defp fetch_comparison(store, id, context) do
-    store.fetch_comparison(id, context.tenant_id, context, lock: true) |> Support.fetch()
+  defp fetch_comparison(store, id, context, options) do
+    store.fetch_comparison(id, context.tenant_id, context, options) |> Support.fetch()
   end
 
-  defp fetch_rfq(store, id, context) do
-    store.fetch_rfq(id, context.tenant_id, context, lock: true) |> Support.fetch()
+  defp fetch_rfq(store, id, context, options) do
+    store.fetch_rfq(id, context.tenant_id, context, options) |> Support.fetch()
   end
 
-  defp fetch_requisition(store, id, context) do
-    store.fetch_requisition(id, context.tenant_id, context, lock: true) |> Support.fetch()
+  defp fetch_requisition(store, id, context, options) do
+    store.fetch_requisition(id, context.tenant_id, context, options) |> Support.fetch()
   end
 
-  defp fetch_quote(store, id, context) do
-    store.fetch_quote(id, context.tenant_id, context, lock: true) |> Support.fetch()
+  defp fetch_quote(store, id, context, options) do
+    store.fetch_quote(id, context.tenant_id, context, options) |> Support.fetch()
   end
 
   defp recommended_row(%{ranking_snapshot: %{"formula_version" => 1, "ranking" => rows}} = record)

@@ -863,6 +863,42 @@ try {
         throw "The shipment-readiness case did not reach safe exact GO"
     }
 
+    $operationalReportUri = "$baseUri/operational-reports/$($readiness.data.id)" +
+        "?expected_version=$([int]$readinessGo.data.lock_version)"
+    $operationalReport = Invoke-RestMethod -Uri $operationalReportUri `
+        -Headers $readHeaders -TimeoutSec 10
+    $repeatedReport = Invoke-RestMethod -Uri $operationalReportUri `
+        -Headers $readHeaders -TimeoutSec 10
+    $reportAuditLeaks = @(
+        $operationalReport.data.audit_events | Where-Object {
+            $_.PSObject.Properties.Name -contains "metadata"
+        }
+    )
+    $reportDeliveryLeaks = @(
+        $operationalReport.data.delivery_events | Where-Object {
+            $_.PSObject.Properties.Name -contains "payload"
+        }
+    )
+    if ($operationalReport.data.outcome -ne "ready" -or
+        $operationalReport.data.grain.id -ne $readiness.data.id -or
+        [int]$operationalReport.data.grain.version -ne [int]$readinessGo.data.lock_version -or
+        $operationalReport.data.stages.Count -ne 6 -or
+        $operationalReport.data.evidence_lineage.Count -ne 5 -or
+        $operationalReport.data.audit_events.Count -lt 1 -or
+        $operationalReport.data.delivery_events.Count -lt 1 -or
+        $reportAuditLeaks.Count -ne 0 -or $reportDeliveryLeaks.Count -ne 0 -or
+        $operationalReport.data.freshness.mode -ne "live_repeatable_read" -or
+        [int]$operationalReport.data.freshness.maximum_staleness_seconds -ne 0 -or
+        $operationalReport.data.reconciliation.status -ne "reconciled" -or
+        $operationalReport.data.reconciliation.projection_sha256 -ne
+            $operationalReport.data.projection_id -or
+        $repeatedReport.data.projection_id -ne $operationalReport.data.projection_id -or
+        $operationalReport.data.authority.source_of_truth -or
+        $operationalReport.data.authority.business_mutation_authorized -or
+        $operationalReport.data.authority.external_effect_created) {
+        throw "The governed operational report failed reconciliation or authority checks"
+    }
+
     $appAImageId = Get-ContainerImageId -Container "uok-next-app-a-1"
     $appBImageId = Get-ContainerImageId -Container "uok-next-app-b-1"
     if ($appAImageId -ne $imageId -or $appBImageId -ne $imageId) {
@@ -910,8 +946,11 @@ try {
                 -Uri "$baseUri/health/ready" -TimeoutSec 5 -DisableKeepAlive
             $failoverRelease = Invoke-RestMethod `
                 -Uri "$baseUri/release" -TimeoutSec 5 -DisableKeepAlive
+            $failoverReport = Invoke-RestMethod -Uri $operationalReportUri `
+                -Headers $readHeaders -TimeoutSec 5 -DisableKeepAlive
 
-            if ($failoverReady.status -ne "ready" -or $failoverRelease.revision -ne $revision) {
+            if ($failoverReady.status -ne "ready" -or $failoverRelease.revision -ne $revision -or
+                $failoverReport.data.projection_id -ne $operationalReport.data.projection_id) {
                 throw "The surviving application replica did not remain ready on the qualified revision"
             }
         }
@@ -948,9 +987,11 @@ try {
         purchase_commitment_qualified_proposal_id = $proposal.data.id
         shipment_readiness_flow = "source-derived proposal, server checklist, verified evidence, exact task, GO, final read, and five false effect boundaries passed"
         shipment_readiness_qualified_case_id = $readiness.data.id
+        operational_reporting_flow = "live repeatable-read projection, six governed stages, five verified evidence references, bounded audit and delivery lineage, deterministic reconciliation, zero-stale failure policy, and three false authority boundaries passed"
+        operational_reporting_projection_id = $operationalReport.data.projection_id
         local_identity_credential_path = $identityCredentialPath
         replicas = 2
-        single_replica_failover = "4 readiness and release probes passed"
+        single_replica_failover = "4 readiness, release, and operational-report probes passed"
     } | ConvertTo-Json
 }
 finally {

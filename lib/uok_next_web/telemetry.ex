@@ -62,6 +62,12 @@ defmodule UokNextWeb.Telemetry do
         reporter_options: [buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1_000]],
         unit: {:native, :millisecond}
       ),
+      counter("uok_next.report.stop.count", tags: [:report, :outcome]),
+      distribution("uok_next.report.stop.duration",
+        tags: [:report, :outcome],
+        reporter_options: [buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1_000]],
+        unit: {:native, :millisecond}
+      ),
       # VM Metrics
       last_value("vm.memory.total", unit: {:byte, :kilobyte}),
       last_value("vm.total_run_queue_lengths.total"),

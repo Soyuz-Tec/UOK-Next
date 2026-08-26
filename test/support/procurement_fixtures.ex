@@ -26,6 +26,7 @@ defmodule UokNext.ProcurementFixtures do
     "parties:read",
     "products:create",
     "products:read",
+    "reports:operational:read",
     "shipments:readiness:create",
     "shipments:readiness:decide",
     "shipments:readiness:evidence:submit",

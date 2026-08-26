@@ -58,6 +58,7 @@ config :logger, level: :warning
 config :uok_next, framework_spike_routes: true
 config :uok_next, metrics_access_token: "uok-next-test-metrics-token-only"
 config :uok_next, deployment_profile: :local_qualification
+config :uok_next, allow_sql_sandbox_snapshot: true
 
 config :uok_next, :local_qualification_identity, %{
   tenant_id: "11111111-1111-4111-8111-111111111111",
@@ -78,6 +79,7 @@ config :uok_next, :local_qualification_identity, %{
     "parties:read",
     "products:create",
     "products:read",
+    "reports:operational:read",
     "shipments:readiness:create",
     "shipments:readiness:decide",
     "shipments:readiness:evidence:submit",

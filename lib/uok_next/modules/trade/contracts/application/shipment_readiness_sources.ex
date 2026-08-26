@@ -12,21 +12,29 @@ defmodule UokNext.Modules.Trade.Contracts.Application.ShipmentReadinessSources d
     with :ok <- Authorization.require_permission(context, @read_permission),
          {:ok, id} <- Support.cast_uuid(proposal_id, :proposal_id),
          {:ok, version} <- Support.cast_version(expected_version) do
-      TenantTransaction.run(context, fn -> locked_source(store, id, version, context) end)
+      TenantTransaction.run(context, fn -> source(store, id, version, context, lock: true) end)
     end
   end
 
-  defp locked_source(store, id, version, context) do
-    with {:ok, proposal} <- fetch_proposal(store, id, context),
+  def project_current(store, proposal_id, expected_version, context) do
+    with :ok <- Authorization.require_permission(context, @read_permission),
+         {:ok, id} <- Support.cast_uuid(proposal_id, :proposal_id),
+         {:ok, version} <- Support.cast_version(expected_version) do
+      TenantTransaction.run(context, fn -> source(store, id, version, context, []) end)
+    end
+  end
+
+  defp source(store, id, version, context, options) do
+    with {:ok, proposal} <- fetch_proposal(store, id, context, options),
          :ok <- Support.require_version(proposal, version),
          :ok <- require_approved(proposal),
-         {:ok, commercial_source} <- current_commercial_source(proposal, context) do
+         {:ok, commercial_source} <- current_commercial_source(proposal, context, options) do
       {:ok, source_view(proposal, commercial_source)}
     end
   end
 
-  defp fetch_proposal(store, id, context) do
-    store.fetch(id, context.tenant_id, context, lock: true) |> Support.fetch()
+  defp fetch_proposal(store, id, context, options) do
+    store.fetch(id, context.tenant_id, context, options) |> Support.fetch()
   end
 
   defp require_approved(%{status: "approved", evidence_metadata: metadata})
@@ -36,13 +44,14 @@ defmodule UokNext.Modules.Trade.Contracts.Application.ShipmentReadinessSources d
   defp require_approved(_proposal),
     do: Support.conflict("purchase commitment proposal is not approved and evidenced")
 
-  defp current_commercial_source(proposal, context) do
+  defp current_commercial_source(proposal, context, options) do
+    query =
+      if Keyword.get(options, :lock, false),
+        do: &Sourcing.require_commitment_source/3,
+        else: &Sourcing.project_commitment_source/3
+
     with {:ok, source} <-
-           Sourcing.require_commitment_source(
-             proposal.quote_comparison_id,
-             proposal.quote_comparison_version,
-             context
-           ) do
+           query.(proposal.quote_comparison_id, proposal.quote_comparison_version, context) do
       if source == proposal.source_snapshot,
         do: {:ok, source},
         else: Support.conflict("purchase commitment proposal source changed after approval")

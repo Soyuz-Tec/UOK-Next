@@ -4,9 +4,19 @@ defmodule UokNext.Modules.Platform.Evidence.Public do
   """
 
   alias UokNext.Kernel.IdempotencyKey
-  alias UokNext.Modules.Platform.Evidence.Application.{EvidenceCandidates, EvidenceObjects}
+
+  alias UokNext.Modules.Platform.Evidence.Application.{
+    EvidenceCandidates,
+    EvidenceObjects,
+    OperationalLineage
+  }
+
   alias UokNext.Modules.Platform.Evidence.Domain.EvidenceObject
-  alias UokNext.Modules.Platform.Evidence.Infrastructure.EctoEvidenceCandidateStore
+
+  alias UokNext.Modules.Platform.Evidence.Infrastructure.{
+    EctoEvidenceCandidateStore,
+    EctoOperationalLineageStore
+  }
 
   @spec store_party_candidate(String.t(), String.t(), map(), binary(), term(), String.t()) ::
           tuple()
@@ -82,6 +92,11 @@ defmodule UokNext.Modules.Platform.Evidence.Public do
       subject_id,
       context
     )
+  end
+
+  @spec operational_lineage([map()], term()) :: tuple()
+  def operational_lineage(references, context) do
+    OperationalLineage.get(EctoOperationalLineageStore, references, context)
   end
 
   defp build_and_store(

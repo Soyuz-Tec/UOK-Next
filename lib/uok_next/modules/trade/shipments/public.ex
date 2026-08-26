@@ -30,4 +30,8 @@ defmodule UokNext.Modules.Trade.Shipments.Public do
   def list_readiness_cases(limit, context) do
     ReadinessCases.list(EctoReadinessStore, limit, context)
   end
+
+  def operational_reporting_source(id, expected_version, context) do
+    ReadinessCases.reporting_source(EctoReadinessStore, id, expected_version, context)
+  end
 end

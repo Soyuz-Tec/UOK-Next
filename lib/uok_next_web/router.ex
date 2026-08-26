@@ -97,6 +97,7 @@ defmodule UokNextWeb.Router do
          :create
 
     post "/shipment-readiness-cases/:id/decision", ReadinessController, :decide
+    get "/operational-reports/:id", OperationalReportController, :show
     get "/review-tasks", WorkflowController, :index
   end
 

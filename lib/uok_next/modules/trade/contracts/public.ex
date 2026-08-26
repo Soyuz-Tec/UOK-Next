@@ -53,4 +53,13 @@ defmodule UokNext.Modules.Trade.Contracts.Public do
   def require_shipment_readiness_source(id, expected_version, context) do
     ShipmentReadinessSources.require_current(EctoCommitmentStore, id, expected_version, context)
   end
+
+  def project_shipment_readiness_source(id, expected_version, context) do
+    ShipmentReadinessSources.project_current(
+      EctoCommitmentStore,
+      id,
+      expected_version,
+      context
+    )
+  end
 end
