@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "UOK Next API",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "description": "Tenant-authenticated Gate 3 sourcing, non-binding commitment, and shipment-readiness GO/HOLD contract."
   },
   "servers": [{"url": "/api/v1"}],
@@ -136,6 +136,37 @@
         "security": [{"bearerAuth": []}],
         "parameters": [{"$ref": "#/components/parameters/EntityId"}],
         "responses": {"200": {"description": "Location detail"}, "404": {"$ref": "#/components/responses/Error"}}
+      }
+    },
+    "/location-references/major-seaports/countries": {
+      "get": {
+        "summary": "List countries with standardized maritime-port references",
+        "security": [{"bearerAuth": []}],
+        "responses": {
+          "200": {"description": "Versioned country and port-count directory"},
+          "401": {"$ref": "#/components/responses/Error"},
+          "403": {"$ref": "#/components/responses/Error"}
+        }
+      }
+    },
+    "/location-references/major-seaports": {
+      "get": {
+        "summary": "List standardized maritime-port references for one country",
+        "security": [{"bearerAuth": []}],
+        "parameters": [
+          {
+            "name": "country_code",
+            "in": "query",
+            "required": true,
+            "schema": {"type": "string", "pattern": "^[A-Za-z]{2}$"}
+          }
+        ],
+        "responses": {
+          "200": {"description": "Versioned country seaport directory"},
+          "401": {"$ref": "#/components/responses/Error"},
+          "403": {"$ref": "#/components/responses/Error"},
+          "422": {"$ref": "#/components/responses/Error"}
+        }
       }
     },
     "/sourcing-lanes": {

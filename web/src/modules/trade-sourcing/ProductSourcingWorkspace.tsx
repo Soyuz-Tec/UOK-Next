@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 
 import {
   listParties,
@@ -13,9 +13,13 @@ import {
   createLocation,
   createProduct,
   listLocations,
+  listMajorSeaportCountries,
+  listMajorSeaports,
   listProducts,
   type Location,
   type LocationInput,
+  type MajorSeaport,
+  type MajorSeaportCountry,
   type Product,
   type ProductInput,
 } from "./referenceApi";
@@ -44,6 +48,11 @@ export function ProductSourcingWorkspace({ token, tenantId, onSignOut }: Props) 
   const [parties, setParties] = useState<Party[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [locations, setLocations] = useState<Location[]>([]);
+  const [seaportCountries, setSeaportCountries] = useState<MajorSeaportCountry[]>([]);
+  const [seaports, setSeaports] = useState<MajorSeaport[]>([]);
+  const [seaportCatalogVersion, setSeaportCatalogVersion] = useState<string>();
+  const [seaportCatalogBusy, setSeaportCatalogBusy] = useState(false);
+  const [seaportCatalogError, setSeaportCatalogError] = useState<string>();
   const [lanes, setLanes] = useState<SourcingLane[]>([]);
   const [tasks, setTasks] = useState<ReviewTask[]>([]);
   const [selectedId, setSelectedId] = useState<string>();
@@ -53,6 +62,7 @@ export function ProductSourcingWorkspace({ token, tenantId, onSignOut }: Props) 
   const [decisionReason, setDecisionReason] = useState("Evidence supports this sourcing authority");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
+  const seaportRequest = useRef<AbortController | undefined>(undefined);
 
   const refresh = useCallback(async () => {
     const [nextParties, nextProducts, nextLocations, nextLanes, nextTasks] = await load(token);
@@ -84,6 +94,31 @@ export function ProductSourcingWorkspace({ token, tenantId, onSignOut }: Props) 
     };
   }, [token]);
 
+  useEffect(
+    () => () => {
+      seaportRequest.current?.abort();
+    },
+    [],
+  );
+
+  useEffect(() => {
+    let active = true;
+    void listMajorSeaportCountries(token)
+      .then((catalog) => {
+        if (!active) return;
+        setSeaportCountries(catalog.items);
+        setSeaportCatalogVersion(catalog.catalog_version);
+      })
+      .catch((reason: unknown) => {
+        if (active) {
+          setSeaportCatalogError(message(reason, "The standard seaport directory is unavailable"));
+        }
+      });
+    return () => {
+      active = false;
+    };
+  }, [token]);
+
   const selected = useMemo(() => lanes.find((lane) => lane.id === selectedId), [lanes, selectedId]);
   const selectedTask = tasks.find((task) => task.subject_id === selected?.id);
   const readyForLane = parties.length > 0 && products.length > 0 && locations.length > 1;
@@ -100,11 +135,50 @@ export function ProductSourcingWorkspace({ token, tenantId, onSignOut }: Props) 
     }
   }
 
-  function createReference<T>(operation: () => Promise<T>) {
-    return command(async () => {
+  async function createReference<T>(operation: () => Promise<T>) {
+    setBusy(true);
+    setError(undefined);
+    let created = false;
+    try {
       await operation();
+      created = true;
       await refresh();
-    });
+      return true;
+    } catch (reason) {
+      setError(
+        created
+          ? "The reference was created, but the workspace could not refresh. Reload before retrying."
+          : message(reason, "The reference command was rejected"),
+      );
+      return created;
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function selectSeaportCountry(countryCode: string) {
+    seaportRequest.current?.abort();
+    setSeaports([]);
+    setSeaportCatalogError(undefined);
+    if (countryCode === "") return;
+
+    const request = new AbortController();
+    seaportRequest.current = request;
+    setSeaportCatalogBusy(true);
+    try {
+      const catalog = await listMajorSeaports(token, countryCode, request.signal);
+      if (seaportRequest.current !== request) return;
+      setSeaports(catalog.items);
+      setSeaportCatalogVersion(catalog.catalog_version);
+    } catch (reason) {
+      if (request.signal.aborted) return;
+      setSeaportCatalogError(message(reason, "Ports could not be loaded for this country"));
+    } finally {
+      if (seaportRequest.current === request) {
+        seaportRequest.current = undefined;
+        setSeaportCatalogBusy(false);
+      }
+    }
   }
 
   function submitLane(event: FormEvent<HTMLFormElement>) {
@@ -170,8 +244,15 @@ export function ProductSourcingWorkspace({ token, tenantId, onSignOut }: Props) 
       )}
       <ReferenceSetupPanel
         busy={busy}
+        locations={locations}
+        seaportCatalogBusy={seaportCatalogBusy}
+        seaportCatalogError={seaportCatalogError}
+        seaportCatalogVersion={seaportCatalogVersion}
+        seaportCountries={seaportCountries}
+        seaports={seaports}
         onProduct={(input: ProductInput) => createReference(() => createProduct(token, input))}
         onLocation={(input: LocationInput) => createReference(() => createLocation(token, input))}
+        onSeaportCountry={selectSeaportCountry}
       />
 
       <div className="sourcing-grid">

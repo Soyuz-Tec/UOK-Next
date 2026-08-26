@@ -87,6 +87,14 @@ and locations through public module queries. Composite tenant foreign keys
 reinforce the references, while evidence and the exact human task remain
 separately owned platform records. ADR-0015 governs this boundary.
 
+`master.locations` also owns a versioned, read-only public major-seaport
+reference catalog. Its immutable snapshot and provenance receipt are verified
+at build time. Authenticated operators query it by country and promote one
+selected reference through the existing tenant-owned location command; the
+catalog, browser, and upstream publisher never become the operational source
+of truth. A manual exception remains available for legitimate uncatalogued
+locations. ADR-0022 governs this reference-to-authority boundary.
+
 The third Gate 3 vertical extends `trade.sourcing` through requisition, RFQ,
 attributable supplier quote, deterministic comparison, and exact human review.
 Every handoff binds the source record version. Quote source bytes use the same

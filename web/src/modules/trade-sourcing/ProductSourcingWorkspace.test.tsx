@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { expect, test, vi } from "vitest";
 
 import { ProductSourcingWorkspace } from "./ProductSourcingWorkspace";
@@ -6,9 +7,36 @@ import { ProductSourcingWorkspace } from "./ProductSourcingWorkspace";
 test("loads approved references and exposes the governed sourcing-lane command", async () => {
   vi.spyOn(globalThis, "fetch").mockImplementation((input) => {
     const url = String(input);
-    let data: object[] = [];
+    let data: object | object[] = [];
 
-    if (url.includes("/parties")) {
+    if (url.includes("/location-references/major-seaports/countries")) {
+      data = {
+        catalog_version: "2026-08-13-testcatalog",
+        items: [{ country_code: "GH", country_name: "Ghana", port_count: 2 }],
+      };
+    } else if (url.includes("/location-references/major-seaports")) {
+      data = {
+        catalog_version: "2026-08-13-testcatalog",
+        items: [
+          {
+            reference_code: "GHTKD",
+            country_code: "GH",
+            country_name: "Ghana",
+            name: "Takoradi",
+            harbor_scale: "medium",
+            catalog_number: "46040",
+          },
+          {
+            reference_code: "GHTEM",
+            country_code: "GH",
+            country_name: "Ghana",
+            name: "Tema",
+            harbor_scale: "small",
+            catalog_number: "46070",
+          },
+        ],
+      };
+    } else if (url.includes("/parties")) {
       data = [
         {
           id: "11111111-1111-4111-8111-111111111111",
@@ -72,6 +100,19 @@ test("loads approved references and exposes the governed sourcing-lane command",
   expect(screen.getByRole("option", { name: "Governed Supplier" })).toBeVisible();
   expect(screen.getByRole("option", { name: "Governed Product · MT" })).toBeVisible();
   expect(screen.getByRole("button", { name: "Create governed lane" })).toBeEnabled();
+
+  const user = userEvent.setup();
+  await user.selectOptions(
+    screen.getByRole("combobox", { name: /Origin or destination country/ }),
+    "GH",
+  );
+  await user.selectOptions(
+    await screen.findByRole("combobox", { name: /Standard seaport/ }),
+    "GHTEM",
+  );
+
+  expect(screen.getAllByText("GHTEM").length).toBeGreaterThan(0);
+  expect(screen.getByRole("button", { name: "Create active seaport" })).toBeEnabled();
   expect(fetch).toHaveBeenCalledWith(
     expect.stringContaining("/api/v1/sourcing-lanes"),
     expect.objectContaining({

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "catalog_version": "2026-08-13-5d3e6062373c",
+  "retrieved_at": "2026-08-13T15:13:31Z",
+  "source_role": "official_public_maritime_port_catalog",
+  "source_uri": "https://msi.nga.mil/api/publications/download?type=view&key=16920959/SFH00000/UpdatedPub150.csv",
+  "source_sha256": "5d3e6062373c3c61e1f6996c0a5eeead270dbf5787d10da6f224b612fab0cd52",
+  "selection_rule": "standardized_maritime_location_code_present",
+  "ranking_rule": "harbor_scale_descending_then_name",
+  "record_count": 3312,
+  "country_count": 192,
+  "catalog_sha256": "0fc64508f3e684ea65ac460ec2f4e661e29d2ef64c62dffac948ce034f048aa4"
+}

@@ -18,7 +18,7 @@
     {"id": "platform.agents", "status": "in_progress", "dependencies": ["platform.workflow"], "record_types": ["agent_runbook", "agent_run", "agent_plan", "agent_approval", "agent_tool_receipt"]},
     {"id": "master.parties", "status": "in_progress", "dependencies": ["platform.evidence", "platform.workflow"], "record_types": ["party", "party_alias", "party_role", "party_relationship", "operating_site", "onboarding_profile"]},
     {"id": "master.products", "status": "in_progress", "dependencies": [], "record_types": ["product", "product_classification", "unit_definition", "quality_template"]},
-    {"id": "master.locations", "status": "in_progress", "dependencies": [], "record_types": ["country_reference", "location", "corridor", "route_reference"]},
+    {"id": "master.locations", "status": "in_progress", "dependencies": [], "record_types": ["country_reference", "major_seaport_reference", "location", "corridor", "route_reference"]},
     {"id": "operations.work", "status": "planned", "record_types": ["project", "work_item", "work_dependency", "work_calendar", "work_comment"]},
     {"id": "trade.sourcing", "status": "in_progress", "dependencies": ["master.parties", "master.products", "master.locations", "platform.evidence", "platform.workflow"], "record_types": ["sourcing_lane", "purchase_requisition", "rfq", "supplier_quote", "quote_comparison"]},
     {"id": "trade.contracts", "status": "in_progress", "dependencies": ["trade.sourcing", "platform.evidence", "platform.workflow"], "record_types": ["purchase_commitment_proposal", "purchase_contract", "sales_contract", "contract_amendment", "commercial_commitment"]},

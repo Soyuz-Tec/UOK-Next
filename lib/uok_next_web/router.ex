@@ -60,6 +60,12 @@ defmodule UokNextWeb.Router do
     get "/locations", LocationController, :index
     post "/locations", LocationController, :create
     get "/locations/:id", LocationController, :show
+
+    get "/location-references/major-seaports/countries",
+        MajorSeaportReferenceController,
+        :countries
+
+    get "/location-references/major-seaports", MajorSeaportReferenceController, :index
     get "/sourcing-lanes", SourcingLaneController, :index
     post "/sourcing-lanes", SourcingLaneController, :create
     get "/sourcing-lanes/:id", SourcingLaneController, :show
