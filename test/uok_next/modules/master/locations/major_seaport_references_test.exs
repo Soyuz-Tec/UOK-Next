@@ -17,6 +17,19 @@ defmodule UokNext.Modules.Master.Locations.MajorSeaportReferencesTest do
     assert Enum.uniq_by(ports, & &1["reference_code"]) == ports
   end
 
+  test "stores canonical bytes so provenance survives cross-platform checkout" do
+    catalog_path = Application.app_dir(:uok_next, "priv/reference/major_seaports.json")
+    metadata_path = Application.app_dir(:uok_next, "priv/reference/major_seaports.metadata.json")
+    catalog_bytes = File.read!(catalog_path)
+    metadata = metadata_path |> File.read!() |> Jason.decode!()
+
+    refute String.contains?(catalog_bytes, "\r")
+
+    assert :sha256
+           |> :crypto.hash(catalog_bytes)
+           |> Base.encode16(case: :lower) == metadata["catalog_sha256"]
+  end
+
   test "requires named read authority and rejects malformed country input" do
     authorized = context(%{permissions: ["locations:read"]})
     denied = context(%{permissions: []})

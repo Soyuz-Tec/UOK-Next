@@ -13,6 +13,19 @@ $metadataPath = Join-Path $referenceRoot "major_seaports.metadata.json"
 $maximumSourceBytes = 10MB
 $maximumCatalogBytes = 2MB
 
+function ConvertTo-CanonicalJson {
+    param(
+        [Parameter(Mandatory)]
+        [AllowEmptyCollection()]
+        [object]$InputObject,
+
+        [int]$Depth = 4
+    )
+
+    $json = $InputObject | ConvertTo-Json -Depth $Depth
+    return (($json -replace "`r`n?", "`n").TrimEnd([char[]]"`r`n") + "`n")
+}
+
 function Read-BoundedHttpsBytes {
     param(
         [Parameter(Mandatory)]
@@ -151,13 +164,13 @@ if ($duplicateCodes.Count -ne 0) {
 }
 
 New-Item -ItemType Directory -Force -Path $referenceRoot | Out-Null
-$catalogJson = $catalog | ConvertTo-Json -Depth 4
-$catalogJsonBytes = [Text.Encoding]::UTF8.GetByteCount("$catalogJson`n")
+$catalogJson = ConvertTo-CanonicalJson -InputObject $catalog
+$catalogJsonBytes = [Text.Encoding]::UTF8.GetByteCount($catalogJson)
 if ($catalogJsonBytes -gt $maximumCatalogBytes) {
     throw "The derived catalog exceeds the byte limit."
 }
 
-[IO.File]::WriteAllText($catalogPath, "$catalogJson`n", [Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText($catalogPath, $catalogJson, [Text.UTF8Encoding]::new($false))
 
 $sourceSha256 = [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($sourceBytes)).ToLowerInvariant()
 $catalogBytes = [IO.File]::ReadAllBytes($catalogPath)
@@ -178,7 +191,7 @@ $metadata = [ordered]@{
     country_count = $countryCount
     catalog_sha256 = $catalogSha256
 }
-$metadataJson = $metadata | ConvertTo-Json -Depth 4
-[IO.File]::WriteAllText($metadataPath, "$metadataJson`n", [Text.UTF8Encoding]::new($false))
+$metadataJson = ConvertTo-CanonicalJson -InputObject $metadata
+[IO.File]::WriteAllText($metadataPath, $metadataJson, [Text.UTF8Encoding]::new($false))
 
 Write-Output "Created catalog $catalogVersion with $($catalog.Count) ports in $countryCount countries."
