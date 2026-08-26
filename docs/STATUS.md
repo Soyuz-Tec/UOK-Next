@@ -611,9 +611,26 @@
   files across nine security surfaces and sealed with zero findings.
   Architecture, code-discipline, database, object-storage, external-identity,
   web-foundation, static-security, and dependency-advisory checks pass.
-- Protected delivery, exact-merge runtime
-  qualification, regular-user provisioning, forced activation, and rendered
-  desktop/mobile proof remain open; this section does not claim delivery yet.
+- Clean candidate revision `0440d50d884c659147fd74b230c2ef4765fe22d5`
+  rebuilt as immutable image
+  `a3894e6dd278103591c431d66f9bbad67def172b1d9f42a931a0ebd70e15e63c`
+  on both replicas. PostgreSQL 19 migrations and role reconciliation, object
+  storage, the complete Gate 3 business chain, authenticated metrics, release
+  identity, and four single-replica readiness/release/report probes passed.
+- Regular user `entity.operator` was provisioned through the administrator API,
+  forced through temporary-password activation, signed in with the rotated
+  credential, and created draft party
+  `0ac0cb27-818e-4a21-b893-aa2c0ae2f808`. Its server-owned profile exposes only
+  evidence and party-onboarding permissions; the generated credential is in
+  clone-local, ACL-restricted storage outside the repository.
+- Protected PR #36 remains open. GitHub recorded open, reopen, and synchronize
+  attempts, but its action scheduler has not created the required foundation,
+  application, or release jobs. Administrative bypass is prohibited, so merge
+  and exact-merge qualification remain blocked on those external checks.
+- The browser shell returns through the loopback proxy, but rendered
+  desktop/mobile automation remains blocked because the in-app browser cannot
+  currently verify its admin-enforced access policy. This section therefore
+  records a qualified candidate, not a delivered increment.
 
 ## Explicitly not yet implemented
 
@@ -640,15 +657,12 @@
 
 ## Next action
 
-Complete the protected merge and exact-revision local qualification for
-ADR-0024. Provision a regular onboarding user through the
-administrator workbench, prove forced password activation and role-bounded
-party creation across both replicas, then render the full flow at 1280-by-720
-and 390-by-844 with no overflow, browser warning/error, inaccessible control,
-or visible action below 44 pixels. The same rendered pass must close the
-outstanding operational-report proof gap before either increment is recorded
-as delivered. Continue Gate 3 with durable outbox delivery, scheduled jobs,
-and recovery evidence only after those exit criteria pass.
+Allow PR #36's required protected checks to run, merge only after all three
+pass, and repeat qualification on the exact merged revision. Then render the
+regular-user and operational-report flows at 1280-by-720 and 390-by-844 with no
+overflow, browser warning/error, inaccessible control, or visible action below
+44 pixels. Continue Gate 3 with durable outbox delivery, scheduled jobs, and
+recovery evidence only after those exit criteria pass.
 
 AI execution and module-installation implementation remain deferred. This
 status advance does not create a second active delivery focus.
