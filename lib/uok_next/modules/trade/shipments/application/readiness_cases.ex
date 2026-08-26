@@ -86,6 +86,33 @@ defmodule UokNext.Modules.Trade.Shipments.Application.ReadinessCases do
 
   def list(_store, _limit, _context), do: Support.validation(%{limit: ["must be 1 to 100"]})
 
+  def reporting_source(store, readiness_id, expected_version, context) do
+    with :ok <- Authorization.require_permission(context, @read_permission),
+         {:ok, id} <- Support.cast_uuid(readiness_id, :readiness_id),
+         {:ok, version} <- Support.cast_version(expected_version) do
+      TenantTransaction.run(context, fn ->
+        reporting_source_scoped(store, id, version, context)
+      end)
+    end
+  end
+
+  defp reporting_source_scoped(store, id, version, context) do
+    with {:ok, readiness} <- Support.fetch(store.fetch(id, context.tenant_id, context, [])),
+         :ok <- Support.require_version(readiness, version),
+         {:ok, source} <-
+           Contracts.project_shipment_readiness_source(
+             readiness.purchase_commitment_proposal_id,
+             readiness.purchase_commitment_proposal_version,
+             context
+           ),
+         true <- source == readiness.source_snapshot do
+      {:ok, Support.readiness_view(readiness)}
+    else
+      false -> Support.conflict("shipment readiness source changed after creation")
+      {:error, _error} = error -> error
+    end
+  end
+
   defp create_operation(store, command, version, context) do
     with {:ok, source} <-
            Contracts.require_shipment_readiness_source(

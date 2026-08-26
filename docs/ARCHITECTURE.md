@@ -252,6 +252,12 @@ is claimed. ADR-0018 governs the transition.
   workload shows PostgreSQL read models are insufficient.
 - Every metric must declare grain, dimensions, filters, currency/time rules,
   owner, freshness, lineage, and reconciliation tests.
+- The first governed report is an `intelligence.bi` live projection over one
+  shipment-readiness case. It composes module public queries inside one
+  repeatable-read, read-only transaction, requires the report permission plus
+  every source-read permission, publishes explicit freshness and a
+  deterministic reconciliation digest, and persists no shadow business truth.
+  ADR-0023 governs this initial reporting boundary.
 
 ## 8. Security and authority
 

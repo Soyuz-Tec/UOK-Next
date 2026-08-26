@@ -31,7 +31,7 @@ explains its intent.
 | `trade.quality` | lots, samples, measurements, inspections, claims |
 | `trade.compliance` | standards, requirements, clearance cases, compliance decisions |
 | `trade.finance` | trade economics, landed cost, funding plans, FX exposure, risk controls |
-| `intelligence.bi` | metric definitions, semantic models, reports, governed exports |
+| `intelligence.bi` | metric definitions, semantic models, reports, live operational-report projections, governed exports; never source business records or command authority |
 | `public.publishing` | reviewed/redacted publication snapshots and public releases |
 
 ## External systems

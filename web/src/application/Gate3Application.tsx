@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { PartyOnboardingWorkspace } from "../modules/master-parties/PartyOnboardingWorkspace";
+import { OperationalReportWorkspace } from "../modules/intelligence-bi/OperationalReportWorkspace";
 import { QualificationSignIn } from "../modules/platform-identity/QualificationSignIn";
 import { verifySession, type Session } from "../modules/platform-identity/sessionApi";
 import { PurchaseCommitmentWorkspace } from "../modules/trade-contracts/PurchaseCommitmentWorkspace";
@@ -74,6 +75,16 @@ export function Gate3Application() {
   if (surface === "#shipment-readiness") {
     return (
       <ShipmentReadinessWorkspace
+        token={session.accessToken}
+        tenantId={session.identity.tenant_id}
+        onSignOut={signOut}
+      />
+    );
+  }
+
+  if (surface === "#operational-report") {
+    return (
+      <OperationalReportWorkspace
         token={session.accessToken}
         tenantId={session.identity.tenant_id}
         onSignOut={signOut}

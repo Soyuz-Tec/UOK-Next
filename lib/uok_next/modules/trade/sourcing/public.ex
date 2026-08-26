@@ -117,4 +117,13 @@ defmodule UokNext.Modules.Trade.Sourcing.Public do
       context
     )
   end
+
+  def project_commitment_source(comparison_id, expected_version, context) do
+    CommitmentSources.project_current(
+      EctoProcurementStore,
+      comparison_id,
+      expected_version,
+      context
+    )
+  end
 end

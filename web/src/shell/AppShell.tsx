@@ -129,9 +129,21 @@ export function AppShell({ children }: Props) {
             </span>
             Shipment readiness
           </a>
-          <a className="nav-link" href="#release-boundary">
+          <a
+            className={
+              activeHash === "#operational-report" ? "nav-link nav-link--active" : "nav-link"
+            }
+            href="#operational-report"
+            aria-current={activeHash === "#operational-report" ? "page" : undefined}
+          >
             <span className="nav-icon" aria-hidden="true">
               06
+            </span>
+            Operational report
+          </a>
+          <a className="nav-link" href="#release-boundary">
+            <span className="nav-icon" aria-hidden="true">
+              07
             </span>
             Release boundary
           </a>
@@ -141,7 +153,7 @@ export function AppShell({ children }: Props) {
           <strong>Gate 3</strong>
           <p>First business operation</p>
           <div className="progress-track" aria-label="Gate 3 operation progress">
-            <span style={{ width: "74%" }} />
+            <span style={{ width: "100%" }} />
           </div>
         </div>
       </aside>

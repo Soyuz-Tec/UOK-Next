@@ -26,7 +26,7 @@
     {"id": "trade.quality", "status": "planned", "record_types": ["quality_lot", "sample", "quality_measurement", "inspection", "quality_claim"]},
     {"id": "trade.compliance", "status": "planned", "record_types": ["standard", "compliance_requirement", "clearance_case", "compliance_decision"]},
     {"id": "trade.finance", "status": "planned", "record_types": ["trade_economics", "landed_cost", "funding_plan", "fx_exposure", "risk_control"]},
-    {"id": "intelligence.bi", "status": "planned", "record_types": ["metric_definition", "semantic_model", "report_definition", "governed_export"]},
+    {"id": "intelligence.bi", "status": "in_progress", "dependencies": ["platform.evidence", "master.parties", "master.products", "master.locations", "trade.sourcing", "trade.contracts", "trade.shipments"], "record_types": ["metric_definition", "semantic_model", "report_definition", "operational_report_projection", "governed_export"]},
     {"id": "public.publishing", "status": "planned", "record_types": ["publication_snapshot", "public_release"]}
   ],
   "external_systems": [

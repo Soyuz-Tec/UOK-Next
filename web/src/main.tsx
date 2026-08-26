@@ -9,6 +9,7 @@ import "./modules/trade-sourcing/product-sourcing.css";
 import "./modules/trade-sourcing/procurement.css";
 import "./modules/trade-contracts/purchase-commitment.css";
 import "./modules/trade-shipments/shipment-readiness.css";
+import "./modules/intelligence-bi/operational-report.css";
 
 const root = document.getElementById("root");
 
