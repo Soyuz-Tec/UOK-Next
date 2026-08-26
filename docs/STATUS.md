@@ -1,6 +1,6 @@
 # Current Build Status
 
-**Snapshot date:** 2026-08-13
+**Snapshot date:** 2026-08-25
 
 **Canonical repository:** `https://github.com/Soyuz-Tec/UOK-Next`
 
@@ -535,6 +535,45 @@
   without exposing a native scrollbar. The fifth sequential Gate 3 vertical is
   therefore delivered, while Gate 3 remains active.
 
+## Gate 3 governed operational reporting merged and runtime-qualified
+
+- Accepted ADR-0023 assigns the non-persisted
+  `operational_report_projection` to `intelligence.bi`. The report consumes one
+  exact tenant-owned shipment-readiness case and its current authoritative
+  source chain through module public queries inside one PostgreSQL
+  repeatable-read, read-only transaction; it creates no analytical copy,
+  command authority, task, connector call, or external effect.
+- The authenticated API and workbench require `reports:operational:read` plus
+  every source-read permission. Exact readiness version, current-source
+  validation, tenant predicates, forced row-level security, bounded audit and
+  outbox lineage, no-store responses, deterministic reconciliation, failure
+  clearing, and explicit false authority flags all fail closed.
+- Backend quality passes 119 tests with one object-store integration test
+  reserved for the immutable runtime qualifier. Frontend formatting, lint,
+  TypeScript 7 and 6 compatibility, 14 tests, and the production build pass.
+  Architecture, code-discipline, database, object-storage, external-identity,
+  web-foundation, production-security, local-qualification-security,
+  dependency-advisory, and package-vulnerability checks pass.
+- The sealed security diff review completed all 30 changed source worklist rows
+  with no reportable finding. It traced authentication and named permissions,
+  tenant/RLS scope, exact source/version binding, repeatable-read and read-only
+  behavior, lineage bounds and privacy, deterministic reconciliation,
+  telemetry, request bounds, and the no-business-mutation boundary.
+- Protected PR 34 passed foundation, application, and release checks and was
+  squash-merged as exact revision
+  `204ea3624def671d7aa6c475485e75adc5ba9071`.
+- The exact merged image `localhost/uok-next:204ea3624def` has identity
+  `8f5ccc3121803e35ccd62dd8a1d3bd37c13d26eacd0ea3a76af16d620f6b5d56`
+  on both replicas. PostgreSQL 19, object storage, the complete authenticated
+  party-to-readiness journey, deterministic report projection
+  `2913efff7f9196b657ef8c4ed7bd6349717b036c1e35ad1e375d0c0b00eda695`,
+  and four single-replica readiness, release, and report probes passed.
+- The loopback browser shell returned HTTP 200, but exact-merge rendered
+  desktop/mobile capture remains blocked because the Codex in-app browser
+  could not verify its admin-enforced access policy. The reporting vertical is
+  merged and runtime-qualified but is not yet recorded as delivered until that
+  visual gate passes.
+
 ## Explicitly not yet implemented
 
 - Production identity/OIDC and session revocation, binding purchase contract or
@@ -543,8 +582,8 @@
   definitions, task assignment/delegation/escalation/notification, evidence
   malware scanning/promotion/retention/deletion, live connector transport and
   credential/retry scheduling, server-owned agent runbook definitions,
-  model/tool execution, agent scheduling/budgets, BI projections, or evidence
-  anchoring.
+  model/tool execution, agent scheduling/budgets, persisted or cross-operation
+  BI projections, or evidence anchoring.
 - Module installation, tenant enablement, compatibility enforcement, dynamic
   surface registration, source-to-catalog import reconciliation, module-owned
   migration receipts, kernel-only boot qualification, disabled-module boot
@@ -558,14 +597,15 @@
 
 ## Next action
 
-Define the governed operational-reporting vertical through a product-neutral
-benchmark and ADR before implementation. The reporting read model must consume
-authorized records, evidence lineage, decisions, audit, and delivery state
-without becoming a second system of record or gaining business-mutation
-authority. Its exit evidence must include tenant and permission negatives,
-deterministic reconciliation, freshness and failure behavior, accessible
-desktop/mobile action paths, protected delivery, and exact merged-revision
-runtime proof.
+Restore the approved in-app browser access check and complete rendered
+1280-by-720 desktop and 390-by-844 mobile proof against exact merged revision
+`204ea3624def671d7aa6c475485e75adc5ba9071`. Verify freshness and
+reconciliation visibility, semantic tables, keyboard reachability, absence of
+report mutation controls, no page overflow, no browser warning/error, and
+44-pixel minimum visible actions. Once that final reporting exit gate passes,
+record the sixth vertical as delivered and continue the same Gate 3 focus with
+durable outbox delivery, scheduled jobs, and recovery evidence required by the
+gate exit.
 
 AI execution and module-installation implementation remain deferred. This
 status advance does not create a second active delivery focus.
