@@ -8,6 +8,11 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $composePath = Join-Path $repoRoot "compose.yaml"
 . (Join-Path $PSScriptRoot "support\write_local_credential.ps1")
 
+# Windows PowerShell does not load this assembly until a System.Net.Http type is
+# first resolved. Load it explicitly so the multipart evidence qualifier uses
+# the same script path under Windows PowerShell and PowerShell 7.
+Add-Type -AssemblyName System.Net.Http
+
 if (-not (Test-Path -LiteralPath $composePath -PathType Leaf)) {
     throw "compose.yaml was not found at the repository root"
 }
