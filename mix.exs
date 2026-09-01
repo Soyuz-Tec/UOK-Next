@@ -54,7 +54,7 @@ defmodule UokNext.MixProject do
       {:ex_aws_s3, "~> 2.5.9"},
       {:req, "~> 0.7.1"},
       {:sweet_xml, "~> 0.7.5"},
-      {:dns_cluster, "~> 0.2.0"},
+      {:dns_cluster, "~> 0.3.0"},
       {:bandit, "~> 1.5"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:sobelow, "~> 0.15.0", only: [:dev, :test], runtime: false}
