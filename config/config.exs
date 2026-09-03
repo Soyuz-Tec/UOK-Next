@@ -11,7 +11,8 @@ config :uok_next,
   build_revision: System.get_env("UOK_BUILD_REVISION", "uncommitted"),
   ecto_repos: [UokNext.Repo],
   generators: [timestamp_type: :utc_datetime_usec, binary_id: true],
-  required_schema_version: 20_260_812_180_000,
+  required_schema_version: 20_260_826_100_000,
+  password_hash_iterations: 600_000,
   database_target_major: 19,
   database_prerelease_allowed: true
 
@@ -47,6 +48,7 @@ config :logger, :default_formatter,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+config :phoenix, :filter_parameters, ["password", "access_code", "credential", "secret", "token"]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

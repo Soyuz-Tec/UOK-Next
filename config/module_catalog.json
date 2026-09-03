@@ -9,7 +9,7 @@
     "architecture": "modular_monolith"
   },
   "modules": [
-    {"id": "platform.identity", "status": "in_progress", "dependencies": [], "record_types": ["tenant", "organization", "actor", "session", "service_identity"]},
+    {"id": "platform.identity", "status": "in_progress", "dependencies": [], "record_types": ["tenant", "organization", "actor", "password_credential", "local_access_profile", "session", "bootstrap_session", "service_identity", "authentication_throttle"]},
     {"id": "platform.modules", "status": "planned", "record_types": ["module_definition", "module_installation"]},
     {"id": "platform.policy", "status": "planned", "record_types": ["permission", "role_grant", "policy_decision"]},
     {"id": "platform.workflow", "status": "in_progress", "dependencies": [], "record_types": ["workflow_definition", "workflow_instance", "human_task", "approval_request", "escalation"]},

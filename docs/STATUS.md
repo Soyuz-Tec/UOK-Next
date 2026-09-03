@@ -1,6 +1,6 @@
 # Current Build Status
 
-**Snapshot date:** 2026-08-25
+**Snapshot date:** 2026-08-26
 
 **Canonical repository:** `https://github.com/Soyuz-Tec/UOK-Next`
 
@@ -209,7 +209,7 @@
   and transitions remain server-owned.
 - The isolated qualifier has a stable clone-local identity and high-entropy
   access code protected by restrictive operating-system ACLs. Successful login
-  returns an eight-hour signed tenant token; invalid credentials, forged
+  returns an eight-hour opaque, database-revocable bootstrap session; invalid credentials, forged
   tokens, and production-profile activation fail closed. This is not the
   production identity selection.
 - `platform.evidence` now owns persisted tenant/subject metadata with forced
@@ -574,11 +574,71 @@
   merged and runtime-qualified but is not yet recorded as delivered until that
   visual gate passes.
 
+## Gate 3 local attributable-user increment verified in source
+
+- Accepted ADR-0024 keeps the clone-local access code as bootstrap
+  administration and adds tenant-owned regular users under `platform.identity`.
+  Two allowlisted party-onboarding profiles replace browser-supplied
+  permissions with server-owned access grants.
+- Administrators create pending users with temporary passwords. First login is
+  restricted to password replacement; activation rotates credential generation
+  and revokes every earlier session before business permissions can be issued.
+- Password verifiers are versioned, salted, and deliberately expensive. Opaque
+  session secrets and login identifiers are retained only as digests.
+  PostgreSQL-backed throttling is serialized per tenant and identifier across
+  both application replicas. Unknown usernames share one bounded bucket and
+  the login boundary rejects non-JSON bodies. Authentication errors remain
+  uniform.
+- Users, credential verifiers, regular sessions, bootstrap sessions, and
+  throttles have tenant
+  references, forced row-level security, bounded constraints, and negative
+  isolation tests. Plaintext temporary and activated passwords are absent from
+  users, credentials, sessions, command receipts, audits, and outbox events.
+- Backend quality passes 126 tests with one object-store integration test
+  reserved for the immutable runtime qualifier. Frontend formatting, lint,
+  TypeScript 7 and 6 compatibility, 19 tests, and the production build pass.
+  Architecture, code-discipline, database, object-storage, external-identity,
+  web-foundation, production/local security-configuration, static-security,
+  and dependency-advisory checks pass.
+- The first sealed security diff found two low-severity local-qualification
+  defects: distinct unknown usernames could grow throttle state and admit
+  expensive verification, and bootstrap sign-out did not revoke its stateless
+  bearer. The remediation now rejects non-JSON login, uses one bounded unknown
+  bucket, persists bootstrap sessions by digest, revokes them server-side, and
+  keeps browser state when revocation is not confirmed. Focused trigger and
+  legitimate-path tests pass. Post-fix security scan
+  `f8573597-572d-45b4-bfe1-6810f41502b9` reviewed all 56 selected changed
+  files across nine security surfaces and sealed with zero findings.
+  Architecture, code-discipline, database, object-storage, external-identity,
+  web-foundation, static-security, and dependency-advisory checks pass.
+- Clean candidate revision `0440d50d884c659147fd74b230c2ef4765fe22d5`
+  rebuilt as immutable image
+  `a3894e6dd278103591c431d66f9bbad67def172b1d9f42a931a0ebd70e15e63c`
+  on both replicas. PostgreSQL 19 migrations and role reconciliation, object
+  storage, the complete Gate 3 business chain, authenticated metrics, release
+  identity, and four single-replica readiness/release/report probes passed.
+- Regular user `entity.operator` was provisioned through the administrator API,
+  forced through temporary-password activation, signed in with the rotated
+  credential, and created draft party
+  `0ac0cb27-818e-4a21-b893-aa2c0ae2f808`. Its server-owned profile exposes only
+  evidence and party-onboarding permissions; the generated credential is in
+  clone-local, ACL-restricted storage outside the repository.
+- Protected PR #36 remains open. GitHub recorded open, reopen, and synchronize
+  attempts, but its action scheduler has not created the required foundation,
+  application, or release jobs. Administrative bypass is prohibited, so merge
+  and exact-merge qualification remain blocked on those external checks.
+- The browser shell returns through the loopback proxy, but rendered
+  desktop/mobile automation remains blocked because the in-app browser cannot
+  currently verify its admin-enforced access policy. This section therefore
+  records a qualified candidate, not a delivered increment.
+
 ## Explicitly not yet implemented
 
-- Production identity/OIDC and session revocation, binding purchase contract or
-  order formation and business APIs beyond the proposal boundary, durable outbox
-  delivery, scheduled jobs, general workflow
+- Production identity/federation, production session and recovery policy,
+  invitation delivery, multifactor/passkey enrollment, account suspension
+  administration, binding purchase contract or order formation and business
+  APIs beyond the proposal boundary, durable outbox delivery, scheduled jobs,
+  general workflow
   definitions, task assignment/delegation/escalation/notification, evidence
   malware scanning/promotion/retention/deletion, live connector transport and
   credential/retry scheduling, server-owned agent runbook definitions,
@@ -597,15 +657,12 @@
 
 ## Next action
 
-Restore the approved in-app browser access check and complete rendered
-1280-by-720 desktop and 390-by-844 mobile proof against exact merged revision
-`204ea3624def671d7aa6c475485e75adc5ba9071`. Verify freshness and
-reconciliation visibility, semantic tables, keyboard reachability, absence of
-report mutation controls, no page overflow, no browser warning/error, and
-44-pixel minimum visible actions. Once that final reporting exit gate passes,
-record the sixth vertical as delivered and continue the same Gate 3 focus with
-durable outbox delivery, scheduled jobs, and recovery evidence required by the
-gate exit.
+Allow PR #36's required protected checks to run, merge only after all three
+pass, and repeat qualification on the exact merged revision. Then render the
+regular-user and operational-report flows at 1280-by-720 and 390-by-844 with no
+overflow, browser warning/error, inaccessible control, or visible action below
+44 pixels. Continue Gate 3 with durable outbox delivery, scheduled jobs, and
+recovery evidence only after those exit criteria pass.
 
 AI execution and module-installation implementation remain deferred. This
 status advance does not create a second active delivery focus.

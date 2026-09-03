@@ -12,9 +12,9 @@ import {
   type ReviewTask,
 } from "./partyApi";
 
-type Props = { token: string; tenantId: string; onSignOut: () => void };
+type Props = { token: string; tenantId: string; permissions: string[]; onSignOut: () => void };
 
-export function PartyOnboardingWorkspace({ token, tenantId, onSignOut }: Props) {
+export function PartyOnboardingWorkspace({ token, tenantId, permissions, onSignOut }: Props) {
   const [parties, setParties] = useState<Party[]>([]);
   const [tasks, setTasks] = useState<ReviewTask[]>([]);
   const [selectedId, setSelectedId] = useState<string>();
@@ -27,21 +27,27 @@ export function PartyOnboardingWorkspace({ token, tenantId, onSignOut }: Props) 
   );
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string>();
+  const canCreate = permissions.includes("parties:create");
+  const canSubmitEvidence = permissions.includes("parties:evidence:submit");
+  const canReview = permissions.includes("parties:approve");
+  const canReadTasks = permissions.includes("workflow:tasks:read");
+
+  const loadTasks = useCallback(
+    () => (canReadTasks ? listReviewTasks(token) : Promise.resolve([])),
+    [canReadTasks, token],
+  );
 
   const refresh = useCallback(async () => {
-    const [nextParties, nextTasks] = await Promise.all([
-      listParties(token),
-      listReviewTasks(token),
-    ]);
+    const [nextParties, nextTasks] = await Promise.all([listParties(token), loadTasks()]);
     setParties(nextParties);
     setTasks(nextTasks);
     setSelectedId((current) => current ?? nextParties[0]?.id);
-  }, [token]);
+  }, [loadTasks, token]);
 
   useEffect(() => {
     let active = true;
 
-    void Promise.all([listParties(token), listReviewTasks(token)])
+    void Promise.all([listParties(token), loadTasks()])
       .then(([nextParties, nextTasks]) => {
         if (!active) return;
         setParties(nextParties);
@@ -57,7 +63,7 @@ export function PartyOnboardingWorkspace({ token, tenantId, onSignOut }: Props) 
     return () => {
       active = false;
     };
-  }, [token]);
+  }, [loadTasks, token]);
 
   const selected = useMemo(
     () => parties.find((party) => party.id === selectedId),
@@ -159,13 +165,15 @@ export function PartyOnboardingWorkspace({ token, tenantId, onSignOut }: Props) 
         </aside>
 
         <div className="work-panel">
-          {selected === undefined ? (
+          {selected === undefined && canCreate ? (
             <CreatePartyForm
               form={partyForm}
               busy={busy}
               onChange={setPartyForm}
               onSubmit={submitParty}
             />
+          ) : selected === undefined ? (
+            <p className="empty-state">No party is available for your assigned access.</p>
           ) : (
             <>
               <div className="panel-heading">
@@ -194,7 +202,7 @@ export function PartyOnboardingWorkspace({ token, tenantId, onSignOut }: Props) 
                 </div>
               </dl>
 
-              {selected.status === "draft" || selected.status === "hold" ? (
+              {(selected.status === "draft" || selected.status === "hold") && canSubmitEvidence ? (
                 <form className="command-form" onSubmit={(event) => void submitEvidence(event)}>
                   <h3>Submit evidence</h3>
                   <label>
@@ -230,7 +238,9 @@ export function PartyOnboardingWorkspace({ token, tenantId, onSignOut }: Props) 
                 </form>
               ) : null}
 
-              {selected.status === "evidence_submitted" && selectedTask !== undefined ? (
+              {selected.status === "evidence_submitted" &&
+              selectedTask !== undefined &&
+              canReview ? (
                 <div className="command-form">
                   <h3>Human review decision</h3>
                   <p>

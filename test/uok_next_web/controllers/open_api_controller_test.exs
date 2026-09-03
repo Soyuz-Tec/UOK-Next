@@ -5,6 +5,9 @@ defmodule UokNextWeb.OpenApiControllerTest do
     contract = conn |> get(~p"/api/v1/openapi.json") |> json_response(200)
 
     assert contract["openapi"] == "3.1.0"
+    assert Map.has_key?(contract["paths"], "/session/password")
+    assert Map.has_key?(contract["paths"], "/identity/users")
+    assert Map.has_key?(contract["paths"], "/identity/access-profiles")
     assert Map.has_key?(contract["paths"], "/parties/{id}/evidence")
     assert Map.has_key?(contract["paths"], "/products")
     assert Map.has_key?(contract["paths"], "/locations")
@@ -22,7 +25,7 @@ defmodule UokNextWeb.OpenApiControllerTest do
     assert Map.has_key?(contract["paths"], "/shipment-readiness-cases/{id}/evidence")
     assert Map.has_key?(contract["paths"], "/shipment-readiness-cases/{id}/decision")
     assert Map.has_key?(contract["paths"], "/operational-reports/{id}")
-    assert contract["info"]["version"] == "0.6.0"
+    assert contract["info"]["version"] == "0.7.0"
     assert contract["components"]["securitySchemes"]["bearerAuth"]["scheme"] == "bearer"
   end
 end

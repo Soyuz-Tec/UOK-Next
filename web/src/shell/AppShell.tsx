@@ -141,9 +141,19 @@ export function AppShell({ children }: Props) {
             </span>
             Operational report
           </a>
-          <a className="nav-link" href="#release-boundary">
+          <a
+            className={activeHash === "#users-access" ? "nav-link nav-link--active" : "nav-link"}
+            href="#users-access"
+            aria-current={activeHash === "#users-access" ? "page" : undefined}
+          >
             <span className="nav-icon" aria-hidden="true">
               07
+            </span>
+            Users &amp; access
+          </a>
+          <a className="nav-link" href="#release-boundary">
+            <span className="nav-icon" aria-hidden="true">
+              08
             </span>
             Release boundary
           </a>

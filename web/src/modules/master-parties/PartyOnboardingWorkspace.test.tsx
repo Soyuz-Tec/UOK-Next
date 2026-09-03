@@ -32,6 +32,12 @@ test("loads tenant-scoped parties and exposes the next governed command", async 
     <PartyOnboardingWorkspace
       token="signed-token"
       tenantId="aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa"
+      permissions={[
+        "parties:create",
+        "parties:evidence:submit",
+        "parties:approve",
+        "workflow:tasks:read",
+      ]}
       onSignOut={vi.fn()}
     />,
   );

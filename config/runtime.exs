@@ -94,6 +94,7 @@ if config_env() == :prod do
         "contracts:commitment-proposals:read",
         "evidence:read",
         "evidence:upload",
+        "identity:users:manage",
         "locations:create",
         "locations:read",
         "parties:approve",

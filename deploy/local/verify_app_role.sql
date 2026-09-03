@@ -66,7 +66,12 @@ BEGIN
     has_table_privilege('uok_app', 'public.platform_workflow_human_tasks', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_integrations_connector_receipts', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_agents_plans', 'SELECT,INSERT,UPDATE') AND
-    has_table_privilege('uok_app', 'public.platform_evidence_objects', 'SELECT,INSERT,UPDATE')
+    has_table_privilege('uok_app', 'public.platform_evidence_objects', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.platform_identity_users', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.platform_identity_password_credentials', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.platform_identity_sessions', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.platform_identity_bootstrap_sessions', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.platform_identity_login_throttles', 'SELECT,INSERT,UPDATE,DELETE')
   ) THEN
     RAISE EXCEPTION 'uok_app is missing an expected table privilege';
   END IF;
@@ -124,7 +129,23 @@ BEGIN
       ('public', 'platform_agents_plans', 'UPDATE'),
       ('public', 'platform_evidence_objects', 'SELECT'),
       ('public', 'platform_evidence_objects', 'INSERT'),
-      ('public', 'platform_evidence_objects', 'UPDATE')
+      ('public', 'platform_evidence_objects', 'UPDATE'),
+      ('public', 'platform_identity_users', 'SELECT'),
+      ('public', 'platform_identity_users', 'INSERT'),
+      ('public', 'platform_identity_users', 'UPDATE'),
+      ('public', 'platform_identity_password_credentials', 'SELECT'),
+      ('public', 'platform_identity_password_credentials', 'INSERT'),
+      ('public', 'platform_identity_password_credentials', 'UPDATE'),
+      ('public', 'platform_identity_sessions', 'SELECT'),
+      ('public', 'platform_identity_sessions', 'INSERT'),
+      ('public', 'platform_identity_sessions', 'UPDATE'),
+      ('public', 'platform_identity_bootstrap_sessions', 'SELECT'),
+      ('public', 'platform_identity_bootstrap_sessions', 'INSERT'),
+      ('public', 'platform_identity_bootstrap_sessions', 'UPDATE'),
+      ('public', 'platform_identity_login_throttles', 'SELECT'),
+      ('public', 'platform_identity_login_throttles', 'INSERT'),
+      ('public', 'platform_identity_login_throttles', 'UPDATE'),
+      ('public', 'platform_identity_login_throttles', 'DELETE')
     );
 
   IF unexpected_privileges > 0 THEN

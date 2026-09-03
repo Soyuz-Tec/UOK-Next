@@ -1,6 +1,7 @@
-defmodule UokNext.Modules.Platform.Identity.SignedAccessTokenTest do
-  use ExUnit.Case, async: false
+defmodule UokNext.Modules.Platform.Identity.BootstrapSessionTest do
+  use UokNext.DataCase, async: false
 
+  alias UokNext.Kernel.CommandContext
   alias UokNext.Modules.Platform.Identity.Public
 
   @access_code "uok-next-test-access-code-00000001"
@@ -12,6 +13,20 @@ defmodule UokNext.Modules.Platform.Identity.SignedAccessTokenTest do
     assert {:ok, identity} = Public.verify_access_token(session["access_token"])
     assert identity == session["identity"]
     assert "parties:create" in identity["permissions"]
+
+    assert {:ok, context} =
+             CommandContext.new(%{
+               tenant_id: identity["tenant_id"],
+               actor_id: identity["actor_id"],
+               correlation_id: Ecto.UUID.generate(),
+               permissions: identity["permissions"]
+             })
+
+    assert {:ok, %{"revoked" => true}, :executed} =
+             Public.revoke_access_token(session["access_token"], context)
+
+    assert {:error, revoked} = Public.verify_access_token(session["access_token"])
+    assert revoked.code == "unauthorized"
   end
 
   test "rejects invalid codes, forged tokens, and production profile activation" do
