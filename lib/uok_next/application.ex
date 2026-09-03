@@ -7,22 +7,31 @@ defmodule UokNext.Application do
 
   @impl true
   def start(_type, _args) do
-    children = [
-      UokNext.Repo,
-      UokNext.Kernel.HealthProbe,
-      UokNextWeb.Telemetry,
-      {DNSCluster, query: Application.get_env(:uok_next, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: UokNext.PubSub},
-      # Start a worker by calling: UokNext.Worker.start_link(arg)
-      # {UokNext.Worker, arg},
-      # Start to serve requests, typically the last entry
-      UokNextWeb.Endpoint
-    ]
+    durable_work = Application.fetch_env!(:uok_next, :durable_work)
+
+    children =
+      [UokNext.Repo] ++
+        durable_repo_children(durable_work) ++
+        [UokNext.Kernel.HealthProbe, UokNextWeb.Telemetry] ++
+        durable_worker_children(durable_work) ++
+        [
+          {DNSCluster, query: Application.get_env(:uok_next, :dns_cluster_query) || :ignore},
+          {Phoenix.PubSub, name: UokNext.PubSub},
+          UokNextWeb.Endpoint
+        ]
 
     # See https://elixir.hexdocs.pm/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: UokNext.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  defp durable_repo_children(options) do
+    if options[:enabled], do: [options[:repo]], else: []
+  end
+
+  defp durable_worker_children(options) do
+    if options[:enabled], do: [{UokNext.Kernel.DurableWorkWorker, options}], else: []
   end
 
   # Tell Phoenix to update the endpoint configuration

@@ -143,6 +143,18 @@ PostgreSQL-backed outbox and jobs provide retries, schedules, external side
 effects, integration receipts, and dead-letter review. Business transactions
 never rely on an uncommitted in-memory message.
 
+The first bounded implementation assigns each pending outbox event one
+`kernel.outbox.publish` job. Separately credentialed workers claim jobs with
+row locks and expiring leases, deliver them to an idempotent PostgreSQL local
+handoff receipt, and then mark the event published. Retry uses bounded
+deterministic backoff; exhausted, permanent, and conflicting delivery state
+dead-letters both records. Expired leases reconcile an existing receipt before
+another attempt, so a restart after handoff cannot duplicate that handoff.
+The receipt contains an event digest and identity, not a copied payload. This
+proves durable internal delivery only: it does not acknowledge a consumer,
+open network transport, or authorize a business effect. ADR-0025 governs this
+increment.
+
 The Gate 2 connector-receipt primitive records each outbound attempt before a
 transport can act. Tenant, connector role, operation, delivery key, request
 digest, subject identity/version, attempt lineage, and deadline are immutable.

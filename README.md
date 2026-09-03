@@ -17,8 +17,11 @@ quote comparison, an internal commitment proposal, shipment-readiness GO/HOLD,
 and a governed operational report through the real API, PostgreSQL, object
 storage, and React UI. Protected delivery, exact-revision two-replica local
 qualification, role-bounded regular-user access, failover, and rendered desktop
-and mobile proof have passed. Durable job delivery and recovery remain the next
-Gate 3 increment; no production capability or topology is claimed.
+and mobile proof have passed. The PostgreSQL durable-work candidate now adds a
+separately credentialed outbox worker, scheduled jobs, idempotent local handoff,
+bounded retry/dead-letter, metrics, and restart recovery. Protected delivery
+and exact merged-revision requalification remain required; no production
+capability or topology is claimed.
 
 The target stack is:
 

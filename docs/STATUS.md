@@ -1,6 +1,6 @@
 # Current Build Status
 
-**Snapshot date:** 2026-09-02
+**Snapshot date:** 2026-09-03
 
 **Canonical repository:** `https://github.com/Soyuz-Tec/UOK-Next`
 
@@ -645,14 +645,44 @@
   operator could submit party evidence but had no reviewer decision control;
   the report loaded all six governed stages. The local attributable-user
   increment is therefore delivered for local qualification only.
+- ADR-0025 now governs the first bounded durable-work implementation. Each
+  committed outbox event receives one PostgreSQL-scheduled job; the exact
+  `uok_outbox` role claims it under an expiring lease and appends one
+  idempotent digest-only local-handoff receipt before marking it published.
+  The worker has no business-command, audit, module-table, sequence,
+  membership, ownership, DDL, or `BYPASSRLS` authority. No live connector or
+  external effect is opened.
+- Integration coverage now proves publish, idempotent replay, deterministic
+  retry timing, attempt exhaustion, permanent dead-letter, forced tenant
+  isolation, composite tenant foreign keys, and expired-lease recovery both
+  before and after the handoff receipt. Readiness includes the separate worker
+  repository, and Prometheus exports bounded execution/recovery outcomes.
+- Backend quality passes 136 tests with one object-store integration test
+  reserved for the immutable runtime qualifier. The existing 19 frontend tests,
+  formatting, lint, TypeScript 7 and 6 compatibility, production build,
+  architecture, code-discipline, database/object-storage policy, credential,
+  static-security, and production/local configuration checks pass.
+- Clean candidate revision `649ceaee4211a88546d87f148a6e480e8c760131`
+  rebuilt as immutable image
+  `1283bea87812738301c710be4bb4a3089558e25a50c93fd9777b6f55602ba13c`
+  on both replicas. The qualifier reconciled exact `uok_app` and `uok_outbox`
+  privileges, migrated PostgreSQL 19, completed the object-store and full Gate
+  3 business/reporting flow, and delivered all 1,043 retained outbox events
+  with zero pending, publishing, or dead-letter state.
+- After both app processes stopped, qualification changed one completed job to
+  an expired receipt-present lease and restarted a single replica. The worker
+  reconciled the job and event to completed/published without increasing the
+  attempt count, exported recovery telemetry, restored both replicas, and
+  passed four readiness, release-identity, and settled-report failover probes.
+  Protected CI and exact merged-revision requalification remain outstanding.
 
 ## Explicitly not yet implemented
 
 - Production identity/federation, production session and recovery policy,
   invitation delivery, multifactor/passkey enrollment, account suspension
   administration, binding purchase contract or order formation and business
-  APIs beyond the proposal boundary, durable outbox delivery, scheduled jobs,
-  general workflow
+  APIs beyond the proposal boundary, additional durable job kinds, operator
+  dead-letter redrive, consumer registration/acknowledgment, general workflow
   definitions, task assignment/delegation/escalation/notification, evidence
   malware scanning/promotion/retention/deletion, live connector transport and
   credential/retry scheduling, server-owned agent runbook definitions,
@@ -671,11 +701,11 @@
 
 ## Next action
 
-Define the first bounded durable-work increment under a new ADR, then implement
-PostgreSQL-backed outbox delivery, scheduled-job execution, bounded retry and
-dead-letter behavior, observability, and restart/recovery evidence without
-opening a live external connector or weakening module ownership. Keep the
-business proving operation as the only active Gate 3 focus.
+Deliver this qualified durable-work branch through protected review and required
+checks, then rerun the complete immutable two-replica qualifier on the exact
+merge commit. If that evidence remains green, record the Gate 3 exit and select
+the first bounded Gate 4 specialist integration without opening connector
+transport, production identity, or model/tool execution prematurely.
 
 AI execution and module-installation implementation remain deferred. This
 status advance does not create a second active delivery focus.

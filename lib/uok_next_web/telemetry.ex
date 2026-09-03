@@ -68,6 +68,13 @@ defmodule UokNextWeb.Telemetry do
         reporter_options: [buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1_000]],
         unit: {:native, :millisecond}
       ),
+      counter("uok_next.durable_work.stop.count", tags: [:job, :outcome]),
+      distribution("uok_next.durable_work.stop.duration",
+        tags: [:job, :outcome],
+        reporter_options: [buckets: [1, 5, 10, 25, 50, 100, 250, 500, 1_000]],
+        unit: {:native, :millisecond}
+      ),
+      counter("uok_next.durable_work.recovery.count", tags: [:job, :outcome]),
       # VM Metrics
       last_value("vm.memory.total", unit: {:byte, :kilobyte}),
       last_value("vm.total_run_queue_lengths.total"),

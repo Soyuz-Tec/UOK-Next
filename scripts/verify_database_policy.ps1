@@ -41,13 +41,16 @@ foreach ($extension in $requiredExtensions) {
 
 $budget = $policy.connection_budget
 $applicationConnections = $budget.application_replicas * $budget.application_pool_per_replica
+$outboxConnections = $budget.application_replicas * $budget.outbox_pool_per_replica
 $nonReservedConnections = $budget.local_max_connections -
     $budget.local_reserved_connections -
     $budget.local_superuser_reserved_connections
 
 if ($applicationConnections -ge $nonReservedConnections -or
     $budget.application_role_limit -lt $applicationConnections -or
-    $budget.application_role_limit -ge $nonReservedConnections) {
+    $budget.application_role_limit -ge $nonReservedConnections -or
+    $budget.outbox_role_limit -lt $outboxConnections -or
+    ($applicationConnections + $outboxConnections) -ge $nonReservedConnections) {
     throw "The local application connection budget has no safe operating headroom"
 }
 
@@ -124,6 +127,29 @@ foreach ($entry in $runtimePrivileges.GetEnumerator()) {
     }
 }
 
+$outboxGrantText = Get-Content -LiteralPath `
+    (Join-Path $repoRoot "deploy\local\grant_outbox_role.sql") -Raw
+$outboxVerificationText = Get-Content -LiteralPath `
+    (Join-Path $repoRoot "deploy\local\verify_outbox_role.sql") -Raw
+$outboxPrivileges = [ordered]@{
+    kernel_outbox_events = "SELECT, UPDATE"
+    kernel_durable_jobs = "SELECT, INSERT, UPDATE"
+    kernel_outbox_deliveries = "SELECT, INSERT"
+}
+
+foreach ($entry in $outboxPrivileges.GetEnumerator()) {
+    $compactPrivileges = $entry.Value.Replace(" ", "")
+    $grantPattern = "GRANT $([Regex]::Escape($entry.Value)) ON TABLE $($entry.Key) TO uok_outbox;"
+    $verificationPattern =
+        "has_table_privilege\('uok_outbox', 'public\.$($entry.Key)', '$compactPrivileges'\)"
+
+    if ($outboxGrantText -notmatch $grantPattern -or
+        $outboxVerificationText -notmatch $verificationPattern) {
+        throw "Durable-work database privileges for '$($entry.Key)' are missing or unverified"
+    }
+}
+
 Write-Output "Database policy verification passed."
 Write-Output "Qualified PostgreSQL $($postgres.compatibility_release); production target is major $($postgres.target_major) GA."
 Write-Output "Application pools consume $applicationConnections of $nonReservedConnections non-reserved local slots."
+Write-Output "Durable-work pools consume $outboxConnections additional local slots."

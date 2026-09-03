@@ -143,6 +143,7 @@ jobs:
         env:
           MIX_ENV: prod
           DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
+          OUTBOX_DATABASE_URL: ecto://uok_outbox:ci_only@db.example.invalid/uok_next
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
           DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
@@ -155,6 +156,7 @@ jobs:
         env:
           MIX_ENV: prod
           DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
+          OUTBOX_DATABASE_URL: ecto://uok_outbox:ci_only@db.example.invalid/uok_next
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
           DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
@@ -170,6 +172,7 @@ jobs:
         env:
           MIX_ENV: prod
           DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
+          OUTBOX_DATABASE_URL: ecto://uok_outbox:ci_only@db.example.invalid/uok_next
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
           DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
@@ -186,6 +189,7 @@ jobs:
         env:
           MIX_ENV: prod
           DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next?ssl=false
+          OUTBOX_DATABASE_URL: ecto://uok_outbox:ci_only@db.example.invalid/uok_next
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
           DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
@@ -199,6 +203,7 @@ jobs:
           MIX_ENV: prod
           UOK_BUILD_REVISION: ${{ github.sha }}
           DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
+          OUTBOX_DATABASE_URL: ecto://uok_outbox:ci_only@db.example.invalid/uok_next
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
         run: |
@@ -211,6 +216,7 @@ jobs:
           MIX_ENV: prod
           UOK_BUILD_REVISION: ${{ github.sha }}
           DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next?pool_size=1000000
+          OUTBOX_DATABASE_URL: ecto://uok_outbox:ci_only@db.example.invalid/uok_next
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
           DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
@@ -219,10 +225,28 @@ jobs:
             echo "DATABASE_URL unexpectedly overrode repository-owned resource bounds"
             exit 1
           fi
+      - name: Reject a shared application and durable-work database identity
+        env:
+          MIX_ENV: prod
+          DATABASE_URL: ecto://uok_app:ci_only@db.example.invalid/uok_next
+          OUTBOX_DATABASE_URL: ecto://uok_app:ci_only@db.example.invalid/uok_next
+          SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+          PHX_HOST: uok-next.example.invalid
+          DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
+          OBJECT_STORE_URL: https://objects.example.invalid
+          OBJECT_STORE_ACCESS_KEY: uok_ci_object_store_access_01
+          OBJECT_STORE_SECRET_KEY: uok_ci_object_store_secret_0123456789abcdef
+          OBJECT_STORE_BUCKET: uok-evidence
+        run: |
+          if mix run --no-start -e 'System.halt(0)'; then
+            echo "The application identity unexpectedly received durable-work authority"
+            exit 1
+          fi
       - name: Verify isolated local qualification profile
         env:
           MIX_ENV: prod
           DATABASE_URL: ecto://uok_next:ci_only@postgres/uok_next
+          OUTBOX_DATABASE_URL: ecto://uok_outbox:ci_only@postgres/uok_next
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: localhost
           UOK_DEPLOYMENT_PROFILE: local_qualification
@@ -239,6 +263,7 @@ jobs:
         env:
           MIX_ENV: prod
           DATABASE_URL: ecto://uok_next:ci_only@db.example.invalid/uok_next
+          OUTBOX_DATABASE_URL: ecto://uok_outbox:ci_only@db.example.invalid/uok_next
           SECRET_KEY_BASE: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
           PHX_HOST: uok-next.example.invalid
           DATABASE_CA_CERT_FILE: /etc/ssl/certs/ca-certificates.crt

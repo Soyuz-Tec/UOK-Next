@@ -5,6 +5,7 @@ defmodule UokNext.Kernel.Health do
 
   alias UokNext.Kernel.DatabaseCompatibility
   alias UokNext.Kernel.ReleaseIdentity
+  alias UokNext.OutboxRepo
   alias UokNext.Repo
 
   @query_timeout 1_000
@@ -14,11 +15,12 @@ defmodule UokNext.Kernel.Health do
     {:ok, ReleaseIdentity.current() |> Map.put(:status, "live")}
   end
 
-  @spec readiness(module()) :: {:ok, map()} | {:error, map()}
-  def readiness(repo \\ Repo) do
+  @spec readiness(module(), module()) :: {:ok, map()} | {:error, map()}
+  def readiness(repo \\ Repo, outbox_repo \\ OutboxRepo) do
     with :ok <- database_available(repo),
          :ok <- DatabaseCompatibility.verify(repo),
-         :ok <- schema_current(repo) do
+         :ok <- schema_current(repo),
+         :ok <- durable_work_available(outbox_repo) do
       {:ok, ReleaseIdentity.current() |> Map.put(:status, "ready")}
     else
       {:error, reason} ->
@@ -28,6 +30,17 @@ defmodule UokNext.Kernel.Health do
 
   @spec startup(module()) :: {:ok, map()} | {:error, map()}
   def startup(repo \\ Repo), do: readiness(repo)
+
+  defp durable_work_available(repo) do
+    if Application.fetch_env!(:uok_next, :durable_work)[:enabled] do
+      case database_available(repo) do
+        :ok -> :ok
+        {:error, _reason} -> {:error, "durable_work_unavailable"}
+      end
+    else
+      :ok
+    end
+  end
 
   defp database_available(repo) do
     case repo.query("SELECT 1", [], timeout: @query_timeout) do

@@ -101,6 +101,22 @@ Production role topology:
 | `uok_replication` | `REPLICATION` only from approved private network identities |
 | `uok_break_glass` | Disabled or vaulted by default; time-bound, approved, and audited use |
 
+ADR-0025 activates the first bounded `uok_outbox` path. Each application
+replica has a two-connection worker pool under an eight-connection role limit.
+The role may select and update `kernel_outbox_events`, manage
+`kernel_durable_jobs`, and append/read `kernel_outbox_deliveries`; it has no
+command, audit, module-business, sequence, role-membership, DDL, ownership, or
+`BYPASSRLS` authority. Forced row-level policies grant cross-tenant access only
+when PostgreSQL `current_user` is exactly `uok_outbox`; application access to
+the original outbox remains transaction-local and tenant-scoped.
+
+The durable job table stores only one reviewed job kind, event identity,
+schedule, attempt budget, lease, completion time, and bounded failure code.
+The delivery table stores one idempotent `kernel.local_handoff.v1` receipt per
+event with a SHA-256 digest and no copied payload. Composite tenant foreign keys
+bind both tables to the source event. Live connectors, arbitrary job arguments,
+consumer registration, and operator redrive are not part of this schema.
+
 The local qualifier may use a container bootstrap superuser, but application
 replicas never do. Production secrets come from a managed secret store, rotate
 without image rebuilds, and are never logged, placed in URLs with query-owned

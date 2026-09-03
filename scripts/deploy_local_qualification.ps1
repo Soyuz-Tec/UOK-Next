@@ -151,6 +151,7 @@ try {
     $env:UOK_LOCAL_SECRET_KEY_BASE = New-RandomToken -Bytes 64
     $env:UOK_LOCAL_METRICS_TOKEN = New-RandomToken -Bytes 48
     $env:UOK_APP_DB_PASSWORD = New-RandomHex -Bytes 32
+    $env:UOK_OUTBOX_DB_PASSWORD = New-RandomHex -Bytes 32
     $env:UOK_OBJECT_STORE_ACCESS_KEY = New-RandomHex -Bytes 24
     $env:UOK_OBJECT_STORE_SECRET_KEY = New-RandomHex -Bytes 48
     $env:UOK_OBJECT_STORE_BUCKET = "uok-evidence"
@@ -376,6 +377,16 @@ try {
         throw "A stale runtime-authorized database session survived reconciliation"
     }
 
+    & podman compose -f $composePath exec -T postgres psql `
+        -v ON_ERROR_STOP=1 `
+        -v "outbox_password=$($env:UOK_OUTBOX_DB_PASSWORD)" `
+        -U "${env:UOK_DB_USER}" `
+        -d "${env:UOK_DB_NAME}" `
+        -f /qualification/prepare_outbox_role.sql
+    if ($LASTEXITCODE -ne 0) {
+        throw "The least-privileged durable-work database role could not be prepared"
+    }
+
     & podman compose -f $composePath up -d migrate
     if ($LASTEXITCODE -ne 0) {
         throw "The local qualification migration failed to start"
@@ -399,9 +410,27 @@ try {
         -v ON_ERROR_STOP=1 `
         -U "${env:UOK_DB_USER}" `
         -d "${env:UOK_DB_NAME}" `
+        -f /qualification/grant_outbox_role.sql
+    if ($LASTEXITCODE -ne 0) {
+        throw "The least-privileged durable-work grants could not be applied"
+    }
+
+    & podman compose -f $composePath exec -T postgres psql `
+        -v ON_ERROR_STOP=1 `
+        -U "${env:UOK_DB_USER}" `
+        -d "${env:UOK_DB_NAME}" `
         -f /qualification/verify_app_role.sql
     if ($LASTEXITCODE -ne 0) {
         throw "The local runtime database role failed least-privilege verification"
+    }
+
+    & podman compose -f $composePath exec -T postgres psql `
+        -v ON_ERROR_STOP=1 `
+        -U "${env:UOK_DB_USER}" `
+        -d "${env:UOK_DB_NAME}" `
+        -f /qualification/verify_outbox_role.sql
+    if ($LASTEXITCODE -ne 0) {
+        throw "The durable-work database role failed least-privilege verification"
     }
 
     & podman compose -f $composePath exec -T postgres psql `
@@ -922,6 +951,9 @@ try {
     if ($metrics.StatusCode -ne 200 -or $metrics.Content -notmatch 'uok_next_repo_query') {
         throw "The authenticated metrics endpoint did not expose repository telemetry"
     }
+    if ($metrics.Content -notmatch 'uok_next_durable_work_stop') {
+        throw "The authenticated metrics endpoint did not expose durable-work telemetry"
+    }
 
     $objectStoreQualification = (& podman exec uok-next-app-a-1 /app/bin/uok_next rpc `
             "UokNext.Release.ObjectStoreQualification.run!()" | Out-String)
@@ -930,6 +962,144 @@ try {
             'Object-store create-only, integrity, and deletion qualification passed') {
         throw "The immutable bounded object-store qualification failed"
     }
+
+    $durableWorkDrained = $false
+    $durableState = $null
+    foreach ($attempt in 1..30) {
+        $durableStateJson = (& podman compose -f $composePath exec -T postgres psql `
+                -v ON_ERROR_STOP=1 `
+                -U "${env:UOK_DB_USER}" `
+                -d "${env:UOK_DB_NAME}" `
+                -Atc "SELECT json_build_object('events', count(*), 'completed_jobs', count(*) FILTER (WHERE job.status = 'completed'), 'deliveries', count(delivery.id), 'pending', count(*) FILTER (WHERE event.status IN ('pending', 'publishing')), 'dead_letter', count(*) FILTER (WHERE event.status = 'dead_letter')) FROM kernel_outbox_events event LEFT JOIN kernel_durable_jobs job ON job.tenant_id = event.tenant_id AND job.outbox_event_id = event.id LEFT JOIN kernel_outbox_deliveries delivery ON delivery.tenant_id = event.tenant_id AND delivery.outbox_event_id = event.id AND delivery.consumer = 'kernel.local_handoff.v1'" |
+                Out-String).Trim()
+        if ($LASTEXITCODE -ne 0) {
+            throw "The durable-work state could not be inspected"
+        }
+
+        $durableState = $durableStateJson | ConvertFrom-Json
+        if ([int]$durableState.events -gt 0 -and
+            [int]$durableState.events -eq [int]$durableState.completed_jobs -and
+            [int]$durableState.events -eq [int]$durableState.deliveries -and
+            [int]$durableState.pending -eq 0 -and [int]$durableState.dead_letter -eq 0) {
+            $durableWorkDrained = $true
+            break
+        }
+        Start-Sleep -Seconds 1
+    }
+    if (-not $durableWorkDrained) {
+        throw "The PostgreSQL durable handoff did not drain every committed outbox event"
+    }
+
+    & podman compose -f $composePath stop app-a app-b
+    if ($LASTEXITCODE -ne 0) {
+        throw "The application replicas could not be stopped for durable-work recovery proof"
+    }
+
+    $recoveryFixture = (& podman compose -f $composePath exec -T postgres psql `
+            -At `
+            -U "${env:UOK_DB_USER}" `
+            -d "${env:UOK_DB_NAME}" `
+            -f /qualification/seed_expired_outbox_lease.sql | Out-String).Trim()
+    if ($LASTEXITCODE -ne 0) {
+        throw "The expired durable-work lease fixture could not be established"
+    }
+    $recoveryMatch = [regex]::Match(
+        $recoveryFixture,
+        '^([0-9a-f-]{36})\|([0-9a-f-]{36})\|([1-9][0-9]*)$'
+    )
+    if (-not $recoveryMatch.Success) {
+        throw "The expired durable-work lease receipt was malformed"
+    }
+    $recoveryJobId = $recoveryMatch.Groups[1].Value
+    $recoveryEventId = $recoveryMatch.Groups[2].Value
+    $recoveryAttemptCount = [int]$recoveryMatch.Groups[3].Value
+
+    & podman compose -f $composePath up -d app-a
+    if ($LASTEXITCODE -ne 0) {
+        throw "The first application replica could not restart for durable-work recovery"
+    }
+
+    $durableWorkRecovered = $false
+    foreach ($attempt in 1..30) {
+        $recoveryState = (& podman compose -f $composePath exec -T postgres psql `
+                -U "${env:UOK_DB_USER}" `
+                -d "${env:UOK_DB_NAME}" `
+                -Atc "SELECT job.status || '|' || event.status || '|' || job.attempt_count::text FROM kernel_durable_jobs job JOIN kernel_outbox_events event ON event.tenant_id = job.tenant_id AND event.id = job.outbox_event_id WHERE job.id = '$recoveryJobId'::uuid AND event.id = '$recoveryEventId'::uuid" |
+                Out-String).Trim()
+        if ($LASTEXITCODE -ne 0) {
+            throw "The durable-work recovery state could not be inspected"
+        }
+        if ($recoveryState -eq "completed|published|$recoveryAttemptCount") {
+            $durableWorkRecovered = $true
+            break
+        }
+        Start-Sleep -Seconds 1
+    }
+    if (-not $durableWorkRecovered) {
+        throw "The restarted worker did not reconcile the expired receipt-present lease"
+    }
+
+    $recoveredReplicaReady = $false
+    foreach ($attempt in 1..30) {
+        if (Test-NativeCommand -FilePath "podman" -Arguments @(
+                "exec", "uok-next-app-a-1", "wget", "-qO-",
+                "http://127.0.0.1:4000/api/v1/health/ready"
+            )) {
+            $recoveredReplicaReady = $true
+            break
+        }
+        Start-Sleep -Seconds 1
+    }
+    if (-not $recoveredReplicaReady) {
+        throw "The recovered application replica did not become ready"
+    }
+
+    $recoveryMetrics = (& podman exec uok-next-app-a-1 wget -qO- `
+            --header="Authorization: Bearer $($env:UOK_LOCAL_METRICS_TOKEN)" `
+            http://127.0.0.1:4000/api/v1/metrics | Out-String)
+    if ($LASTEXITCODE -ne 0 -or
+        $recoveryMetrics -notmatch 'uok_next_durable_work_recovery_count') {
+        throw "The recovered worker did not expose bounded recovery telemetry"
+    }
+
+    & podman compose -f $composePath up -d app-b
+    if ($LASTEXITCODE -ne 0) {
+        throw "The second application replica could not restart after recovery proof"
+    }
+
+    $secondReplicaReady = $false
+    foreach ($attempt in 1..30) {
+        if (Test-NativeCommand -FilePath "podman" -Arguments @(
+                "exec", "uok-next-app-b-1", "wget", "-qO-",
+                "http://127.0.0.1:4000/api/v1/health/ready"
+            )) {
+            $secondReplicaReady = $true
+            break
+        }
+        Start-Sleep -Seconds 1
+    }
+    if (-not $secondReplicaReady) {
+        throw "The second application replica did not become ready after recovery proof"
+    }
+
+    # Direct readiness precedes HAProxy's own admission window. Wait for that
+    # bounded window and then establish the settled report projection after
+    # asynchronous delivery state has reached its durable terminal state.
+    Start-Sleep -Seconds 5
+    $settledOperationalReport = Invoke-RestMethod -Uri $operationalReportUri `
+        -Headers $readHeaders -TimeoutSec 10 -DisableKeepAlive
+    $settledRepeatedReport = Invoke-RestMethod -Uri $operationalReportUri `
+        -Headers $readHeaders -TimeoutSec 10 -DisableKeepAlive
+    if ($settledOperationalReport.data.projection_id -ne
+        $settledRepeatedReport.data.projection_id -or
+        [int]$settledOperationalReport.data.delivery_status_counts.pending -ne 0 -or
+        [int]$settledOperationalReport.data.delivery_status_counts.publishing -ne 0 -or
+        [int]$settledOperationalReport.data.delivery_status_counts.dead_letter -ne 0 -or
+        [int]$settledOperationalReport.data.delivery_status_counts.published -ne
+            $settledOperationalReport.data.delivery_events.Count) {
+        throw "The operational report did not settle on the durable delivery state"
+    }
+    $operationalReport = $settledOperationalReport
 
     & podman compose -f $composePath stop app-a
     if ($LASTEXITCODE -ne 0) {
@@ -989,6 +1159,8 @@ try {
         shipment_readiness_qualified_case_id = $readiness.data.id
         operational_reporting_flow = "live repeatable-read projection, six governed stages, five verified evidence references, bounded audit and delivery lineage, deterministic reconciliation, zero-stale failure policy, and three false authority boundaries passed"
         operational_reporting_projection_id = $operationalReport.data.projection_id
+        durable_work = "$($durableState.events) committed events reached idempotent local handoff; retry/dead-letter tests passed; expired receipt-present lease recovered after restart without another attempt"
+        durable_work_recovery_job_id = $recoveryJobId
         local_identity_credential_path = $identityCredentialPath
         replicas = 2
         single_replica_failover = "4 readiness, release, and operational-report probes passed"

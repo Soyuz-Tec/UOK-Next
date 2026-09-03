@@ -53,6 +53,52 @@ defmodule UokNext.Repo.TenantReferentialIntegrityTest do
     assert error.postgres.constraint == "kernel_outbox_events_tenant_receipt_fkey"
   end
 
+  test "durable jobs cannot reference an outbox event from another tenant" do
+    {_tenant_id, event_id} = insert_outbox_event()
+
+    error =
+      assert_raise Postgrex.Error, fn ->
+        Repo.query!(
+          """
+          INSERT INTO kernel_durable_jobs (
+            id, tenant_id, job_kind, outbox_event_id, status, run_at,
+            attempt_count, max_attempts, inserted_at, updated_at
+          ) VALUES (
+            $1::uuid, $2::uuid, 'kernel.outbox.publish', $3::uuid, 'scheduled', now(),
+            0, 5, now(), now()
+          )
+          """,
+          [uuid(), uuid(), event_id]
+        )
+      end
+
+    assert error.postgres.code == :foreign_key_violation
+    assert error.postgres.constraint == "kernel_durable_jobs_tenant_outbox_fkey"
+  end
+
+  test "handoff receipts cannot reference an outbox event from another tenant" do
+    {_tenant_id, event_id} = insert_outbox_event()
+
+    error =
+      assert_raise Postgrex.Error, fn ->
+        Repo.query!(
+          """
+          INSERT INTO kernel_outbox_deliveries (
+            id, tenant_id, outbox_event_id, consumer, event_digest,
+            delivered_at, inserted_at
+          ) VALUES (
+            $1::uuid, $2::uuid, $3::uuid, 'kernel.local_handoff.v1',
+            decode($4, 'hex'), now(), now()
+          )
+          """,
+          [uuid(), uuid(), event_id, String.duplicate("a", 64)]
+        )
+      end
+
+    assert error.postgres.code == :foreign_key_violation
+    assert error.postgres.constraint == "kernel_outbox_deliveries_tenant_outbox_fkey"
+  end
+
   test "a sourcing lane cannot reference product authority from another tenant" do
     tenant_id = uuid()
     other_tenant_id = uuid()
@@ -86,6 +132,11 @@ defmodule UokNext.Repo.TenantReferentialIntegrityTest do
   end
 
   defp insert_receipt do
+    {_tenant_id, receipt_id} = insert_receipt_for_tenant(uuid())
+    receipt_id
+  end
+
+  defp insert_receipt_for_tenant(tenant_id) do
     receipt_id = uuid()
 
     Repo.query!(
@@ -98,10 +149,35 @@ defmodule UokNext.Repo.TenantReferentialIntegrityTest do
         'test.command', decode('00', 'hex'), 'completed', now(), now()
       )
       """,
-      [receipt_id, uuid(), uuid(), uuid(), Ecto.UUID.generate()]
+      [receipt_id, tenant_id, uuid(), uuid(), Ecto.UUID.generate()]
     )
 
-    receipt_id
+    {tenant_id, receipt_id}
+  end
+
+  defp insert_outbox_event do
+    tenant_id = uuid()
+    {^tenant_id, receipt_id} = insert_receipt_for_tenant(tenant_id)
+    event_id = uuid()
+
+    Repo.query!(
+      """
+      INSERT INTO kernel_outbox_events (
+        id, tenant_id, actor_id, correlation_id, command_receipt_id,
+        event_name, event_version, aggregate_type, aggregate_id,
+        aggregate_version, classification, payload, status, available_at,
+        attempt_count, inserted_at, updated_at
+      ) VALUES (
+        $1::uuid, $2::uuid, $3::uuid, $4::uuid, $5::uuid,
+        'test.event', 1, 'test_resource', $6::uuid,
+        1, 'internal', '{}'::jsonb, 'pending', now(),
+        0, now(), now()
+      )
+      """,
+      [event_id, tenant_id, uuid(), uuid(), receipt_id, uuid()]
+    )
+
+    {tenant_id, event_id}
   end
 
   defp insert_party(tenant_id, id) do

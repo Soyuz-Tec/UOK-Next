@@ -29,7 +29,9 @@
     "local_superuser_reserved_connections": 3,
     "application_replicas": 2,
     "application_pool_per_replica": 5,
-    "application_role_limit": 20
+    "application_role_limit": 20,
+    "outbox_pool_per_replica": 2,
+    "outbox_role_limit": 8
   },
   "service_objectives": {
     "monthly_availability_percent": 99.9,

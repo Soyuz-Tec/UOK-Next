@@ -55,6 +55,19 @@ defmodule UokNext.Kernel.HealthTest do
         do: {:ok, %{rows: [[190_000, "19beta2"]]}}
   end
 
+  defmodule ReadyRepo do
+    def query("SELECT 1", [], _options), do: {:ok, %{num_rows: 1}}
+
+    def query(
+          "SELECT current_setting('server_version_num')::integer, current_setting('server_version')",
+          [],
+          _options
+        ),
+        do: {:ok, %{rows: [[190_000, "19.0"]]}}
+
+    def query(_statement, [_version], _options), do: {:ok, %{num_rows: 1}}
+  end
+
   test "liveness is independent from database readiness" do
     assert {:ok, %{status: "live"}} = Health.liveness()
     assert {:error, response} = Health.readiness(UnavailableRepo)
@@ -87,5 +100,15 @@ defmodule UokNext.Kernel.HealthTest do
 
     assert {:error, response} = Health.readiness(PrereleaseVersionRepo)
     assert response.reason == "database_prerelease_forbidden"
+  end
+
+  test "readiness includes the durable-work repository when enabled" do
+    previous = Application.fetch_env!(:uok_next, :durable_work)
+    Application.put_env(:uok_next, :durable_work, Keyword.put(previous, :enabled, true))
+
+    on_exit(fn -> Application.put_env(:uok_next, :durable_work, previous) end)
+
+    assert {:error, response} = Health.readiness(ReadyRepo, UnavailableRepo)
+    assert response.reason == "durable_work_unavailable"
   end
 end
