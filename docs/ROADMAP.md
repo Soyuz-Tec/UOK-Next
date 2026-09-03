@@ -99,11 +99,24 @@ reporting journey, regular-user creation and forced password activation,
 role-bounded party creation, revocation, and rendered desktop/mobile behavior.
 It remains explicitly distinct from production identity or federation.
 
+ADR-0025 implements the first bounded durable-work increment without opening a
+live connector. One PostgreSQL job schedules each transactional outbox event;
+the separately credentialed `uok_outbox` role claims it with a lease and writes
+an idempotent digest-only local-handoff receipt before publication completes.
+Deterministic backoff, attempt exhaustion, permanent dead-letter, bounded
+telemetry, and receipt-aware lease recovery are covered by integration tests.
+Candidate revision `649ceaee4211a88546d87f148a6e480e8c760131` drained 1,043
+committed events, recovered an expired receipt-present lease after both app
+processes stopped without increasing its attempt count, and passed the full
+two-replica business/reporting/failover qualifier. Protected delivery and
+exact merged-revision qualification remain the Gate 3 exit evidence.
+
 Completing the first vertical is necessary evidence, not the Gate 3 exit by
 itself.
 
 AI remains advisory throughout Gate 3. The delivered RFQ oracle, commitment
-proposal, and shipment-readiness gate plus the next reporting slice must
+proposal, shipment-readiness gate, reporting surface, and durable-work slice
+must
 preserve deterministic commands, policies, evidence, exact human decisions,
 recovery, and reportable outcomes.
 They do not open model/tool execution, persistent agent memory, dynamic module
