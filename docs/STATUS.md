@@ -1,6 +1,6 @@
 # Current Build Status
 
-**Snapshot date:** 2026-08-26
+**Snapshot date:** 2026-09-02
 
 **Canonical repository:** `https://github.com/Soyuz-Tec/UOK-Next`
 
@@ -535,7 +535,7 @@
   without exposing a native scrollbar. The fifth sequential Gate 3 vertical is
   therefore delivered, while Gate 3 remains active.
 
-## Gate 3 governed operational reporting merged and runtime-qualified
+## Gate 3 governed operational reporting delivered
 
 - Accepted ADR-0023 assigns the non-persisted
   `operational_report_projection` to `intelligence.bi`. The report consumes one
@@ -568,13 +568,15 @@
   party-to-readiness journey, deterministic report projection
   `2913efff7f9196b657ef8c4ed7bd6349717b036c1e35ad1e375d0c0b00eda695`,
   and four single-replica readiness, release, and report probes passed.
-- The loopback browser shell returned HTTP 200, but exact-merge rendered
-  desktop/mobile capture remains blocked because the Codex in-app browser
-  could not verify its admin-enforced access policy. The reporting vertical is
-  merged and runtime-qualified but is not yet recorded as delivered until that
-  visual gate passes.
+- On protected-main revision
+  `fc5bf65b3f3329553e41f58603ad6a5d06b47dc4`, the report automatically loaded
+  one complete six-stage projection at 1280-by-720 and 390-by-844. Both
+  viewports had no horizontal overflow, unnamed control, visible control below
+  44 pixels, browser warning, or browser error. The exact report remained
+  reconciled, read-only, and explicit that it created no business or external
+  effect. The governed reporting vertical is therefore delivered.
 
-## Gate 3 local attributable-user increment verified in source
+## Gate 3 local attributable-user increment delivered
 
 - Accepted ADR-0024 keeps the clone-local access code as bootstrap
   administration and adds tenant-owned regular users under `platform.identity`.
@@ -623,14 +625,26 @@
   `0ac0cb27-818e-4a21-b893-aa2c0ae2f808`. Its server-owned profile exposes only
   evidence and party-onboarding permissions; the generated credential is in
   clone-local, ACL-restricted storage outside the repository.
-- Protected PR #36 remains open. GitHub recorded open, reopen, and synchronize
-  attempts, but its action scheduler has not created the required foundation,
-  application, or release jobs. Administrative bypass is prohibited, so merge
-  and exact-merge qualification remain blocked on those external checks.
-- The browser shell returns through the loopback proxy, but rendered
-  desktop/mobile automation remains blocked because the in-app browser cannot
-  currently verify its admin-enforced access policy. This section therefore
-  records a qualified candidate, not a delivered increment.
+- Protected PR #36 passed the required foundation, application, and release
+  checks and was squash-merged without administrative bypass as exact revision
+  `fc5bf65b3f3329553e41f58603ad6a5d06b47dc4`.
+- The exact merged image `localhost/uok-next:fc5bf65b3f33` has identity
+  `fcd8461a9e327c3c0609715738929aa7f5efdd25ffd327485f24a3db9181cf4c`
+  on both replicas. PostgreSQL 19 migrations and unsafe-role reconciliation,
+  the immutable object-store round trip, the complete Gate 3 business chain,
+  deterministic reporting, authenticated metrics, release identity, and four
+  single-replica readiness, release, and report probes passed.
+- On that exact protected revision, administrator creation, temporary-password
+  login, mandatory password replacement, regular login, server-owned operator
+  permissions, draft-party creation, and session revocation passed for a new
+  clone-local `entity.operator`. The rotated credential remains only in
+  ACL-restricted clone-local storage outside the repository.
+- The regular-user workspace and operational report rendered at 1280-by-720
+  and 390-by-844. Both viewports had no horizontal overflow, unnamed control,
+  visible control below 44 pixels, browser warning, or browser error. The
+  operator could submit party evidence but had no reviewer decision control;
+  the report loaded all six governed stages. The local attributable-user
+  increment is therefore delivered for local qualification only.
 
 ## Explicitly not yet implemented
 
@@ -657,12 +671,11 @@
 
 ## Next action
 
-Allow PR #36's required protected checks to run, merge only after all three
-pass, and repeat qualification on the exact merged revision. Then render the
-regular-user and operational-report flows at 1280-by-720 and 390-by-844 with no
-overflow, browser warning/error, inaccessible control, or visible action below
-44 pixels. Continue Gate 3 with durable outbox delivery, scheduled jobs, and
-recovery evidence only after those exit criteria pass.
+Define the first bounded durable-work increment under a new ADR, then implement
+PostgreSQL-backed outbox delivery, scheduled-job execution, bounded retry and
+dead-letter behavior, observability, and restart/recovery evidence without
+opening a live external connector or weakening module ownership. Keep the
+business proving operation as the only active Gate 3 focus.
 
 AI execution and module-installation implementation remain deferred. This
 status advance does not create a second active delivery focus.

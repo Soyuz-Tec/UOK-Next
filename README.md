@@ -11,11 +11,14 @@ evidence, policy, audit lineage, and recoverability.
 
 ## Current state
 
-**Gate 1 is complete and Gate 2 Kernel v0 is active.** The durable command
-kernel, first governed party-onboarding slice, module-neutral React shell,
-PostgreSQL 19 platform, and provider-neutral S3 evidence-byte boundary have
-passed protected CI and clean-revision local HA qualification. No production
-business capability or production topology is claimed.
+**Gates 1 and 2 are qualified and Gate 3 is active.** The first proving
+operation now reaches attributable party onboarding, sourcing, deterministic
+quote comparison, an internal commitment proposal, shipment-readiness GO/HOLD,
+and a governed operational report through the real API, PostgreSQL, object
+storage, and React UI. Protected delivery, exact-revision two-replica local
+qualification, role-bounded regular-user access, failover, and rendered desktop
+and mobile proof have passed. Durable job delivery and recovery remain the next
+Gate 3 increment; no production capability or topology is claimed.
 
 The target stack is:
 
