@@ -1,6 +1,6 @@
 # UOK Next Architecture
 
-**Status:** Accepted target architecture; Gate 1 and Gate 2 qualified, Gate 3 active
+**Status:** Accepted target architecture; Gates 1 through 3 qualified, Gate 4 active
 
 ## 1. Architecture objective
 

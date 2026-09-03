@@ -8,7 +8,7 @@
 
 ## One active focus
 
-**Gate 3: deliver the first end-to-end business operation.**
+**Gate 4: define and qualify the first external communications-system contract.**
 
 ## Verified foundation
 
@@ -674,7 +674,32 @@
   reconciled the job and event to completed/published without increasing the
   attempt count, exported recovery telemetry, restored both replicas, and
   passed four readiness, release-identity, and settled-report failover probes.
-  Protected CI and exact merged-revision requalification remain outstanding.
+- Protected PR #42 passed foundation, application, and release checks and
+  delivered the durable-work implementation as
+  `977d5816429a0c8f345279b1d9dd483a7c58ba2d`. Its first exact-merge
+  qualifier found that ten expected asynchronous publication transitions
+  occurred between two pre-drain live report reads. The report remained
+  reconciled; the harness had incorrectly required identical projections while
+  authoritative delivery state was still changing.
+- PR #43 removed only that premature comparison while preserving the later
+  terminal-state equality, recovery, and failover assertions. It passed all
+  three protected checks and merged as exact revision
+  `d93e435e4c4bff9cb172409db04ebe99de5688af`.
+- That exact protected revision rebuilt as image
+  `832f32d39432ce6d8d72ce6575968c9dff9f236b8f33a3553089a1f2425be800`
+  on both replicas. The complete API, PostgreSQL 19, object-store, business,
+  reporting, readiness, release-identity, and metrics qualifier passed. All
+  1,211 retained outbox events reached idempotent local handoff with no
+  pending, publishing, or dead-letter state. Recovery job
+  `a37214ae-3f09-4d11-8d13-1dc6a129b190` reconciled after both app processes
+  stopped without another attempt; the settled projection was
+  `9dbaf62eb47f47c73cf1403ca43109d822dd8d7109851b88af49a6844c8d9ea4`,
+  and four single-replica readiness/release/report probes passed.
+- The proving operation has now passed the real API, PostgreSQL, object store,
+  React UI, policies, audit, durable jobs, governed reporting, and recovery
+  path required by the roadmap. Gate 3 is qualified for local development and
+  CI; `docs/GATE_3_FIRST_BUSINESS_OPERATION.md` records the exit evidence and
+  explicit non-claims.
 
 ## Explicitly not yet implemented
 
@@ -701,11 +726,11 @@
 
 ## Next action
 
-Deliver this qualified durable-work branch through protected review and required
-checks, then rerun the complete immutable two-replica qualifier on the exact
-merge commit. If that evidence remains green, record the Gate 3 exit and select
-the first bounded Gate 4 specialist integration without opening connector
-transport, production identity, or model/tool execution prematurely.
+Record ADR-0026 for a provider-neutral external communications-system boundary,
+then implement and negative-test one business-object link and delivery-intent
+contract against a local contract double. Require independent authorization,
+idempotency, bounded receipts, health, failure, and reconciliation before
+selecting provider credentials or opening live transport.
 
 AI execution and module-installation implementation remain deferred. This
 status advance does not create a second active delivery focus.

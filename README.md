@@ -11,17 +11,18 @@ evidence, policy, audit lineage, and recoverability.
 
 ## Current state
 
-**Gates 1 and 2 are qualified and Gate 3 is active.** The first proving
+**Gates 1 through 3 are qualified and Gate 4 is active.** The first proving
 operation now reaches attributable party onboarding, sourcing, deterministic
 quote comparison, an internal commitment proposal, shipment-readiness GO/HOLD,
 and a governed operational report through the real API, PostgreSQL, object
 storage, and React UI. Protected delivery, exact-revision two-replica local
 qualification, role-bounded regular-user access, failover, and rendered desktop
-and mobile proof have passed. The PostgreSQL durable-work candidate now adds a
-separately credentialed outbox worker, scheduled jobs, idempotent local handoff,
-bounded retry/dead-letter, metrics, and restart recovery. Protected delivery
-and exact merged-revision requalification remain required; no production
-capability or topology is claimed.
+and mobile proof have passed. PostgreSQL durable work adds a separately
+credentialed outbox worker, scheduled jobs, idempotent local handoff, bounded
+retry/dead-letter, metrics, and restart recovery. The exact protected merge has
+passed the complete local qualifier. Gate 4 begins with a provider-neutral
+external communications-system contract; no production capability, live
+connector, or topology is claimed.
 
 The target stack is:
 

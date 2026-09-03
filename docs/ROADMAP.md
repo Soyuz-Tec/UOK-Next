@@ -72,7 +72,7 @@ actions, zero commercial-term re-entry, and zero cross-document navigation. It
 deliberately creates no shipment, dispatch, inventory, finance, or external
 effect. Protected delivery, exact merged-revision runtime, two-replica failover,
 and rendered desktop/mobile evidence passed. The fifth vertical is delivered
-and Gate 3 remains the single active focus.
+and supplied the final business-decision stage of the Gate 3 proving operation.
 
 The governed operational-reporting implementation is delivered under ADR-0023.
 It has passed protected CI, exact merged-revision runtime,
@@ -105,23 +105,26 @@ the separately credentialed `uok_outbox` role claims it with a lease and writes
 an idempotent digest-only local-handoff receipt before publication completes.
 Deterministic backoff, attempt exhaustion, permanent dead-letter, bounded
 telemetry, and receipt-aware lease recovery are covered by integration tests.
-Candidate revision `649ceaee4211a88546d87f148a6e480e8c760131` drained 1,043
-committed events, recovered an expired receipt-present lease after both app
-processes stopped without increasing its attempt count, and passed the full
-two-replica business/reporting/failover qualifier. Protected delivery and
-exact merged-revision qualification remain the Gate 3 exit evidence.
+Protected PR #42 delivered the implementation, and PR #43 removed a qualifier
+race that had compared two live report digests while delivery state was still
+advancing. Exact protected revision
+`d93e435e4c4bff9cb172409db04ebe99de5688af` drained 1,211 committed
+events, recovered an expired receipt-present lease after both app processes
+stopped without increasing its attempt count, and passed the full two-replica
+business/reporting/failover qualifier. Gate 3 is qualified; the complete exit
+evidence is recorded in `docs/GATE_3_FIRST_BUSINESS_OPERATION.md`.
 
-Completing the first vertical is necessary evidence, not the Gate 3 exit by
-itself.
+Each sequential vertical was necessary evidence; Gate 3 exited only after the
+integrated operation also passed durable jobs, reporting, and recovery.
 
-AI remains advisory throughout Gate 3. The delivered RFQ oracle, commitment
+AI remained advisory throughout Gate 3 and remains advisory as Gate 4 starts.
+The delivered RFQ oracle, commitment
 proposal, shipment-readiness gate, reporting surface, and durable-work slice
-must
 preserve deterministic commands, policies, evidence, exact human decisions,
 recovery, and reportable outcomes.
 They do not open model/tool execution, persistent agent memory, dynamic module
 installation, or tenant module enablement. ADR-0017 and ADR-0018 define those
-later prerequisites without changing the active delivery focus.
+later prerequisites.
 
 ## Gate 4: Specialist integration
 
@@ -129,6 +132,13 @@ Exit when specialist systems, including bounded model and document-intelligence
 workers where justified, are connected through typed, independently authorized
 contracts with idempotency, health, failure, reconciliation, and end-to-end
 evidence. Specialist execution never owns business command authority.
+
+The first bounded Gate 4 focus is the external communications-system contract.
+It starts with provider-neutral business-object links, independently
+reauthorized access, minimal projections, delivery intent, idempotency, and
+reconciliation. An ADR and local contract double must establish those
+boundaries before any provider binding, credential, or live transport is
+opened.
 
 ## Gate 5: Business breadth
 
