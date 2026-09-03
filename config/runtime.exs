@@ -195,6 +195,66 @@ if config_env() == :prod do
     ],
     socket_options: maybe_ipv6
 
+  outbox_database_url =
+    case System.get_env("OUTBOX_DATABASE_URL") do
+      value when is_binary(value) and value != "" -> value
+      _ -> raise "environment variable OUTBOX_DATABASE_URL is missing or empty"
+    end
+
+  outbox_database_uri = URI.parse(outbox_database_url)
+  outbox_credentials = String.split(outbox_database_uri.userinfo || "", ":", parts: 2)
+
+  unless outbox_database_uri.scheme in ["ecto", "postgres", "postgresql"] and
+           outbox_database_uri.query in [nil, ""] and
+           outbox_database_uri.fragment in [nil, ""] and
+           outbox_database_uri.host == database_uri.host and
+           outbox_database_uri.port == database_uri.port and
+           outbox_database_uri.path == database_uri.path and
+           length(outbox_credentials) == 2 and hd(outbox_credentials) == "uok_outbox" and
+           Enum.all?(outbox_credentials, &(&1 != "")) do
+    raise "OUTBOX_DATABASE_URL must use uok_outbox for the configured primary database"
+  end
+
+  config :uok_next, UokNext.OutboxRepo,
+    url: outbox_database_url,
+    ssl: database_ssl,
+    target_server_type: :primary,
+    disconnect_on_error_codes: [:read_only_sql_transaction],
+    pool_size: parse_bounded_integer.("OUTBOX_POOL_SIZE", "2", 1, 4),
+    queue_target: parse_bounded_integer.("OUTBOX_DB_QUEUE_TARGET_MS", "50", 1, 60_000),
+    queue_interval: parse_bounded_integer.("OUTBOX_DB_QUEUE_INTERVAL_MS", "1000", 1, 60_000),
+    timeout: parse_bounded_integer.("OUTBOX_DB_CHECKOUT_TIMEOUT_MS", "5000", 100, 120_000),
+    parameters: [
+      statement_timeout:
+        parse_bounded_integer.("OUTBOX_DB_STATEMENT_TIMEOUT_MS", "5000", 100, 300_000)
+        |> to_string(),
+      lock_timeout:
+        parse_bounded_integer.("OUTBOX_DB_LOCK_TIMEOUT_MS", "2000", 100, 120_000)
+        |> to_string(),
+      idle_in_transaction_session_timeout:
+        parse_bounded_integer.("OUTBOX_DB_IDLE_TRANSACTION_TIMEOUT_MS", "10000", 100, 300_000)
+        |> to_string(),
+      application_name: "uok-next-outbox",
+      timezone: "UTC"
+    ],
+    socket_options: maybe_ipv6
+
+  base_backoff_ms = parse_bounded_integer.("OUTBOX_BASE_BACKOFF_MS", "1000", 100, 60_000)
+
+  max_backoff_ms =
+    parse_bounded_integer.("OUTBOX_MAX_BACKOFF_MS", "60000", base_backoff_ms, 3_600_000)
+
+  config :uok_next, :durable_work,
+    enabled: true,
+    repo: UokNext.OutboxRepo,
+    publisher: UokNext.Kernel.PostgresOutboxPublisher,
+    poll_interval_ms: parse_bounded_integer.("OUTBOX_POLL_INTERVAL_MS", "1000", 100, 60_000),
+    batch_size: parse_bounded_integer.("OUTBOX_BATCH_SIZE", "25", 1, 100),
+    lease_ms: parse_bounded_integer.("OUTBOX_LEASE_MS", "30000", 1_000, 300_000),
+    max_attempts: parse_bounded_integer.("OUTBOX_MAX_ATTEMPTS", "5", 1, 10),
+    base_backoff_ms: base_backoff_ms,
+    max_backoff_ms: max_backoff_ms
+
   object_store_uri = required_object_store_url.(local_qualification?)
   object_store_access_key = required_bounded_token.("OBJECT_STORE_ACCESS_KEY", 16, 64)
   object_store_secret_key = required_bounded_token.("OBJECT_STORE_SECRET_KEY", 32, 128)

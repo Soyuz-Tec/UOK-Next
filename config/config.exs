@@ -11,10 +11,21 @@ config :uok_next,
   build_revision: System.get_env("UOK_BUILD_REVISION", "uncommitted"),
   ecto_repos: [UokNext.Repo],
   generators: [timestamp_type: :utc_datetime_usec, binary_id: true],
-  required_schema_version: 20_260_826_100_000,
+  required_schema_version: 20_260_903_010_000,
   password_hash_iterations: 600_000,
   database_target_major: 19,
   database_prerelease_allowed: true
+
+config :uok_next, :durable_work,
+  enabled: false,
+  repo: UokNext.OutboxRepo,
+  publisher: UokNext.Kernel.PostgresOutboxPublisher,
+  poll_interval_ms: 1_000,
+  batch_size: 25,
+  lease_ms: 30_000,
+  max_attempts: 5,
+  base_backoff_ms: 1_000,
+  max_backoff_ms: 60_000
 
 config :uok_next, UokNext.Repo, migration_lock: :table_lock
 

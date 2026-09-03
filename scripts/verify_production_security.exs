@@ -1,7 +1,9 @@
 repo_config = Application.fetch_env!(:uok_next, UokNext.Repo)
+outbox_repo_config = Application.fetch_env!(:uok_next, UokNext.OutboxRepo)
 endpoint_config = Application.fetch_env!(:uok_next, UokNextWeb.Endpoint)
 build_revision = Application.fetch_env!(:uok_next, :build_revision)
 object_store = Application.fetch_env!(:uok_next, :object_store)
+durable_work = Application.fetch_env!(:uok_next, :durable_work)
 force_ssl = Keyword.fetch!(endpoint_config, :force_ssl)
 http = Keyword.fetch!(endpoint_config, :http)
 
@@ -12,10 +14,28 @@ end
 {:ok, effective_repo_config} =
   Ecto.Repo.Supervisor.init_config(:supervisor, UokNext.Repo, :uok_next, [])
 
+{:ok, effective_outbox_repo_config} =
+  Ecto.Repo.Supervisor.init_config(:supervisor, UokNext.OutboxRepo, :uok_next, [])
+
 database_ca_cert_file = System.fetch_env!("DATABASE_CA_CERT_FILE")
 
 unless effective_repo_config[:ssl] == [cacertfile: database_ca_cert_file] do
   raise "production PostgreSQL must verify peer identity against the declared CA trust file"
+end
+
+unless effective_outbox_repo_config[:ssl] == [cacertfile: database_ca_cert_file] and
+         effective_outbox_repo_config[:target_server_type] == :primary and
+         effective_outbox_repo_config[:disconnect_on_error_codes] ==
+           [:read_only_sql_transaction] do
+  raise "production durable work must use the separately configured TLS-protected primary"
+end
+
+outbox_database_uri = outbox_repo_config |> Keyword.fetch!(:url) |> URI.parse()
+
+unless outbox_database_uri.userinfo |> String.split(":", parts: 2) |> hd() == "uok_outbox" and
+         durable_work[:enabled] and durable_work[:repo] == UokNext.OutboxRepo and
+         durable_work[:publisher] == UokNext.Kernel.PostgresOutboxPublisher do
+  raise "production durable work must use the exact worker identity and local handoff publisher"
 end
 
 unless effective_repo_config[:target_server_type] == :primary and

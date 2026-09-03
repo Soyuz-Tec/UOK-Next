@@ -1,7 +1,9 @@
 repo_config = Application.fetch_env!(:uok_next, UokNext.Repo)
+outbox_repo_config = Application.fetch_env!(:uok_next, UokNext.OutboxRepo)
 endpoint_config = Application.fetch_env!(:uok_next, UokNextWeb.Endpoint)
 build_revision = Application.fetch_env!(:uok_next, :build_revision)
 object_store = Application.fetch_env!(:uok_next, :object_store)
+durable_work = Application.fetch_env!(:uok_next, :durable_work)
 force_ssl = endpoint_config |> Keyword.fetch!(:force_ssl) |> Plug.SSL.init()
 
 unless is_binary(build_revision) and Regex.match?(~r/\A[0-9a-f]{40}\z/, build_revision) do
@@ -11,12 +13,25 @@ end
 {:ok, effective_repo_config} =
   Ecto.Repo.Supervisor.init_config(:supervisor, UokNext.Repo, :uok_next, [])
 
+{:ok, effective_outbox_repo_config} =
+  Ecto.Repo.Supervisor.init_config(:supervisor, UokNext.OutboxRepo, :uok_next, [])
+
 unless repo_config |> Keyword.fetch!(:url) |> URI.parse() |> Map.fetch!(:host) == "postgres" do
   raise "local qualification database must use the isolated Compose dependency"
 end
 
 unless effective_repo_config[:ssl] == false do
   raise "local qualification is the only profile allowed to use its isolated plaintext database"
+end
+
+outbox_database_uri = outbox_repo_config |> Keyword.fetch!(:url) |> URI.parse()
+
+unless outbox_database_uri.host == "postgres" and
+         outbox_database_uri.userinfo |> String.split(":", parts: 2) |> hd() == "uok_outbox" and
+         effective_outbox_repo_config[:ssl] == false and durable_work[:enabled] and
+         durable_work[:repo] == UokNext.OutboxRepo and
+         durable_work[:publisher] == UokNext.Kernel.PostgresOutboxPublisher do
+  raise "local qualification durable work must use the isolated worker role and handoff"
 end
 
 unless effective_repo_config[:target_server_type] == :primary and

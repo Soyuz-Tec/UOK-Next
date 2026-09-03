@@ -6,6 +6,8 @@ defmodule UokNext.Kernel.OutboxEvent do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
 
+  @type t :: %__MODULE__{}
+
   schema "kernel_outbox_events" do
     field :tenant_id, :binary_id
     field :actor_id, :binary_id
