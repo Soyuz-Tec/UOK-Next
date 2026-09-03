@@ -74,14 +74,12 @@ effect. Protected delivery, exact merged-revision runtime, two-replica failover,
 and rendered desktop/mobile evidence passed. The fifth vertical is delivered
 and Gate 3 remains the single active focus.
 
-The governed operational-reporting implementation is merged under ADR-0023 and
-has passed protected CI, exact merged-revision runtime, PostgreSQL/object-store
-qualification, the full business journey, deterministic reconciliation, and
-two-replica failover. Its live, read-only projection remains product-neutral
+The governed operational-reporting implementation is delivered under ADR-0023.
+It has passed protected CI, exact merged-revision runtime,
+PostgreSQL/object-store qualification, the full business journey,
+deterministic reconciliation, two-replica failover, and rendered 1280-by-720
+and 390-by-844 proof. Its live, read-only projection remains product-neutral
 and never becomes business-command authority or a second system of record.
-The vertical is not yet recorded as delivered because the required exact-merge
-rendered desktop/mobile proof is blocked by an unavailable admin-enforced
-in-app browser policy check.
 
 ADR-0024 adds the local attributable-user increment inside the existing Gate 3
 identity boundary. The clone-local access code remains bootstrap administration;
@@ -93,6 +91,13 @@ permission is issued, and then operate through an expiring database-revocable
 session with one of two party-onboarding access profiles. This is required
 multi-actor evidence for the proving operation, not a production identity or
 federation selection.
+
+The local attributable-user increment is delivered for local qualification on
+protected-main revision `fc5bf65b3f3329553e41f58603ad6a5d06b47dc4`.
+Exact-merge qualification proved both replicas, the complete business and
+reporting journey, regular-user creation and forced password activation,
+role-bounded party creation, revocation, and rendered desktop/mobile behavior.
+It remains explicitly distinct from production identity or federation.
 
 Completing the first vertical is necessary evidence, not the Gate 3 exit by
 itself.
