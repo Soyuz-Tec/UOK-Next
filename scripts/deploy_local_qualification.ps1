@@ -1082,6 +1082,25 @@ try {
         throw "The second application replica did not become ready after recovery proof"
     }
 
+    # Direct readiness precedes HAProxy's own admission window. Wait for that
+    # bounded window and then establish the settled report projection after
+    # asynchronous delivery state has reached its durable terminal state.
+    Start-Sleep -Seconds 5
+    $settledOperationalReport = Invoke-RestMethod -Uri $operationalReportUri `
+        -Headers $readHeaders -TimeoutSec 10 -DisableKeepAlive
+    $settledRepeatedReport = Invoke-RestMethod -Uri $operationalReportUri `
+        -Headers $readHeaders -TimeoutSec 10 -DisableKeepAlive
+    if ($settledOperationalReport.data.projection_id -ne
+        $settledRepeatedReport.data.projection_id -or
+        [int]$settledOperationalReport.data.delivery_status_counts.pending -ne 0 -or
+        [int]$settledOperationalReport.data.delivery_status_counts.publishing -ne 0 -or
+        [int]$settledOperationalReport.data.delivery_status_counts.dead_letter -ne 0 -or
+        [int]$settledOperationalReport.data.delivery_status_counts.published -ne
+            $settledOperationalReport.data.delivery_events.Count) {
+        throw "The operational report did not settle on the durable delivery state"
+    }
+    $operationalReport = $settledOperationalReport
+
     & podman compose -f $composePath stop app-a
     if ($LASTEXITCODE -ne 0) {
         throw "Unable to stop the first application replica for failover qualification"
