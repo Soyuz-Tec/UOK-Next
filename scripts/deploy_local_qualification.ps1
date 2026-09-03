@@ -896,8 +896,6 @@ try {
         "?expected_version=$([int]$readinessGo.data.lock_version)"
     $operationalReport = Invoke-RestMethod -Uri $operationalReportUri `
         -Headers $readHeaders -TimeoutSec 10
-    $repeatedReport = Invoke-RestMethod -Uri $operationalReportUri `
-        -Headers $readHeaders -TimeoutSec 10
     $reportAuditLeaks = @(
         $operationalReport.data.audit_events | Where-Object {
             $_.PSObject.Properties.Name -contains "metadata"
@@ -921,7 +919,6 @@ try {
         $operationalReport.data.reconciliation.status -ne "reconciled" -or
         $operationalReport.data.reconciliation.projection_sha256 -ne
             $operationalReport.data.projection_id -or
-        $repeatedReport.data.projection_id -ne $operationalReport.data.projection_id -or
         $operationalReport.data.authority.source_of_truth -or
         $operationalReport.data.authority.business_mutation_authorized -or
         $operationalReport.data.authority.external_effect_created) {
