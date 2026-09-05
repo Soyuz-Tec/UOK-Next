@@ -411,7 +411,10 @@ defmodule UokNext.Modules.Platform.Integrations.CommunicationsTest do
       |> Task.async_stream(
         fn _ ->
           Public.request_communication_delivery(link["id"], attrs, 1, state.context, key)
-        end, max_concurrency: 2, timeout: 10_000)
+        end,
+        max_concurrency: 2,
+        timeout: 10_000
+      )
       |> Enum.map(fn {:ok, result} -> result end)
 
     assert Enum.sort(Enum.map(results, fn {:ok, _receipt, disposition} -> disposition end)) ==

@@ -15,9 +15,9 @@ ownership and separate specialist authorities. A literal source-folder merge
 would introduce incompatible frameworks, duplicate task/approval ownership,
 multiple canvas engines and false maturity claims.
 
-ADR-0026 remains reserved for the communications contract already named in
-`docs/STATUS.md`. This decision does not consume that reservation or change
-the current delivery sequence.
+ADR-0026 was reserved for the communications contract already named in
+`docs/STATUS.md` and now records that contract. This inventory decision does
+not change the current delivery sequence.
 
 ## Decision
 
