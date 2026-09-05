@@ -281,7 +281,7 @@ defmodule UokNext.Modules.Platform.Integrations.PublicTest do
   defp attempt_attrs(overrides \\ %{}) do
     Map.merge(
       %{
-        "connector_role" => "communications_system",
+        "connector_role" => "contract_system",
         "operation" => "deliver_notice",
         "delivery_key" => "delivery-#{System.unique_integer([:positive])}",
         "request_sha256" => String.duplicate("a", 64),

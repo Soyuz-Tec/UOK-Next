@@ -142,9 +142,11 @@ evidence. Specialist execution never owns business command authority.
 The first bounded Gate 4 focus is the external communications-system contract.
 It starts with provider-neutral business-object links, independently
 reauthorized access, minimal projections, delivery intent, idempotency, and
-reconciliation. An ADR and local contract double must establish those
-boundaries before any provider binding, credential, or live transport is
-opened.
+reconciliation. ADR-0026 implements the first party-link and delivery-intent
+contract against a local double. Its qualification, independent review, and
+recovery evidence must establish those boundaries before any provider binding,
+credential, or live transport is opened. Broader communications parity and
+Gate 4 closure remain open.
 
 ## Gate 5: Business breadth
 

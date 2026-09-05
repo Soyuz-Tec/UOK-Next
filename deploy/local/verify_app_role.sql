@@ -65,6 +65,7 @@ BEGIN
     has_table_privilege('uok_app', 'public.trade_shipment_readiness_cases', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_workflow_human_tasks', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_integrations_connector_receipts', 'SELECT,INSERT,UPDATE') AND
+    has_table_privilege('uok_app', 'public.platform_integrations_communication_links', 'SELECT,INSERT') AND
     has_table_privilege('uok_app', 'public.platform_agents_plans', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_evidence_objects', 'SELECT,INSERT,UPDATE') AND
     has_table_privilege('uok_app', 'public.platform_identity_users', 'SELECT,INSERT,UPDATE') AND
@@ -124,6 +125,8 @@ BEGIN
       ('public', 'platform_integrations_connector_receipts', 'SELECT'),
       ('public', 'platform_integrations_connector_receipts', 'INSERT'),
       ('public', 'platform_integrations_connector_receipts', 'UPDATE'),
+      ('public', 'platform_integrations_communication_links', 'SELECT'),
+      ('public', 'platform_integrations_communication_links', 'INSERT'),
       ('public', 'platform_agents_plans', 'SELECT'),
       ('public', 'platform_agents_plans', 'INSERT'),
       ('public', 'platform_agents_plans', 'UPDATE'),

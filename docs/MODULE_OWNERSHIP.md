@@ -14,7 +14,7 @@ explains its intent.
 | `platform.policy` | permissions, capability checks, policy decisions | domain approval facts |
 | `platform.workflow` | workflow instances, human tasks, approval requests, escalations | source business records coordinated by a workflow |
 | `platform.evidence` | evidence metadata, review state, audit events, integrity manifests | private communication content or source documents' business meaning |
-| `platform.integrations` | connector configuration, health, external references, receipts | external systems' owned records |
+| `platform.integrations` | connector configuration, health, external references, immutable party communication links, delivery-intent and reconciliation receipts | external systems' owned records |
 | `platform.agents` | runbooks, generated plans, agent runs, agent approvals, tool receipts; future context or memory only after a catalog ownership update | business commands, permissions, policy facts, or records owned by target modules |
 
 ## Business modules

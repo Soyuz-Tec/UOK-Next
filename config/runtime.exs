@@ -88,6 +88,10 @@ if config_env() == :prod do
       actor_id: required_uuid.("UOK_LOCAL_ACTOR_ID"),
       access_code: required_bounded_token.("UOK_LOCAL_ACCESS_CODE", 32, 128),
       permissions: [
+        "communications:deliver",
+        "communications:link",
+        "communications:read",
+        "communications:reconcile",
         "contracts:commitment-proposals:approve",
         "contracts:commitment-proposals:create",
         "contracts:commitment-proposals:evidence:submit",

@@ -12,17 +12,32 @@ defmodule UokNext.Modules.Platform.Integrations.Application.ConnectorReceipts do
   @spec begin_attempt(module(), map(), CommandContext.t(), String.t()) :: tuple()
   def begin_attempt(store, attrs, context, idempotency_key) do
     with :ok <- Authorization.require_permission(context, @attempt_permission),
-         {:ok, command} <- validate(ConnectorReceipt.validate_attempt(attrs)) do
-      payload = Map.put(command, :tenant_id, context.tenant_id)
-
-      CommandTransaction.execute(
-        context,
-        "platform.integrations.begin_attempt",
-        idempotency_key,
-        payload,
-        fn -> begin_operation(store, command, context) end
-      )
+         {:ok, command} <- validate(ConnectorReceipt.validate_attempt(attrs)),
+         :ok <- general_role(command.connector_role) do
+      execute_attempt(store, command, context, idempotency_key)
     end
+  end
+
+  @doc false
+  @spec begin_communication_attempt(module(), map(), CommandContext.t(), String.t()) :: tuple()
+  def begin_communication_attempt(store, attrs, context, idempotency_key) do
+    with :ok <- Authorization.require_permission(context, "communications:deliver"),
+         {:ok, command} <- validate(ConnectorReceipt.validate_attempt(attrs)),
+         :ok <- communication_role(command.connector_role) do
+      execute_attempt(store, command, context, idempotency_key)
+    end
+  end
+
+  defp execute_attempt(store, command, context, idempotency_key) do
+    payload = Map.put(command, :tenant_id, context.tenant_id)
+
+    CommandTransaction.execute(
+      context,
+      "platform.integrations.begin_attempt",
+      idempotency_key,
+      payload,
+      fn -> begin_operation(store, command, context) end
+    )
   end
 
   @spec reconcile(module(), String.t(), integer(), map(), CommandContext.t(), String.t()) ::
@@ -30,23 +45,54 @@ defmodule UokNext.Modules.Platform.Integrations.Application.ConnectorReceipts do
   def reconcile(store, receipt_id, expected_version, attrs, context, idempotency_key) do
     with :ok <- Authorization.require_permission(context, @reconcile_permission),
          {:ok, id} <- validate(ConnectorReceipt.validate_id(receipt_id)),
-         {:ok, version} <- cast_version(expected_version) do
-      payload = %{receipt_id: id, expected_version: version, outcome: attrs}
-
-      CommandTransaction.execute(
-        context,
-        "platform.integrations.reconcile_attempt",
-        idempotency_key,
-        payload,
-        fn -> reconcile_operation(store, id, version, attrs, context) end
-      )
+         {:ok, version} <- cast_version(expected_version),
+         :ok <- require_general_receipt(store, id, context) do
+      execute_reconciliation(store, id, version, attrs, context, idempotency_key)
     end
+  end
+
+  @doc false
+  @spec reconcile_communication_attempt(
+          module(),
+          String.t(),
+          integer(),
+          map(),
+          CommandContext.t(),
+          String.t(),
+          atom()
+        ) :: tuple()
+  def reconcile_communication_attempt(store, id, version, attrs, context, key, authority) do
+    permission =
+      case authority do
+        :delivery -> "communications:deliver"
+        :reconciliation -> "communications:reconcile"
+      end
+
+    with :ok <- Authorization.require_permission(context, permission),
+         {:ok, id} <- validate(ConnectorReceipt.validate_id(id)),
+         {:ok, version} <- cast_version(version),
+         :ok <- require_communication_receipt(store, id, context) do
+      execute_reconciliation(store, id, version, attrs, context, key)
+    end
+  end
+
+  defp execute_reconciliation(store, id, version, attrs, context, idempotency_key) do
+    payload = %{receipt_id: id, expected_version: version, outcome: attrs}
+
+    CommandTransaction.execute(
+      context,
+      "platform.integrations.reconcile_attempt",
+      idempotency_key,
+      payload,
+      fn -> reconcile_operation(store, id, version, attrs, context) end
+    )
   end
 
   @spec get(module(), String.t(), CommandContext.t()) :: {:ok, map()} | {:error, CommandError.t()}
   def get(store, receipt_id, context) do
     with :ok <- Authorization.require_permission(context, @read_permission),
-         {:ok, id} <- validate(ConnectorReceipt.validate_id(receipt_id)) do
+         {:ok, id} <- validate(ConnectorReceipt.validate_id(receipt_id)),
+         :ok <- require_general_receipt(store, id, context) do
       TenantTransaction.run(context, fn -> get_scoped(store, id, context) end)
     end
   end
@@ -150,7 +196,9 @@ defmodule UokNext.Modules.Platform.Integrations.Application.ConnectorReceipts do
   defp validate_rule(:ok), do: :ok
   defp validate_rule({:error, details}), do: validation_error(details)
 
-  defp view(receipt) do
+  @doc false
+  @spec view(map()) :: map()
+  def view(receipt) do
     %{
       "id" => receipt.id,
       "tenant_id" => receipt.tenant_id,
@@ -202,6 +250,31 @@ defmodule UokNext.Modules.Platform.Integrations.Application.ConnectorReceipts do
       }
     }
   end
+
+  defp require_general_receipt(store, id, context) do
+    require_receipt_role(store, id, context, &general_role/1)
+  end
+
+  defp require_communication_receipt(store, id, context) do
+    require_receipt_role(store, id, context, &communication_role/1)
+  end
+
+  defp require_receipt_role(store, id, context, rule) do
+    TenantTransaction.run(context, fn ->
+      case store.fetch(id, context.tenant_id, context) do
+        {:ok, receipt} -> rule.(receipt.connector_role)
+        :not_found -> not_found()
+      end
+    end)
+  end
+
+  defp general_role("communications_system"), do: reserved_role()
+  defp general_role(_role), do: :ok
+  defp communication_role("communications_system"), do: :ok
+  defp communication_role(_role), do: reserved_role()
+
+  defp reserved_role,
+    do: {:error, CommandError.new("forbidden", "use the governed communications contract", 403)}
 
   defp validation_error(details),
     do:

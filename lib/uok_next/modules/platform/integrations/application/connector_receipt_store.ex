@@ -5,6 +5,7 @@ defmodule UokNext.Modules.Platform.Integrations.Application.ConnectorReceiptStor
 
   @type persisted_record :: term()
 
+  @callback transaction_open?() :: boolean()
   @callback create(map(), UokNext.Kernel.CommandContext.t()) ::
               {:ok, persisted_record()} | {:error, map()}
   @callback fetch(String.t(), String.t(), UokNext.Kernel.CommandContext.t()) ::

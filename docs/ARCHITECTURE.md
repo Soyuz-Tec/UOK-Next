@@ -165,6 +165,15 @@ row-level security fail closed. This is evidence for side-effect delivery, not
 an external-record replica or a live connector implementation. ADR-0012
 governs the primitive.
 
+The first Gate 4 contract binds an immutable party version to an opaque
+conversation reference. `platform.integrations` reauthorizes the party through
+its public module API and the external conversation through an independent
+port before link access, delivery, reconciliation, and command replay. Its
+existing connector receipts retain durable intent and bounded acknowledgement
+evidence. The test-only adapter can accept the contract; message delivery stays
+unverified. Deployment transport remains disabled. ADR-0026 governs this
+bounded increment and the remaining provider compatibility gap.
+
 ### Governed agents
 
 The Gate 2 agent primitive accepts only bounded advisory plans. A plan binds a

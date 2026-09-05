@@ -55,6 +55,10 @@ unless match?({:ok, _tenant_id}, Ecto.UUID.cast(local_identity.tenant_id)) and
          is_binary(local_identity.access_code) and byte_size(local_identity.access_code) in 32..128 and
          Enum.sort(local_identity.permissions) ==
            Enum.sort([
+             "communications:deliver",
+             "communications:link",
+             "communications:read",
+             "communications:reconcile",
              "contracts:commitment-proposals:approve",
              "contracts:commitment-proposals:create",
              "contracts:commitment-proposals:evidence:submit",

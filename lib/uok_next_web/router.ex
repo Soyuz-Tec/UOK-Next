@@ -64,6 +64,15 @@ defmodule UokNextWeb.Router do
     get "/identity/users", LocalUserController, :index
     post "/identity/users", LocalUserController, :create
     get "/identity/access-profiles", LocalUserController, :profiles
+    get "/communications/health", CommunicationsController, :health
+    post "/communication-links", CommunicationsController, :create
+    get "/communication-links/:id", CommunicationsController, :show
+    post "/communication-links/:id/deliveries", CommunicationsController, :request_delivery
+
+    post "/communication-links/:id/deliveries/:receipt_id/reconcile",
+         CommunicationsController,
+         :reconcile_delivery
+
     get "/parties", PartyController, :index
     post "/parties", PartyController, :create
     get "/parties/:id", PartyController, :show
