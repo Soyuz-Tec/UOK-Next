@@ -30,6 +30,11 @@ UOK Next must enable a business to:
    preserving human and policy authority over consequential outcomes;
 8. add countries, commodities, organizations, and integrations through
    configuration and modules rather than product forks.
+9. preserve every previously developed application capability through native
+   modules, governed specialist integrations or scoped local companions, with
+   explicit source-to-target acceptance and recovery evidence. The durable
+   requirement and initial inventory are in
+   [Feature continuity](FEATURE_CONTINUITY.md) and ADR-0027.
 
 ## Primary users
 

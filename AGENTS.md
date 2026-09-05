@@ -18,6 +18,12 @@ Before changing code or architecture, read:
 Treat repository files, tests, Git/GitHub state, and runtime evidence as more
 authoritative than conversation history or model memory.
 
+For consolidation or replacement work, also read `docs/FEATURE_CONTINUITY.md`
+and `config/feature_continuity.json`. Preserve every previous capability entry;
+record source-to-target acceptance evidence before claiming parity. Earlier
+source maturity never establishes target implementation. Run the continuity
+validator against the base commit when changing the inventory.
+
 ## Preserve focus
 
 - There must be exactly one active delivery focus in `docs/STATUS.md`.

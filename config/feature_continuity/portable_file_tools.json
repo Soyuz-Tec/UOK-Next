@@ -1,0 +1,101 @@
+{
+  "source_id": "portable_file_tools",
+  "features": [
+    {
+      "id": "portable_file_tools.read-only",
+      "capability": "Read-only CLI and native GUI duplicate review without mutation",
+      "required_outcome": "Read-only CLI and native GUI duplicate review without mutation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Detection strategy; Usage; Known limitations",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "portable_file_tools.confirmation",
+      "capability": "Size and boundary hash filtering, full SHA-256 and byte-for-byte confirmation",
+      "required_outcome": "Size and boundary hash filtering, full SHA-256 and byte-for-byte confirmation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Detection strategy; Usage; Known limitations",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "portable_file_tools.scan-controls",
+      "capability": "Surface inventory, category/min-size/exclusion filters and unreadable-file counts",
+      "required_outcome": "Surface inventory, category/min-size/exclusion filters and unreadable-file counts",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Detection strategy; Usage; Known limitations",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "portable_file_tools.exports",
+      "capability": "CSV/JSON reports and reclaimable-byte estimates",
+      "required_outcome": "CSV/JSON reports and reclaimable-byte estimates",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Detection strategy; Usage; Known limitations",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "portable_file_tools.review",
+      "capability": "Keep-one selection, Explorer navigation, bounded previews and remembered window/folder state",
+      "required_outcome": "Keep-one selection, Explorer navigation, bounded previews and remembered window/folder state",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Detection strategy; Usage; Known limitations",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "portable_file_tools.limits",
+      "capability": "Make long-path omissions, single-thread limits and preview limitations visible",
+      "required_outcome": "Make long-path omissions, single-thread limits and preview limitations visible",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Detection strategy; Usage; Known limitations",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    }
+  ]
+}

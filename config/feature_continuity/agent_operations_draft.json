@@ -1,0 +1,261 @@
+{
+  "source_id": "agent_operations_draft",
+  "features": [
+    {
+      "id": "agent_operations_draft.versioned-task-registry-and-deterministic-run-state-machine",
+      "capability": "Versioned task registry and deterministic run state machine.",
+      "required_outcome": "Versioned task registry and deterministic run state machine.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 11",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.risk-tiered-action-proposals-with-approval-gates-enforced-outside-the-model",
+      "capability": "Risk-tiered action proposals with approval gates enforced outside the model.",
+      "required_outcome": "Risk-tiered action proposals with approval gates enforced outside the model.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 12",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.evidence-records-with-provenance-classification-hashes-and-verification-status",
+      "capability": "Evidence records with provenance, classification, hashes, and verification status.",
+      "required_outcome": "Evidence records with provenance, classification, hashes, and verification status.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 13",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.evaluation-gates-that-control-run-completion-and-learning-promotion",
+      "capability": "Evaluation gates that control run completion and learning promotion.",
+      "required_outcome": "Evaluation gates that control run completion and learning promotion.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 14",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.episodic-semantic-and-procedural-memory-candidates-with-reviewer-separation",
+      "capability": "Episodic, semantic, and procedural memory candidates with reviewer separation.",
+      "required_outcome": "Episodic, semantic, and procedural memory candidates with reviewer separation.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 15",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.append-only-hash-chained-audit-events-with-integrity-verification",
+      "capability": "Append-only, hash-chained audit events with integrity verification.",
+      "required_outcome": "Append-only, hash-chained audit events with integrity verification.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 16",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.stable-idempotency-keys-with-same-request-replay-and-changed-request-conflict",
+      "capability": "Stable idempotency keys with same-request replay and changed-request conflict.",
+      "required_outcome": "Stable idempotency keys with same-request replay and changed-request conflict.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 17",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.optimistic-action-revisions-with-typed-stale-write-recovery",
+      "capability": "Optimistic action revisions with typed stale-write recovery.",
+      "required_outcome": "Optimistic action revisions with typed stale-write recovery.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 18",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.atomic-single-dual-approval-mutations-with-separation-of-duties",
+      "capability": "Atomic single/dual approval mutations with separation of duties.",
+      "required_outcome": "Atomic single/dual approval mutations with separation of duties.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 19",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.hashed-execution-receipts-retry-history-and-controlled-failure-recovery",
+      "capability": "Hashed execution receipts, retry history, and controlled failure recovery.",
+      "required_outcome": "Hashed execution receipts, retry history, and controlled failure recovery.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 20",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.hard-fail-closed-segregation-of-personal-private-information-from-business-storage",
+      "capability": "Hard fail-closed segregation of personal/private information from business storage.",
+      "required_outcome": "Hard fail-closed segregation of personal/private information from business storage.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 21",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.sqlite-development-adapter-standard-library-cli-and-dependency-free-test-suite",
+      "capability": "SQLite development adapter, standard-library CLI, and dependency-free test suite.",
+      "required_outcome": "SQLite development adapter, standard-library CLI, and dependency-free test suite.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 22",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.lease-based-work-queue-with-bounded-retries-and-a-dead-letter-terminal-state",
+      "capability": "Lease-based work queue with bounded retries and a dead-letter terminal state.",
+      "required_outcome": "Lease-based work queue with bounded retries and a dead-letter terminal state.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 23",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.versioned-http-control-surface-with-health-readiness-endpoints-and-optional-bearer-auth",
+      "capability": "Versioned HTTP control surface with health/readiness endpoints and optional bearer auth.",
+      "required_outcome": "Versioned HTTP control surface with health/readiness endpoints and optional bearer auth.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 24",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.rootless-container-image-and-docker-podman-compose-deployment",
+      "capability": "Rootless container image and Docker/Podman Compose deployment.",
+      "required_outcome": "Rootless container image and Docker/Podman Compose deployment.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 25",
+        "reported_maturity": "unmerged_draft_claim"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "agent_operations_draft.single-run-authority",
+      "capability": "Resolve a single owner for task/run state, approvals, leases and evidence before integration",
+      "required_outcome": "Resolve a single owner for task/run state, approvals, leases and evidence before integration",
+      "source_evidence": {
+        "path": "docs/UOK_NEXT_INTEGRATION.md",
+        "locator": "Responsibilities and initial calls",
+        "reported_maturity": "unmerged_draft_contract"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "ownership_review",
+      "delivery_gate": 4,
+      "target_status": "blocked",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    }
+  ]
+}

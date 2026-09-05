@@ -58,6 +58,10 @@ Machine-readable architecture authority is in
 External-system naming authority is in
 [`config/external_identity_policy.json`](config/external_identity_policy.json).
 
+Previous application capabilities must be retained under
+[Feature continuity](docs/FEATURE_CONTINUITY.md). Its initial register tracks
+source evidence and target obligations; it does not claim completed migration.
+
 ## Verify the foundation
 
 From PowerShell:

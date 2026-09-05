@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-09-05",
+  "requirement": "UOK Next must preserve every previously developed application capability through a native module or an explicitly governed integration.",
+  "coverage_status": "initial_inventory",
+  "target_baseline_revision": "dc44822b46e52699e8384d2fd39fa0242327d037",
+  "decision_ref": "docs/adr/0027-previous-application-capability-continuity.md",
+  "sources": [
+    {
+      "id": "legacy_operations",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": "d8fe71df008e63cf1e5780de006bd2e498ece7ba",
+      "discovery_status": "initial_inventory",
+      "feature_file": "config/feature_continuity/legacy_operations.json",
+      "discovery_note": "Initial default-branch documents/manifests and selected source inspected; characterize routes/tests and unmerged branches before declaring exhaustive coverage."
+    },
+    {
+      "id": "legacy_trade_prototype",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": "7cb7122375bce8d62201033baa67f6adf8ad0c2f",
+      "discovery_status": "initial_inventory",
+      "feature_file": "config/feature_continuity/legacy_trade_prototype.json",
+      "discovery_note": "Initial default-branch documents/manifests and selected source inspected; characterize routes/tests and unmerged branches before declaring exhaustive coverage."
+    },
+    {
+      "id": "legacy_trade_intelligence",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": "a0d6e343d1674aa2c90a508e5ddff9eaf0ff21ea",
+      "discovery_status": "initial_inventory",
+      "feature_file": "config/feature_continuity/legacy_trade_intelligence.json",
+      "discovery_note": "Initial default-branch documents/manifests and selected source inspected; characterize routes/tests and unmerged branches before declaring exhaustive coverage."
+    },
+    {
+      "id": "communications",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": "112aac9cfcf6459dbd5a351434d86d7492c7113b",
+      "discovery_status": "initial_inventory",
+      "feature_file": "config/feature_continuity/communications.json",
+      "discovery_note": "Initial default-branch documents/manifests and selected source inspected; characterize routes/tests and unmerged branches before declaring exhaustive coverage."
+    },
+    {
+      "id": "canvas",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": "95cd6e89834d7dc23d7137456d016b7cd29df323",
+      "discovery_status": "initial_inventory",
+      "feature_file": "config/feature_continuity/canvas.json",
+      "discovery_note": "Initial default-branch documents/manifests and selected source inspected; characterize routes/tests and unmerged branches before declaring exhaustive coverage."
+    },
+    {
+      "id": "desktop_file_tools",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": "fdea0d30ae8e1c65083bd831e1edc8dce25e7b60",
+      "discovery_status": "initial_inventory",
+      "feature_file": "config/feature_continuity/desktop_file_tools.json",
+      "discovery_note": "Initial default-branch documents/manifests and selected source inspected; characterize routes/tests and unmerged branches before declaring exhaustive coverage."
+    },
+    {
+      "id": "portable_file_tools",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": "3ea2d5e27f1e54837100ac15ed9971eef1cbb1e3",
+      "discovery_status": "initial_inventory",
+      "feature_file": "config/feature_continuity/portable_file_tools.json",
+      "discovery_note": "Initial default-branch documents/manifests and selected source inspected; characterize routes/tests and unmerged branches before declaring exhaustive coverage."
+    },
+    {
+      "id": "agent_operations_draft",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": "03ca3e1acfddce6ca3185b2266f6db3e6fbbd682",
+      "discovery_status": "initial_inventory",
+      "feature_file": "config/feature_continuity/agent_operations_draft.json",
+      "discovery_note": "Main contains only a README; PR 3 is an unmerged draft including Phases 1-3. Resolve ownership conflicts with target ADR-0017 and module catalog."
+    },
+    {
+      "id": "back_office_reference",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": "1868713dbd07e0b518f91dffe73e62d85e6ab9a6",
+      "discovery_status": "inventory_gap",
+      "feature_file": null,
+      "discovery_note": "Upstream fork: determine whether custom or adopted features exist; an upstream product catalog is not automatically an implemented company app."
+    },
+    {
+      "id": "chain_reference",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": "e85be69012373182c141591c89be11eca40f16fc",
+      "discovery_status": "inventory_gap",
+      "feature_file": null,
+      "discovery_note": "Upstream fork: determine whether custom or adopted features exist; an upstream product catalog is not automatically an implemented company app."
+    },
+    {
+      "id": "tutorial_reference",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": "24083e89ae58b3f50157fca7b2086bea93e8349a",
+      "discovery_status": "inventory_gap",
+      "feature_file": null,
+      "discovery_note": "Upstream fork: determine whether custom or adopted features exist; an upstream product catalog is not automatically an implemented company app."
+    },
+    {
+      "id": "profile_repository",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": null,
+      "discovery_status": "not_application",
+      "feature_file": null,
+      "discovery_note": "No application code in the profile repository."
+    },
+    {
+      "id": "historical_trade_alias",
+      "provenance_ref": "docs/adr/0027-previous-application-capability-continuity.md#source-inventory",
+      "revision": null,
+      "discovery_status": "inventory_gap",
+      "feature_file": null,
+      "discovery_note": "Historical repository name not independently located; reconcile alias and archived source packages."
+    }
+  ],
+  "acceptance_profiles": {
+    "planning": [
+      "Reproduce the pinned source behavior with server-owned scheduling and tenant-scoped commands.",
+      "Characterize FS/SS/FF/SF lag/lead, calendars/DST, negative float, baselines, resources, risk and stale-safe undo where relevant.",
+      "Verify keyboard, touch, RTL, export and failure recovery for each affected surface; retain measured budgets."
+    ],
+    "master_data": [
+      "Preserve canonical identity, aliases, relationships, custom fields, lifecycle and source lineage relevant to this entry.",
+      "Reject unauthorized/cross-tenant writes; reconcile imports, duplicates, rollback and downstream links."
+    ],
+    "commercial": [
+      "Characterize the full requisition/quote/contract or sales outcome using decimal quantities and explicit currency.",
+      "Preserve source versions, evidence, separation of review from binding commitment, and deterministic replay."
+    ],
+    "shipment": [
+      "Preserve route, milestones, document requirements, inventory references and exception transitions relevant to this entry.",
+      "GO/readiness must not silently become shipment, customs, payment or inventory execution."
+    ],
+    "field_quality": [
+      "Preserve lot/farm/delivery lineage, sampling units, split/merge balances and original measurements.",
+      "Replay offline observations idempotently; surface conflicts, permissions and missing evidence explicitly."
+    ],
+    "compliance": [
+      "Version standards and requirements by relevant product/country/context and preserve evidence/reviewer lineage.",
+      "Missing, expired or unreviewed evidence must not satisfy readiness or certify a legal outcome."
+    ],
+    "finance": [
+      "Use decimal money/quantities with source-dated FX, fees, freight, duties and assumption versions.",
+      "Reconcile landed cost, working capital, cashflow and sensitivities; advisory approval must not settle funds."
+    ],
+    "evidence": [
+      "Preserve classification, source references, immutable digests, review history and exact subject binding.",
+      "Private personal records stay separate; individual business due-diligence records remain restricted business data.",
+      "Verify quarantine, promotion, redaction, retention, export and recovery where applicable."
+    ],
+    "identity": [
+      "Require authenticated tenant/actor context and fresh server-side permission checks.",
+      "Verify lifecycle, revocation, scoped partner access and negative cross-tenant/cross-role cases."
+    ],
+    "workflow": [
+      "Use one owner per task, approval and retry lifecycle, with bounded idempotent transitions.",
+      "Preserve assignment, escalation, cancellation, evidence and recovery relevant to the source behavior."
+    ],
+    "agents": [
+      "Resolve source/target ownership before execution; one scheduler advances each run.",
+      "Preserve risk tiers, independent approval, evaluation, memory review, budgets, leases and receipts.",
+      "Agent output never grants permission; deny unknown classification and cross-tenant or stale commands."
+    ],
+    "communications": [
+      "External communications system remains authoritative for content, membership, calls and delivery.",
+      "Qualify UOK object links with independent authorization, short-lived scope, receipt-backed delivery and degraded operation.",
+      "Preserve each listed communication behavior; legacy whiteboards use one chosen canvas authority."
+    ],
+    "canvas": [
+      "Use one authoritative convergence engine with per-property merge, scope isolation and bounded operations.",
+      "Prove concurrent edits, offline replay, snapshot/restart recovery, authorization and accessible editing/export."
+    ],
+    "local_files": [
+      "Keep local desktop work behind an explicitly scoped companion contract with no server filesystem access.",
+      "Preserve read-only behavior and local privacy; migration does not activate deletion or cleanup.",
+      "Any future cleanup requires a separate ownership/security decision, exact identity revalidation and reversible recovery."
+    ],
+    "reporting": [
+      "Preserve filters, grain, source permissions, freshness, reconciliation and each declared artifact format.",
+      "Verify report/export accuracy and spreadsheet-safe cells; do not create shadow business authority."
+    ],
+    "publication": [
+      "Publish only reviewed/redacted snapshots and validate public intake as pending review.",
+      "Prove tenant/private-content exclusion and controlled publication withdrawal."
+    ],
+    "platform": [
+      "Preserve module-neutral navigation, installation lifecycle and shared usability behavior relevant to this entry.",
+      "Prove disabled-module behavior, capability-based controls, accessibility and stale-request containment."
+    ]
+  }
+}
