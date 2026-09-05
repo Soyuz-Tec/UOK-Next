@@ -24,7 +24,8 @@
   branches, archives and detailed workflow characterization remain open.
 - The engineering validator checks owners, evidence structure and retention
   against the previous Git inventory. It does not prove runtime parity.
-  No business runtime capability is added or newly qualified by this change.
+  The inventory itself adds no business runtime capability; the bounded
+  communications implementation is recorded separately below.
 - Local verification with the pinned Node 24.19.0 passed 13 continuity tests,
   baseline validation against `dc44822b46e52699e8384d2fd39fa0242327d037`
   and `git diff --check`. Existing application/release qualification is not
@@ -32,7 +33,43 @@
   merge gate.
 - Agent execution ownership, canvas convergence ownership and desktop
   companion boundaries require explicit reconciliation before integration.
-  ADR-0026 remains reserved for the next communications-contract increment.
+  ADR-0026 now governs the first communications-contract increment.
+
+## Gate 4 communications implementation
+
+- ADR-0026 defines one immutable party-version link to an externally owned
+  conversation and a recoverable, independently authorized delivery intent.
+  `platform.integrations` owns link metadata and existing connector receipts;
+  external content and delivery authority remain outside UOK.
+- Implementation adds typed public/HTTP commands, strict envelope and response
+  validation, fresh party and external authorization before replay, bounded
+  adapter calls, and failure reconciliation against a test-only contract double.
+- Deployment defaults to disabled transport. Four explicit communications
+  permissions are added only to the local bootstrap qualification profile;
+  existing regular-user profiles retain their narrower scope.
+- The additive link-table migration requires forced tenant RLS and exact
+  SELECT/INSERT application grants. Readiness requires the new migration.
+  Rollback retains records and reverts application/grant changes.
+- Implementation revision `9ae243ace20ea5d9fee22c17bab538db568c5162`
+  passed all three Foundation jobs in
+  [CI run 33975218019](https://github.com/Soyuz-Tec/UOK-Next/actions/runs/33975218019):
+  architecture/ownership, PostgreSQL 19 baseline, compiler, formatting, strict
+  Credo, Sobelow, 174 backend tests, 19 frontend tests, 13 continuity tests,
+  current Hex/npm advisory audits, production/local configuration checks, and
+  the immutable non-root release build. The 37 new backend tests cover the
+  contract, database/API workflow, and HTTP-parser security regressions.
+- [Draft PR #46](https://github.com/Soyuz-Tec/UOK-Next/pull/46) is stacked on the
+  continuity-framework PR #45. This is CI qualification of the local contract
+  double, not protected-main delivery, real-provider interoperability, or a
+  two-replica communications/recovery qualification.
+- Mint is updated from 1.9.3 to verified 1.10.0 to remediate the two advisories
+  that blocked the preceding framework PR. Both oversized-response and
+  excessive chunk-size protocol regressions now fail with bounded errors.
+- Actor revocation or a changed party version blocks this first contract
+  recovery path. Delegated incident closure needs a separate policy decision.
+- Local-double acceptance cannot
+  establish provider interoperability, message delivery, production readiness,
+  or complete migration of any broader legacy capability.
 
 ## Verified foundation
 
@@ -750,11 +787,12 @@
 
 ## Next action
 
-Record ADR-0026 for a provider-neutral external communications-system boundary,
-then implement and negative-test one business-object link and delivery-intent
-contract against a local contract double. Require independent authorization,
-idempotency, bounded receipts, health, failure, and reconciliation before
-selecting provider credentials or opening live transport.
+Review and deliver the CI-qualified communications contract through the
+protected workflow. Resolve the provider API, identity mapping, and recovery
+policy for changed subjects or revoked initiating actors before selecting
+credentials or enabling live transport. Then prove actual interoperability,
+independent-connection contention, and replica/restart recovery. Retain fresh
+authorization and all previous capability obligations throughout.
 
 AI execution and module-installation implementation remain deferred. This
 status advance does not create a second active delivery focus.

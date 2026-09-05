@@ -21,8 +21,11 @@ and mobile proof have passed. PostgreSQL durable work adds a separately
 credentialed outbox worker, scheduled jobs, idempotent local handoff, bounded
 retry/dead-letter, metrics, and restart recovery. The exact protected merge has
 passed the complete local qualifier. Gate 4 begins with a provider-neutral
-external communications-system contract; no production capability, live
-connector, or topology is claimed.
+external communications-system contract. The first implementation adds
+party/conversation links, independently authorized delivery intents, and
+reconciliation against a test-only contract double under
+[ADR-0026](docs/adr/0026-governed-communications-contract.md). Transport remains
+disabled; no production capability, live connector, or topology is claimed.
 
 The target stack is:
 

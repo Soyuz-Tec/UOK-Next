@@ -2,11 +2,367 @@
   "openapi": "3.1.0",
   "info": {
     "title": "UOK Next API",
-    "version": "0.7.0",
-    "description": "Tenant-authenticated Gate 3 operation, local attributable user access, and governed read-only reporting contract."
+    "version": "0.8.0",
+    "description": "Tenant-authenticated operation, local attributable user access, governed reporting, and the bounded Gate 4 communications contract."
   },
   "servers": [{"url": "/api/v1"}],
   "paths": {
+    "/communications/health": {
+      "get": {
+        "summary": "Read communications contract availability",
+        "description": "Requires communications:read. The default binding is unavailable. A local contract double proves contract behavior only; live transport and message delivery remain disabled.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read communications contract availability",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CommunicationsHealth"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/communication-links": {
+      "post": {
+        "summary": "Link a party to an external conversation",
+        "description": "Requires communications:link, current party read authority and independent external authorization. Persists only an immutable business-object reference. Request fields are exact; content, credentials and provider fields are rejected.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCommunicationLink"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Link a party to an external conversation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CommunicationLink"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Idempotent command replay",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CommunicationLink"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error"
+          },
+          "502": {
+            "$ref": "#/components/responses/Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/communication-links/{id}": {
+      "get": {
+        "summary": "Read an independently authorized communication link",
+        "description": "Requires communications:read and fresh party and external conversation authorization, including on repeated reads. No communication content or membership is returned.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EntityId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read an independently authorized communication link",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CommunicationLink"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error"
+          },
+          "502": {
+            "$ref": "#/components/responses/Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/communication-links/{id}/deliveries": {
+      "post": {
+        "summary": "Request a communication contract handoff",
+        "description": "Requires communications:deliver and fresh party and external authorization. A durable receipt precedes the bounded adapter handoff. Contract acceptance never claims message delivery. A pending outcome can be recovered through explicit reconciliation. previous_receipt_id permits only an exact retryable or timed-out predecessor.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EntityId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCommunicationDelivery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Request a communication contract handoff",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CommunicationDeliveryReceipt"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Idempotent command replay",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CommunicationDeliveryReceipt"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error"
+          },
+          "502": {
+            "$ref": "#/components/responses/Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/communication-links/{id}/deliveries/{receipt_id}/reconcile": {
+      "post": {
+        "summary": "Reconcile a communication contract handoff",
+        "description": "Requires communications:reconcile and fresh party and external authorization. expected_version refers to the connector receipt. Outcome, external receipt, response, status and provider fields cannot be supplied by callers; only the independently validated adapter response can resolve the attempt.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EntityId"
+          },
+          {
+            "$ref": "#/components/parameters/CommunicationReceiptId"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReconcileCommunicationDelivery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reconcile a communication contract handoff",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CommunicationDeliveryReceipt"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error"
+          },
+          "502": {
+            "$ref": "#/components/responses/Error"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
     "/session": {
       "post": {
         "summary": "Create an isolated qualification session",
@@ -464,12 +820,307 @@
   "components": {
     "securitySchemes": {"bearerAuth": {"type": "http", "scheme": "bearer"}},
     "parameters": {
+      "CommunicationReceiptId": {"name": "receipt_id", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}},
       "PartyId": {"name": "id", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}},
       "EntityId": {"name": "id", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}},
       "LaneId": {"name": "id", "in": "path", "required": true, "schema": {"type": "string", "format": "uuid"}},
       "IdempotencyKey": {"name": "Idempotency-Key", "in": "header", "required": true, "schema": {"type": "string", "minLength": 8, "maxLength": 128}}
     },
     "schemas": {
+      "CreateCommunicationLink": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "subject_type",
+          "subject_id",
+          "subject_version",
+          "conversation_id",
+          "reason"
+        ],
+        "properties": {
+          "subject_type": {
+            "type": "string",
+            "const": "party"
+          },
+          "subject_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subject_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "conversation_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500
+          }
+        }
+      },
+      "RequestCommunicationDelivery": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version",
+          "delivery_key",
+          "reason"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "delivery_key": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{7,127}$"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500
+          },
+          "previous_receipt_id": {
+            "type": ["string", "null"],
+            "format": "uuid"
+          }
+        }
+      },
+      "ReconcileCommunicationDelivery": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expected_version"
+        ],
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "CommunicationLink": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tenant_id",
+          "subject_type",
+          "subject_id",
+          "subject_version",
+          "conversation_id",
+          "lock_version",
+          "contract_version",
+          "system_role",
+          "external_delivery_state"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tenant_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subject_type": {
+            "type": "string",
+            "const": "party"
+          },
+          "subject_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subject_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "conversation_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lock_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "contract_version": {
+            "type": "integer",
+            "const": 1
+          },
+          "system_role": {
+            "type": "string",
+            "const": "communications_system"
+          },
+          "external_delivery_state": {
+            "type": "string",
+            "const": "unverified"
+          }
+        }
+      },
+      "CommunicationsHealth": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "status",
+          "contract_version",
+          "system_role",
+          "external_delivery_state"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "unavailable",
+              "local_contract_double"
+            ]
+          },
+          "contract_version": {
+            "type": "integer",
+            "const": 1
+          },
+          "system_role": {
+            "type": "string",
+            "const": "communications_system"
+          },
+          "external_delivery_state": {
+            "type": "string",
+            "const": "unverified"
+          }
+        }
+      },
+      "CommunicationDeliveryReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tenant_id",
+          "connector_role",
+          "operation",
+          "delivery_key",
+          "attempt_number",
+          "request_sha256",
+          "subject_type",
+          "subject_id",
+          "subject_version",
+          "status",
+          "deadline_at",
+          "previous_receipt_id",
+          "response_sha256",
+          "external_reference",
+          "retry_after_seconds",
+          "lock_version",
+          "communication_link_id",
+          "contract_acceptance",
+          "external_delivery_state"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tenant_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "connector_role": {
+            "type": "string",
+            "const": "communications_system"
+          },
+          "operation": {
+            "type": "string",
+            "const": "communications.delivery"
+          },
+          "delivery_key": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{7,127}$"
+          },
+          "attempt_number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "request_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "subject_type": {
+            "type": "string",
+            "const": "party"
+          },
+          "subject_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subject_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "attempted",
+              "succeeded",
+              "retryable_failure",
+              "permanent_failure",
+              "timed_out"
+            ]
+          },
+          "deadline_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "previous_receipt_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "response_sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "external_reference": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 200
+          },
+          "retry_after_seconds": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 86400
+          },
+          "lock_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "communication_link_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "contract_acceptance": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "contract_accepted"
+            ]
+          },
+          "external_delivery_state": {
+            "type": "string",
+            "const": "unverified"
+          }
+        }
+      },
       "CreateLocalUser": {
         "type": "object",
         "required": ["username", "display_name", "access_profile", "temporary_password", "reason"],

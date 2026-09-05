@@ -9,6 +9,9 @@ defmodule UokNext.Modules.Platform.Integrations.Infrastructure.EctoConnectorRece
   alias UokNext.Repo
 
   @impl true
+  def transaction_open?, do: Repo.in_transaction?()
+
+  @impl true
   def create(attrs, _context) do
     %ConnectorReceiptRecord{}
     |> ConnectorReceiptRecord.create_changeset(attrs)

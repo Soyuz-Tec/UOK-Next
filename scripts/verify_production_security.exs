@@ -77,6 +77,10 @@ unless Application.fetch_env!(:uok_next, :deployment_profile) == :production do
   raise "production must not activate the local qualification transport profile"
 end
 
+unless Application.fetch_env!(:uok_next, :communications_adapter) == :disabled do
+  raise "production communications transport must remain disabled pending provider qualification"
+end
+
 if Application.get_env(:uok_next, :local_qualification_identity) do
   raise "production must not configure the local qualification identity adapter"
 end
