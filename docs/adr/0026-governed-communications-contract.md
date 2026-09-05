@@ -108,6 +108,24 @@ failover, production identity, migration completeness, or disaster recovery.
 Gate 4 remains active until those applicable contracts and operational proofs
 are completed in bounded increments.
 
+## Qualification evidence
+
+Revision `9ae243ace20ea5d9fee22c17bab538db568c5162` passed
+[Foundation run 33975218019](https://github.com/Soyuz-Tec/UOK-Next/actions/runs/33975218019),
+including all 174 backend tests, 19 frontend tests, 13 continuity tests,
+PostgreSQL baseline, security/advisory/configuration checks, architecture, and
+immutable release build. New evidence is in:
+
+- `test/uok_next/modules/platform/integrations/domain/communication_contract_test.exs`
+- `test/uok_next/modules/platform/integrations/communications_test.exs`
+- `test/uok_next_web/controllers/communications_controller_test.exs`
+- `test/security/http_response_limits_test.exs`
+
+The concurrency test uses the shared SQL sandbox; it does not qualify separate
+connections or replicas. The double is test-only and in-memory; it does not
+prove durable external acceptance after its own restart. No legacy capability
+is marked fully qualified by this evidence.
+
 ## Technical provenance and compatibility gap
 
 The pinned prior communications application at revision

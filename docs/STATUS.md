@@ -50,10 +50,18 @@
 - The additive link-table migration requires forced tenant RLS and exact
   SELECT/INSERT application grants. Readiness requires the new migration.
   Rollback retains records and reverts application/grant changes.
-- Local format, application compilation with warnings-as-errors, and Sobelow
-  checks passed, alongside 13 contract/adapter tests, four HTTP-parser security
-  regression tests, and the 13 feature-retention tests. Hosted PostgreSQL,
-  full-suite, fresh advisory, and release qualification remain pending.
+- Implementation revision `9ae243ace20ea5d9fee22c17bab538db568c5162`
+  passed all three Foundation jobs in
+  [CI run 33975218019](https://github.com/Soyuz-Tec/UOK-Next/actions/runs/33975218019):
+  architecture/ownership, PostgreSQL 19 baseline, compiler, formatting, strict
+  Credo, Sobelow, 174 backend tests, 19 frontend tests, 13 continuity tests,
+  current Hex/npm advisory audits, production/local configuration checks, and
+  the immutable non-root release build. The 37 new backend tests cover the
+  contract, database/API workflow, and HTTP-parser security regressions.
+- [Draft PR #46](https://github.com/Soyuz-Tec/UOK-Next/pull/46) is stacked on the
+  continuity-framework PR #45. This is CI qualification of the local contract
+  double, not protected-main delivery, real-provider interoperability, or a
+  two-replica communications/recovery qualification.
 - Mint is updated from 1.9.3 to verified 1.10.0 to remediate the two advisories
   that blocked the preceding framework PR. Both oversized-response and
   excessive chunk-size protocol regressions now fail with bounded errors.
@@ -779,10 +787,12 @@
 
 ## Next action
 
-Complete code, independent review, and executable qualification of ADR-0026's
-party-link and delivery-intent contract. Then resolve the provider contract and
-identity-mapping gap before selecting credentials or enabling live transport.
-Retain failure/reconciliation and fresh authorization requirements throughout.
+Review and deliver the CI-qualified communications contract through the
+protected workflow. Resolve the provider API, identity mapping, and recovery
+policy for changed subjects or revoked initiating actors before selecting
+credentials or enabling live transport. Then prove actual interoperability,
+independent-connection contention, and replica/restart recovery. Retain fresh
+authorization and all previous capability obligations throughout.
 
 AI execution and module-installation implementation remain deferred. This
 status advance does not create a second active delivery focus.
