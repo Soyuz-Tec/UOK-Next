@@ -1,6 +1,6 @@
 # Current Build Status
 
-**Snapshot date:** 2026-09-03
+**Snapshot date:** 2026-09-05
 
 **Canonical repository:** `https://github.com/Soyuz-Tec/UOK-Next`
 
@@ -9,6 +9,30 @@
 ## One active focus
 
 **Gate 4: define and qualify the first external communications-system contract.**
+
+## Previous application continuity requirement
+
+- The owner requires all previously developed application capabilities to be
+  incorporated in UOK Next. ADR-0027 and `docs/FEATURE_CONTINUITY.md` make this
+  a durable acceptance requirement while preserving the Gate 4 focus.
+- The initial register contains 488 capability entries across eight
+  application lineages, plus upstream-fork, profile and unresolved historical
+  alias records. Overlapping features and declared commands are separate
+  entries; this is not a count of unique features or completed migrations.
+- Source documents, module manifests, trees and selected source files were
+  inspected. Legacy runtime claims were not rerun. Discovery remains initial;
+  branches, archives and detailed workflow characterization remain open.
+- The engineering validator checks owners, evidence structure and retention
+  against the previous Git inventory. It does not prove runtime parity.
+  No business runtime capability is added or newly qualified by this change.
+- Local verification with the pinned Node 24.19.0 passed 13 continuity tests,
+  baseline validation against `dc44822b46e52699e8384d2fd39fa0242327d037`
+  and `git diff --check`. Existing application/release qualification is not
+  rerun locally by this governance-only increment; protected CI remains a
+  merge gate.
+- Agent execution ownership, canvas convergence ownership and desktop
+  companion boundaries require explicit reconciliation before integration.
+  ADR-0026 remains reserved for the next communications-contract increment.
 
 ## Verified foundation
 

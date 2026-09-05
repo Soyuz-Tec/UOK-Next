@@ -1,0 +1,805 @@
+{
+  "source_id": "legacy_trade_intelligence",
+  "features": [
+    {
+      "id": "legacy_trade_intelligence.strategic-model",
+      "capability": "Strategic model",
+      "required_outcome": "Strategic model",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 7",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.data-discipline",
+      "capability": "Data discipline",
+      "required_outcome": "Data discipline",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 16",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.evidence",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "evidence",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.v2-security-and-quality-gates",
+      "capability": "V2 security and quality gates",
+      "required_outcome": "V2 security and quality gates",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 45",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.quality-traceability",
+      "capability": "quality traceability",
+      "required_outcome": "quality traceability",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 57",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.quality",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "field_quality",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.offline-field-evidence-sync",
+      "capability": "offline field evidence sync",
+      "required_outcome": "offline field evidence sync",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 61",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.quality",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "field_quality",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.logistics-readiness-scorecard",
+      "capability": "logistics readiness scorecard",
+      "required_outcome": "logistics readiness scorecard",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 65",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.counterparty-risk-and-confidence",
+      "capability": "counterparty risk and confidence",
+      "required_outcome": "counterparty risk and confidence",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 69",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.deal-economics-calculator",
+      "capability": "deal economics calculator",
+      "required_outcome": "deal economics calculator",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 73",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.finance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "finance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.commercial-decision-gate",
+      "capability": "commercial decision gate",
+      "required_outcome": "commercial decision gate",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 77",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.contracts",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "commercial",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.business-learning-log",
+      "capability": "business learning log",
+      "required_outcome": "business learning log",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 81",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.access-controlled-editing-foundation",
+      "capability": "access-controlled editing foundation",
+      "required_outcome": "access-controlled editing foundation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 85",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.identity",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "identity",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.record-revision-and-reopen-workflow",
+      "capability": "record revision and reopen workflow",
+      "required_outcome": "record revision and reopen workflow",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 89",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.evidence",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "evidence",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.participant-and-authority-registry",
+      "capability": "participant and authority registry",
+      "required_outcome": "participant and authority registry",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 93",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.trade-intelligence-evidence-object-storage-boundary",
+      "capability": "Trade intelligence evidence/object storage boundary",
+      "required_outcome": "Trade intelligence evidence/object storage boundary",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 97",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.evidence",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "evidence",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.trade-intelligence-durable-workflow-runtime",
+      "capability": "Trade intelligence durable workflow runtime",
+      "required_outcome": "Trade intelligence durable workflow runtime",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 101",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.trade-intelligence-ai-gateway-draft-layer",
+      "capability": "Trade intelligence AI gateway draft layer",
+      "required_outcome": "Trade intelligence AI gateway draft layer",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 105",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "native",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.trade-intelligence-communications-boundary",
+      "capability": "Trade intelligence Communications boundary",
+      "required_outcome": "Trade intelligence Communications boundary",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 109",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.trade-intelligence-staging-deployment-skeleton",
+      "capability": "Trade intelligence staging deployment skeleton",
+      "required_outcome": "Trade intelligence staging deployment skeleton",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 113",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.trusted-time-and-global-operations-clock",
+      "capability": "trusted time and global operations clock",
+      "required_outcome": "trusted time and global operations clock",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 117",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.reference-data-and-fx-rates",
+      "capability": "reference data and FX rates",
+      "required_outcome": "reference data and FX rates",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 121",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.finance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "finance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.international-phone-numbers",
+      "capability": "international phone numbers",
+      "required_outcome": "international phone numbers",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 125",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.unified-party-master",
+      "capability": "unified party master",
+      "required_outcome": "unified party master",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 129",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.country-report-data-framework",
+      "capability": "country report data framework",
+      "required_outcome": "country report data framework",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 141",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.corridor-country-intelligence",
+      "capability": "corridor country intelligence",
+      "required_outcome": "corridor country intelligence",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 155",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.shipment-support-orchestration",
+      "capability": "shipment support orchestration",
+      "required_outcome": "shipment support orchestration",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 161",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.shipment-route-selection-and-binding",
+      "capability": "shipment route selection and binding",
+      "required_outcome": "shipment route selection and binding",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 171",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.operational-intelligence-foundation",
+      "capability": "operational intelligence foundation",
+      "required_outcome": "operational intelligence foundation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 179",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.operational-workflow-action-hardening",
+      "capability": "operational workflow action hardening",
+      "required_outcome": "operational workflow action hardening",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 187",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.operational-task-assignment-and-escalation",
+      "capability": "operational task assignment and escalation",
+      "required_outcome": "operational task assignment and escalation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 193",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.operational-task-execution-receipts",
+      "capability": "operational task execution receipts",
+      "required_outcome": "operational task execution receipts",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 199",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.shipment-workspace-v2-ui-workflow",
+      "capability": "shipment workspace V2 UI workflow",
+      "required_outcome": "shipment workspace V2 UI workflow",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 205",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.operational-intelligence-security-hardening",
+      "capability": "operational intelligence security hardening",
+      "required_outcome": "operational intelligence security hardening",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 211",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.multi-domain-master-data-foundation",
+      "capability": "multi-domain master data foundation",
+      "required_outcome": "multi-domain master data foundation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 217",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "master.products",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.developer-dashboard",
+      "capability": "Developer Dashboard",
+      "required_outcome": "Developer Dashboard",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 225",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.workspace-navigation-model",
+      "capability": "Workspace navigation model",
+      "required_outcome": "Workspace navigation model",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 231",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.product-and-location-domains",
+      "capability": "product and location domains",
+      "required_outcome": "product and location domains",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 251",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "master.products",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.asset-and-compliance-extensions",
+      "capability": "asset and compliance extensions",
+      "required_outcome": "asset and compliance extensions",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 259",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.compliance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "compliance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.party-compliance-and-vendor-capability-governance",
+      "capability": "party compliance and vendor capability governance",
+      "required_outcome": "party compliance and vendor capability governance",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 265",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.master-data-quality-analytics",
+      "capability": "master-data quality analytics",
+      "required_outcome": "master-data quality analytics",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 271",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.intelligence-signals-foundation",
+      "capability": "intelligence signals foundation",
+      "required_outcome": "intelligence signals foundation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 277",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.multi-commodity-source-to-lot-foundation",
+      "capability": "multi-commodity source-to-lot foundation",
+      "required_outcome": "multi-commodity source-to-lot foundation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 285",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.quality",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "field_quality",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.farm-source-mapping-foundation",
+      "capability": "farm source mapping foundation",
+      "required_outcome": "farm source mapping foundation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 293",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.quality",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "field_quality",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.trade-intelligence-public-snapshot-portal-and-operation-registry",
+      "capability": "Trade intelligence public snapshot, portal, and operation registry",
+      "required_outcome": "Trade intelligence public snapshot, portal, and operation registry",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 303",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "public.publishing",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "publication",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.source-lot-contributions",
+      "capability": "Source deliveries, lot contributions, split/merge lineage and warehouse stock",
+      "required_outcome": "Source deliveries, lot contributions, split/merge lineage and warehouse stock",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 285",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.quality",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "field_quality",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.farm-map-revisions",
+      "capability": "Farm boundary revisions, field observations and crop-cycle context",
+      "required_outcome": "Farm boundary revisions, field observations and crop-cycle context",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 293",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "trade.quality",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "field_quality",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.public-snapshots",
+      "capability": "Reviewed redacted public commodity, corridor, country, report and methodology snapshots",
+      "required_outcome": "Reviewed redacted public commodity, corridor, country, report and methodology snapshots",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 303",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "public.publishing",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "publication",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.public-intake",
+      "capability": "Idempotent pending-review public inquiries without automatic party or account creation",
+      "required_outcome": "Idempotent pending-review public inquiries without automatic party or account creation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 313",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "public.publishing",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "publication",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.partner-portals",
+      "capability": "Party-scoped partner dashboards with reviewed membership and role-specific access",
+      "required_outcome": "Party-scoped partner dashboards with reviewed membership and role-specific access",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 325",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.identity",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "identity",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.operation-registry",
+      "capability": "Versioned operation variants, task/gate templates and evidence requirements",
+      "required_outcome": "Versioned operation variants, task/gate templates and evidence requirements",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 317",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_intelligence.restricted-business-records",
+      "capability": "Keep individual business due-diligence records restricted and separate from private personal records",
+      "required_outcome": "Keep individual business due-diligence records restricted and separate from private personal records",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 16",
+        "reported_maturity": "documented_delivery"
+      },
+      "target_owner": "platform.evidence",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "evidence",
+      "target_evidence": []
+    }
+  ]
+}

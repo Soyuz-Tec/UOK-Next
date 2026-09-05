@@ -29,3 +29,6 @@ Material decisions live in ADRs. This file is a short index and review queue.
 | [0023](adr/0023-governed-live-operational-report-projection.md) | The first BI surface is a reconciled live projection over public module queries | Accepted | Persisted or cross-operation BI, metric catalog, analytical export, or execution-plane work |
 | [0024](adr/0024-local-user-access-and-password-activation.md) | Local qualification supports attributable users, forced password activation, role-bounded access, throttling, and revocable opaque sessions | Accepted | Production identity, invitation delivery, reset/recovery, MFA/passkeys, federation, provisioning, or local access-profile expansion |
 | [0025](adr/0025-postgresql-durable-outbox-handoff.md) | PostgreSQL jobs and a separate worker role deliver outbox events to an idempotent local durable handoff | Accepted | Live transport, consumer registration, redrive, retention, or a broader job kind |
+| [0027](adr/0027-previous-application-capability-continuity.md) | All previously developed application capabilities remain tracked obligations with source-to-target parity evidence | Accepted requirement; implementation gated | Consolidation, source discovery, retirement, ownership change or feature qualification |
+
+ADR-0026 is reserved for the next communications contract in `STATUS.md`.

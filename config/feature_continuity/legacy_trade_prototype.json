@@ -1,0 +1,1349 @@
+{
+  "source_id": "legacy_trade_prototype",
+  "features": [
+    {
+      "id": "legacy_trade_prototype.scope-scm-control-tower-decision-dashboard",
+      "capability": "SCM Control Tower decision dashboard",
+      "required_outcome": "SCM Control Tower decision dashboard",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 59",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-execution-workflow-home-with-role-scoped-pending-completed-task-notifications-guided-plan-to-report-stage-path-and-severity-ranked-task-blocker-inbox",
+      "capability": "Execution Workflow Home with role-scoped pending/completed task notifications, guided Plan-to-Report stage path, and severity-ranked task/blocker inbox",
+      "required_outcome": "Execution Workflow Home with role-scoped pending/completed task notifications, guided Plan-to-Report stage path, and severity-ranked task/blocker inbox",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 60",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-enterprise-apps-blueprint-and-trade-enterprise-app-launcher-for-enterprise-app-grid-navigation-working-module-routing-and-orchestration-layer-visibility-with-independent-implementation",
+      "capability": "Enterprise Apps Blueprint and Trade Enterprise App Launcher for Enterprise app-grid navigation, working module routing and orchestration-layer visibility with independent implementation",
+      "required_outcome": "Enterprise Apps Blueprint and Trade Enterprise App Launcher for Enterprise app-grid navigation, working module routing and orchestration-layer visibility with independent implementation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 61",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-scm-operating-workflow-stage-board-for-plan-source-procure-inspect-pack-move-clear-store-sell-settle-and-report",
+      "capability": "SCM Operating Workflow stage board for Plan, Source, Procure, Inspect, Pack, Move, Clear, Store, Sell, Settle and Report",
+      "required_outcome": "SCM Operating Workflow stage board for Plan, Source, Procure, Inspect, Pack, Move, Clear, Store, Sell, Settle and Report",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 62",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-prototype-hardening-workspace-for-phase-0i-modularization-repository-context-mapping-persistence-schema-evidence-file-hashing-alert-derivation-report-packs-adapter-contracts-and-ai-evidence-support",
+      "capability": "Prototype Hardening workspace for Phase 0I modularization, repository context mapping, persistence schema, evidence file hashing, alert derivation, report packs, adapter contracts and AI evidence support",
+      "required_outcome": "Prototype Hardening workspace for Phase 0I modularization, repository context mapping, persistence schema, evidence file hashing, alert derivation, report packs, adapter contracts and AI evidence support",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 63",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-master-data-and-trade-reference-foundation-for-static-reference-data-governed-master-data-volatile-external-feeds-trusted-source-records-and-refresh-rules",
+      "capability": "Master Data And Trade Reference foundation for static reference data, governed master data, volatile external feeds, trusted source records and refresh rules",
+      "required_outcome": "Master Data And Trade Reference foundation for static reference data, governed master data, volatile external feeds, trusted source records and refresh rules",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 64",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.products",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-business-operation-playbooks-powered-by-the-internal-operationworkflow-orchestration-layer-coordinating-onboarding-master-data-purchase-requisition-rfq-quote-approval-po-inbound-logistics-evidence-gates-and-task-routing-without-duplicating-module-records",
+      "capability": "Business Operation Playbooks powered by the internal `OperationWorkflow` orchestration layer, coordinating onboarding, master data, purchase requisition, RFQ, quote approval, PO, inbound logistics, evidence gates and task routing without duplicating module records",
+      "required_outcome": "Business Operation Playbooks powered by the internal `OperationWorkflow` orchestration layer, coordinating onboarding, master data, purchase requisition, RFQ, quote approval, PO, inbound logistics, evidence gates and task routing without duplicating module records",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 65",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-real-data-intake-and-review-for-read-only-connected-mailbox-connected-document-storage-and-local-document-candidate-extraction-source-traceability-reviewer-approval-and-controlled-promotion-into-prototype-evidence",
+      "capability": "Real Data Intake And Review for read-only connected mailbox, connected document storage and local-document candidate extraction, source traceability, reviewer approval and controlled promotion into prototype evidence",
+      "required_outcome": "Real Data Intake And Review for read-only connected mailbox, connected document storage and local-document candidate extraction, source traceability, reviewer approval and controlled promotion into prototype evidence",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 66",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.evidence",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "evidence",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-admin-setup-and-access-for-prototype-entities-users-roles-access-and-drill-down-editing",
+      "capability": "Admin Setup And Access for prototype entities, users, roles, access and drill-down editing",
+      "required_outcome": "Admin Setup And Access for prototype entities, users, roles, access and drill-down editing",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 67",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.identity",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "identity",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-product-and-hs-master-data-for-hs-linked-product-profiles-verification-creation-and-modification",
+      "capability": "Product And HS Master Data for HS-linked product profiles, verification, creation and modification",
+      "required_outcome": "Product And HS Master Data for HS-linked product profiles, verification, creation and modification",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 68",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.products",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-entity-registry-and-roles-for-people-companies-government-bodies-sovereign-actors-and-service-providers-linked-to-iso-country-references",
+      "capability": "Entity Registry And Roles for people, companies, government bodies, sovereign actors and service providers linked to ISO country references",
+      "required_outcome": "Entity Registry And Roles for people, companies, government bodies, sovereign actors and service providers linked to ISO country references",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 69",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-entity-kyc-kyb-and-aml-readiness-profiles-with-structured-address-email-telephone-statutory-id-signatory-beneficial-ownership-screening-and-bank-verification-placeholders",
+      "capability": "Entity KYC/KYB and AML readiness profiles with structured address, email, telephone, statutory ID, signatory, beneficial ownership, screening and bank-verification placeholders",
+      "required_outcome": "Entity KYC/KYB and AML readiness profiles with structured address, email, telephone, statutory ID, signatory, beneficial ownership, screening and bank-verification placeholders",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 70",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-entity-roles-relationships-and-operating-sites-so-one-person-farm-company-or-authority-can-buy-sell-own-represent-sign-supply-or-provide-services-in-different-workflows",
+      "capability": "Entity roles, relationships and operating sites so one person, farm, company or authority can buy, sell, own, represent, sign, supply or provide services in different workflows",
+      "required_outcome": "Entity roles, relationships and operating sites so one person, farm, company or authority can buy, sell, own, represent, sign, supply or provide services in different workflows",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 71",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-detail-panel-reference-lookup-for-product-and-entity-records-including-local-search-field-apply-actions-draft-creation-and-evidence-attachment",
+      "capability": "Detail Panel Reference Lookup for product and entity records, including local search, field-apply actions, draft creation and evidence attachment",
+      "required_outcome": "Detail Panel Reference Lookup for product and entity records, including local search, field-apply actions, draft creation and evidence attachment",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 72",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-global-command-and-reference-center-across-products-hs-codes-entities-countries-evidence-trades-supply-chain-records-and-invoice-module-readiness-including-permissioned-commands-for-entity-farm-product-drafts-and-country-product-reports",
+      "capability": "Global Command and Reference Center across products, HS codes, entities, countries, evidence, trades, supply-chain records and invoice-module readiness, including permissioned commands for entity/farm/product drafts and country-product reports",
+      "required_outcome": "Global Command and Reference Center across products, HS codes, entities, countries, evidence, trades, supply-chain records and invoice-module readiness, including permissioned commands for entity/farm/product drafts and country-product reports",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 73",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-iso-3166-1-country-reference-model-for-alpha-2-alpha-3-and-numeric-country-codes",
+      "capability": "ISO 3166-1 country reference model for alpha-2, alpha-3 and numeric country codes",
+      "required_outcome": "ISO 3166-1 country reference model for alpha-2, alpha-3 and numeric country codes",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 74",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.locations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-internal-hs-code-reference-seed-records-and-future-official-source-connector-placeholders",
+      "capability": "Internal HS code reference seed records and future official-source connector placeholders",
+      "required_outcome": "Internal HS code reference seed records and future official-source connector placeholders",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 75",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.products",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-prototype-data-studio-for-editing-seeded-prototype-records-across-products-parties-lanes-workflow-evidence-finance-execution-communications-scm-and-planning-datasets",
+      "capability": "Prototype Data Studio for editing seeded prototype records across products, parties, lanes, workflow, evidence, finance, execution, communications, SCM and planning datasets",
+      "required_outcome": "Prototype Data Studio for editing seeded prototype records across products, parties, lanes, workflow, evidence, finance, execution, communications, SCM and planning datasets",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 76",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-local-api-bff-scaffold-for-health-snapshot-engineering-plan-product-entity-user-and-workflow-status-routes",
+      "capability": "Local API/BFF scaffold for health, snapshot, engineering plan, product, entity, user and workflow status routes",
+      "required_outcome": "Local API/BFF scaffold for health, snapshot, engineering plan, product, entity, user and workflow status routes",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 77",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-production-iam-simulation-with-tenant-actor-scoped-grant-protected-action-and-secure-mutation-checks",
+      "capability": "Production IAM simulation with tenant, actor, scoped grant, protected action and secure mutation checks",
+      "required_outcome": "Production IAM simulation with tenant, actor, scoped grant, protected action and secure mutation checks",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 78",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.identity",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "identity",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-counterparty-onboarding-kyc-kyb-simulation-with-evidence-driven-participant-readiness",
+      "capability": "Counterparty onboarding/KYC-KYB simulation with evidence-driven participant readiness",
+      "required_outcome": "Counterparty onboarding/KYC-KYB simulation with evidence-driven participant readiness",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 79",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-procurement-and-sales-book-for-physical-purchase-sale-trades-and-service-linked-commercial-records",
+      "capability": "Procurement And Sales Book for physical purchase/sale trades and service-linked commercial records",
+      "required_outcome": "Procurement And Sales Book for physical purchase/sale trades and service-linked commercial records",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 80",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.contracts",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "commercial",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-logistics-quality-and-customs-workflow-for-ghana-to-thoothukudi-movement-inspection-clearance-and-warehouse-intake",
+      "capability": "Logistics, Quality And Customs workflow for Ghana to Thoothukudi movement, inspection, clearance and warehouse intake",
+      "required_outcome": "Logistics, Quality And Customs workflow for Ghana to Thoothukudi movement, inspection, clearance and warehouse intake",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 81",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-standards-and-go-hold-rules-workflow-register",
+      "capability": "Standards And GO/HOLD Rules workflow register",
+      "required_outcome": "Standards And GO/HOLD Rules workflow register",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 82",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.compliance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "compliance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-product-profile-model-with-rcn-hs08013100-as-product-1-and-jute-bag-hs630510-as-product-2",
+      "capability": "Product profile model with RCN-HS08013100 as Product 1 and JUTE-BAG-HS630510 as Product 2",
+      "required_outcome": "Product profile model with RCN-HS08013100 as Product 1 and JUTE-BAG-HS630510 as Product 2",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 83",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.products",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-sourcing-lane-model-for-rcn-from-ghana-tanzania-cote-d-ivoire-and-jute-bags-from-india-bangladesh-china-togo",
+      "capability": "Sourcing lane model for RCN from Ghana/Tanzania/Cote d'Ivoire and jute bags from India/Bangladesh/China/Togo",
+      "required_outcome": "Sourcing lane model for RCN from Ghana/Tanzania/Cote d'Ivoire and jute bags from India/Bangladesh/China/Togo",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 84",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.sourcing",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "commercial",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-linked-packaging-supply-lane-for-jute-bags-from-india-bangladesh-to-ghana-before-rcn-bagging",
+      "capability": "Linked packaging supply lane for jute bags from India/Bangladesh to Ghana before RCN bagging",
+      "required_outcome": "Linked packaging supply lane for jute bags from India/Bangladesh to Ghana before RCN bagging",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 85",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.sourcing",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "commercial",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-canonical-party-registry-with-lane-scoped-party-roles-and-aliases",
+      "capability": "Canonical party registry with lane-scoped party roles and aliases",
+      "required_outcome": "Canonical party registry with lane-scoped party roles and aliases",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 86",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-operational-continuity-model-linking-source-reports-product-profiles-lanes-rfqs-routes-support-plans-trades-and-shipments",
+      "capability": "Operational continuity model linking source reports, product profiles, lanes, RFQs, routes, support plans, trades and shipments",
+      "required_outcome": "Operational continuity model linking source reports, product profiles, lanes, RFQs, routes, support plans, trades and shipments",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 87",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-route-validation-and-apply-workflow-for-internally-consistent-lane-execution",
+      "capability": "Route validation and apply workflow for internally consistent lane execution",
+      "required_outcome": "Route validation and apply workflow for internally consistent lane execution",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 88",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-evidence-vault-review-workflow-with-decision-support-only-status-boundaries",
+      "capability": "Evidence vault review workflow with decision-support-only status boundaries",
+      "required_outcome": "Evidence vault review workflow with decision-support-only status boundaries",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 89",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.evidence",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "evidence",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-evidence-approval-gate-workbench-with-task-completion-approval-decisions-and-controlled-green-gate-promotion",
+      "capability": "Evidence + Approval Gate workbench with task completion, approval decisions and controlled GREEN gate promotion",
+      "required_outcome": "Evidence + Approval Gate workbench with task completion, approval decisions and controlled GREEN gate promotion",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 90",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-iam-simulation-workbench-for-admin-developer-permission-smoke-tests",
+      "capability": "IAM Simulation workbench for admin/developer permission smoke tests",
+      "required_outcome": "IAM Simulation workbench for admin/developer permission smoke tests",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 91",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.identity",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "identity",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-counterparties-workbench-for-supplier-buyer-cha-warehouse-inspector-forwarder-funder-and-importer-onboarding-blockers",
+      "capability": "Counterparties workbench for supplier, buyer, CHA, warehouse, inspector, forwarder, funder and importer onboarding blockers",
+      "required_outcome": "Counterparties workbench for supplier, buyer, CHA, warehouse, inspector, forwarder, funder and importer onboarding blockers",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 92",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-rfq-quote-contract-workspace-with-quote-versions-selection-controls-and-draft-agreement-readiness",
+      "capability": "RFQ/Quote/Contract workspace with quote versions, selection controls and draft agreement readiness",
+      "required_outcome": "RFQ/Quote/Contract workspace with quote versions, selection controls and draft agreement readiness",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 93",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.sourcing",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "commercial",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-finance-cashflow-and-funding-controls-with-usd-as-the-control-currency",
+      "capability": "Finance, cashflow and funding controls with USD as the control currency",
+      "required_outcome": "Finance, cashflow and funding controls with USD as the control currency",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 94",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.finance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "finance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-quality-inspection-workbench-for-rcn-moisture-kor-nut-count-defects-and-release-readiness",
+      "capability": "Quality inspection workbench for RCN moisture, KOR, nut count, defects and release readiness",
+      "required_outcome": "Quality inspection workbench for RCN moisture, KOR, nut count, defects and release readiness",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 95",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.quality",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "field_quality",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-voc-clearance-workbench-for-ordered-thoothukudi-customs-fssai-pq-duty-milestones",
+      "capability": "VOC clearance workbench for ordered Thoothukudi customs/FSSAI/PQ/duty milestones",
+      "required_outcome": "VOC clearance workbench for ordered Thoothukudi customs/FSSAI/PQ/duty milestones",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 96",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.compliance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "compliance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-release-evidence-packages-for-tests-build-container-and-browser-api-smoke-checks",
+      "capability": "Release evidence packages for tests, build, container and browser/API smoke checks",
+      "required_outcome": "Release evidence packages for tests, build, container and browser/API smoke checks",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 97",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-participant-communications-workspace-with-object-linked-rooms-message-logging-file-metadata-external-send-approval-logs-and-prototype-call-sessions",
+      "capability": "Participant communications workspace with object-linked rooms, message logging, file metadata, external-send approval logs and prototype call sessions",
+      "required_outcome": "Participant communications workspace with object-linked rooms, message logging, file metadata, external-send approval logs and prototype call sessions",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 98",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-scm-operating-workflow-with-plan-readiness-dependency-mapping-milestone-tracking-exception-handling-and-inventory-position-visibility",
+      "capability": "SCM Operating Workflow with plan readiness, dependency mapping, milestone tracking, exception handling and inventory-position visibility",
+      "required_outcome": "SCM Operating Workflow with plan readiness, dependency mapping, milestone tracking, exception handling and inventory-position visibility",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 99",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-data-intake-guardrails-for-source-permissions-candidate-confidence-labels-conflict-handling-sensitive-field-boundaries-and-no-automatic-master-data-mutation",
+      "capability": "Data-intake guardrails for source permissions, candidate confidence labels, conflict handling, sensitive-field boundaries and no automatic master-data mutation",
+      "required_outcome": "Data-intake guardrails for source permissions, candidate confidence labels, conflict handling, sensitive-field boundaries and no automatic master-data mutation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 100",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.evidence",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "evidence",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-phase-0i-hardening-models-for-postgresql-object-storage-target-schema-disabled-mock-integration-adapters-markdown-report-templates-browser-smoke-scenarios-and-evidence-ai-policies",
+      "capability": "Phase 0I hardening models for PostgreSQL/object-storage target schema, disabled/mock integration adapters, Markdown report templates, browser smoke scenarios and evidence AI policies",
+      "required_outcome": "Phase 0I hardening models for PostgreSQL/object-storage target schema, disabled/mock integration adapters, Markdown report templates, browser smoke scenarios and evidence AI policies",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 101",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-business-operation-playbook-templates-workflow-requests-workflow-instances-purchase-requisitions-purchase-orders-and-inbound-logistics-work-orders",
+      "capability": "Business operation playbook templates, workflow requests, workflow instances, purchase requisitions, purchase orders and inbound logistics work orders",
+      "required_outcome": "Business operation playbook templates, workflow requests, workflow instances, purchase requisitions, purchase orders and inbound logistics work orders",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 102",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-evidence-file-intake-with-sha-256-hashing-promotion-into-formal-evidence-records-and-hash-manifest-export",
+      "capability": "Evidence file intake with SHA-256 hashing, promotion into formal evidence records and hash-manifest export",
+      "required_outcome": "Evidence file intake with SHA-256 hashing, promotion into formal evidence records and hash-manifest export",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 103",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.evidence",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "evidence",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-notification-escalation-queue-derived-from-workflow-tasks-milestones-exceptions-missing-evidence-and-cashflow-blockers",
+      "capability": "Notification/escalation queue derived from workflow tasks, milestones, exceptions, missing evidence and cashflow blockers",
+      "required_outcome": "Notification/escalation queue derived from workflow tasks, milestones, exceptions, missing evidence and cashflow blockers",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 104",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.workflow",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-report-pack-generation-for-lender-readiness-shipment-execution-evidence-checklist-counterparty-readiness-and-product-hs-profiles",
+      "capability": "Report pack generation for lender/readiness, shipment execution, evidence checklist, counterparty readiness and product/HS profiles",
+      "required_outcome": "Report pack generation for lender/readiness, shipment execution, evidence checklist, counterparty readiness and product/HS profiles",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 105",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-finance-margin-and-risk-scenario-comparison",
+      "capability": "Finance, Margin And Risk scenario comparison",
+      "required_outcome": "Finance, Margin And Risk scenario comparison",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 106",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "trade.finance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "finance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-evidence-vault-and-approvals-register",
+      "capability": "Evidence Vault And Approvals register",
+      "required_outcome": "Evidence Vault And Approvals register",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 107",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.evidence",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "evidence",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-ai-decision-support-boundary-and-local-assistant",
+      "capability": "AI Decision Support boundary and local assistant",
+      "required_outcome": "AI Decision Support boundary and local assistant",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 108",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "native",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-bounded-context-seed-models-split-inside-the-modular-monolith-under-src-data-models-js",
+      "capability": "Bounded-context seed models split inside the modular monolith under `src/data/*Models.js`",
+      "required_outcome": "Bounded-context seed models split inside the modular monolith under `src/data/*Models.js`",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 109",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-engineering-plan-module-with-phase-readiness-blockers-production-stack-and-quality-gates",
+      "capability": "Engineering Plan module with phase readiness, blockers, production stack and quality gates",
+      "required_outcome": "Engineering Plan module with phase readiness, blockers, production stack and quality gates",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 110",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-pure-domain-tests-for-risk-workflow-standards-and-communication-baseline-logic",
+      "capability": "Pure domain tests for risk, workflow, standards and communication baseline logic",
+      "required_outcome": "Pure domain tests for risk, workflow, standards and communication baseline logic",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 111",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.scope-native-windows-go-gui-shell-for-local-workspace-readiness-checks",
+      "capability": "Native Windows Go GUI shell for local workspace readiness checks",
+      "required_outcome": "Native Windows Go GUI shell for local workspace readiness checks",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 112",
+        "reported_maturity": "prototype_documentation"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-user-login-logout-and-session-identity",
+      "capability": "User login, logout and session identity",
+      "required_outcome": "Every tester can enter Communications as a specific prototype user and carry actor identity into API calls.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 15",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-role-scoped-room-visibility",
+      "capability": "Role-scoped room visibility",
+      "required_outcome": "Users see only rooms they belong to, while unrelated rooms are hidden from normal user workflows.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 26",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-room-posting-and-call-permissions",
+      "capability": "Room posting and call permissions",
+      "required_outcome": "Room members can post and create call metadata only when their assigned participant permissions allow it.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 37",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-internal-workflow-messaging",
+      "capability": "Internal workflow messaging",
+      "required_outcome": "Users can log room messages linked to SCM workflow objects without leaving the active workspace.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 48",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-presence-and-availability",
+      "capability": "Presence and availability",
+      "required_outcome": "Users can see chat, call and meeting availability for room participants.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 59",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-call-and-meeting-metadata",
+      "capability": "Call and meeting metadata",
+      "required_outcome": "Users can create, list and update call sessions for room coordination, including local browser audio-call testing.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 70",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-secure-file-reference-metadata",
+      "capability": "Secure file reference metadata",
+      "required_outcome": "Users can link file metadata, evidence IDs and classification to communication rooms.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 81",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-external-communication-approval-gate",
+      "capability": "External communication approval gate",
+      "required_outcome": "External messages can be drafted and approved as records before any external channel is used.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 92",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-communication-audit-events",
+      "capability": "Communication audit events",
+      "required_outcome": "Allowed and denied communication actions produce audit-ready records for investigation.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 103",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-browser-workflow-surface",
+      "capability": "Browser workflow surface",
+      "required_outcome": "A user can navigate Communications, switch rooms and sections, post a message and inspect context.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 114",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-room-search-and-filters",
+      "capability": "Room search and filters",
+      "required_outcome": "Users can locate rooms by workflow, RFQ, clearance, finance or typed search context.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 125",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-thread-tracking",
+      "capability": "Thread tracking",
+      "required_outcome": "Important conversations can be grouped as threads linked to message IDs and business objects.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 136",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-message-to-task-conversion",
+      "capability": "Message-to-task conversion",
+      "required_outcome": "Users can convert communication decisions into task candidates for execution workflows.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 147",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "workflow",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-room-participant-administration",
+      "capability": "Room participant administration",
+      "required_outcome": "Privileged users can add, update or remove room participants and permission sets.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 158",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-actor-scoped-notifications",
+      "capability": "Actor-scoped notifications",
+      "required_outcome": "Users can see pending communication work, mentions, call requests and blocked evidence prompts.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 169",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-meeting-scheduling-workflow",
+      "capability": "Meeting scheduling workflow",
+      "required_outcome": "Rooms can capture proposed time, participants, agenda and meeting status before live calendar sync.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 180",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-file-to-evidence-promotion",
+      "capability": "File-to-evidence promotion",
+      "required_outcome": "File metadata can be prepared for Evidence Vault review without treating chat as the evidence owner.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 191",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "platform.evidence",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "evidence",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-retention-policy-model",
+      "capability": "Retention policy model",
+      "required_outcome": "Communication records have explicit retention classes for trade, clearance, finance and external evidence contexts.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 202",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-admin-monitoring-views",
+      "capability": "Admin monitoring views",
+      "required_outcome": "Privileged users can inspect room health, access denials, quality gates and production readiness.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 213",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-scm-bridge-api-fallback",
+      "capability": "SCM bridge API fallback",
+      "required_outcome": "The SCM app exposes local Communications APIs that can later proxy to the Communications service.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 224",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-realtime-message-fanout",
+      "capability": "Realtime message fanout",
+      "required_outcome": "Deliver low-latency room messages, typing indicators and receipts to active users.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 235",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-otp-supervision-and-clustering",
+      "capability": "OTP supervision and clustering",
+      "required_outcome": "Run telecom-style fault isolation, restart strategy, distributed presence and room process supervision.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 246",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-secure-voice-and-video-signaling",
+      "capability": "Secure voice and video signaling",
+      "required_outcome": "Create secure room calls and meetings with signaling, consent and participant controls.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 257",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-message-and-file-encryption-controls",
+      "capability": "Message and file encryption controls",
+      "required_outcome": "Protect messages, files and call metadata with strong key management and privacy controls.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 268",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-governed-object-storage-integration",
+      "capability": "Governed object storage integration",
+      "required_outcome": "Store and retrieve file bytes with classification, scan status, evidence promotion and retention policy.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 279",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-external-federation-and-provider-integrations",
+      "capability": "External federation and provider integrations",
+      "required_outcome": "Coordinate email, calendar, file share and external messaging providers through governed channels.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 290",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-private-enterprise-mobile-network-mode",
+      "capability": "Private enterprise mobile network mode",
+      "required_outcome": "Operate WiFi-first secure communication for managed enterprise mobile devices.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 301",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-ai-assisted-communication-operations",
+      "capability": "AI-assisted communication operations",
+      "required_outcome": "Summarize rooms, draft internal replies and extract tasks while preserving decision-support-only boundaries.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 312",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-communication-observability",
+      "capability": "Communication observability",
+      "required_outcome": "Measure delivery, latency, failure rate, call quality, access denials and service health.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 323",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_trade_prototype.communication-telecom-grade-regulatory-readiness",
+      "capability": "Telecom-grade regulatory readiness",
+      "required_outcome": "Prepare Communications for privacy, retention, lawful access analysis and regional deployment obligations.",
+      "source_evidence": {
+        "path": "src/data/kconnectFeatureCompletionModels.js",
+        "locator": "line 334",
+        "reported_maturity": "source_model"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    }
+  ]
+}

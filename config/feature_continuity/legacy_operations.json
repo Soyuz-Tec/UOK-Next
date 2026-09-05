@@ -1,0 +1,4229 @@
+{
+  "source_id": "legacy_operations",
+  "features": [
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-first-party-renderer",
+      "capability": "First-party renderer",
+      "required_outcome": "First-party renderer",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 35",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-project-picker-and-command-context",
+      "capability": "Project picker and command context",
+      "required_outcome": "Project picker and command context",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 36",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-project-lifecycle-and-finish-authority",
+      "capability": "Project lifecycle and finish authority",
+      "required_outcome": "Project lifecycle and finish authority",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 37",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-compact-view-and-schedule-health-surface",
+      "capability": "Compact view and schedule-health surface",
+      "required_outcome": "Compact view and schedule-health surface",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 38",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-task-creation-commands",
+      "capability": "Task creation commands",
+      "required_outcome": "Task creation commands",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 39",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-dependencies",
+      "capability": "Dependencies",
+      "required_outcome": "Dependencies",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 40",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-dependency-types",
+      "capability": "Dependency types",
+      "required_outcome": "Dependency types",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 41",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-drag-to-reschedule",
+      "capability": "Drag-to-reschedule",
+      "required_outcome": "Drag-to-reschedule",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 42",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-summary-tasks-and-wbs",
+      "capability": "Summary tasks and WBS",
+      "required_outcome": "Summary tasks and WBS",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 43",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-milestones",
+      "capability": "Milestones",
+      "required_outcome": "Milestones",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 44",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-baselines",
+      "capability": "Baselines",
+      "required_outcome": "Baselines",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 45",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-critical-path",
+      "capability": "Critical path",
+      "required_outcome": "Critical path",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 46",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-calendars",
+      "capability": "Calendars",
+      "required_outcome": "Calendars",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 47",
+        "reported_maturity": "integration_tested"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-resources",
+      "capability": "Resources",
+      "required_outcome": "Resources",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 48",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-typed-resource-domain",
+      "capability": "Typed resource domain",
+      "required_outcome": "Typed resource domain",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 49",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-resource-capacity-calendars",
+      "capability": "Resource capacity calendars",
+      "required_outcome": "Resource capacity calendars",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 50",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-resource-specific-calendar-core-warnings",
+      "capability": "Resource-specific `calendar.core` warnings",
+      "required_outcome": "Resource-specific `calendar.core` warnings",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 51",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-immutable-what-if-snapshots",
+      "capability": "Immutable what-if snapshots",
+      "required_outcome": "Immutable what-if snapshots",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 52",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-reproducible-schedule-risk",
+      "capability": "Reproducible schedule risk",
+      "required_outcome": "Reproducible schedule risk",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 53",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-governed-optimization-and-recommendations",
+      "capability": "Governed optimization and recommendations",
+      "required_outcome": "Governed optimization and recommendations",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 54",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-export-import",
+      "capability": "Export/import",
+      "required_outcome": "Export/import",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 55",
+        "reported_maturity": "integration_tested"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-ui-proof",
+      "capability": "UI proof",
+      "required_outcome": "UI proof",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 56",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-measured-scale-and-virtualization",
+      "capability": "Measured scale and virtualization",
+      "required_outcome": "Measured scale and virtualization",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 57",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-shared-localization-rtl-touch-and-reflow",
+      "capability": "Shared localization, RTL, touch, and reflow",
+      "required_outcome": "Shared localization, RTL, touch, and reflow",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 58",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-portfolio-and-multi-project-view",
+      "capability": "Portfolio and multi-project view",
+      "required_outcome": "Portfolio and multi-project view",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 59",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-production-like-release-readiness",
+      "capability": "Production-like release readiness",
+      "required_outcome": "Production-like release readiness",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 60",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-server-capabilities",
+      "capability": "Server capabilities",
+      "required_outcome": "Server capabilities",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 61",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-database-invariants",
+      "capability": "Database invariants",
+      "required_outcome": "Database invariants",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 62",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-audit-correlation",
+      "capability": "Audit correlation",
+      "required_outcome": "Audit correlation",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 63",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-immutable-revision-ledger-and-outbox",
+      "capability": "Immutable revision ledger and outbox",
+      "required_outcome": "Immutable revision ledger and outbox",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 64",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-structured-errors",
+      "capability": "Structured errors",
+      "required_outcome": "Structured errors",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 65",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-typed-client-contracts",
+      "capability": "Typed client contracts",
+      "required_outcome": "Typed client contracts",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 66",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-accessible-failure-recovery",
+      "capability": "Accessible failure recovery",
+      "required_outcome": "Accessible failure recovery",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 67",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-typed-operation-links",
+      "capability": "Typed operation links",
+      "required_outcome": "Typed operation links",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 68",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-execution-date-semantics",
+      "capability": "Execution date semantics",
+      "required_outcome": "Execution date semantics",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 69",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-task-participants",
+      "capability": "Task participants",
+      "required_outcome": "Task participants",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 70",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-task-gates-and-readiness",
+      "capability": "Task gates and readiness",
+      "required_outcome": "Task gates and readiness",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 71",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-current-evidence-foundation-communications-thread-jump",
+      "capability": "Communications thread jump",
+      "required_outcome": "Communications thread jump",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 72",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-resizable-columns",
+      "capability": "Resizable columns",
+      "required_outcome": "Resizable columns",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 78",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-auto-fit-columns",
+      "capability": "Auto-fit columns",
+      "required_outcome": "Auto-fit columns",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 79",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-shared-column-resize-primitive",
+      "capability": "Shared column resize primitive",
+      "required_outcome": "Shared column resize primitive",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 80",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-field-presets",
+      "capability": "Field presets",
+      "required_outcome": "Field presets",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 81",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-column-visibility",
+      "capability": "Column visibility",
+      "required_outcome": "Column visibility",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 82",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-column-header-menu",
+      "capability": "Column header menu",
+      "required_outcome": "Column header menu",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 83",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-column-reorder",
+      "capability": "Column reorder",
+      "required_outcome": "Column reorder",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 84",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-pinned-columns",
+      "capability": "Pinned columns",
+      "required_outcome": "Pinned columns",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 85",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-sort-by-columns",
+      "capability": "Sort by columns",
+      "required_outcome": "Sort by columns",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 86",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-inline-grid-edit",
+      "capability": "Inline grid edit",
+      "required_outcome": "Inline grid edit",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 87",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-tree-summary-expander",
+      "capability": "Tree summary expander",
+      "required_outcome": "Tree summary expander",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 88",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-grid-and-column-features-context-row-menu",
+      "capability": "Context row menu",
+      "required_outcome": "Context row menu",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 89",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-row-and-density-features-compact-standard-roomy-density",
+      "capability": "Compact/standard/roomy density",
+      "required_outcome": "Compact/standard/roomy density",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 95",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-row-and-density-features-double-click-task-header-to-shorten-rows",
+      "capability": "Double-click task header to shorten rows",
+      "required_outcome": "Double-click task header to shorten rows",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 96",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-row-and-density-features-double-click-summary-row",
+      "capability": "Double-click summary row",
+      "required_outcome": "Double-click summary row",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 97",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-row-and-density-features-per-row-height",
+      "capability": "Per-row height",
+      "required_outcome": "Per-row height",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 98",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-row-and-density-features-auto-height-row-fit",
+      "capability": "Auto-height row fit",
+      "required_outcome": "Auto-height row fit",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 99",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-row-and-density-features-scroll-synchronization",
+      "capability": "Scroll synchronization",
+      "required_outcome": "Scroll synchronization",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 100",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-row-and-density-features-empty-visible-schedule-state",
+      "capability": "Empty visible schedule state",
+      "required_outcome": "Empty visible schedule state",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 101",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-hour-day-week-month-quarter-year-scale",
+      "capability": "Hour/day/week/month/quarter/year scale",
+      "required_outcome": "Hour/day/week/month/quarter/year scale",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 107",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-today-marker",
+      "capability": "Today marker",
+      "required_outcome": "Today marker",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 108",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-fit-project",
+      "capability": "Fit project",
+      "required_outcome": "Fit project",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 109",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-scroll-to-selected-task",
+      "capability": "Scroll to selected task",
+      "required_outcome": "Scroll to selected task",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 110",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-scroll-to-date",
+      "capability": "Scroll to date",
+      "required_outcome": "Scroll to date",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 111",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-project-boundary-markers",
+      "capability": "Project boundary markers",
+      "required_outcome": "Project boundary markers",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 112",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-task-deadline-event-markers",
+      "capability": "Task deadline/event markers",
+      "required_outcome": "Task deadline/event markers",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 113",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-drag-timeline-and-controlled-wheel-zoom",
+      "capability": "Drag timeline and controlled wheel zoom",
+      "required_outcome": "Drag timeline and controlled wheel zoom",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 114",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-click-drag-task-creation",
+      "capability": "Click-drag task creation",
+      "required_outcome": "Click-drag task creation",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 115",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-timeline-only-layout",
+      "capability": "Timeline-only layout",
+      "required_outcome": "Timeline-only layout",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 116",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-weekend-shading",
+      "capability": "Weekend shading",
+      "required_outcome": "Weekend shading",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 117",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-holiday-shading",
+      "capability": "Holiday shading",
+      "required_outcome": "Holiday shading",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 118",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-minute-sprint-stage-scales",
+      "capability": "Minute/sprint/stage scales",
+      "required_outcome": "Minute/sprint/stage scales",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 119",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-timeline-header-grouping",
+      "capability": "Timeline header grouping",
+      "required_outcome": "Timeline header grouping",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 120",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-pinned-two-band-timeline-header",
+      "capability": "Pinned two-band timeline header",
+      "required_outcome": "Pinned two-band timeline header",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 121",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-resizable-grid-timeline-split",
+      "capability": "Resizable grid/timeline split",
+      "required_outcome": "Resizable grid/timeline split",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 122",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-timeline-features-ignored-periods",
+      "capability": "Ignored periods",
+      "required_outcome": "Ignored periods",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 123",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-task-shape-and-color-features-normal-task-bars",
+      "capability": "Normal task bars",
+      "required_outcome": "Normal task bars",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 129",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-task-shape-and-color-features-summary-bars",
+      "capability": "Summary bars",
+      "required_outcome": "Summary bars",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 130",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-task-shape-and-color-features-milestone-diamonds",
+      "capability": "Milestone diamonds",
+      "required_outcome": "Milestone diamonds",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 131",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-task-shape-and-color-features-progress-overlay",
+      "capability": "Progress overlay",
+      "required_outcome": "Progress overlay",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 132",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-task-shape-and-color-features-status-color-coding",
+      "capability": "Status color coding",
+      "required_outcome": "Status color coding",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 133",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-task-shape-and-color-features-non-color-indicators",
+      "capability": "Non-color indicators",
+      "required_outcome": "Non-color indicators",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 134",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-task-shape-and-color-features-selected-hover-focus-states",
+      "capability": "Selected/hover/focus states",
+      "required_outcome": "Selected/hover/focus states",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 135",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-task-shape-and-color-features-keyboard-navigation-and-hotkeys",
+      "capability": "Keyboard navigation and hotkeys",
+      "required_outcome": "Keyboard navigation and hotkeys",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 136",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-task-shape-and-color-features-taskbar-tooltips",
+      "capability": "Taskbar tooltips",
+      "required_outcome": "Taskbar tooltips",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 137",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-task-shape-and-color-features-resize-start-end-handles",
+      "capability": "Resize start/end handles",
+      "required_outcome": "Resize start/end handles",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 138",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-task-shape-and-color-features-progress-drag-handle",
+      "capability": "Progress drag handle",
+      "required_outcome": "Progress drag handle",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 139",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-dependency-features-dependency-display",
+      "capability": "Dependency display",
+      "required_outcome": "Dependency display",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 145",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-dependency-features-dependency-inspector",
+      "capability": "Dependency inspector",
+      "required_outcome": "Dependency inspector",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 146",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-dependency-features-dependency-lag-lead",
+      "capability": "Dependency lag/lead",
+      "required_outcome": "Dependency lag/lead",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 147",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-dependency-features-dependency-validation",
+      "capability": "Dependency validation",
+      "required_outcome": "Dependency validation",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 148",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-dependency-features-dependency-drag-creation",
+      "capability": "Dependency drag creation",
+      "required_outcome": "Dependency drag creation",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 149",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-dependency-features-highlight-chain",
+      "capability": "Highlight chain",
+      "required_outcome": "Highlight chain",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 150",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-dependency-features-cascade-scheduling-toggle",
+      "capability": "Cascade scheduling toggle",
+      "required_outcome": "Cascade scheduling toggle",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 151",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-scheduling-and-python-features-server-side-validation",
+      "capability": "Server-side validation",
+      "required_outcome": "Server-side validation",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 157",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-scheduling-and-python-features-topological-ordering",
+      "capability": "Topological ordering",
+      "required_outcome": "Topological ordering",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 158",
+        "reported_maturity": "unit_tested"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-scheduling-and-python-features-cpm-read-model",
+      "capability": "CPM read model",
+      "required_outcome": "CPM read model",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 159",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-scheduling-and-python-features-calendar-aware-propagation",
+      "capability": "Calendar-aware propagation",
+      "required_outcome": "Calendar-aware propagation",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 160",
+        "reported_maturity": "integration_tested"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-scheduling-and-python-features-resource-over-allocation",
+      "capability": "Resource over-allocation",
+      "required_outcome": "Resource over-allocation",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 161",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-scheduling-and-python-features-resource-leveling",
+      "capability": "Resource leveling",
+      "required_outcome": "Resource leveling",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 162",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-scheduling-and-python-features-constraints",
+      "capability": "Constraints",
+      "required_outcome": "Constraints",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 163",
+        "reported_maturity": "integration_tested"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-scheduling-and-python-features-manual-auto-scheduling",
+      "capability": "Manual/auto scheduling",
+      "required_outcome": "Manual/auto scheduling",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 164",
+        "reported_maturity": "integration_tested"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-scheduling-and-python-features-controlled-task-status",
+      "capability": "Controlled task status",
+      "required_outcome": "Controlled task status",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 165",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-scheduling-and-python-features-optimistic-concurrency",
+      "capability": "Optimistic concurrency",
+      "required_outcome": "Optimistic concurrency",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 166",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-board-list-calendar-workload-people-dashboard-views",
+      "capability": "Board/List/Calendar/Workload/People/Dashboard views",
+      "required_outcome": "Board/List/Calendar/Workload/People/Dashboard views",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 172",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-fullscreen-focus-mode",
+      "capability": "Fullscreen/focus mode",
+      "required_outcome": "Fullscreen/focus mode",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 173",
+        "reported_maturity": "source_present"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-layout-and-split-persistence",
+      "capability": "Layout and split persistence",
+      "required_outcome": "Layout and split persistence",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 174",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-review-edit-mode",
+      "capability": "Review/edit mode",
+      "required_outcome": "Review/edit mode",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 175",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-bulk-selection",
+      "capability": "Bulk selection",
+      "required_outcome": "Bulk selection",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 176",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-bulk-edit",
+      "capability": "Bulk edit",
+      "required_outcome": "Bulk edit",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 177",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-atomic-mixed-mutation",
+      "capability": "Atomic mixed mutation",
+      "required_outcome": "Atomic mixed mutation",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 178",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-undo-redo",
+      "capability": "Undo/redo",
+      "required_outcome": "Undo/redo",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 179",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-saved-views",
+      "capability": "Saved views",
+      "required_outcome": "Saved views",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 180",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-schedule-health",
+      "capability": "Schedule Health",
+      "required_outcome": "Schedule Health",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 181",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-search-filter-group",
+      "capability": "Search/filter/group",
+      "required_outcome": "Search/filter/group",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 182",
+        "reported_maturity": "integration_tested"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-export-import",
+      "capability": "Export/import",
+      "required_outcome": "Export/import",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 183",
+        "reported_maturity": "integration_tested"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-non-drag-mutation-access",
+      "capability": "Non-drag mutation access",
+      "required_outcome": "Non-drag mutation access",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 184",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-focus-and-stale-state-recovery",
+      "capability": "Focus and stale-state recovery",
+      "required_outcome": "Focus and stale-state recovery",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 185",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-audit-history",
+      "capability": "Audit history",
+      "required_outcome": "Audit history",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 186",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-operation-links-inspector",
+      "capability": "Operation Links inspector",
+      "required_outcome": "Operation Links inspector",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 187",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-planned-forecast-actual-deadline-editor",
+      "capability": "Planned/forecast/actual/deadline editor",
+      "required_outcome": "Planned/forecast/actual/deadline editor",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 188",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-people-inspector-and-participant-filter",
+      "capability": "People inspector and participant filter",
+      "required_outcome": "People inspector and participant filter",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 189",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-gates-inspector-and-readiness-views",
+      "capability": "Gates inspector and readiness views",
+      "required_outcome": "Gates inspector and readiness views",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 190",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-workspace-and-professional-features-communications-exact-thread-workspace-jump",
+      "capability": "Communications exact-thread workspace jump",
+      "required_outcome": "Communications exact-thread workspace jump",
+      "source_evidence": {
+        "path": "docs/modules/planning.core/PLANNING_GANTT_FEATURE_CATALOG.md",
+        "locator": "line 191",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.agents-core-module",
+      "capability": "Optional AI agent governance capability for programmable runbooks, human approval gates, compliance evidence, and controlled business-operation automation.",
+      "required_outcome": "Optional AI agent governance capability for programmable runbooks, human approval gates, compliance evidence, and controlled business-operation automation.",
+      "source_evidence": {
+        "path": "modules/agents.core/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "planned"
+      },
+      "target_owner": "platform.agents",
+      "integration_mode": "native",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "agents",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.apps-manager-module",
+      "capability": "Required lightweight control panel for listing, installing, upgrading, disabling, and uninstalling optional modules.",
+      "required_outcome": "Required lightweight control panel for listing, installing, upgrading, disabling, and uninstalling optional modules.",
+      "source_evidence": {
+        "path": "modules/apps.manager/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.calendar-core-module",
+      "capability": "Global calendars, events, recurrence, persisted reminder rules, free-busy context, and iCalendar export for UOK apps.",
+      "required_outcome": "Global calendars, events, recurrence, persisted reminder rules, free-busy context, and iCalendar export for UOK apps.",
+      "source_evidence": {
+        "path": "modules/calendar.core/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.calendar-core-createcalendar",
+      "capability": "Create Calendar",
+      "required_outcome": "Create Calendar",
+      "source_evidence": {
+        "path": "modules/calendar.core/manifest.yaml",
+        "locator": "commands/CreateCalendar",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.calendar-core-updatecalendar",
+      "capability": "Update Calendar",
+      "required_outcome": "Update Calendar",
+      "source_evidence": {
+        "path": "modules/calendar.core/manifest.yaml",
+        "locator": "commands/UpdateCalendar",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.calendar-core-deletecalendar",
+      "capability": "Delete Calendar",
+      "required_outcome": "Delete Calendar",
+      "source_evidence": {
+        "path": "modules/calendar.core/manifest.yaml",
+        "locator": "commands/DeleteCalendar",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.calendar-core-restorecalendar",
+      "capability": "Restore Calendar",
+      "required_outcome": "Restore Calendar",
+      "source_evidence": {
+        "path": "modules/calendar.core/manifest.yaml",
+        "locator": "commands/RestoreCalendar",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.calendar-core-createcalendarevent",
+      "capability": "Create Calendar Event",
+      "required_outcome": "Create Calendar Event",
+      "source_evidence": {
+        "path": "modules/calendar.core/manifest.yaml",
+        "locator": "commands/CreateCalendarEvent",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.calendar-core-updatecalendarevent",
+      "capability": "Update Calendar Event",
+      "required_outcome": "Update Calendar Event",
+      "source_evidence": {
+        "path": "modules/calendar.core/manifest.yaml",
+        "locator": "commands/UpdateCalendarEvent",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.calendar-core-cancelcalendarevent",
+      "capability": "Cancel Calendar Event",
+      "required_outcome": "Cancel Calendar Event",
+      "source_evidence": {
+        "path": "modules/calendar.core/manifest.yaml",
+        "locator": "commands/CancelCalendarEvent",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.calendar-core-restorecalendarevent",
+      "capability": "Restore Calendar Event",
+      "required_outcome": "Restore Calendar Event",
+      "source_evidence": {
+        "path": "modules/calendar.core/manifest.yaml",
+        "locator": "commands/RestoreCalendarEvent",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.calendar-core-createcalendarreminder",
+      "capability": "Create Calendar Reminder",
+      "required_outcome": "Create Calendar Reminder",
+      "source_evidence": {
+        "path": "modules/calendar.core/manifest.yaml",
+        "locator": "commands/CreateCalendarReminder",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.calendar-core-deletecalendarreminder",
+      "capability": "Delete Calendar Reminder",
+      "required_outcome": "Delete Calendar Reminder",
+      "source_evidence": {
+        "path": "modules/calendar.core/manifest.yaml",
+        "locator": "commands/DeleteCalendarReminder",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.communications-core-module",
+      "capability": "Organization-scoped Communications communication thread provider for authorized cross-module jumps.",
+      "required_outcome": "Organization-scoped Communications communication thread provider for authorized cross-module jumps.",
+      "source_evidence": {
+        "path": "modules/communications.core/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.communications-core-createcommunicationthread",
+      "capability": "Create Communication Thread",
+      "required_outcome": "Create Communication Thread",
+      "source_evidence": {
+        "path": "modules/communications.core/manifest.yaml",
+        "locator": "commands/CreateCommunicationThread",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.communications-core-archivecommunicationthread",
+      "capability": "Archive Communication Thread",
+      "required_outcome": "Archive Communication Thread",
+      "source_evidence": {
+        "path": "modules/communications.core/manifest.yaml",
+        "locator": "commands/ArchiveCommunicationThread",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.communications-core-restorecommunicationthread",
+      "capability": "Restore Communication Thread",
+      "required_outcome": "Restore Communication Thread",
+      "source_evidence": {
+        "path": "modules/communications.core/manifest.yaml",
+        "locator": "commands/RestoreCommunicationThread",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.compliance-core-module",
+      "capability": "Tenant-scoped Compliance Document Type registry for governed trade-document vocabulary.",
+      "required_outcome": "Tenant-scoped Compliance Document Type registry for governed trade-document vocabulary.",
+      "source_evidence": {
+        "path": "modules/compliance.core/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.compliance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "compliance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.compliance-core-createcompliancedocumenttype",
+      "capability": "Create Compliance Document Type",
+      "required_outcome": "Create Compliance Document Type",
+      "source_evidence": {
+        "path": "modules/compliance.core/manifest.yaml",
+        "locator": "commands/CreateComplianceDocumentType",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.compliance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "compliance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.compliance-core-updatecompliancedocumenttype",
+      "capability": "Update Compliance Document Type",
+      "required_outcome": "Update Compliance Document Type",
+      "source_evidence": {
+        "path": "modules/compliance.core/manifest.yaml",
+        "locator": "commands/UpdateComplianceDocumentType",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.compliance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "compliance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.compliance-core-deactivatecompliancedocumenttype",
+      "capability": "Deactivate Compliance Document Type",
+      "required_outcome": "Deactivate Compliance Document Type",
+      "source_evidence": {
+        "path": "modules/compliance.core/manifest.yaml",
+        "locator": "commands/DeactivateComplianceDocumentType",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.compliance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "compliance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.compliance-core-activatecompliancedocumenttype",
+      "capability": "Activate Compliance Document Type",
+      "required_outcome": "Activate Compliance Document Type",
+      "source_evidence": {
+        "path": "modules/compliance.core/manifest.yaml",
+        "locator": "commands/ActivateComplianceDocumentType",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.compliance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "compliance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.compliance-core-archivecompliancedocumenttype",
+      "capability": "Archive Compliance Document Type",
+      "required_outcome": "Archive Compliance Document Type",
+      "source_evidence": {
+        "path": "modules/compliance.core/manifest.yaml",
+        "locator": "commands/ArchiveComplianceDocumentType",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.compliance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "compliance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.compliance-core-restorecompliancedocumenttype",
+      "capability": "Restore Compliance Document Type",
+      "required_outcome": "Restore Compliance Document Type",
+      "source_evidence": {
+        "path": "modules/compliance.core/manifest.yaml",
+        "locator": "commands/RestoreComplianceDocumentType",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.compliance",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "compliance",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-module",
+      "capability": "Governed optional Party and Contacts system of record with first-class facts, consent, teams, groups, quality, import/export evidence, saved views, external identities, and custom fields.",
+      "required_outcome": "Governed optional Party and Contacts system of record with first-class facts, consent, teams, groups, quality, import/export evidence, saved views, external identities, and custom fields.",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-createcontact",
+      "capability": "Create Contact",
+      "required_outcome": "Create Contact",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/CreateContact",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-createcontactgroup",
+      "capability": "Create Contact Group",
+      "required_outcome": "Create Contact Group",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/CreateContactGroup",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-updatecontact",
+      "capability": "Update Contact",
+      "required_outcome": "Update Contact",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/UpdateContact",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-updatecontactgroup",
+      "capability": "Update Contact Group",
+      "required_outcome": "Update Contact Group",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/UpdateContactGroup",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-archivecontact",
+      "capability": "Archive Contact",
+      "required_outcome": "Archive Contact",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/ArchiveContact",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-archivecontactgroup",
+      "capability": "Archive Contact Group",
+      "required_outcome": "Archive Contact Group",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/ArchiveContactGroup",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-restorecontactgroup",
+      "capability": "Restore Contact Group",
+      "required_outcome": "Restore Contact Group",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RestoreContactGroup",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-restorecontact",
+      "capability": "Restore Contact",
+      "required_outcome": "Restore Contact",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RestoreContact",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-purgecontact",
+      "capability": "Purge Contact",
+      "required_outcome": "Purge Contact",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/PurgeContact",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-addcontactnote",
+      "capability": "Add Contact Note",
+      "required_outcome": "Add Contact Note",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/AddContactNote",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-addcontactstogroup",
+      "capability": "Add Contacts To Group",
+      "required_outcome": "Add Contacts To Group",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/AddContactsToGroup",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-removecontactfromgroup",
+      "capability": "Remove Contact From Group",
+      "required_outcome": "Remove Contact From Group",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RemoveContactFromGroup",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-groupcontactsbybusinessemaildomain",
+      "capability": "Group Contacts By Business Email Domain",
+      "required_outcome": "Group Contacts By Business Email Domain",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/GroupContactsByBusinessEmailDomain",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-groupcontactsbysmartrule",
+      "capability": "Group Contacts By Smart Rule",
+      "required_outcome": "Group Contacts By Smart Rule",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/GroupContactsBySmartRule",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-linkcontactrelationship",
+      "capability": "Link Contact Relationship",
+      "required_outcome": "Link Contact Relationship",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/LinkContactRelationship",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-mergeduplicatecontact",
+      "capability": "Merge Duplicate Contact",
+      "required_outcome": "Merge Duplicate Contact",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/MergeDuplicateContact",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-rollbackduplicatemerge",
+      "capability": "Rollback Duplicate Merge",
+      "required_outcome": "Rollback Duplicate Merge",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RollbackDuplicateMerge",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-updatecontactrelationship",
+      "capability": "Update Contact Relationship",
+      "required_outcome": "Update Contact Relationship",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/UpdateContactRelationship",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-removecontactrelationship",
+      "capability": "Remove Contact Relationship",
+      "required_outcome": "Remove Contact Relationship",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RemoveContactRelationship",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-importcontactscsv",
+      "capability": "Import Contacts Csv",
+      "required_outcome": "Import Contacts Csv",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/ImportContactsCsv",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-importcontactsvcard",
+      "capability": "Import Contacts VCard",
+      "required_outcome": "Import Contacts VCard",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/ImportContactsVCard",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-rollbackcontactimport",
+      "capability": "Rollback Contact Import",
+      "required_outcome": "Rollback Contact Import",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RollbackContactImport",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-upsertcontactfact",
+      "capability": "Upsert Contact Fact",
+      "required_outcome": "Upsert Contact Fact",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/UpsertContactFact",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-removecontactfact",
+      "capability": "Remove Contact Fact",
+      "required_outcome": "Remove Contact Fact",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RemoveContactFact",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-recordcontactconsent",
+      "capability": "Record Contact Consent",
+      "required_outcome": "Record Contact Consent",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RecordContactConsent",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-createcontactteam",
+      "capability": "Create Contact Team",
+      "required_outcome": "Create Contact Team",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/CreateContactTeam",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-updatecontactteam",
+      "capability": "Update Contact Team",
+      "required_outcome": "Update Contact Team",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/UpdateContactTeam",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-deletecontactteam",
+      "capability": "Delete Contact Team",
+      "required_outcome": "Delete Contact Team",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/DeleteContactTeam",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-restorecontactteam",
+      "capability": "Restore Contact Team",
+      "required_outcome": "Restore Contact Team",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RestoreContactTeam",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-addcontactteammember",
+      "capability": "Add Contact Team Member",
+      "required_outcome": "Add Contact Team Member",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/AddContactTeamMember",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-removecontactteammember",
+      "capability": "Remove Contact Team Member",
+      "required_outcome": "Remove Contact Team Member",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RemoveContactTeamMember",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-savecontactview",
+      "capability": "Save Contact View",
+      "required_outcome": "Save Contact View",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/SaveContactView",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-deletecontactview",
+      "capability": "Delete Contact View",
+      "required_outcome": "Delete Contact View",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/DeleteContactView",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-refreshcontactduplicatecandidates",
+      "capability": "Refresh Contact Duplicate Candidates",
+      "required_outcome": "Refresh Contact Duplicate Candidates",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RefreshContactDuplicateCandidates",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-resolvecontactduplicatecandidate",
+      "capability": "Resolve Contact Duplicate Candidate",
+      "required_outcome": "Resolve Contact Duplicate Candidate",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/ResolveContactDuplicateCandidate",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-bulkupdatecontacts",
+      "capability": "Bulk Update Contacts",
+      "required_outcome": "Bulk Update Contacts",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/BulkUpdateContacts",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-linkcontactexternalidentity",
+      "capability": "Link Contact External Identity",
+      "required_outcome": "Link Contact External Identity",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/LinkContactExternalIdentity",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-definecontactcustomfield",
+      "capability": "Define Contact Custom Field",
+      "required_outcome": "Define Contact Custom Field",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/DefineContactCustomField",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-deletecontactcustomfield",
+      "capability": "Delete Contact Custom Field",
+      "required_outcome": "Delete Contact Custom Field",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/DeleteContactCustomField",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-restorecontactcustomfield",
+      "capability": "Restore Contact Custom Field",
+      "required_outcome": "Restore Contact Custom Field",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/RestoreContactCustomField",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.contacts-core-setcontactcustomfieldvalue",
+      "capability": "Set Contact Custom Field Value",
+      "required_outcome": "Set Contact Custom Field Value",
+      "source_evidence": {
+        "path": "modules/contacts.core/manifest.yaml",
+        "locator": "commands/SetContactCustomFieldValue",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.parties",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.intelligence-core-module",
+      "capability": "Read-only tenant-scoped Shipment readiness signals derived from immutable Shipment owner facts.",
+      "required_outcome": "Read-only tenant-scoped Shipment readiness signals derived from immutable Shipment owner facts.",
+      "source_evidence": {
+        "path": "modules/intelligence.core/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.locations-core-module",
+      "capability": "Tenant-scoped Location Master registry for canonical operational trade locations.",
+      "required_outcome": "Tenant-scoped Location Master registry for canonical operational trade locations.",
+      "source_evidence": {
+        "path": "modules/locations.core/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.locations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.locations-core-createlocationdefinition",
+      "capability": "Create Location Definition",
+      "required_outcome": "Create Location Definition",
+      "source_evidence": {
+        "path": "modules/locations.core/manifest.yaml",
+        "locator": "commands/CreateLocationDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.locations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.locations-core-updatelocationdefinition",
+      "capability": "Update Location Definition",
+      "required_outcome": "Update Location Definition",
+      "source_evidence": {
+        "path": "modules/locations.core/manifest.yaml",
+        "locator": "commands/UpdateLocationDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.locations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.locations-core-archivelocationdefinition",
+      "capability": "Archive Location Definition",
+      "required_outcome": "Archive Location Definition",
+      "source_evidence": {
+        "path": "modules/locations.core/manifest.yaml",
+        "locator": "commands/ArchiveLocationDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.locations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.locations-core-restorelocationdefinition",
+      "capability": "Restore Location Definition",
+      "required_outcome": "Restore Location Definition",
+      "source_evidence": {
+        "path": "modules/locations.core/manifest.yaml",
+        "locator": "commands/RestoreLocationDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.locations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-module",
+      "capability": "Optional project planning, task participant, scheduling, execution-date, dependency, baseline, typed operation-link, calendar, and Gantt capability.",
+      "required_outcome": "Optional project planning, task participant, scheduling, execution-date, dependency, baseline, typed operation-link, calendar, and Gantt capability.",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-createplanningproject",
+      "capability": "Create Planning Project",
+      "required_outcome": "Create Planning Project",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/CreatePlanningProject",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-transitionplanningproject",
+      "capability": "Transition Planning Project",
+      "required_outcome": "Transition Planning Project",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/TransitionPlanningProject",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-createplanningtask",
+      "capability": "Create Planning Task",
+      "required_outcome": "Create Planning Task",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/CreatePlanningTask",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-updateplanningtask",
+      "capability": "Update Planning Task",
+      "required_outcome": "Update Planning Task",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/UpdatePlanningTask",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-updateplanningtaskdates",
+      "capability": "Update Planning Task Dates",
+      "required_outcome": "Update Planning Task Dates",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/UpdatePlanningTaskDates",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-deleteplanningtask",
+      "capability": "Delete Planning Task",
+      "required_outcome": "Delete Planning Task",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/DeletePlanningTask",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-linkplanningtasks",
+      "capability": "Link Planning Tasks",
+      "required_outcome": "Link Planning Tasks",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/LinkPlanningTasks",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-updateplanningdependency",
+      "capability": "Update Planning Dependency",
+      "required_outcome": "Update Planning Dependency",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/UpdatePlanningDependency",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-removeplanningdependency",
+      "capability": "Remove Planning Dependency",
+      "required_outcome": "Remove Planning Dependency",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/RemovePlanningDependency",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-setplanningcalendar",
+      "capability": "Set Planning Calendar",
+      "required_outcome": "Set Planning Calendar",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/SetPlanningCalendar",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-createplanningbaseline",
+      "capability": "Create Planning Baseline",
+      "required_outcome": "Create Planning Baseline",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/CreatePlanningBaseline",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-createplanningresource",
+      "capability": "Create Planning Resource",
+      "required_outcome": "Create Planning Resource",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/CreatePlanningResource",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-setplanningresourcecalendar",
+      "capability": "Set Planning Resource Calendar",
+      "required_outcome": "Set Planning Resource Calendar",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/SetPlanningResourceCalendar",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-assignplanningresource",
+      "capability": "Assign Planning Resource",
+      "required_outcome": "Assign Planning Resource",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/AssignPlanningResource",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-levelplanningresources",
+      "capability": "Level Planning Resources",
+      "required_outcome": "Level Planning Resources",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/LevelPlanningResources",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-batchplanningoperations",
+      "capability": "Batch Planning Operations",
+      "required_outcome": "Batch Planning Operations",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/BatchPlanningOperations",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-createplanninglink",
+      "capability": "Create Planning Link",
+      "required_outcome": "Create Planning Link",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/CreatePlanningLink",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-removeplanninglink",
+      "capability": "Remove Planning Link",
+      "required_outcome": "Remove Planning Link",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/RemovePlanningLink",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-addplanningtaskparticipant",
+      "capability": "Add Planning Task Participant",
+      "required_outcome": "Add Planning Task Participant",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/AddPlanningTaskParticipant",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-removeplanningtaskparticipant",
+      "capability": "Remove Planning Task Participant",
+      "required_outcome": "Remove Planning Task Participant",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/RemovePlanningTaskParticipant",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-createplanningtaskrequirement",
+      "capability": "Create Planning Task Requirement",
+      "required_outcome": "Create Planning Task Requirement",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/CreatePlanningTaskRequirement",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-advanceplanningtaskrequirement",
+      "capability": "Advance Planning Task Requirement",
+      "required_outcome": "Advance Planning Task Requirement",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/AdvancePlanningTaskRequirement",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-setplanningtaskrequirementlink",
+      "capability": "Set Planning Task Requirement Link",
+      "required_outcome": "Set Planning Task Requirement Link",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/SetPlanningTaskRequirementLink",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-decideplanningtaskrequirement",
+      "capability": "Decide Planning Task Requirement",
+      "required_outcome": "Decide Planning Task Requirement",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/DecidePlanningTaskRequirement",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-createplanningwhatifsnapshot",
+      "capability": "Create Planning What If Snapshot",
+      "required_outcome": "Create Planning What If Snapshot",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/CreatePlanningWhatIfSnapshot",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-runplanningriskanalysis",
+      "capability": "Run Planning Risk Analysis",
+      "required_outcome": "Run Planning Risk Analysis",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/RunPlanningRiskAnalysis",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-runplanningoptimization",
+      "capability": "Run Planning Optimization",
+      "required_outcome": "Run Planning Optimization",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/RunPlanningOptimization",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-decideplanningrecommendation",
+      "capability": "Decide Planning Recommendation",
+      "required_outcome": "Decide Planning Recommendation",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/DecidePlanningRecommendation",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-applyplanningrecommendation",
+      "capability": "Apply Planning Recommendation",
+      "required_outcome": "Apply Planning Recommendation",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/ApplyPlanningRecommendation",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.planning-core-rollbackplanningrecommendation",
+      "capability": "Rollback Planning Recommendation",
+      "required_outcome": "Rollback Planning Recommendation",
+      "source_evidence": {
+        "path": "modules/planning.core/manifest.yaml",
+        "locator": "commands/RollbackPlanningRecommendation",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "operations.work",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "planning",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.product-master-module",
+      "capability": "Tenant-scoped Product Master registry for canonical product and material definitions.",
+      "required_outcome": "Tenant-scoped Product Master registry for canonical product and material definitions.",
+      "source_evidence": {
+        "path": "modules/product.master/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.products",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.product-master-createproductdefinition",
+      "capability": "Create Product Definition",
+      "required_outcome": "Create Product Definition",
+      "source_evidence": {
+        "path": "modules/product.master/manifest.yaml",
+        "locator": "commands/CreateProductDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.products",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.product-master-updateproductdefinition",
+      "capability": "Update Product Definition",
+      "required_outcome": "Update Product Definition",
+      "source_evidence": {
+        "path": "modules/product.master/manifest.yaml",
+        "locator": "commands/UpdateProductDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.products",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.product-master-archiveproductdefinition",
+      "capability": "Archive Product Definition",
+      "required_outcome": "Archive Product Definition",
+      "source_evidence": {
+        "path": "modules/product.master/manifest.yaml",
+        "locator": "commands/ArchiveProductDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.products",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.product-master-restoreproductdefinition",
+      "capability": "Restore Product Definition",
+      "required_outcome": "Restore Product Definition",
+      "source_evidence": {
+        "path": "modules/product.master/manifest.yaml",
+        "locator": "commands/RestoreProductDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.products",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.reports-core-module",
+      "capability": "Global secure report and artifact generation capability shared by UOK modules.",
+      "required_outcome": "Global secure report and artifact generation capability shared by UOK modules.",
+      "source_evidence": {
+        "path": "modules/reports.core/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.reports-core-generatereport",
+      "capability": "Generate Report",
+      "required_outcome": "Generate Report",
+      "source_evidence": {
+        "path": "modules/reports.core/manifest.yaml",
+        "locator": "commands/GenerateReport",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.reports-core-deletereportartifact",
+      "capability": "Delete Report Artifact",
+      "required_outcome": "Delete Report Artifact",
+      "source_evidence": {
+        "path": "modules/reports.core/manifest.yaml",
+        "locator": "commands/DeleteReportArtifact",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.reports-core-verifyreportartifact",
+      "capability": "Verify Report Artifact",
+      "required_outcome": "Verify Report Artifact",
+      "source_evidence": {
+        "path": "modules/reports.core/manifest.yaml",
+        "locator": "commands/VerifyReportArtifact",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "intelligence.bi",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "reporting",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.routes-core-module",
+      "capability": "Tenant-scoped Route/Corridor master for ordered operational Location paths.",
+      "required_outcome": "Tenant-scoped Route/Corridor master for ordered operational Location paths.",
+      "source_evidence": {
+        "path": "modules/routes.core/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.locations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.routes-core-createroutedefinition",
+      "capability": "Create Route Definition",
+      "required_outcome": "Create Route Definition",
+      "source_evidence": {
+        "path": "modules/routes.core/manifest.yaml",
+        "locator": "commands/CreateRouteDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.locations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.routes-core-updateroutedefinition",
+      "capability": "Update Route Definition",
+      "required_outcome": "Update Route Definition",
+      "source_evidence": {
+        "path": "modules/routes.core/manifest.yaml",
+        "locator": "commands/UpdateRouteDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.locations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.routes-core-archiveroutedefinition",
+      "capability": "Archive Route Definition",
+      "required_outcome": "Archive Route Definition",
+      "source_evidence": {
+        "path": "modules/routes.core/manifest.yaml",
+        "locator": "commands/ArchiveRouteDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.locations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.routes-core-restoreroutedefinition",
+      "capability": "Restore Route Definition",
+      "required_outcome": "Restore Route Definition",
+      "source_evidence": {
+        "path": "modules/routes.core/manifest.yaml",
+        "locator": "commands/RestoreRouteDefinition",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "master.locations",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "master_data",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shipments-core-module",
+      "capability": "Tenant-scoped operational Shipment headers, document requirements, and document-instance metadata over governed Party, Location, Route, and Compliance references.",
+      "required_outcome": "Tenant-scoped operational Shipment headers, document requirements, and document-instance metadata over governed Party, Location, Route, and Compliance references.",
+      "source_evidence": {
+        "path": "modules/shipments.core/manifest.yaml",
+        "locator": "description and extension points",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shipments-core-addshipmentdocumentrequirement",
+      "capability": "Add Shipment Document Requirement",
+      "required_outcome": "Add Shipment Document Requirement",
+      "source_evidence": {
+        "path": "modules/shipments.core/manifest.yaml",
+        "locator": "commands/AddShipmentDocumentRequirement",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shipments-core-createshipment",
+      "capability": "Create Shipment",
+      "required_outcome": "Create Shipment",
+      "source_evidence": {
+        "path": "modules/shipments.core/manifest.yaml",
+        "locator": "commands/CreateShipment",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shipments-core-createshipmentdocumentinstance",
+      "capability": "Create Shipment Document Instance",
+      "required_outcome": "Create Shipment Document Instance",
+      "source_evidence": {
+        "path": "modules/shipments.core/manifest.yaml",
+        "locator": "commands/CreateShipmentDocumentInstance",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shipments-core-removeshipmentdocumentrequirement",
+      "capability": "Remove Shipment Document Requirement",
+      "required_outcome": "Remove Shipment Document Requirement",
+      "source_evidence": {
+        "path": "modules/shipments.core/manifest.yaml",
+        "locator": "commands/RemoveShipmentDocumentRequirement",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shipments-core-setshipmentdocumentinstancestatus",
+      "capability": "Set Shipment Document Instance Status",
+      "required_outcome": "Set Shipment Document Instance Status",
+      "source_evidence": {
+        "path": "modules/shipments.core/manifest.yaml",
+        "locator": "commands/SetShipmentDocumentInstanceStatus",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shipments-core-setshipmentdocumentrequirementstatus",
+      "capability": "Set Shipment Document Requirement Status",
+      "required_outcome": "Set Shipment Document Requirement Status",
+      "source_evidence": {
+        "path": "modules/shipments.core/manifest.yaml",
+        "locator": "commands/SetShipmentDocumentRequirementStatus",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shipments-core-updateshipment",
+      "capability": "Update Shipment",
+      "required_outcome": "Update Shipment",
+      "source_evidence": {
+        "path": "modules/shipments.core/manifest.yaml",
+        "locator": "commands/UpdateShipment",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shipments-core-updateshipmentdocumentinstance",
+      "capability": "Update Shipment Document Instance",
+      "required_outcome": "Update Shipment Document Instance",
+      "source_evidence": {
+        "path": "modules/shipments.core/manifest.yaml",
+        "locator": "commands/UpdateShipmentDocumentInstance",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shipments-core-updateshipmentdocumentrequirement",
+      "capability": "Update Shipment Document Requirement",
+      "required_outcome": "Update Shipment Document Requirement",
+      "source_evidence": {
+        "path": "modules/shipments.core/manifest.yaml",
+        "locator": "commands/UpdateShipmentDocumentRequirement",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shipments-core-transitionshipmentstatus",
+      "capability": "Transition Shipment Status",
+      "required_outcome": "Transition Shipment Status",
+      "source_evidence": {
+        "path": "modules/shipments.core/manifest.yaml",
+        "locator": "commands/TransitionShipmentStatus",
+        "reported_maturity": "runtime_proven"
+      },
+      "target_owner": "trade.shipments",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "shipment",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-module-event-emission",
+      "capability": "Module event emission",
+      "required_outcome": "Module event emission",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 15",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-csv-row-limits-and-spreadsheet-safe-cells",
+      "capability": "CSV row limits and spreadsheet-safe cells",
+      "required_outcome": "CSV row limits and spreadsheet-safe cells",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 16",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-report-artifact-generation-and-download",
+      "capability": "Report artifact generation and download",
+      "required_outcome": "Report artifact generation and download",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 17",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-search-filters-sort-grouping-and-saved-views",
+      "capability": "Search, filters, sort, grouping, and saved views",
+      "required_outcome": "Search, filters, sort, grouping, and saved views",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 18",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-workspace-command-bar-layout-accessible-query-context-action-grouping-and-common-localized-action-vocabulary",
+      "capability": "Workspace command-bar layout, accessible query/context/action grouping, and common localized action vocabulary",
+      "required_outcome": "Workspace command-bar layout, accessible query/context/action grouping, and common localized action vocabulary",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 19",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-table-column-visibility-resize-order-pinned-columns-and-row-heights",
+      "capability": "Table column visibility, resize, order, pinned columns, and row heights",
+      "required_outcome": "Table column visibility, resize, order, pinned columns, and row heights",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 20",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-bounded-pagination-controls-and-accessible-range-announcements",
+      "capability": "Bounded pagination controls and accessible range announcements",
+      "required_outcome": "Bounded pagination controls and accessible range announcements",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 21",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-toggle-command-icon-and-segmented-controls",
+      "capability": "Toggle, command, icon, and segmented controls",
+      "required_outcome": "Toggle, command, icon, and segmented controls",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 22",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-bounded-draggable-modal-workspace-overlays-and-editor-composition",
+      "capability": "Bounded draggable modal workspace overlays and editor composition",
+      "required_outcome": "Bounded draggable modal workspace overlays and editor composition",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 23",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-consequential-command-confirmation-async-state-and-recoverable-module-render-containment",
+      "capability": "Consequential-command confirmation, async state, and recoverable module render containment",
+      "required_outcome": "Consequential-command confirmation, async state, and recoverable module render containment",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 24",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-request-authoritative-async-epochs-independent-owner-lanes-guarded-one-shot-callbacks-cooperative-cancellation-and-stale-state-masking",
+      "capability": "Request-authoritative async epochs, independent owner lanes, guarded one-shot callbacks, cooperative cancellation, and stale-state masking",
+      "required_outcome": "Request-authoritative async epochs, independent owner lanes, guarded one-shot callbacks, cooperative cancellation, and stale-state masking",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 25",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-empty-states-status-pills-detail-items-and-fact-lists",
+      "capability": "Empty states, status pills, detail items, and fact lists",
+      "required_outcome": "Empty states, status pills, detail items, and fact lists",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 26",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-skip-path-focus-visibility-coarse-pointer-target-sizing-closed-panel-semantics-and-representative-320-css-pixel-reflow-proof",
+      "capability": "Skip path, focus visibility, coarse-pointer target sizing, closed-panel semantics, and representative 320 CSS-pixel reflow proof",
+      "required_outcome": "Skip path, focus visibility, coarse-pointer target sizing, closed-panel semantics, and representative 320 CSS-pixel reflow proof",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 27",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    },
+    {
+      "id": "legacy_operations.shared-frontend-dependency-lint-logical-style-generated-contract-accessibility-test-and-bundle-budget-gates",
+      "capability": "Frontend dependency, lint, logical-style, generated-contract, accessibility, test, and bundle-budget gates",
+      "required_outcome": "Frontend dependency, lint, logical-style, generated-contract, accessibility, test, and bundle-budget gates",
+      "source_evidence": {
+        "path": "docs/architecture/UOK_GLOBAL_SHARED_FEATURES.md",
+        "locator": "line 28",
+        "reported_maturity": "documented"
+      },
+      "target_owner": "platform.modules",
+      "integration_mode": "native",
+      "delivery_gate": 5,
+      "target_status": "planned",
+      "acceptance_profile": "platform",
+      "target_evidence": []
+    }
+  ]
+}

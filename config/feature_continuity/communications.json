@@ -1,0 +1,389 @@
+{
+  "source_id": "communications",
+  "features": [
+    {
+      "id": "communications.identity",
+      "capability": "Password sign-in and recovery; profiles, devices, session rotation and revocation",
+      "required_outcome": "Password sign-in and recovery; profiles, devices, session rotation and revocation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.tenant-lifecycle",
+      "capability": "Tenant invitations, lifecycle controls, scoped roles, quotas and last-owner protection",
+      "required_outcome": "Tenant invitations, lifecycle controls, scoped roles, quotas and last-owner protection",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.conversations",
+      "capability": "Direct messages, private groups, public channels and scoped memberships",
+      "required_outcome": "Direct messages, private groups, public channels and scoped memberships",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.service-participants",
+      "capability": "Service-account participants with bounded rotating credentials",
+      "required_outcome": "Service-account participants with bounded rotating credentials",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.ordered-messages",
+      "capability": "Ordered idempotent messaging, reconnect replay and paged history",
+      "required_outcome": "Ordered idempotent messaging, reconnect replay and paged history",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.search-drafts",
+      "capability": "Authorized message search and drafts",
+      "required_outcome": "Authorized message search and drafts",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.edit-tombstone",
+      "capability": "Message edits, tombstones and reactions",
+      "required_outcome": "Message edits, tombstones and reactions",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.read-threads",
+      "capability": "Read state, replies, threads and mentions",
+      "required_outcome": "Read state, replies, threads and mentions",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.whiteboard",
+      "capability": "Conversation-linked durable whiteboards, operation replay and reconnect-safe save",
+      "required_outcome": "Conversation-linked durable whiteboards, operation replay and reconnect-safe save",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.calls",
+      "capability": "One-to-one, group and channel audio/video calls",
+      "required_outcome": "One-to-one, group and channel audio/video calls",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.media-consent",
+      "capability": "Explicit microphone/camera consent, screen sharing and device controls",
+      "required_outcome": "Explicit microphone/camera consent, screen sharing and device controls",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.call-membership",
+      "capability": "Short-lived source-restricted grants and participant eviction after access changes",
+      "required_outcome": "Short-lived source-restricted grants and participant eviction after access changes",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.presence",
+      "capability": "Realtime presence, typing and ephemeral collaborator cursors",
+      "required_outcome": "Realtime presence, typing and ephemeral collaborator cursors",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.notifications",
+      "capability": "Durable in-app notifications, inactive-conversation alerts and preferences",
+      "required_outcome": "Durable in-app notifications, inactive-conversation alerts and preferences",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.attachments",
+      "capability": "Version-bound attachment transfer, checksums, malware scanning and quarantine",
+      "required_outcome": "Version-bound attachment transfer, checksums, malware scanning and quarantine",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.moderation",
+      "capability": "Moderation cases/actions, legal holds and governed deletion",
+      "required_outcome": "Moderation cases/actions, legal holds and governed deletion",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.audit-export",
+      "capability": "Communication audit and bounded spreadsheet-safe CSV export",
+      "required_outcome": "Communication audit and bounded spreadsheet-safe CSV export",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.push-webhooks",
+      "capability": "Per-device browser push and hardened webhooks",
+      "required_outcome": "Per-device browser push and hardened webhooks",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.surfaces",
+      "capability": "Responsive accessible user, tenant-admin and content-blind operations surfaces",
+      "required_outcome": "Responsive accessible user, tenant-admin and content-blind operations surfaces",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.operations",
+      "capability": "Health, metrics, alerts, migration, backup/restore and rollback",
+      "required_outcome": "Health, metrics, alerts, migration, backup/restore and rollback",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.qualification",
+      "capability": "Revision-bound runtime/release evidence and provider launch gates",
+      "required_outcome": "Revision-bound runtime/release evidence and provider launch gates",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.future-sip",
+      "capability": "SIP interoperability",
+      "required_outcome": "SIP interoperability",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "explicitly_deferred"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.future-recording",
+      "capability": "Consent-governed recording, transcription and media egress",
+      "required_outcome": "Consent-governed recording, transcription and media egress",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "explicitly_deferred"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    },
+    {
+      "id": "communications.future-e2ee",
+      "capability": "True end-to-end encryption with explicit search/recovery tradeoffs",
+      "required_outcome": "True end-to-end encryption with explicit search/recovery tradeoffs",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "Implemented 0.3.0 platform and explicit deferrals",
+        "reported_maturity": "explicitly_deferred"
+      },
+      "target_owner": "communications_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "communications",
+      "target_evidence": []
+    }
+  ]
+}

@@ -3,6 +3,12 @@
 This roadmap uses evidence gates rather than feature-count targets. There is
 exactly one active focus, recorded in `docs/STATUS.md`.
 
+Every gate also preserves the previous-application capability requirement in
+[Feature continuity](FEATURE_CONTINUITY.md) and ADR-0027. The initial inventory
+does not alter the active gate. A source application cannot be retired until
+its discovery gaps are closed and all applicable outcomes have target tests,
+runtime, reconciliation and rollback evidence.
+
 ## Gate 0: Durable foundation
 
 Exit when:

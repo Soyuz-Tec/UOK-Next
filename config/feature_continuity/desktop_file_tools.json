@@ -1,0 +1,197 @@
+{
+  "source_id": "desktop_file_tools",
+  "features": [
+    {
+      "id": "desktop_file_tools.scan",
+      "capability": "Staged size/boundary/full-content duplicate scanning with file identity capture",
+      "required_outcome": "Staged size/boundary/full-content duplicate scanning with file identity capture",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "desktop_file_tools.folder",
+      "capability": "Native folder selection, progress and cancellation",
+      "required_outcome": "Native folder selection, progress and cancellation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "desktop_file_tools.filters",
+      "capability": "Document, media, archive and Other category filters",
+      "required_outcome": "Document, media, archive and Other category filters",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "desktop_file_tools.groups",
+      "capability": "Duplicate groups and keep-newest/keep-oldest selection helpers",
+      "required_outcome": "Duplicate groups and keep-newest/keep-oldest selection helpers",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "desktop_file_tools.reports",
+      "capability": "Explicit cancellable CSV/JSON export with atomic publication and formula neutralization",
+      "required_outcome": "Explicit cancellable CSV/JSON export with atomic publication and formula neutralization",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "desktop_file_tools.previews",
+      "capability": "Local thumbnails, rich previews and metadata fallbacks",
+      "required_outcome": "Local thumbnails, rich previews and metadata fallbacks",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "desktop_file_tools.selection",
+      "capability": "Checkbox-only cleanup planning; row focus never authorizes mutation",
+      "required_outcome": "Checkbox-only cleanup planning; row focus never authorizes mutation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "desktop_file_tools.privacy",
+      "capability": "Local execution and diagnostics without telemetry or automatic upload",
+      "required_outcome": "Local execution and diagnostics without telemetry or automatic upload",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "desktop_file_tools.cleanup",
+      "capability": "Preserve disabled cleanup until an identity-bound reversible adapter is qualified",
+      "required_outcome": "Preserve disabled cleanup until an identity-bound reversible adapter is qualified",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "desktop_file_tools.keeper",
+      "capability": "Revalidate distinct keeper and target identity/content before any future cleanup",
+      "required_outcome": "Revalidate distinct keeper and target identity/content before any future cleanup",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "desktop_file_tools.protection",
+      "capability": "Protect system/dependency/executable/reparse/hardlink/alternate-stream files",
+      "required_outcome": "Protect system/dependency/executable/reparse/hardlink/alternate-stream files",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    },
+    {
+      "id": "desktop_file_tools.distribution",
+      "capability": "Portable and per-user Windows x64/ARM64 install, update and uninstall",
+      "required_outcome": "Portable and per-user Windows x64/ARM64 install, update and uninstall",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "What it does; Safety model; Privacy; Supported platform",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "platform.integrations",
+      "integration_mode": "companion",
+      "delivery_gate": 5,
+      "target_status": "blocked",
+      "acceptance_profile": "local_files",
+      "target_evidence": []
+    }
+  ]
+}

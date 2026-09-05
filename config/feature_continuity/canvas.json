@@ -1,0 +1,517 @@
+{
+  "source_id": "canvas",
+  "features": [
+    {
+      "id": "canvas.convergent-document-model-with-per-property-merge",
+      "capability": "Convergent document model with per-property merge",
+      "required_outcome": "Convergent document model with per-property merge",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 160",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.hybrid-logical-clocks-deterministic-tiebreaking-fractional-z-ordering",
+      "capability": "Hybrid logical clocks, deterministic tiebreaking, fractional z-ordering",
+      "required_outcome": "Hybrid logical clocks, deterministic tiebreaking, fractional z-ordering",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 161",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.snapshot-compaction-and-tombstone-collection",
+      "capability": "Snapshot compaction and tombstone collection",
+      "required_outcome": "Snapshot compaction and tombstone collection",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 162",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.authority-ports-tenant-scope-isolation",
+      "capability": "Authority ports; tenant scope isolation",
+      "required_outcome": "Authority ports; tenant scope isolation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 163",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.c-abi-with-panic-trapping-wasm32-and-native-from-one-crate",
+      "capability": "C ABI with panic trapping; wasm32 and native from one crate",
+      "required_outcome": "C ABI with panic trapping; wasm32 and native from one crate",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 164",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.websocket-sync-server-with-per-room-compacting-log",
+      "capability": "WebSocket sync server with per-room compacting log",
+      "required_outcome": "WebSocket sync server with per-room compacting log",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 165",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.browser-client-shapes-freehand-select-move-erase-pan-zoom-colours-text-undo-redo-with-ctrl-z-ctrl-shift-z",
+      "capability": "Browser client: shapes, freehand, select/move, erase, pan, zoom, colours, text, undo/redo with Ctrl+Z / Ctrl+Shift+Z",
+      "required_outcome": "Browser client: shapes, freehand, select/move, erase, pan, zoom, colours, text, undo/redo with Ctrl+Z / Ctrl+Shift+Z",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 166",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.local-first-queueing-draw-offline-reconnect-replay",
+      "capability": "Local-first queueing \u2014 draw offline, reconnect, replay",
+      "required_outcome": "Local-first queueing \u2014 draw offline, reconnect, replay",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 168",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.dom-accessibility-mirror",
+      "capability": "DOM accessibility mirror",
+      "required_outcome": "DOM accessibility mirror",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 169",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.server-hardening-rate-limiting-frame-batch-caps-room-bounds-idle-reclamation-scope-validation-security-headers",
+      "capability": "Server hardening: rate limiting, frame/batch caps, room bounds, idle reclamation, scope validation, security headers",
+      "required_outcome": "Server hardening: rate limiting, frame/batch caps, room bounds, idle reclamation, scope validation, security headers",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 170",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.architecture-decision-records",
+      "capability": "Architecture decision records",
+      "required_outcome": "Architecture decision records",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 172",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.performance-baseline-docs-benchmarks-md-docs-benchmarks-md-captured-before-persistence-changes-it",
+      "capability": "Performance baseline ([`docs/benchmarks.md`](docs/benchmarks.md)) captured before persistence changes it",
+      "required_outcome": "Performance baseline ([`docs/benchmarks.md`](docs/benchmarks.md)) captured before persistence changes it",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 173",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.dependency-policy-via-cargo-deny-licences-duplicates-and-sources",
+      "capability": "Dependency policy via `cargo-deny` \u2014 licences, duplicates, and sources",
+      "required_outcome": "Dependency policy via `cargo-deny` \u2014 licences, duplicates, and sources",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 175",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.durable-persistence-sqlite-behind-the-engine-s-oplog-snapshotstore-ports-with-boards-restored-on-join-adr-0007-docs-adr-0007-sqlite-durable-storage-md",
+      "capability": "Durable persistence: SQLite behind the engine's `OpLog`/`SnapshotStore` ports, with boards restored on join ([ADR-0007](docs/adr/0007-sqlite-durable-storage.md))",
+      "required_outcome": "Durable persistence: SQLite behind the engine's `OpLog`/`SnapshotStore` ports, with boards restored on join ([ADR-0007](docs/adr/0007-sqlite-durable-storage.md))",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 176",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.undo-redo-per-actor-as-fresh-writes-of-prior-values-so-a-reversal-converges-like-any-other-edit-and-reaches-collaborators",
+      "capability": "Undo/redo, per actor, as fresh writes of prior values \u2014 so a reversal converges like any other edit and reaches collaborators",
+      "required_outcome": "Undo/redo, per actor, as fresh writes of prior values \u2014 so a reversal converges like any other edit and reaches collaborators",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 178",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.per-scope-bearer-authentication-enforced-on-the-websocket-handshake-with-a-loopback-only-refusal-when-no-secret-is-set",
+      "capability": "Per-scope bearer authentication, enforced on the WebSocket handshake, with a loopback-only refusal when no secret is set",
+      "required_outcome": "Per-scope bearer authentication, enforced on the WebSocket handshake, with a loopback-only refusal when no secret is set",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 180",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.client-side-png-and-svg-export-cropped-to-the-board-rather-than-the-viewport-from-one-geometry-description-shared-with-the-on-screen-renderer",
+      "capability": "Client-side PNG and SVG export, cropped to the board rather than the viewport, from one geometry description shared with the on-screen renderer",
+      "required_outcome": "Client-side PNG and SVG export, cropped to the board rather than the viewport, from one geometry description shared with the on-screen renderer",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 182",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.presence-live-peer-cursors-relayed-but-never-merged-stored-or-logged",
+      "capability": "Presence: live peer cursors, relayed but never merged, stored, or logged",
+      "required_outcome": "Presence: live peer cursors, relayed but never merged, stored, or logged",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 184",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.copy-cut-paste-duplicate-and-delete-on-the-system-clipboard-so-a-shape-can-be-carried-between-boards-tabs-and-reloads",
+      "capability": "Copy, cut, paste, duplicate and delete \u2014 on the *system* clipboard, so a shape can be carried between boards, tabs, and reloads",
+      "required_outcome": "Copy, cut, paste, duplicate and delete \u2014 on the *system* clipboard, so a shape can be carried between boards, tabs, and reloads",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 185",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.keyboard-selection-tab-cycles-escape-clears-and-every-clipboard-shortcut-acts-on-the-result",
+      "capability": "Keyboard selection: Tab cycles, Escape clears, and every clipboard shortcut acts on the result",
+      "required_outcome": "Keyboard selection: Tab cycles, Escape clears, and every clipboard shortcut acts on the result",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 187",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.text-elements-edited-in-place-through-a-real-textarea-with-the-measured-box-stored-on-the-element-because-the-engine-has-no-font",
+      "capability": "Text elements, edited in place through a real textarea, with the measured box stored on the element because the engine has no font",
+      "required_outcome": "Text elements, edited in place through a real textarea, with the measured box stored on the element because the engine has no font",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 189",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.multi-select-by-marquee-or-shift-click-move-resize-and-rotate-a-selection-as-one-thing",
+      "capability": "Multi-select by marquee or shift-click; move, resize and rotate a selection as one thing",
+      "required_outcome": "Multi-select by marquee or shift-click; move, resize and rotate a selection as one thing",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 191",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.stroke-colour-fill-width-and-opacity-applied-to-the-selection-and-to-what-is-drawn-next-each-control-sending-only-what-it-changed",
+      "capability": "Stroke colour, fill, width and opacity, applied to the selection and to what is drawn next \u2014 each control sending only what it changed",
+      "required_outcome": "Stroke colour, fill, width and opacity, applied to the selection and to what is drawn next \u2014 each control sending only what it changed",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 193",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.ci-fmt-clippy-tests-msrv-wasm-build-convergence-proofs-e2e-audit-dependency-policy-benchmark-compilation",
+      "capability": "CI: fmt, clippy, tests, MSRV, wasm build, convergence proofs, e2e, audit, dependency policy, benchmark compilation",
+      "required_outcome": "CI: fmt, clippy, tests, MSRV, wasm build, convergence proofs, e2e, audit, dependency policy, benchmark compilation",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 195",
+        "reported_maturity": "readme_claim_not_retested"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.beam-host-binding-so-a-beam-host-can-call-merge-snapshot-validate",
+      "capability": "BEAM host binding so a BEAM host can call `merge`, `snapshot`, `validate`",
+      "required_outcome": "BEAM host binding so a BEAM host can call `merge`, `snapshot`, `validate`",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 199",
+        "reported_maturity": "explicitly_deferred"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.presence-shared-selection-and-names-rather-than-actor-ids",
+      "capability": "Presence: shared selection, and names rather than actor ids",
+      "required_outcome": "Presence: shared selection, and names rather than actor ids",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 200",
+        "reported_maturity": "explicitly_deferred"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.images",
+      "capability": "Images",
+      "required_outcome": "Images",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 201",
+        "reported_maturity": "explicitly_deferred"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.headless-renderer-so-a-server-can-render-a-board-without-a-browser-the-client-side-export-above-does-not-cover-thumbnails-or-notification-previews",
+      "capability": "Headless renderer  so a *server* can render a board without a browser \u2014 the client-side export above does not cover thumbnails or notification previews",
+      "required_outcome": "Headless renderer  so a *server* can render a board without a browser \u2014 the client-side export above does not cover thumbnails or notification previews",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 202",
+        "reported_maturity": "explicitly_deferred"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.gpu-renderer-with-a-webgl2-fallback",
+      "capability": "GPU renderer  with a WebGL2 fallback",
+      "required_outcome": "GPU renderer  with a WebGL2 fallback",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 205",
+        "reported_maturity": "explicitly_deferred"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.framework-agnostic-web-component-packaging",
+      "capability": "Framework-agnostic Web Component packaging",
+      "required_outcome": "Framework-agnostic Web Component packaging",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 206",
+        "reported_maturity": "explicitly_deferred"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.board-scene-costs-10-3-ms-at-10-000-elements-and-20-5-ms-once-serialised-past-a-60-fps-frame-budget-before-anything-is-drawn-the-projection-re-sorts-and-re-allocates-the-whole-board-on-every-change-see-docs-benchmarks-md-docs-benchmarks-md",
+      "capability": "`board/scene` costs **10.3 ms** at 10,000 elements, and **20.5 ms** once serialised \u2014 past a 60 fps frame budget before anything is drawn. The projection re-sorts and re-allocates the whole board on every change. See [`docs/benchmarks.md`](docs/benchmarks.md).",
+      "required_outcome": "`board/scene` costs **10.3 ms** at 10,000 elements, and **20.5 ms** once serialised \u2014 past a 60 fps frame budget before anything is drawn. The projection re-sorts and re-allocates the whole board on every change. See [`docs/benchmarks.md`](docs/benchmarks.md).",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 209",
+        "reported_maturity": "explicitly_deferred"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    },
+    {
+      "id": "canvas.text-crdt-text-is-currently-a-last-writer-wins-property-so-concurrent-edits-to-one-text-block-keep-only-one-a-sequence-crdt-is-the-fix-it-is-not-free-and-the-current-behaviour-is-honest-and-documented-rather-than-silently-wrong",
+      "capability": "Text CRDT. Text is currently a last-writer-wins property, so concurrent edits to one text block keep only one. A sequence CRDT is the fix; it is not free, and the current behaviour is honest and documented rather than silently wrong.",
+      "required_outcome": "Text CRDT. Text is currently a last-writer-wins property, so concurrent edits to one text block keep only one. A sequence CRDT is the fix; it is not free, and the current behaviour is honest and documented rather than silently wrong.",
+      "source_evidence": {
+        "path": "README.md",
+        "locator": "line 215",
+        "reported_maturity": "explicitly_deferred"
+      },
+      "target_owner": "collaborative_canvas_system",
+      "integration_mode": "adapter",
+      "delivery_gate": 4,
+      "target_status": "planned",
+      "acceptance_profile": "canvas",
+      "target_evidence": []
+    }
+  ]
+}
