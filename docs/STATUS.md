@@ -43,7 +43,7 @@
   updates: `brace-expansion` 5.0.9 to 5.0.12 and `undici` 8.10.0 to 8.11.2.
   Only those two npm lock entries change beyond the original Vitest update;
   direct dependency declarations are unchanged by this repair.
-- The first current CI rerun exposes retired Alpine package pins in the release
+- The first current CI rerun exposed retired Alpine package pins in the release
   build. The digest-pinned runtime base is retained; exact `ca-certificates`,
   `openssl`, and `tzdata` pins advance to `20260909-r0`, `3.5.9-r0`, and
   `2026d-r0`. Installation against the same base passes signed APK verification
@@ -61,7 +61,12 @@
   Hex reports no retired or advisory packages; npm reports zero vulnerabilities.
   Foundation architecture, database, object-storage, credential-ACL, and
   artifact-integrity checks pass.
-  Protected CI and immutable-release verification remain required for delivery.
+- Foundation run `37338022812` passes all three jobs for PR head
+  `0cd6b5e79866124941ea4f73b056f1394cb7aa22`, including backend/object-store
+  tests, both advisory audits, production fail-closed configuration tests, and
+  the immutable-release build/non-root check. A local release build for that
+  exact head also passes with runtime user `10001:10001` and the matching
+  revision label. The PR remains subject to protected review before merge.
 - Operational risk is stricter parsing of malformed upstream HTTP responses.
   Deployment rollback uses a previously qualified immutable release; new builds
   continue to require advisory checks. This maintenance does not change the
