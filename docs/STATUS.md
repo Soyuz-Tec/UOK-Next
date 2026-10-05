@@ -1,6 +1,6 @@
 # Current Build Status
 
-**Snapshot date:** 2026-09-03
+**Snapshot date:** 2026-10-05
 
 **Canonical repository:** `https://github.com/Soyuz-Tec/UOK-Next`
 
@@ -27,6 +27,39 @@
   the module catalog rejects every field outside its governed role schema.
 - `main` is protected; Foundation CI, review resolution, linear history, and
   administrative enforcement remain delivery gates.
+
+## PR #47 dependency-maintenance verification
+
+- The September 10 Foundation run for PR #47 passed the frontend quality gate
+  and all 137 backend tests, then failed `mix hex.audit` on Mint 1.9.3 HTTP/1
+  response-line and chunk-size parsing advisories. The Vitest 4.1.11 update is
+  retained.
+- Current advisory verification also identifies later Mint HTTP/2 header/frame
+  limits and HTTP/1 framing defects. The Hex lock now selects Mint 1.11.0 and
+  its required HPAX 1.1.0 dependency, with registry-verified package checksums.
+  The runtime consumer is `platform.evidence`; no business command, event,
+  data ownership, migration, permission, or integration contract changes.
+- The current npm advisory gate also requires transitive development-tooling
+  updates: `brace-expansion` 5.0.9 to 5.0.12 and `undici` 8.10.0 to 8.11.2.
+  Only those two npm lock entries change beyond the original Vitest update;
+  direct dependency declarations are unchanged by this repair.
+- Transport regression coverage exercises oversized status/extension lines,
+  excessive chunk-size digits, malformed chunk extensions, non-final chunked
+  transfer coding, HPACK-indexed cookie expansion, and header-only oversized
+  HTTP/2 frames, plus legitimate HTTP/1 and HTTP/2 responses. The original
+  Mint 1.9.3 lock fails all seven malicious-response cases while preserving both
+  legitimate cases; the patched lock passes all nine.
+- Candidate verification passes all 146 backend tests with a real isolated
+  PostgreSQL 19 and S3-compatible object store, the full backend quality gate,
+  and the pinned frontend quality gate with 19 tests and a production build.
+  Hex reports no retired or advisory packages; npm reports zero vulnerabilities.
+  Foundation architecture, database, object-storage, credential-ACL, and
+  artifact-integrity checks pass.
+  Protected CI and immutable-release verification remain required for delivery.
+- Operational risk is stricter parsing of malformed upstream HTTP responses.
+  Deployment rollback uses a previously qualified immutable release; new builds
+  continue to require advisory checks. This maintenance does not change the
+  sole Gate 4 focus or qualify a new deployed runtime.
 
 ## Gate 1 exit evidence
 
