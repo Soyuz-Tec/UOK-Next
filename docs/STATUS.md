@@ -43,6 +43,12 @@
   updates: `brace-expansion` 5.0.9 to 5.0.12 and `undici` 8.10.0 to 8.11.2.
   Only those two npm lock entries change beyond the original Vitest update;
   direct dependency declarations are unchanged by this repair.
+- The first current CI rerun exposes retired Alpine package pins in the release
+  build. The digest-pinned runtime base is retained; exact `ca-certificates`,
+  `openssl`, and `tzdata` pins advance to `20260909-r0`, `3.5.9-r0`, and
+  `2026d-r0`. Installation against the same base passes signed APK verification
+  and upgrades the matching OpenSSL shared libraries to 3.5.9. Runtime identity,
+  capabilities, resource limits, and deployment topology are unchanged.
 - Transport regression coverage exercises oversized status/extension lines,
   excessive chunk-size digits, malformed chunk extensions, non-final chunked
   transfer coding, HPACK-indexed cookie expansion, and header-only oversized
